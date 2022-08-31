@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.IOException;
 import java.io.Reader;
 
 public class AnalizadorLexico{
@@ -19,7 +20,8 @@ public class AnalizadorLexico{
         this.entrada = entrada;
         estadoAct = 0;
     }
-    public int getToken(){
+    public int getToken() throws IOException{
+        int valor = getCaracter(Character.toChars(entrada.read())[0]);
         
         return 0;
     }
