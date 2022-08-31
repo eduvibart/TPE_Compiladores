@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class GeneradorMatrices {
     
     public static AccionSemantica[][] getMatrizAS(){

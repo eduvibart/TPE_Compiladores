@@ -2,6 +2,10 @@ import java.util.*;
 import java.io.Reader;
 
 public class AnalizadorLexico{
+	private static final String path = "TransicionDeEstados.txt";
+	private static final int columnas=23;
+	private static final int filas=14;
+	
     private int[][] matrizEstados;
     private AccionSemantica[][] matrizAS;
 
@@ -10,7 +14,7 @@ public class AnalizadorLexico{
     private int estadoAct;
 
     public AnalizadorLexico(Reader entrada){
-        matrizEstados = GeneradorMatrices.getMatrizEstados();
+        matrizEstados = GeneradorMatrices.getMatrizEstados(path, filas, columnas);
         matrizAS= GeneradorMatrices.getMatrizAS();
         this.entrada = entrada;
         estadoAct = 0;
