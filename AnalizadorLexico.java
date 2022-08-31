@@ -3,7 +3,7 @@ import java.io.Reader;
 
 public class AnalizadorLexico{
 	private static final String path = "TransicionDeEstados.txt";
-	private static final int columnas=23;
+	private static final int columnas=24;
 	private static final int filas=14;
 	
     private int[][] matrizEstados;
