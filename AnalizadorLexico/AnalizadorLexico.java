@@ -25,10 +25,6 @@ public class AnalizadorLexico{
         estadoAct = 0;
     }
     
-    public int[][] getME(){
-    	return this.matrizEstados;
-    }
-    
     public int getToken() throws IOException{
         int t = -1;
         while(estadoAct != -1){

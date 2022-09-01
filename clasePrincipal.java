@@ -11,13 +11,5 @@ public  class clasePrincipal {
     BufferedReader entrada = new BufferedReader(new FileReader("archivos/entrada.txt"));
     AnalizadorLexico a = new AnalizadorLexico(entrada);
 
-    //a.getToken();
-    for(int i=0; i<14; i++) {
-    	for (int j=0; j<25; j++) {
-    		System.out.print(a.getME()[i][j]);
-    	}
-    	System.out.println("\n");
-    }
-
     }
 }
