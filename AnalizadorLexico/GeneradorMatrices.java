@@ -8,7 +8,7 @@ import AccionesSemanticas.AccionSemantica;
 
 public class GeneradorMatrices {
     
-    public static AccionSemantica[][] getMatrizAS(String path, int rows, int columns){
+    public AccionSemantica[][] getMatrizAS(String path, int rows, int columns){
         AccionSemantica[][] as_matrix = new AccionSemantica[rows][columns];
         try {
             File archivo = new File(path);
@@ -37,7 +37,7 @@ public class GeneradorMatrices {
         return null;
     }
     
-    public static int[][] getMatrizEstados(String path, int rows, int columns) {
+    public int[][] getMatrizEstados(String path, int rows, int columns) {
         int[][] int_matrix = new int[rows][columns];
 
         try {

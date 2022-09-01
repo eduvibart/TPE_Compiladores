@@ -1,6 +1,4 @@
 package AnalizadorLexico;
-import java.util.*;
-
 import AccionesSemanticas.AccionSemantica;
 
 import java.io.IOException;
@@ -9,9 +7,9 @@ import java.io.Reader;
 public class AnalizadorLexico{
 	private static final String pathTE = "archivos/TransicionDeEstados.txt";
     private static final String pathAS = "archivos/MatrisAS.txt";
-	private static final int columnas=24;
+	private static final int columnas=25;
 	private static final int filas=14;
-	
+	private GeneradorMatrices generadorMatrices;
     private int[][] matrizEstados;
     private AccionSemantica[][] matrizAS;
 
@@ -20,11 +18,17 @@ public class AnalizadorLexico{
     private int estadoAct;
 
     public AnalizadorLexico(Reader entrada){
-        matrizEstados = GeneradorMatrices.getMatrizEstados(pathTE, filas, columnas);
-        matrizAS= GeneradorMatrices.getMatrizAS(pathAS,filas,columnas);
+    	this.generadorMatrices= new GeneradorMatrices();
+        matrizEstados = generadorMatrices.getMatrizEstados(pathTE, filas, columnas);
+        matrizAS= generadorMatrices.getMatrizAS(pathAS,filas,columnas);
         this.entrada = entrada;
         estadoAct = 0;
     }
+    
+    public int[][] getME(){
+    	return this.matrizEstados;
+    }
+    
     public int getToken() throws IOException{
         int t = -1;
         while(estadoAct != -1){
