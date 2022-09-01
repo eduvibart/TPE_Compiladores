@@ -26,7 +26,7 @@ public class AnalizadorLexico{
         estadoAct = 0;
     }
     public int getToken() throws IOException{
-        int t = 0;
+        int t = -1;
         while(estadoAct != -1){
         int valor = getCaracter(Character.toChars(entrada.read())[0]);
         t = matrizAS[estadoAct][valor].ejecutar();
