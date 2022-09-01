@@ -1,9 +1,14 @@
+package AnalizadorLexico;
 import java.util.*;
+
+import AccionesSemanticas.AccionSemantica;
+
 import java.io.IOException;
 import java.io.Reader;
 
 public class AnalizadorLexico{
-	private static final String path = "TransicionDeEstados.txt";
+	private static final String pathTE = "archivos/TransicionDeEstados.txt";
+    private static final String pathAS = "archivos/MatrisAS.txt";
 	private static final int columnas=24;
 	private static final int filas=14;
 	
@@ -15,15 +20,19 @@ public class AnalizadorLexico{
     private int estadoAct;
 
     public AnalizadorLexico(Reader entrada){
-        matrizEstados = GeneradorMatrices.getMatrizEstados(path, filas, columnas);
-        matrizAS= GeneradorMatrices.getMatrizAS();
+        matrizEstados = GeneradorMatrices.getMatrizEstados(pathTE, filas, columnas);
+        matrizAS= GeneradorMatrices.getMatrizAS(pathAS,filas,columnas);
         this.entrada = entrada;
         estadoAct = 0;
     }
     public int getToken() throws IOException{
+        int t = 0;
+        while(estadoAct != -1){
         int valor = getCaracter(Character.toChars(entrada.read())[0]);
-        
-        return 0;
+        t = matrizAS[estadoAct][valor].ejecutar();
+        estadoAct = matrizEstados[estadoAct][valor]; 
+        }
+        return t;
     }
 
     private char obtenerCar(char c){
