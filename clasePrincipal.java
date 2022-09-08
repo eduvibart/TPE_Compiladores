@@ -11,5 +11,10 @@ public  class clasePrincipal {
     BufferedReader entrada = new BufferedReader(new FileReader("archivos/entrada.txt"));
     AnalizadorLexico a = new AnalizadorLexico(entrada);
 
+    
+    
+    String b = "-53.32";
+    Double d = Double.parseDouble(b);
+    System.out.println(d);
     }
 }
