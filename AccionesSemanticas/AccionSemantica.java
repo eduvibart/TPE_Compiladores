@@ -1,8 +1,14 @@
 package AccionesSemanticas;
+
+import java.io.Reader;
+
+import AnalizadorLexico.*;
+
 public abstract class AccionSemantica {
 
     protected static final int LETRA = 0;
     protected static final int DIGITO = 0;
+    protected static final int DECIMAL = 0;
     protected static final int PUNTO = 0;
     protected static final int F = 0;
     protected static final int SUMA = 0;
@@ -20,6 +26,8 @@ public abstract class AccionSemantica {
     protected static final int MENOR = 0;
     protected static final int LLAVE_A = 0;
     protected static final int LLAVE_C = 0;
+    protected static final int EXCL = 0;
 
-    public abstract int ejecutar();
+
+    public abstract void ejecutar(Token t, Reader entrada);
 }

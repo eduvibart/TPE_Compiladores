@@ -12,10 +12,10 @@ public class AnalizadorLexico{
 	private GeneradorMatrices generadorMatrices;
     private int[][] matrizEstados;
     private AccionSemantica[][] matrizAS;
-
     private Reader entrada;
-
     private int estadoAct;
+    private static int lineaAct;
+    private static String errores = "";
 
     public AnalizadorLexico(Reader entrada){
     	this.generadorMatrices= new GeneradorMatrices();
@@ -23,14 +23,26 @@ public class AnalizadorLexico{
         matrizAS= generadorMatrices.getMatrizAS(pathAS,filas,columnas);
         this.entrada = entrada;
         estadoAct = 0;
+        lineaAct = 1;
+    }
+
+    public static void sumLinea(){
+        lineaAct++;
     }
     
-    public int getToken() throws IOException{
-        int t = -1;
-        while(estadoAct != -1){
-        int valor = getCaracter(Character.toChars(entrada.read())[0]);
-        t = matrizAS[estadoAct][valor].ejecutar();
-        estadoAct = matrizEstados[estadoAct][valor]; 
+    public static void addError(String s){
+        errores += "\n" + s + " Error en la linea " + lineaAct;
+    }
+    public Token getToken() throws IOException{
+        Token t = new Token();
+        while(estadoAct != -1 || estadoAct != -2){
+            entrada.mark(1);
+            char c = Character.toChars(entrada.read())[0];
+            String s =""+ c;
+            t.addCarac(s);
+            int valor = getCaracter(c);
+            matrizAS[estadoAct][valor].ejecutar(t,entrada);
+            estadoAct = matrizEstados[estadoAct][valor]; 
         }
         return t;
     }
@@ -114,8 +126,11 @@ public class AnalizadorLexico{
             case '}':
                 valor = 22;
                 break;
-            default:
+            case '!':
                 valor = 23;
+                break;
+            default:
+                valor = 24;
 
         }
         return valor;
