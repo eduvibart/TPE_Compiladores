@@ -36,9 +36,6 @@ public class AS0 extends AccionSemantica {
             case "}":
                 t.setId(LLAVE_C);
                 break;
-            case ".":
-                t.setId(PUNTO);
-                break;
             case ",":
                 t.setId(COMA);
                 break;

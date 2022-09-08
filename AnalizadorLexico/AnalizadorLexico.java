@@ -33,12 +33,16 @@ public class AnalizadorLexico{
     public static void addError(String s){
         errores += "\n" + s + " Error en la linea " + lineaAct;
     }
+
+    public static String getErrores(){
+        return errores;
+    }
     public Token getToken() throws IOException{
         Token t = new Token();
         while(estadoAct != -1 || estadoAct != -2){
             entrada.mark(1);
             char c = Character.toChars(entrada.read())[0];
-            String s =""+ c;
+            String s = Character.toString(c);
             t.addCarac(s);
             int valor = getCaracter(c);
             matrizAS[estadoAct][valor].ejecutar(t,entrada);
@@ -54,6 +58,7 @@ public class AnalizadorLexico{
             return 'a';
         return c;
     }
+    //Devuelve la columna correspondiente a la matriz de Estados
     private int getCaracter(char c){
         int valor;
         switch(obtenerCar(c)){
