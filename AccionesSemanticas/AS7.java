@@ -12,7 +12,8 @@ public class AS7 extends AccionSemantica{
     
 	@Override
     public void ejecutar(Token t, Reader entrada) {
-		//for (int n = 0, n <str.length (); n + +) { char c = str.charAt (n); System.out.println (c); }        
+		      
+		t.delCarac();		
 		String lexema = t.getLexema();
 		int i =0;
 		char caracter=' ';
@@ -27,7 +28,7 @@ public class AS7 extends AccionSemantica{
 		
 		Double d = Double.parseDouble(digito); //d va a tener la parte numerica
 		
-		for (int j=i ; j < (lexema.length()-1); j++) {
+		for (int j=i ; j < (lexema.length()); j++) {
 			caracter = lexema.charAt(j);
 			exponente += caracter;
 			j++;

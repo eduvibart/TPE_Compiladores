@@ -16,11 +16,13 @@ public class AnalizadorLexico{
     private int estadoAct;
     private static int lineaAct;
     private static String errores = "";
+    private static TPR tablaPalabrasReservadas;
 
     public AnalizadorLexico(Reader entrada){
     	this.generadorMatrices= new GeneradorMatrices();
         matrizEstados = generadorMatrices.getMatrizEstados(pathTE, filas, columnas);
         matrizAS= generadorMatrices.getMatrizAS(pathAS,filas,columnas);
+        tablaPalabrasReservadas = new TPR();
         this.entrada = entrada;
         estadoAct = 0;
         lineaAct = 1;
@@ -51,6 +53,9 @@ public class AnalizadorLexico{
         return t;
     }
 
+    public static Integer isPR(String key){
+        return tablaPalabrasReservadas.get(key);
+    }
     private char obtenerCar(char c){
         if(Character.isDigit(c)){
             return '0';

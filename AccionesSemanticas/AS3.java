@@ -8,8 +8,7 @@ public class AS3 extends AccionSemantica{
 
     @Override
     public void ejecutar(Token t, Reader entrada) {
-        // TODO Auto-generated method stub
-        t.setId(LETRA);
+        t.setId(ID);
         
     }
     

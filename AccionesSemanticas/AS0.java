@@ -42,6 +42,24 @@ public class AS0 extends AccionSemantica {
             case "!":
                 t.setId(EXCL);
                 break;
+            case "=!":
+                t.setId(DIST);
+                break;
+            case "<":
+                t.setId(MENOR);
+                break;
+            case ">":
+                t.setId(MAYOR);
+                break;
+            case "=:":
+                t.setId(ASIG);
+                break;
+            case "<=":
+                t.setId(ASIG);
+                break;
+            case ">=":
+                t.setId(ASIG);
+                break;
         }
     }
     

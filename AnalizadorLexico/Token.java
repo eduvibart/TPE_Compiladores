@@ -25,5 +25,12 @@ public void addCarac(String s) {
     this.lexema = lexema + s;
 }
 
+public void delCarac(){
+    String auxiliarnuevo = "";
+    for (int i=0;i<this.lexema.length()-1;i++){
+        auxiliarnuevo += lexema.charAt(i);
+    }
+    this.lexema = auxiliarnuevo;
+}
 
 }

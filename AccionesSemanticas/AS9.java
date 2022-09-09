@@ -4,12 +4,11 @@ import java.io.Reader;
 
 import AnalizadorLexico.Token;
 
-public class AS6 extends AccionSemantica {
+public class AS9 extends AccionSemantica{
 
     @Override
     public void ejecutar(Token t, Reader entrada) {
-        t.setId(DECIMAL);
-        
+        t.setId(IGUAL);
     }
     
 }

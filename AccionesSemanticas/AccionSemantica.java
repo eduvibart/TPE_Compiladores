@@ -6,7 +6,7 @@ import AnalizadorLexico.*;
 
 public abstract class AccionSemantica {
 
-    protected static final int LETRA = 0;
+    protected static final int ID = 0;
     protected static final int DIGITO = 0;
     protected static final int DECIMAL = 0;
     protected static final int PUNTO = 0;
@@ -27,6 +27,9 @@ public abstract class AccionSemantica {
     protected static final int LLAVE_A = 0;
     protected static final int LLAVE_C = 0;
     protected static final int EXCL = 0;
+    protected static final int DIST = 0;
+    protected static final int ASIG = 0;
+
 
 
     public abstract void ejecutar(Token t, Reader entrada);
