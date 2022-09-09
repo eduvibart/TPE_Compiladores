@@ -13,6 +13,11 @@ public int getId() {
     return id;
 }
 
+
+public void truncarLexema(int i){
+    lexema = lexema.substring(0, i);
+}
+
 public String getLexema() {
     return lexema;
 }
