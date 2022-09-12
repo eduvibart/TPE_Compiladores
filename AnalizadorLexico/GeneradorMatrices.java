@@ -56,6 +56,8 @@ public class GeneradorMatrices {
             	return new AS11();
             case "12":
             	return new AS12();
+            case "13":
+            	return new AS13();
             case "E":
             	return new ASE();
         }

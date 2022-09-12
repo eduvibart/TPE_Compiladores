@@ -40,16 +40,24 @@ public class AnalizadorLexico{
         return errores;
     }
     public Token getToken() throws IOException{
+        
         Token t = new Token();
-        while(estadoAct != -1 && estadoAct != -2){
+        int r = 0;
+        while(estadoAct != -1 && estadoAct != -2 && (-1 != (r=entrada.read())) ){
             entrada.mark(1);
-            char c = Character.toChars(entrada.read())[0];
+            char c = Character.toChars(r)[0];
             String s = Character.toString(c);
             t.addCarac(s);
             int valor = getCaracter(c);
+            //System.out.println("El estado actual es: " + estadoAct);
+            //System.out.println("El lexema del token antes: -" + t.getLexema()+"-");
+            //System.out.println("El id del token antes: " + t.getId());
             matrizAS[estadoAct][valor].ejecutar(t,entrada);
+            //System.out.println("El lexema del token despues: -" + t.getLexema()+"-");
+            //System.out.println("El id del token despues: " + t.getId());
             estadoAct = matrizEstados[estadoAct][valor]; 
         }
+        estadoAct = 0;
         return t;
     }
 

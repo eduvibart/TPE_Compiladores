@@ -55,10 +55,13 @@ public class AS0 extends AccionSemantica {
                 t.setId(ASIG);
                 break;
             case "<=":
-                t.setId(ASIG);
+                t.setId(MENORIGUAL);
                 break;
             case ">=":
-                t.setId(ASIG);
+                t.setId(MAYORIGUAL);
+                break;
+            case "=":
+                t.setId(IGUAL);
                 break;
         }
     }
