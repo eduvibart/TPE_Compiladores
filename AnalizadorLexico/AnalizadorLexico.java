@@ -6,7 +6,7 @@ import java.io.Reader;
 
 public class AnalizadorLexico{
 	private static final String pathTE = "archivos/TransicionDeEstados.txt";
-    private static final String pathAS = "archivos/MatrisAS.txt";
+    private static final String pathAS = "archivos/AccionesSemanticas.txt";
 	private static final int columnas=25;
 	private static final int filas=14;
 	private GeneradorMatrices generadorMatrices;
