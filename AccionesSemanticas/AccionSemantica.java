@@ -29,6 +29,7 @@ public abstract class AccionSemantica {
     protected static final int EXCL = 0;
     protected static final int DIST = 0;
     protected static final int ASIG = 0;
+    protected static final int TAMANIO_VAR=25;
 
 
 
