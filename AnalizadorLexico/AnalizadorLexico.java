@@ -13,7 +13,7 @@ public class AnalizadorLexico{
     private int[][] matrizEstados;
     private AccionSemantica[][] matrizAS;
     private Reader entrada;
-    private int estadoAct;
+    private static int estadoAct;
     private static int lineaAct;
     private static String errores = "";
     private static TPR tablaPalabrasReservadas;
@@ -41,7 +41,7 @@ public class AnalizadorLexico{
     }
     public Token getToken() throws IOException{
         Token t = new Token();
-        while(estadoAct != -1 || estadoAct != -2){
+        while(estadoAct != -1 && estadoAct != -2){
             entrada.mark(1);
             char c = Character.toChars(entrada.read())[0];
             String s = Character.toString(c);
@@ -51,6 +51,10 @@ public class AnalizadorLexico{
             estadoAct = matrizEstados[estadoAct][valor]; 
         }
         return t;
+    }
+
+    public static void resetEstado(){
+        estadoAct = 0; 
     }
 
     public static Integer isPR(String key){

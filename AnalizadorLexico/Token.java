@@ -33,4 +33,7 @@ public void delCarac(){
     this.lexema = auxiliarnuevo;
 }
 
+public void resetLexema(){
+    this.lexema = "";
+}
 }
