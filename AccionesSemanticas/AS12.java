@@ -2,14 +2,17 @@ package AccionesSemanticas;
 
 import java.io.Reader;
 
+import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
 
-public class AS11 extends AccionSemantica{
+public class AS12 extends AccionSemantica {
 
     @Override
     public void ejecutar(Token t, Reader entrada) {
-        t.setId(CADENA);
+        AnalizadorLexico.sumLinea();
         t.delCarac();
+        t.delCarac();
+        
     }
     
 }

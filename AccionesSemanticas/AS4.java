@@ -12,7 +12,7 @@ public class AS4 extends AccionSemantica {
 	
     @Override
     public void ejecutar(Token t, Reader entrada) {
-    	t.delCarac(); //se saca le ultimo caracter
+    	t.delCarac(); //se saca el ultimo caracter
     	int valor = Integer.parseInt(t.getLexema()); //convierto el lexema del token a un entero para chekear el rango
     	
     	if ((valor <= maximo)&&(valor >= minimo)) {

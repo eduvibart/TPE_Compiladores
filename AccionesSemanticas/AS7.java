@@ -36,17 +36,16 @@ public class AS7 extends AccionSemantica{
 		
 		Double e = Double.parseDouble(exponente);
 		
-		Double numero = Math.pow(d, e); //numero del lexema convertido a doube
+		Double numero = Math.pow(d, e); //numero del lexema convertido a double
 		
-		if ((numero <= maximo)&&(numero >= minimo)) {
-			try {
-				entrada.reset();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}else {
+		if ((numero >= maximo)|| (numero <= minimo)) {
 			//Fuera de rango
 			AnalizadorLexico.addError("Numero fuera de rango");
+		}
+		try {
+			entrada.reset();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 		
 	}

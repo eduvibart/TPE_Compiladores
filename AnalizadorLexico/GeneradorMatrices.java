@@ -30,7 +30,7 @@ public class GeneradorMatrices {
     }
     private static AccionSemantica getAS(String AS) {
         switch(AS){
-            case "AS0":
+            case "0":
             return new AS0();
         }
         
