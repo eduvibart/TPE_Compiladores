@@ -6,18 +6,19 @@ public class TPR {
     private HashMap<String,Integer> palabrasRes = new HashMap<String,Integer>();
 
     public TPR(){
-        palabrasRes.put("if",1);
-        palabrasRes.put("then",1);
-        palabrasRes.put("else",1);
-        palabrasRes.put("end-if",1);
-        palabrasRes.put("out",1);
-        palabrasRes.put("fun",1);
-        palabrasRes.put("return",1);
-        palabrasRes.put("break",1);
-        palabrasRes.put("discard",1);
-        palabrasRes.put("for",1);
-        palabrasRes.put("continue",1);
-        palabrasRes.put("f32",1);
+        palabrasRes.put("if",40);
+        palabrasRes.put("then",41);
+        palabrasRes.put("else",42);
+        palabrasRes.put("end-if",43);
+        palabrasRes.put("out",44);
+        palabrasRes.put("fun",45);
+        palabrasRes.put("return",46);
+        palabrasRes.put("when",47);
+        palabrasRes.put("while",48);
+        palabrasRes.put("for",49);
+        palabrasRes.put("continue",50);
+        palabrasRes.put("i32",51);
+        palabrasRes.put("f32",52);
     }
 
     public Integer get(String key){

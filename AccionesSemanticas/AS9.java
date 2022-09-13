@@ -13,7 +13,6 @@ public class AS9 extends AccionSemantica{
         try {
             entrada.reset();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
