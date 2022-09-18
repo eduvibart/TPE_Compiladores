@@ -6,18 +6,25 @@ import java.util.Map;
 
 public class TablaSimbolos {
     
-    private static final Map<String,Map<String,Object>> simbolos = new HashMap<>();//contiene el token y el lexema de clave
+    private static Map<String,Map<String,Object>> simbolos = new HashMap<>();
 
-    public void addNuevoSimbolo(String lexema) {
+    public static final String VALOR="valor";
+    public static final String ID="ID";
+
+    public static void addNuevoSimbolo(String lexema) {
         Map<String,Object> aux=new HashMap<>();
         simbolos.put(lexema,aux);
     }
 
-    public void addAtributo(String lexema, String atributo, Object valor ) {
+    public static boolean existeSimbolo(String lexema){
+        return simbolos.containsKey(lexema);
+    }
+
+    public static void addAtributo(String lexema, String atributo, Object valor ) {
         simbolos.get(lexema).put(atributo, valor);
     }
 
-    public Object getAtributo(String lexema, String atributo ) {
+    public static Object getAtributo(String lexema, String atributo ) {
         return simbolos.get(lexema).get(atributo);
     }
 

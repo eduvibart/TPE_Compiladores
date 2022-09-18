@@ -3,6 +3,7 @@ package AccionesSemanticas;
 import java.io.IOException;
 import java.io.Reader;
 
+import AnalizadorLexico.TablaSimbolos;
 import AnalizadorLexico.Token;
 
 public class AS9 extends AccionSemantica{
@@ -12,12 +13,18 @@ public class AS9 extends AccionSemantica{
         t.delCarac();
         try {
             entrada.reset();
+            
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
-        
+        if (TablaSimbolos.existeSimbolo(t.getLexema())){
+            TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
+        } else{
+            TablaSimbolos.addNuevoSimbolo(t.getLexema());
+            TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
+
+        }
     }
     
 }
