@@ -10,7 +10,6 @@ public abstract class AccionSemantica {
     protected static final int DIGITO = 2;
     protected static final int DECIMAL = 3;
     protected static final int PUNTO = 4;
-    protected static final int F = 5;
     protected static final int SUMA = 6;
     protected static final int RESTA = 7;
     protected static final int DIV = 8;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 import AnalizadorLexico.AnalizadorLexico;
+import AnalizadorLexico.TablaSimbolos;
 import AnalizadorLexico.Token;
 
 public class AS4 extends AccionSemantica {
@@ -21,9 +22,19 @@ public class AS4 extends AccionSemantica {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if (TablaSimbolos.existeSimbolo(t.getLexema())){
+                TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, valor);
+                TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
+            } else{
+                TablaSimbolos.addNuevoSimbolo(t.getLexema());
+                TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, valor);
+                TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
+
+            }
     	}else {
     		AnalizadorLexico.addError("Constante fuera de rango");
     	}
+
     	
         
     }

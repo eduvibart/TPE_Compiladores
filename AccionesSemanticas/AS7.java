@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 import AnalizadorLexico.AnalizadorLexico;
+import AnalizadorLexico.TablaSimbolos;
 import AnalizadorLexico.Token;
 
 public class AS7 extends AccionSemantica{
@@ -41,6 +42,17 @@ public class AS7 extends AccionSemantica{
 		if ((numero >= maximo)|| (numero <= minimo)) {
 			//Fuera de rango
 			AnalizadorLexico.addError("Numero fuera de rango");
+		}else{
+			if (TablaSimbolos.existeSimbolo(t.getLexema())){
+                TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, numero);
+				TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
+
+            } else{
+                TablaSimbolos.addNuevoSimbolo(t.getLexema());
+                TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, numero);
+				TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
+
+            }
 		}
 		try {
 			entrada.reset();
