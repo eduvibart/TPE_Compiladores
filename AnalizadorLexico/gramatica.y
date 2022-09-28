@@ -40,22 +40,29 @@ tipo : I32 | F32
 list_var : ID 
         | list_var ',' ID 
 
-sentencia_decl_fun : FUN ID '(' parametro ')' DOSPUNTOS tipo LLAVE_A cuerpo_fun retorno LLAVE_C
-                    | FUN ID '(' parametro COMA parametro ')' DOSPUNTOS tipo LLAVE_A cuerpo_fun retorno LLAVE_C
-                    | FUN ID '(' ')' DOSPUNTOS tipo LLAVE_A cuerpo_fun retorno LLAVE_C
+sentencia_decl_fun : FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun retorno LLAVE_C
+                    | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun retorno LLAVE_C
+                    | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun retorno LLAVE_C
 
 parametro : tipo ID 
             | tipo {agregarError("Se esperaba tipo del parametro")}
             | ID {agregarError("Se esperaba nombre del parametro")}
 
-cuerpo_fun : LLAVE_A cuerpo_fun LLAVE_C bloque_ejecutable
-            | LLAVE_A cuerpo_fun LLAVE_C sentencia_declarativa
-            | bloque_ejecutable
-            | sentencia_declarativa 
+cuerpo_fun : cuerpo_fun bloque_ejecutable
+                | cuerpo_fun sentencia_declarativa
+                | bloque bloque_ejecutable
+                | sentencia_declarativa
 
 bloque_ejecutable : sentencia_ejecutable retorno
-                    | sentencia_ejecutable
+                | sentencia_ejecutable
 
 retorno : RETURN PARENT_A expresion PARENT_C ';'
 
 expresion : //despues
+termino : //despues
+cte : //despues
+factor: //despues
+
+
+sentencia_ejecutable : asignacion ';'
+                        | 
