@@ -19,6 +19,7 @@ public  class clasePrincipal {
         System.out.println(prueba.getLexema());
         System.out.println("");
     }
+    System.out.println(AnalizadorLexico.errores);
 
    
     }

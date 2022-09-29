@@ -15,7 +15,7 @@ public class AnalizadorLexico{
     private Reader entrada;
     private static int estadoAct;
     private static int lineaAct;
-    private static String errores = "";
+    public static String errores = "";
     private static TPR tablaPalabrasReservadas;
 
     public AnalizadorLexico(Reader entrada){
