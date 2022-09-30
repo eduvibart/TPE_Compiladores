@@ -121,11 +121,38 @@ lista_const : CONST lista_asignacion PUNTOCOMA
 sentencia_when : WHEN PARENT_A condicion PARENT_C THEN bloque_ejecutable
 ;
 
-bloque_while : bloque_ejecutable BREAK PUNTOCOMA
+bloque_while : bloque_ejecutable BREAK CTE PUNTOCOMA
+        | bloque_ejecutable BREAK PUNTOCOMA
         | bloque_ejecutable
+        | BREAK CTE PUNTOCOMA bloque_ejecutable
         | BREAK PUNTOCOMA bloque_ejecutable
         | bloque_while bloque_ejecutable
         | BREAK PUNTOCOMA
+        | BREAK CTE PUNTOCOMA
 ;
 sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_while LLAVE_C PUNTOCOMA
+;
+encabezado_for : asignacion PUNTOCOMA comparacion PUNTOCOMA '+' ID 
+        | asignacion PUNTOCOMA comparacion PUNTOCOMA '-' ID 
+;
+
+sentencia_continue : CONTINUE   
+                | CONTINUE DOSPUNTOS etiqueta
+
+
+bloque_for : bloque_while
+        | sentencia_continue PUNTOCOMA
+        | bloque_ejecutable sentencia_continue PUNTOCOMA
+        | sentencia_continue PUNTOCOMA bloque_ejecutable 
+;
+sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_for PUNTOCOMA
+;
+
+etiqueta: ID 
+;
+
+sentencia_control : etiqueta DOSPUNTOS sentencia_for
+                | etiqueta DOSPUNTOS sentencia_while
+                | sentencia_for
+                | sentencia_while
 ;
