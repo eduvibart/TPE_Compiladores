@@ -129,6 +129,11 @@ bloque_while : bloque_ejecutable BREAK CTE PUNTOCOMA
         | bloque_while bloque_ejecutable
         | BREAK PUNTOCOMA
         | BREAK CTE PUNTOCOMA
+        | sentencia_continue PUNTOCOMA
+        | bloque_ejecutable sentencia_continue PUNTOCOMA
+        | sentencia_continue PUNTOCOMA bloque_ejecutable 
+
+
 ;
 sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_while LLAVE_C PUNTOCOMA
 ;
@@ -138,14 +143,8 @@ encabezado_for : asignacion PUNTOCOMA comparacion PUNTOCOMA '+' ID
 
 sentencia_continue : CONTINUE   
                 | CONTINUE DOSPUNTOS etiqueta
-
-
-bloque_for : bloque_while
-        | sentencia_continue PUNTOCOMA
-        | bloque_ejecutable sentencia_continue PUNTOCOMA
-        | sentencia_continue PUNTOCOMA bloque_ejecutable 
 ;
-sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_for PUNTOCOMA
+sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_while PUNTOCOMA
 ;
 
 etiqueta: ID 
