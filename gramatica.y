@@ -21,29 +21,28 @@ nombre_program : ID
 etiqueta: ID 
 ;
 
-tipo : I32 | F32
+tipo : ID
 ;
 
-list_var : ID 
-        | list_var COMA ID 
+list_var : list_var COMA ID 
+        |  ID
 ;
 
-sentencia_decl_datos : tipo list_var PUNTOCOMA
-                        | sentencia_decl_datos tipo list_var PUNTOCOMA
+sentencia_decl_datos : sentencia_decl_datos tipo list_var PUNTOCOMA
+                        |tipo list_var PUNTOCOMA 
 ;
 
-parametro : tipo ID 
-            | tipo {agregarError("Se esperaba tipo del parametro")}
-            | ID {agregarError("Se esperaba nombre del parametro")}
+parametro : tipo ID
 ;
 
 cte : I32 
         | F32
 ;
 
-factor: ID
+factor: '-' cte
+        | ID
         | cte
-        | '-' cte {chequear rango}
+        
 ;
 
 termino: termino '*' factor     
@@ -76,10 +75,16 @@ condicion : expresion comparacion expresion
 sentencia_out : OUT PARENT_A CADENA PARENT_C
 ;
 
+sentencia_ejecutable : asignacion PUNTOCOMA
+        | sentencia_if PUNTOCOMA
+        | sentencia_out PUNTOCOMA
+        | sentencia_when PUNTOCOMA
+        | sentencia_control PUNTOCOMA
+;
+
 bloque_ejecutable : bloque_ejecutable sentencia_ejecutable
                 | sentencia_ejecutable 
-; 
-//PROBLEMON con sentencia_ejecutable bloque_ejecutable sentencia_if cual pongo antes??
+;
 
 sentencia_when : WHEN PARENT_A condicion PARENT_C THEN bloque_ejecutable
 ;
@@ -92,21 +97,21 @@ encabezado_for : asignacion PUNTOCOMA comparacion PUNTOCOMA '+' ID
         | asignacion PUNTOCOMA comparacion PUNTOCOMA '-' ID 
 ;
 
-sentencia_continue : CONTINUE   
-                | CONTINUE DOSPUNTOS etiqueta
+sentencia_continue : CONTINUE DOSPUNTOS etiqueta
+                | CONTINUE 
 ;
 
-bloque_while : bloque_ejecutable BREAK CTE PUNTOCOMA
+bloque_while : bloque_while bloque_ejecutable 
+        | bloque_ejecutable BREAK cte PUNTOCOMA
         | bloque_ejecutable BREAK PUNTOCOMA
-        | bloque_ejecutable
-        | BREAK CTE PUNTOCOMA bloque_ejecutable
-        | BREAK PUNTOCOMA bloque_ejecutable
-        | bloque_while bloque_ejecutable
-        | BREAK PUNTOCOMA
-        | BREAK CTE PUNTOCOMA
-        | sentencia_continue PUNTOCOMA
         | bloque_ejecutable sentencia_continue PUNTOCOMA
+        | bloque_ejecutable
         | sentencia_continue PUNTOCOMA bloque_ejecutable 
+        | sentencia_continue PUNTOCOMA
+        | BREAK cte PUNTOCOMA bloque_ejecutable
+        | BREAK PUNTOCOMA bloque_ejecutable
+        | BREAK PUNTOCOMA
+        | BREAK cte PUNTOCOMA
 ;
 
 sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_while
@@ -121,13 +126,6 @@ sentencia_control : etiqueta DOSPUNTOS sentencia_for
                 | sentencia_while
 ;
 
-sentencia_ejecutable : asignacion PUNTOCOMA
-        | sentencia_if PUNTOCOMA
-        | sentencia_out PUNTOCOMA
-        | sentencia_when PUNTOCOMA
-        | sentencia_control PUNTOCOMA
-;
-
 bloque_ejecutable_funcion : sentencia_ejecutable retorno
                 | sentencia_ejecutable
 ;
@@ -139,7 +137,7 @@ sentencia_declarativa : sentencia_decl_datos
 
 cuerpo_fun : cuerpo_fun bloque_ejecutable_funcion
                 | cuerpo_fun sentencia_declarativa
-                | bloque bloque_ejecutable_funcion
+                | bloque_ejecutable_funcion
                 | sentencia_declarativa
 ;
 
@@ -156,11 +154,8 @@ sentencia : sentencia sentencia_declarativa
             | sentencia_ejecutable 
 ;
 
-program : nombre_program LLAVE_A sentencia LLAVE_C PUNTOCOMA 
-        | nombre_program LLAVE_A  LLAVE_C PUNTOCOMA {agregarError("Faltan declarar sentencia/s en el programa")}
-        | nombre_program LLAVE_A sentencia {agregarError("Falta llave de cierre")}
-        | LLAVE_A  {agregarError("Se espera nombre de programa")}
-        | PUNTOCOMA {agregarError("Se espera programa")}
+program : nombre_program LLAVE_A sentencia LLAVE_C PUNTOCOMA
+        |nombre_program LLAVE_A LLAVE_C PUNTOCOMA
 ;
 
 list_param_real : list_param_real COMA ID 
