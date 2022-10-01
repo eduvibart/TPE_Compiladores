@@ -179,3 +179,20 @@ lista_asignacion : lista_asignacion, asignacion
 
 lista_const : CONST lista_asignacion PUNTOCOMA
 ;
+%%
+
+void yyerror(String mensaje){
+        System.out.println("Error yacc: " + mensaje);
+}
+
+int yylex() throws IOException{
+        BufferedReader entrada = new BufferedReader(new FileReader("archivos/entrada.txt"));
+        AnalizadorLexico a = new AnalizadorLexico(entrada);
+        Token t = a.getToken();
+        return t.getId();
+}
+
+public static void main(String[] args) {
+        Parser parser = new Parser();
+        parser.run();
+}
