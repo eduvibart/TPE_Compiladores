@@ -1,38 +1,24 @@
-%{
-packege 
-import 
+%token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST
 
-%}
-
-%token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C 
- COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG 
- CADENA COMENT CONST
+%start program 
 
 %left '+' '-'
 %left '*' '/'
-
-%start program 
 
 %% 
 
 nombre_program : ID 
 ;
 
-etiqueta: ID 
-;
-
-tipo : ID
-;
-
 list_var : list_var COMA ID 
         |  ID
 ;
 
-sentencia_decl_datos : sentencia_decl_datos tipo list_var PUNTOCOMA
-                        |tipo list_var PUNTOCOMA 
+sentencia_decl_datos : sentencia_decl_datos ID list_var PUNTOCOMA
+                        |ID list_var PUNTOCOMA 
 ;
 
-parametro : tipo ID
+parametro : ID ID
 ;
 
 cte : I32 
@@ -82,7 +68,8 @@ sentencia_ejecutable : asignacion PUNTOCOMA
         | sentencia_control PUNTOCOMA
 ;
 
-bloque_ejecutable : bloque_ejecutable sentencia_ejecutable
+bloque_ejecutable : 
+                | bloque_ejecutable sentencia_ejecutable
                 | sentencia_ejecutable 
 ;
 
@@ -97,21 +84,11 @@ encabezado_for : asignacion PUNTOCOMA comparacion PUNTOCOMA '+' ID
         | asignacion PUNTOCOMA comparacion PUNTOCOMA '-' ID 
 ;
 
-sentencia_continue : CONTINUE DOSPUNTOS etiqueta
+sentencia_continue : CONTINUE DOSPUNTOS ID
                 | CONTINUE 
 ;
 
-bloque_while : bloque_while bloque_ejecutable 
-        | bloque_ejecutable BREAK cte PUNTOCOMA
-        | bloque_ejecutable BREAK PUNTOCOMA
-        | bloque_ejecutable sentencia_continue PUNTOCOMA
-        | bloque_ejecutable
-        | sentencia_continue PUNTOCOMA bloque_ejecutable 
-        | sentencia_continue PUNTOCOMA
-        | BREAK cte PUNTOCOMA bloque_ejecutable
-        | BREAK PUNTOCOMA bloque_ejecutable
-        | BREAK PUNTOCOMA
-        | BREAK cte PUNTOCOMA
+bloque_while : sentencia_continue
 ;
 
 sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_while
@@ -120,8 +97,8 @@ sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_while
 sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_while LLAVE_C 
 ;
 
-sentencia_control : etiqueta DOSPUNTOS sentencia_for
-                | etiqueta DOSPUNTOS sentencia_while
+sentencia_control : ID DOSPUNTOS sentencia_for
+                | ID DOSPUNTOS sentencia_while
                 | sentencia_for
                 | sentencia_while
 ;
@@ -141,9 +118,9 @@ cuerpo_fun : cuerpo_fun bloque_ejecutable_funcion
                 | sentencia_declarativa
 ;
 
-sentencia_decl_fun : FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun retorno LLAVE_C
-                    | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun retorno LLAVE_C
-                    | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun retorno LLAVE_C
+sentencia_decl_fun : FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun retorno LLAVE_C
+                    | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun retorno LLAVE_C
+                    | FUN ID PARENT_A PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun retorno LLAVE_C
 ;
 
 
