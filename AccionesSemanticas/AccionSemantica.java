@@ -6,33 +6,32 @@ import AnalizadorLexico.*;
 
 public abstract class AccionSemantica {
 
-    protected static final int ID = 1;
-    protected static final int DIGITO = 2;
-    protected static final int DECIMAL = 3;
-    protected static final int PUNTO = 4;
-    protected static final int SUMA = 6;
-    protected static final int RESTA = 7;
-    protected static final int DIV = 8;
-    protected static final int MULT = 9;
-    protected static final int PARENT_A = 10;
-    protected static final int PARENT_C = 11;
-    protected static final int COMILLA = 12;
-    protected static final int COMA = 13;
-    protected static final int DOSPUNTOS = 14;
-    protected static final int PUNTOCOMA = 15;
-    protected static final int IGUAL = 16;
-    protected static final int MAYOR = 17;
-    protected static final int MENOR = 18;
-    protected static final int LLAVE_A = 19;
-    protected static final int LLAVE_C = 20;
-    protected static final int EXCL = 21;
-    protected static final int DIST = 22;
-    protected static final int ASIG = 23;
-    protected static final int CADENA = 24;
-    protected static final int MENORIGUAL = 25;
-    protected static final int MAYORIGUAL = 26;
+    protected static final int ID = 269;
+    protected static final int I32 = 270;
+    protected static final int F32 = 271;
+    protected static final int PUNTO = 272;
+    protected static final int PARENT_A = 273;
+    protected static final int PARENT_C = 274;
+    protected static final int COMILLA = 275;
+    protected static final int COMA = 276;
+    protected static final int DOSPUNTOS = 277;
+    protected static final int PUNTOCOMA = 278;
+    protected static final int IGUAL = 279;
+    protected static final int MAYOR = 280;
+    protected static final int MENOR = 281;
+    protected static final int MENORIGUAL = 282;
+    protected static final int MAYORIGUAL = 283;
+    protected static final int LLAVE_A = 284;
+    protected static final int LLAVE_C = 285;
+    protected static final int EXCL = 286;
+    protected static final int DIST = 287;
+    protected static final int ASIG = 288;
+    protected static final int CADENA = 289;
     protected static final int TAMANIO_VAR=25;
-
+    protected static final int SUMA = 292;
+    protected static final int RESTA = 293;
+    protected static final int MULT = 294;
+    protected static final int DIV = 295;
 
 
 

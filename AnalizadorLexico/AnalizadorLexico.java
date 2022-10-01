@@ -9,25 +9,19 @@ public class AnalizadorLexico{
     private static final String pathAS = "archivos/AccionesSemanticas.txt";
 	private static final int columnas=25;
 	private static final int filas=14;
-	private GeneradorMatrices generadorMatrices;
-    private int[][] matrizEstados;
-    private AccionSemantica[][] matrizAS;
-    private Reader entrada;
-    private static int estadoAct;
-    private static int lineaAct;
+	private static GeneradorMatrices generadorMatrices = new GeneradorMatrices();;
+    private static int[][] matrizEstados  = generadorMatrices.getMatrizEstados(pathTE, filas, columnas);;
+    private static AccionSemantica[][] matrizAS = generadorMatrices.getMatrizAS(pathAS,filas,columnas);;
+    private static Reader entrada;
+    private static int estadoAct = 0;
+    private static int lineaAct = 1;
     public static String errores = "";
-    private static TPR tablaPalabrasReservadas;
+    private static TPR tablaPalabrasReservadas = new TPR();
 
-    public AnalizadorLexico(Reader entrada){
-    	this.generadorMatrices= new GeneradorMatrices();
-        matrizEstados = generadorMatrices.getMatrizEstados(pathTE, filas, columnas);
-        matrizAS= generadorMatrices.getMatrizAS(pathAS,filas,columnas);
-        tablaPalabrasReservadas = new TPR();
-        this.entrada = entrada;
-        estadoAct = 0;
-        lineaAct = 1;
+
+    public static void setEntrada(Reader entrada){
+        AnalizadorLexico.entrada = entrada;
     }
-
     public static void sumLinea(){
         lineaAct++;
     }
@@ -39,7 +33,7 @@ public class AnalizadorLexico{
     public static String getErrores(){
         return errores;
     }
-    public Token getToken() throws IOException{
+    public static Token getToken() throws IOException{
         
         Token t = new Token();
         int r = 0;
@@ -71,7 +65,7 @@ public class AnalizadorLexico{
     public static Integer isPR(String key){
         return tablaPalabrasReservadas.get(key);
     }
-    private char obtenerCar(char c){
+    private static char obtenerCar(char c){
         if(Character.isDigit(c)){
             return '0';
         }else if (Character.isLowerCase(c) || (Character.isUpperCase(c) && c != 'F'))
@@ -79,7 +73,7 @@ public class AnalizadorLexico{
         return c;
     }
     //Devuelve la columna correspondiente a la matriz de Estados
-    private int getCaracter(char c){
+    private static int getCaracter(char c){
         int valor;
         switch(obtenerCar(c)){
             case ' ':

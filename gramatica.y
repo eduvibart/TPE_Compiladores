@@ -1,9 +1,17 @@
-%token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST
+%{
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import AnalizadorLexico.AnalizadorLexico;
+import AnalizadorLexico.Token;
+}%
+
+%token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST SUMA RESTA MULT DIV
 
 %start program 
 
-%left '+' '-'
-%left '*' '/'
+%left SUMA RESTA
+%left MULT DIV
 
 %% 
 program : nombre_program LLAVE_A bloque_sentencias LLAVE_C
@@ -13,12 +21,10 @@ nombre_program : ID
 bloque_sentencias :
                   | bloque_sentencias sentencia PUNTOCOMA 
 ;
-sentencia : 
-        | sentencia_declarativa
+sentencia : sentencia_declarativa
         | sentencia_ejecutable
 ;
-sentencia_declarativa : 
-                        | sentencia_decl_datos 
+sentencia_declarativa : sentencia_decl_datos 
                         | sentencia_decl_fun
                         | lista_const
 ;
@@ -27,9 +33,9 @@ sentencia_decl_datos : ID list_var
 list_var : list_var COMA ID 
         |  ID
 ;
-sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun retorno LLAVE_C
-                | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun retorno LLAVE_C
-                | FUN ID PARENT_A PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun retorno LLAVE_C
+sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C
+                | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C
+                | FUN ID PARENT_A PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C
 ;
 retorno : RETURN PARENT_A expresion PARENT_C PUNTOCOMA
 ;
@@ -57,19 +63,19 @@ sentencia_ejecutable : asignacion
 ;
 asignacion : ID ASIG expresion
 ;
-expresion: expresion '+' termino
-        | expresion '-' termino
+expresion: expresion SUMA termino
+        | expresion RESTA termino
         | termino
         | llamado_func
         | sentencia_for {/*Si sentencia_for no devuelve nada asignar algo por defecto*/}
         | sentencia_while {/*Si sentencia_while no devuelve nada asignar algo por defecto*/}
         
 ;
-termino: termino '*' factor     
-        | termino '/' factor    
+termino: termino MULT factor     
+        | termino DIV factor    
         | factor
 ;
-factor: '-' cte
+factor: RESTA cte
         | ID
         | cte      
 ;
@@ -93,7 +99,7 @@ bloque_ejecutable :
 ;
 sentencia_out : OUT PARENT_A CADENA PARENT_C
 ;
-sentencia_when : WHEN PARENT_A condicion PARENT_C THEN bloque_sentencias 
+sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C
 ;
 sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
 ;
@@ -101,7 +107,7 @@ bloque_break_continue :
         | bloque_break_continue ejecutables_break_continue PUNTOCOMA 
 ;
 
-ejecutables_break_continue : asignacion 
+ejecutables_break_continue :  asignacion 
                 | sentencia_if_break
                 | sentencia_out 
                 | sentencia_when
@@ -116,21 +122,13 @@ tag :
 ;
 
 sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF
-        | IF PARENT_A condicion PARENT_C THEN bloque_ejecutable END_IF
+        | IF PARENT_A condicion PARENT_C THEN bloque_break_continue END_IF
 ;
-sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_break_continue
-;
-
-encabezado_for : asignacion PUNTOCOMA comparacion PUNTOCOMA '+' ID 
-        | asignacion PUNTOCOMA comparacion PUNTOCOMA '-' ID 
+sentencia_for : FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C
 ;
 
-
-
-sentencia_control : ID DOSPUNTOS sentencia_for
-                | ID DOSPUNTOS sentencia_while
-                | sentencia_for
-                | sentencia_while
+encabezado_for : asignacion PUNTOCOMA comparacion PUNTOCOMA SUMA ID 
+        | asignacion PUNTOCOMA comparacion PUNTOCOMA RESTA ID 
 ;
 list_param_real : list_param_real COMA ID 
         | list_param_real COMA cte
