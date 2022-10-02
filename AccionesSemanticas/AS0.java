@@ -66,6 +66,9 @@ public class AS0 extends AccionSemantica {
             case ";":
                 t.setId(PUNTOCOMA);
                 break;
+            case ":":
+                t.setId(DOSPUNTOS);
+                break;
         }
     }
     

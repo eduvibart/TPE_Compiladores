@@ -1,11 +1,3 @@
-%{
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import AnalizadorLexico.AnalizadorLexico;
-import AnalizadorLexico.Token;
-}%
-
 %token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST SUMA RESTA MULT DIV
 
 %start program 
@@ -41,13 +33,8 @@ retorno : RETURN PARENT_A expresion PARENT_C PUNTOCOMA
 ;
 parametro : ID ID
 ;
-cuerpo_fun : cuerpo_fun bloque_ejecutable_funcion
-                | cuerpo_fun sentencia_declarativa
-                | bloque_ejecutable_funcion
-                | sentencia_declarativa
-;
-bloque_ejecutable_funcion : sentencia_ejecutable retorno
-                | sentencia_ejecutable
+cuerpo_fun : 
+        | cuerpo_fun bloque_sentencias retorno
 ;
 lista_const : CONST lista_asignacion 
 ;
@@ -95,7 +82,7 @@ comparacion: IGUAL
         | MAYORIGUAL
 ;
 bloque_ejecutable : 
-                | bloque_ejecutable sentencia_ejecutable PUNTOCOMA 
+                | LLAVE_A bloque_ejecutable sentencia_ejecutable PUNTOCOMA LLAVE_C
 ;
 sentencia_out : OUT PARENT_A CADENA PARENT_C
 ;
@@ -139,19 +126,27 @@ llamado_func: ID PARENT_A list_param_real PARENT_C
         | ID PARENT_A PARENT_C
 ;
 %%
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import AnalizadorLexico.AnalizadorLexico;
+import AnalizadorLexico.Token;
 
 void yyerror(String mensaje){
         System.out.println("Error yacc: " + mensaje);
 }
 
 int yylex() throws IOException{
-        BufferedReader entrada = new BufferedReader(new FileReader("archivos/entrada.txt"));
-        AnalizadorLexico a = new AnalizadorLexico(entrada);
-        Token t = a.getToken();
+        Token t = AnalizadorLexico.getToken();
+        System.out.println("NUEVO TOKEN");
+        System.out.println(t.getId());
+        System.out.println(t.getLexema());
         return t.getId();
 }
 
-public static void main(String[] args) {
+public static void main(String[] args) throws IOException {
+        BufferedReader entrada = new BufferedReader(new FileReader("archivos/entrada.txt"));
+        AnalizadorLexico.setEntrada(entrada);
         Parser parser = new Parser();
         parser.run();
 }

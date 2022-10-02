@@ -1,0 +1,12 @@
+program {
+            a =: cumple(a,b);
+            if (a < b) then 
+                { out (`hola`); }
+            else 
+                {when( a > b ) then 
+                    { 
+                        a =: 3 ;
+                    };
+                }
+            end_if;
+        }

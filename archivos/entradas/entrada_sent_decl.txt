@@ -1,0 +1,8 @@
+program { 
+        int a, b,c;
+        fun cumple(int a,int b): int {
+            int z;
+            return (z);
+        };
+        const a =: 3;
+        }
