@@ -1,5 +1,8 @@
-program {
+program {   
+            a =: 3 + 1;
+            << FUNCION COMO EXPRESION
             a =: cumple(a,b);
+            << IF OUT WHEN
             if (a < b) then 
                 { out (`hola`); }
             else 
@@ -9,4 +12,34 @@ program {
                     };
                 }
             end_if;
+            << WHILE 
+            while ( i < 10 ) : (i =: i + 1 ) {
+                out ( `test` );
+            };
+            << FOR
+            for ( i =: n ; i < 10 ; +1){
+                a =: 3; 
+            };
+            << FOR CON CONTINUE Y BREAK 
+            for ( i =: n ; i < 10 ; +1){
+                if (a < b) then {
+                    continue; 
+                }
+            else {
+                    break;
+                }
+            end_if;
+            };
+            << CONTINUE CON ETIQUETADO 
+            outer:  while ( i < 10 ) : (i =: i + 1 ) {
+                        while ( j < 5 ) : (j =: j + 1 ) {
+                            continue :outer;     
+                        };           
+                    };
+            << SENTENCIA DE CONTROL COMO EXPRESION 
+            a =:    for (i =: 0 ;i < end ; +1){
+                        if (i = number) then {
+                            break 1;
+                        } end_if;
+                    }else 3;
         }

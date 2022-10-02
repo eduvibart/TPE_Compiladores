@@ -1,8 +1,21 @@
-program { 
+program {
+        << DECLARACION DE VARIABLES
         int a, b,c;
+        << DECLARACION DE FUNCION
         fun cumple(int a,int b): int {
             int z;
             return (z);
         };
-        const a =: 3;
+        << FUNCION CON VARIOS RETORNOS
+        fun cumple(int a,int b): int {
+            if (a < b) then { 
+                return (a);
+            }
+            else {
+                return (3);
+                };
+            }
+            end_if;
+        };
+        const a =: 3,b =:2;
         }
