@@ -29,12 +29,53 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C
                 | FUN ID PARENT_A PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C
 ;
-retorno : RETURN PARENT_A expresion PARENT_C PUNTOCOMA
+cuerpo_fun : 
+                | cuerpo_fun sentencias_fun PUNTOCOMA
+;
+sentencias_fun : sentencia_decl_datos 
+                | sentencia_decl_fun
+                | lista_const 
+                | asignacion 
+                | sentencia_if_fun 
+                | sentencia_out 
+                | sentencia_when_fun 
+                | sentencia_for_fun 
+                | sentencia_while_fun 
+                | retorno
+;
+sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C END_IF
+;
+sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C
+;
+sentencia_while_fun :  WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C
+;
+sentencia_for_fun: FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C
+                | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C
+;
+cuerpo_fun_break : 
+                |cuerpo_fun_break sentencias_fun_break PUNTOCOMA
+;
+sentencias_fun_break :   asignacion 
+                | sentencia_if_break_fun
+                | sentencia_out 
+                | sentencia_when_fun
+                | sentencia_while_fun
+                | sentencia_for_fun
+                | CONTINUE tag
+                | BREAK 
+                | BREAK cte
+                | retorno 
+;
+sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF
+;
+retorno : RETURN PARENT_A expresion PARENT_C 
 ;
 parametro : ID ID
 ;
-cuerpo_fun : 
-        | cuerpo_fun bloque_sentencias retorno
+
 ;
 lista_const : CONST lista_asignacion 
 ;

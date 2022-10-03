@@ -25,10 +25,10 @@ program {
                 if (a < b) then {
                     continue; 
                 }
-            else {
+                else {
                     break;
                 }
-            end_if;
+                end_if;
             };
             << CONTINUE CON ETIQUETADO 
             outer:  while ( i < 10 ) : (i =: i + 1 ) {

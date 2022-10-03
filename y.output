@@ -23,98 +23,137 @@
   14                     | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C
   15                     | FUN ID PARENT_A PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C
 
-  16  retorno : RETURN PARENT_A expresion PARENT_C PUNTOCOMA
+  16  cuerpo_fun :
+  17             | cuerpo_fun sentencias_fun PUNTOCOMA
 
-  17  parametro : ID ID
+  18  sentencias_fun : sentencia_decl_datos
+  19                 | sentencia_decl_fun
+  20                 | lista_const
+  21                 | asignacion
+  22                 | sentencia_if_fun
+  23                 | sentencia_out
+  24                 | sentencia_when_fun
+  25                 | sentencia_for_fun
+  26                 | sentencia_while_fun
+  27                 | retorno
 
-  18  cuerpo_fun :
-  19             | cuerpo_fun bloque_sentencias retorno
+  28  sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF
+  29                   | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C END_IF
 
-  20  lista_const : CONST lista_asignacion
+  30  sentencia_when_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C
 
-  21  lista_asignacion : lista_asignacion COMA asignacion
-  22                   | asignacion
+  31  sentencia_while_fun : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C
+  32                      | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C
 
-  23  sentencia_ejecutable : asignacion
-  24                       | sentencia_if
-  25                       | sentencia_out
-  26                       | sentencia_when
-  27                       | sentencia_for
-  28                       | sentencia_while
+  33  sentencia_for_fun : FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C
+  34                    | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C
 
-  29  asignacion : ID ASIG expresion
+  35  cuerpo_fun_break :
+  36                   | cuerpo_fun_break sentencias_fun_break PUNTOCOMA
 
-  30  expresion : expresion SUMA termino
-  31            | expresion RESTA termino
-  32            | termino
-  33            | llamado_func
-  34            | sentencia_for ELSE cte
-  35            | sentencia_while ELSE cte
+  37  sentencias_fun_break : asignacion
+  38                       | sentencia_if_break_fun
+  39                       | sentencia_out
+  40                       | sentencia_when_fun
+  41                       | sentencia_while_fun
+  42                       | sentencia_for_fun
+  43                       | CONTINUE tag
+  44                       | BREAK
+  45                       | BREAK cte
+  46                       | retorno
 
-  36  termino : termino MULT factor
-  37          | termino DIV factor
-  38          | factor
+  47  sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF
+  48                         | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF
 
-  39  factor : RESTA cte
-  40         | ID
-  41         | cte
+  49  retorno : RETURN PARENT_A expresion PARENT_C
 
-  42  cte : I32
-  43      | F32
+  50  parametro : ID ID
 
-  44  sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable END_IF
-  45               | IF PARENT_A condicion PARENT_C THEN bloque_ejecutable END_IF
+  51  lista_const : CONST lista_asignacion
 
-  46  condicion : expresion comparacion expresion
+  52  lista_asignacion : lista_asignacion COMA asignacion
+  53                   | asignacion
 
-  47  comparacion : IGUAL
-  48              | MAYOR
-  49              | MENOR
-  50              | MENORIGUAL
-  51              | MAYORIGUAL
+  54  sentencia_ejecutable : asignacion
+  55                       | sentencia_if
+  56                       | sentencia_out
+  57                       | sentencia_when
+  58                       | sentencia_for
+  59                       | sentencia_while
 
-  52  bloque_ejecutable :
-  53                    | LLAVE_A bloque_ejecutable sentencia_ejecutable PUNTOCOMA LLAVE_C
+  60  asignacion : ID ASIG expresion
 
-  54  sentencia_out : OUT PARENT_A CADENA PARENT_C
+  61  expresion : expresion SUMA termino
+  62            | expresion RESTA termino
+  63            | termino
+  64            | llamado_func
+  65            | sentencia_for ELSE cte
+  66            | sentencia_while ELSE cte
 
-  55  sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C
+  67  termino : termino MULT factor
+  68          | termino DIV factor
+  69          | factor
 
-  56  sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue
-  57                  | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue
+  70  factor : RESTA cte
+  71         | ID
+  72         | cte
 
-  58  bloque_break_continue :
-  59                        | LLAVE_A bloque_break_continue ejecutables_break_continue PUNTOCOMA LLAVE_C
+  73  cte : I32
+  74      | F32
 
-  60  ejecutables_break_continue : asignacion
-  61                             | sentencia_if_break
-  62                             | sentencia_out
-  63                             | sentencia_when
-  64                             | sentencia_while
-  65                             | sentencia_for
-  66                             | CONTINUE tag
-  67                             | BREAK
-  68                             | BREAK cte
+  75  sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable END_IF
+  76               | IF PARENT_A condicion PARENT_C THEN bloque_ejecutable END_IF
 
-  69  tag :
-  70      | DOSPUNTOS ID
+  77  condicion : expresion comparacion expresion
 
-  71  sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF
-  72                     | IF PARENT_A condicion PARENT_C THEN bloque_break_continue END_IF
+  78  comparacion : IGUAL
+  79              | MAYOR
+  80              | MENOR
+  81              | MENORIGUAL
+  82              | MAYORIGUAL
 
-  73  sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_break_continue
-  74                | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C bloque_break_continue
+  83  bloque_ejecutable :
+  84                    | LLAVE_A bloque_ejecutable sentencia_ejecutable PUNTOCOMA LLAVE_C
 
-  75  encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte
-  76                 | asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte
+  85  sentencia_out : OUT PARENT_A CADENA PARENT_C
 
-  77  list_param_real : list_param_real COMA ID
-  78                  | list_param_real COMA cte
-  79                  | cte
-  80                  | ID
+  86  sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C
 
-  81  llamado_func : ID PARENT_A list_param_real PARENT_C
-  82               | ID PARENT_A PARENT_C
+  87  sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue
+  88                  | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue
+
+  89  bloque_break_continue :
+  90                        | LLAVE_A bloque_break_continue ejecutables_break_continue PUNTOCOMA LLAVE_C
+
+  91  ejecutables_break_continue : asignacion
+  92                             | sentencia_if_break
+  93                             | sentencia_out
+  94                             | sentencia_when
+  95                             | sentencia_while
+  96                             | sentencia_for
+  97                             | CONTINUE tag
+  98                             | BREAK
+  99                             | BREAK cte
+
+ 100  tag :
+ 101      | DOSPUNTOS ID
+
+ 102  sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF
+ 103                     | IF PARENT_A condicion PARENT_C THEN bloque_break_continue END_IF
+
+ 104  sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_break_continue
+ 105                | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C bloque_break_continue
+
+ 106  encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte
+ 107                 | asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte
+
+ 108  list_param_real : list_param_real COMA ID
+ 109                  | list_param_real COMA cte
+ 110                  | cte
+ 111                  | ID
+
+ 112  llamado_func : ID PARENT_A list_param_real PARENT_C
+ 113               | ID PARENT_A PARENT_C
 
 state 0
 	$accept : . program $end  (0)
@@ -176,23 +215,23 @@ state 5
 	sentencia_decl_fun  goto 19
 	lista_const  goto 20
 	asignacion  goto 21
-	sentencia_if  goto 22
-	sentencia_out  goto 23
+	sentencia_out  goto 22
+	sentencia_if  goto 23
 	sentencia_when  goto 24
 	sentencia_for  goto 25
 	sentencia_while  goto 26
 
 
 state 6
-	sentencia_if : IF . PARENT_A condicion PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable END_IF  (44)
-	sentencia_if : IF . PARENT_A condicion PARENT_C THEN bloque_ejecutable END_IF  (45)
+	sentencia_if : IF . PARENT_A condicion PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable END_IF  (75)
+	sentencia_if : IF . PARENT_A condicion PARENT_C THEN bloque_ejecutable END_IF  (76)
 
 	PARENT_A  shift 27
 	.  error
 
 
 state 7
-	sentencia_out : OUT . PARENT_A CADENA PARENT_C  (54)
+	sentencia_out : OUT . PARENT_A CADENA PARENT_C  (85)
 
 	PARENT_A  shift 28
 	.  error
@@ -208,21 +247,21 @@ state 8
 
 
 state 9
-	sentencia_when : WHEN . PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C  (55)
+	sentencia_when : WHEN . PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C  (86)
 
 	PARENT_A  shift 30
 	.  error
 
 
 state 10
-	sentencia_while : WHILE . PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (56)
+	sentencia_while : WHILE . PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (87)
 
 	PARENT_A  shift 31
 	.  error
 
 
 state 11
-	sentencia_for : FOR . PARENT_A encabezado_for PARENT_C bloque_break_continue  (73)
+	sentencia_for : FOR . PARENT_A encabezado_for PARENT_C bloque_break_continue  (104)
 
 	PARENT_A  shift 32
 	.  error
@@ -230,9 +269,9 @@ state 11
 
 state 12
 	sentencia_decl_datos : ID . list_var  (10)
-	asignacion : ID . ASIG expresion  (29)
-	sentencia_while : ID . DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (57)
-	sentencia_for : ID . DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C bloque_break_continue  (74)
+	asignacion : ID . ASIG expresion  (60)
+	sentencia_while : ID . DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (88)
+	sentencia_for : ID . DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C bloque_break_continue  (105)
 
 	ID  shift 33
 	DOSPUNTOS  shift 34
@@ -249,13 +288,13 @@ state 13
 
 
 state 14
-	lista_const : CONST . lista_asignacion  (20)
+	lista_const : CONST . lista_asignacion  (51)
 
 	ID  shift 37
 	.  error
 
-	lista_asignacion  goto 38
-	asignacion  goto 39
+	asignacion  goto 38
+	lista_asignacion  goto 39
 
 
 state 15
@@ -296,44 +335,44 @@ state 20
 
 
 state 21
-	sentencia_ejecutable : asignacion .  (23)
+	sentencia_ejecutable : asignacion .  (54)
 
-	.  reduce 23
+	.  reduce 54
 
 
 state 22
-	sentencia_ejecutable : sentencia_if .  (24)
+	sentencia_ejecutable : sentencia_out .  (56)
 
-	.  reduce 24
+	.  reduce 56
 
 
 state 23
-	sentencia_ejecutable : sentencia_out .  (25)
+	sentencia_ejecutable : sentencia_if .  (55)
 
-	.  reduce 25
+	.  reduce 55
 
 
 state 24
-	sentencia_ejecutable : sentencia_when .  (26)
+	sentencia_ejecutable : sentencia_when .  (57)
 
-	.  reduce 26
+	.  reduce 57
 
 
 state 25
-	sentencia_ejecutable : sentencia_for .  (27)
+	sentencia_ejecutable : sentencia_for .  (58)
 
-	.  reduce 27
+	.  reduce 58
 
 
 state 26
-	sentencia_ejecutable : sentencia_while .  (28)
+	sentencia_ejecutable : sentencia_while .  (59)
 
-	.  reduce 28
+	.  reduce 59
 
 
 state 27
-	sentencia_if : IF PARENT_A . condicion PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable END_IF  (44)
-	sentencia_if : IF PARENT_A . condicion PARENT_C THEN bloque_ejecutable END_IF  (45)
+	sentencia_if : IF PARENT_A . condicion PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable END_IF  (75)
+	sentencia_if : IF PARENT_A . condicion PARENT_C THEN bloque_ejecutable END_IF  (76)
 
 	WHILE  shift 10
 	FOR  shift 11
@@ -343,18 +382,18 @@ state 27
 	RESTA  shift 44
 	.  error
 
-	expresion  goto 45
-	sentencia_for  goto 46
-	sentencia_while  goto 47
-	termino  goto 48
-	llamado_func  goto 49
-	cte  goto 50
-	factor  goto 51
-	condicion  goto 52
+	condicion  goto 45
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
 state 28
-	sentencia_out : OUT PARENT_A . CADENA PARENT_C  (54)
+	sentencia_out : OUT PARENT_A . CADENA PARENT_C  (85)
 
 	CADENA  shift 53
 	.  error
@@ -370,7 +409,7 @@ state 29
 
 
 state 30
-	sentencia_when : WHEN PARENT_A . condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C  (55)
+	sentencia_when : WHEN PARENT_A . condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C  (86)
 
 	WHILE  shift 10
 	FOR  shift 11
@@ -380,18 +419,18 @@ state 30
 	RESTA  shift 44
 	.  error
 
-	expresion  goto 45
-	sentencia_for  goto 46
-	sentencia_while  goto 47
-	termino  goto 48
-	llamado_func  goto 49
-	cte  goto 50
-	factor  goto 51
 	condicion  goto 55
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
 state 31
-	sentencia_while : WHILE PARENT_A . condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (56)
+	sentencia_while : WHILE PARENT_A . condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (87)
 
 	WHILE  shift 10
 	FOR  shift 11
@@ -401,18 +440,18 @@ state 31
 	RESTA  shift 44
 	.  error
 
-	expresion  goto 45
-	sentencia_for  goto 46
-	sentencia_while  goto 47
-	termino  goto 48
-	llamado_func  goto 49
-	cte  goto 50
-	factor  goto 51
 	condicion  goto 56
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
 state 32
-	sentencia_for : FOR PARENT_A . encabezado_for PARENT_C bloque_break_continue  (73)
+	sentencia_for : FOR PARENT_A . encabezado_for PARENT_C bloque_break_continue  (104)
 
 	ID  shift 37
 	.  error
@@ -428,8 +467,8 @@ state 33
 
 
 state 34
-	sentencia_while : ID DOSPUNTOS . WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (57)
-	sentencia_for : ID DOSPUNTOS . FOR PARENT_A encabezado_for PARENT_C bloque_break_continue  (74)
+	sentencia_while : ID DOSPUNTOS . WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (88)
+	sentencia_for : ID DOSPUNTOS . FOR PARENT_A encabezado_for PARENT_C bloque_break_continue  (105)
 
 	WHILE  shift 59
 	FOR  shift 60
@@ -437,7 +476,7 @@ state 34
 
 
 state 35
-	asignacion : ID ASIG . expresion  (29)
+	asignacion : ID ASIG . expresion  (60)
 
 	WHILE  shift 10
 	FOR  shift 11
@@ -447,13 +486,13 @@ state 35
 	RESTA  shift 44
 	.  error
 
+	cte  goto 46
 	expresion  goto 61
-	sentencia_for  goto 46
-	sentencia_while  goto 47
-	termino  goto 48
-	llamado_func  goto 49
-	cte  goto 50
-	factor  goto 51
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
 state 36
@@ -465,24 +504,24 @@ state 36
 
 
 state 37
-	asignacion : ID . ASIG expresion  (29)
+	asignacion : ID . ASIG expresion  (60)
 
 	ASIG  shift 35
 	.  error
 
 
 state 38
-	lista_const : CONST lista_asignacion .  (20)
-	lista_asignacion : lista_asignacion . COMA asignacion  (21)
+	lista_asignacion : asignacion .  (53)
 
-	COMA  shift 63
-	PUNTOCOMA  reduce 20
+	.  reduce 53
 
 
 state 39
-	lista_asignacion : asignacion .  (22)
+	lista_const : CONST lista_asignacion .  (51)
+	lista_asignacion : lista_asignacion . COMA asignacion  (52)
 
-	.  reduce 22
+	COMA  shift 63
+	PUNTOCOMA  reduce 51
 
 
 state 40
@@ -492,42 +531,42 @@ state 40
 
 
 state 41
-	factor : ID .  (40)
-	sentencia_while : ID . DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (57)
-	sentencia_for : ID . DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C bloque_break_continue  (74)
-	llamado_func : ID . PARENT_A list_param_real PARENT_C  (81)
-	llamado_func : ID . PARENT_A PARENT_C  (82)
+	factor : ID .  (71)
+	sentencia_while : ID . DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (88)
+	sentencia_for : ID . DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C bloque_break_continue  (105)
+	llamado_func : ID . PARENT_A list_param_real PARENT_C  (112)
+	llamado_func : ID . PARENT_A PARENT_C  (113)
 
 	PARENT_A  shift 64
 	DOSPUNTOS  shift 34
-	PARENT_C  reduce 40
-	COMA  reduce 40
-	PUNTOCOMA  reduce 40
-	IGUAL  reduce 40
-	MAYOR  reduce 40
-	MENOR  reduce 40
-	MENORIGUAL  reduce 40
-	MAYORIGUAL  reduce 40
-	SUMA  reduce 40
-	RESTA  reduce 40
-	MULT  reduce 40
-	DIV  reduce 40
+	PARENT_C  reduce 71
+	COMA  reduce 71
+	PUNTOCOMA  reduce 71
+	IGUAL  reduce 71
+	MAYOR  reduce 71
+	MENOR  reduce 71
+	MENORIGUAL  reduce 71
+	MAYORIGUAL  reduce 71
+	SUMA  reduce 71
+	RESTA  reduce 71
+	MULT  reduce 71
+	DIV  reduce 71
 
 
 state 42
-	cte : I32 .  (42)
+	cte : I32 .  (73)
 
-	.  reduce 42
+	.  reduce 73
 
 
 state 43
-	cte : F32 .  (43)
+	cte : F32 .  (74)
 
-	.  reduce 43
+	.  reduce 74
 
 
 state 44
-	factor : RESTA . cte  (39)
+	factor : RESTA . cte  (70)
 
 	I32  shift 42
 	F32  shift 43
@@ -537,83 +576,83 @@ state 44
 
 
 state 45
-	expresion : expresion . SUMA termino  (30)
-	expresion : expresion . RESTA termino  (31)
-	condicion : expresion . comparacion expresion  (46)
+	sentencia_if : IF PARENT_A condicion . PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable END_IF  (75)
+	sentencia_if : IF PARENT_A condicion . PARENT_C THEN bloque_ejecutable END_IF  (76)
 
-	IGUAL  shift 66
-	MAYOR  shift 67
-	MENOR  shift 68
-	MENORIGUAL  shift 69
-	MAYORIGUAL  shift 70
-	SUMA  shift 71
-	RESTA  shift 72
+	PARENT_C  shift 66
 	.  error
-
-	comparacion  goto 73
 
 
 state 46
-	expresion : sentencia_for . ELSE cte  (34)
+	factor : cte .  (72)
 
-	ELSE  shift 74
-	.  error
+	.  reduce 72
 
 
 state 47
-	expresion : sentencia_while . ELSE cte  (35)
+	expresion : expresion . SUMA termino  (61)
+	expresion : expresion . RESTA termino  (62)
+	condicion : expresion . comparacion expresion  (77)
+
+	IGUAL  shift 67
+	MAYOR  shift 68
+	MENOR  shift 69
+	MENORIGUAL  shift 70
+	MAYORIGUAL  shift 71
+	SUMA  shift 72
+	RESTA  shift 73
+	.  error
+
+	comparacion  goto 74
+
+
+state 48
+	expresion : sentencia_for . ELSE cte  (65)
 
 	ELSE  shift 75
 	.  error
 
 
-state 48
-	expresion : termino .  (32)
-	termino : termino . MULT factor  (36)
-	termino : termino . DIV factor  (37)
-
-	MULT  shift 76
-	DIV  shift 77
-	PARENT_C  reduce 32
-	COMA  reduce 32
-	PUNTOCOMA  reduce 32
-	IGUAL  reduce 32
-	MAYOR  reduce 32
-	MENOR  reduce 32
-	MENORIGUAL  reduce 32
-	MAYORIGUAL  reduce 32
-	SUMA  reduce 32
-	RESTA  reduce 32
-
-
 state 49
-	expresion : llamado_func .  (33)
+	expresion : sentencia_while . ELSE cte  (66)
 
-	.  reduce 33
-
-
-state 50
-	factor : cte .  (41)
-
-	.  reduce 41
-
-
-state 51
-	termino : factor .  (38)
-
-	.  reduce 38
-
-
-state 52
-	sentencia_if : IF PARENT_A condicion . PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable END_IF  (44)
-	sentencia_if : IF PARENT_A condicion . PARENT_C THEN bloque_ejecutable END_IF  (45)
-
-	PARENT_C  shift 78
+	ELSE  shift 76
 	.  error
 
 
+state 50
+	expresion : termino .  (63)
+	termino : termino . MULT factor  (67)
+	termino : termino . DIV factor  (68)
+
+	MULT  shift 77
+	DIV  shift 78
+	PARENT_C  reduce 63
+	COMA  reduce 63
+	PUNTOCOMA  reduce 63
+	IGUAL  reduce 63
+	MAYOR  reduce 63
+	MENOR  reduce 63
+	MENORIGUAL  reduce 63
+	MAYORIGUAL  reduce 63
+	SUMA  reduce 63
+	RESTA  reduce 63
+
+
+state 51
+	expresion : llamado_func .  (64)
+
+	.  reduce 64
+
+
+state 52
+	termino : factor .  (69)
+
+	.  reduce 69
+
+
 state 53
-	sentencia_out : OUT PARENT_A CADENA . PARENT_C  (54)
+	sentencia_out : OUT PARENT_A CADENA . PARENT_C  (85)
 
 	PARENT_C  shift 79
 	.  error
@@ -632,58 +671,58 @@ state 54
 
 
 state 55
-	sentencia_when : WHEN PARENT_A condicion . PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C  (55)
+	sentencia_when : WHEN PARENT_A condicion . PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C  (86)
 
 	PARENT_C  shift 83
 	.  error
 
 
 state 56
-	sentencia_while : WHILE PARENT_A condicion . PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (56)
+	sentencia_while : WHILE PARENT_A condicion . PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (87)
 
 	PARENT_C  shift 84
 	.  error
 
 
 state 57
-	encabezado_for : asignacion . PUNTOCOMA condicion PUNTOCOMA SUMA cte  (75)
-	encabezado_for : asignacion . PUNTOCOMA condicion PUNTOCOMA RESTA cte  (76)
+	encabezado_for : asignacion . PUNTOCOMA condicion PUNTOCOMA SUMA cte  (106)
+	encabezado_for : asignacion . PUNTOCOMA condicion PUNTOCOMA RESTA cte  (107)
 
 	PUNTOCOMA  shift 85
 	.  error
 
 
 state 58
-	sentencia_for : FOR PARENT_A encabezado_for . PARENT_C bloque_break_continue  (73)
+	sentencia_for : FOR PARENT_A encabezado_for . PARENT_C bloque_break_continue  (104)
 
 	PARENT_C  shift 86
 	.  error
 
 
 state 59
-	sentencia_while : ID DOSPUNTOS WHILE . PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (57)
+	sentencia_while : ID DOSPUNTOS WHILE . PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (88)
 
 	PARENT_A  shift 87
 	.  error
 
 
 state 60
-	sentencia_for : ID DOSPUNTOS FOR . PARENT_A encabezado_for PARENT_C bloque_break_continue  (74)
+	sentencia_for : ID DOSPUNTOS FOR . PARENT_A encabezado_for PARENT_C bloque_break_continue  (105)
 
 	PARENT_A  shift 88
 	.  error
 
 
 state 61
-	asignacion : ID ASIG expresion .  (29)
-	expresion : expresion . SUMA termino  (30)
-	expresion : expresion . RESTA termino  (31)
+	asignacion : ID ASIG expresion .  (60)
+	expresion : expresion . SUMA termino  (61)
+	expresion : expresion . RESTA termino  (62)
 
-	SUMA  shift 71
-	RESTA  shift 72
-	PARENT_C  reduce 29
-	COMA  reduce 29
-	PUNTOCOMA  reduce 29
+	SUMA  shift 72
+	RESTA  shift 73
+	PARENT_C  reduce 60
+	COMA  reduce 60
+	PUNTOCOMA  reduce 60
 
 
 state 62
@@ -694,7 +733,7 @@ state 62
 
 
 state 63
-	lista_asignacion : lista_asignacion COMA . asignacion  (21)
+	lista_asignacion : lista_asignacion COMA . asignacion  (52)
 
 	ID  shift 37
 	.  error
@@ -703,8 +742,8 @@ state 63
 
 
 state 64
-	llamado_func : ID PARENT_A . list_param_real PARENT_C  (81)
-	llamado_func : ID PARENT_A . PARENT_C  (82)
+	llamado_func : ID PARENT_A . list_param_real PARENT_C  (112)
+	llamado_func : ID PARENT_A . PARENT_C  (113)
 
 	ID  shift 91
 	I32  shift 42
@@ -717,71 +756,79 @@ state 64
 
 
 state 65
-	factor : RESTA cte .  (39)
+	factor : RESTA cte .  (70)
 
-	.  reduce 39
+	.  reduce 70
 
 
 state 66
-	comparacion : IGUAL .  (47)
+	sentencia_if : IF PARENT_A condicion PARENT_C . THEN bloque_ejecutable ELSE bloque_ejecutable END_IF  (75)
+	sentencia_if : IF PARENT_A condicion PARENT_C . THEN bloque_ejecutable END_IF  (76)
 
-	.  reduce 47
+	THEN  shift 95
+	.  error
 
 
 state 67
-	comparacion : MAYOR .  (48)
+	comparacion : IGUAL .  (78)
 
-	.  reduce 48
+	.  reduce 78
 
 
 state 68
-	comparacion : MENOR .  (49)
+	comparacion : MAYOR .  (79)
 
-	.  reduce 49
+	.  reduce 79
 
 
 state 69
-	comparacion : MENORIGUAL .  (50)
+	comparacion : MENOR .  (80)
 
-	.  reduce 50
+	.  reduce 80
 
 
 state 70
-	comparacion : MAYORIGUAL .  (51)
+	comparacion : MENORIGUAL .  (81)
 
-	.  reduce 51
+	.  reduce 81
 
 
 state 71
-	expresion : expresion SUMA . termino  (30)
+	comparacion : MAYORIGUAL .  (82)
 
-	ID  shift 95
-	I32  shift 42
-	F32  shift 43
-	RESTA  shift 44
-	.  error
-
-	termino  goto 96
-	cte  goto 50
-	factor  goto 51
+	.  reduce 82
 
 
 state 72
-	expresion : expresion RESTA . termino  (31)
+	expresion : expresion SUMA . termino  (61)
 
-	ID  shift 95
+	ID  shift 96
 	I32  shift 42
 	F32  shift 43
 	RESTA  shift 44
 	.  error
 
+	cte  goto 46
 	termino  goto 97
-	cte  goto 50
-	factor  goto 51
+	factor  goto 52
 
 
 state 73
-	condicion : expresion comparacion . expresion  (46)
+	expresion : expresion RESTA . termino  (62)
+
+	ID  shift 96
+	I32  shift 42
+	F32  shift 43
+	RESTA  shift 44
+	.  error
+
+	cte  goto 46
+	termino  goto 98
+	factor  goto 52
+
+
+state 74
+	condicion : expresion comparacion . expresion  (77)
 
 	WHILE  shift 10
 	FOR  shift 11
@@ -791,27 +838,17 @@ state 73
 	RESTA  shift 44
 	.  error
 
-	expresion  goto 98
-	sentencia_for  goto 46
-	sentencia_while  goto 47
-	termino  goto 48
-	llamado_func  goto 49
-	cte  goto 50
-	factor  goto 51
-
-
-state 74
-	expresion : sentencia_for ELSE . cte  (34)
-
-	I32  shift 42
-	F32  shift 43
-	.  error
-
-	cte  goto 99
+	cte  goto 46
+	expresion  goto 99
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
 state 75
-	expresion : sentencia_while ELSE . cte  (35)
+	expresion : sentencia_for ELSE . cte  (65)
 
 	I32  shift 42
 	F32  shift 43
@@ -821,47 +858,49 @@ state 75
 
 
 state 76
-	termino : termino MULT . factor  (36)
+	expresion : sentencia_while ELSE . cte  (66)
 
-	ID  shift 95
 	I32  shift 42
 	F32  shift 43
-	RESTA  shift 44
 	.  error
 
-	cte  goto 50
-	factor  goto 101
+	cte  goto 101
 
 
 state 77
-	termino : termino DIV . factor  (37)
+	termino : termino MULT . factor  (67)
 
-	ID  shift 95
+	ID  shift 96
 	I32  shift 42
 	F32  shift 43
 	RESTA  shift 44
 	.  error
 
-	cte  goto 50
+	cte  goto 46
 	factor  goto 102
 
 
 state 78
-	sentencia_if : IF PARENT_A condicion PARENT_C . THEN bloque_ejecutable ELSE bloque_ejecutable END_IF  (44)
-	sentencia_if : IF PARENT_A condicion PARENT_C . THEN bloque_ejecutable END_IF  (45)
+	termino : termino DIV . factor  (68)
 
-	THEN  shift 103
+	ID  shift 96
+	I32  shift 42
+	F32  shift 43
+	RESTA  shift 44
 	.  error
+
+	cte  goto 46
+	factor  goto 103
 
 
 state 79
-	sentencia_out : OUT PARENT_A CADENA PARENT_C .  (54)
+	sentencia_out : OUT PARENT_A CADENA PARENT_C .  (85)
 
-	.  reduce 54
+	.  reduce 85
 
 
 state 80
-	parametro : ID . ID  (17)
+	parametro : ID . ID  (50)
 
 	ID  shift 104
 	.  error
@@ -884,22 +923,22 @@ state 82
 
 
 state 83
-	sentencia_when : WHEN PARENT_A condicion PARENT_C . THEN LLAVE_A bloque_sentencias LLAVE_C  (55)
+	sentencia_when : WHEN PARENT_A condicion PARENT_C . THEN LLAVE_A bloque_sentencias LLAVE_C  (86)
 
 	THEN  shift 108
 	.  error
 
 
 state 84
-	sentencia_while : WHILE PARENT_A condicion PARENT_C . DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (56)
+	sentencia_while : WHILE PARENT_A condicion PARENT_C . DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (87)
 
 	DOSPUNTOS  shift 109
 	.  error
 
 
 state 85
-	encabezado_for : asignacion PUNTOCOMA . condicion PUNTOCOMA SUMA cte  (75)
-	encabezado_for : asignacion PUNTOCOMA . condicion PUNTOCOMA RESTA cte  (76)
+	encabezado_for : asignacion PUNTOCOMA . condicion PUNTOCOMA SUMA cte  (106)
+	encabezado_for : asignacion PUNTOCOMA . condicion PUNTOCOMA RESTA cte  (107)
 
 	WHILE  shift 10
 	FOR  shift 11
@@ -909,29 +948,29 @@ state 85
 	RESTA  shift 44
 	.  error
 
-	expresion  goto 45
-	sentencia_for  goto 46
-	sentencia_while  goto 47
-	termino  goto 48
-	llamado_func  goto 49
-	cte  goto 50
-	factor  goto 51
 	condicion  goto 110
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
 state 86
-	sentencia_for : FOR PARENT_A encabezado_for PARENT_C . bloque_break_continue  (73)
-	bloque_break_continue : .  (58)
+	sentencia_for : FOR PARENT_A encabezado_for PARENT_C . bloque_break_continue  (104)
+	bloque_break_continue : .  (89)
 
 	LLAVE_A  shift 111
-	ELSE  reduce 58
-	PUNTOCOMA  reduce 58
+	ELSE  reduce 89
+	PUNTOCOMA  reduce 89
 
 	bloque_break_continue  goto 112
 
 
 state 87
-	sentencia_while : ID DOSPUNTOS WHILE PARENT_A . condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (57)
+	sentencia_while : ID DOSPUNTOS WHILE PARENT_A . condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (88)
 
 	WHILE  shift 10
 	FOR  shift 11
@@ -941,18 +980,18 @@ state 87
 	RESTA  shift 44
 	.  error
 
-	expresion  goto 45
-	sentencia_for  goto 46
-	sentencia_while  goto 47
-	termino  goto 48
-	llamado_func  goto 49
-	cte  goto 50
-	factor  goto 51
 	condicion  goto 113
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
 state 88
-	sentencia_for : ID DOSPUNTOS FOR PARENT_A . encabezado_for PARENT_C bloque_break_continue  (74)
+	sentencia_for : ID DOSPUNTOS FOR PARENT_A . encabezado_for PARENT_C bloque_break_continue  (105)
 
 	ID  shift 37
 	.  error
@@ -968,33 +1007,33 @@ state 89
 
 
 state 90
-	lista_asignacion : lista_asignacion COMA asignacion .  (21)
+	lista_asignacion : lista_asignacion COMA asignacion .  (52)
 
-	.  reduce 21
+	.  reduce 52
 
 
 state 91
-	list_param_real : ID .  (80)
+	list_param_real : ID .  (111)
 
-	.  reduce 80
+	.  reduce 111
 
 
 state 92
-	llamado_func : ID PARENT_A PARENT_C .  (82)
+	llamado_func : ID PARENT_A PARENT_C .  (113)
 
-	.  reduce 82
+	.  reduce 113
 
 
 state 93
-	list_param_real : cte .  (79)
+	list_param_real : cte .  (110)
 
-	.  reduce 79
+	.  reduce 110
 
 
 state 94
-	list_param_real : list_param_real . COMA ID  (77)
-	list_param_real : list_param_real . COMA cte  (78)
-	llamado_func : ID PARENT_A list_param_real . PARENT_C  (81)
+	list_param_real : list_param_real . COMA ID  (108)
+	list_param_real : list_param_real . COMA cte  (109)
+	llamado_func : ID PARENT_A list_param_real . PARENT_C  (112)
 
 	PARENT_C  shift 115
 	COMA  shift 116
@@ -1002,100 +1041,100 @@ state 94
 
 
 state 95
-	factor : ID .  (40)
-
-	.  reduce 40
-
-
-state 96
-	expresion : expresion SUMA termino .  (30)
-	termino : termino . MULT factor  (36)
-	termino : termino . DIV factor  (37)
-
-	MULT  shift 76
-	DIV  shift 77
-	PARENT_C  reduce 30
-	COMA  reduce 30
-	PUNTOCOMA  reduce 30
-	IGUAL  reduce 30
-	MAYOR  reduce 30
-	MENOR  reduce 30
-	MENORIGUAL  reduce 30
-	MAYORIGUAL  reduce 30
-	SUMA  reduce 30
-	RESTA  reduce 30
-
-
-state 97
-	expresion : expresion RESTA termino .  (31)
-	termino : termino . MULT factor  (36)
-	termino : termino . DIV factor  (37)
-
-	MULT  shift 76
-	DIV  shift 77
-	PARENT_C  reduce 31
-	COMA  reduce 31
-	PUNTOCOMA  reduce 31
-	IGUAL  reduce 31
-	MAYOR  reduce 31
-	MENOR  reduce 31
-	MENORIGUAL  reduce 31
-	MAYORIGUAL  reduce 31
-	SUMA  reduce 31
-	RESTA  reduce 31
-
-
-state 98
-	expresion : expresion . SUMA termino  (30)
-	expresion : expresion . RESTA termino  (31)
-	condicion : expresion comparacion expresion .  (46)
-
-	SUMA  shift 71
-	RESTA  shift 72
-	PARENT_C  reduce 46
-	PUNTOCOMA  reduce 46
-
-
-state 99
-	expresion : sentencia_for ELSE cte .  (34)
-
-	.  reduce 34
-
-
-state 100
-	expresion : sentencia_while ELSE cte .  (35)
-
-	.  reduce 35
-
-
-state 101
-	termino : termino MULT factor .  (36)
-
-	.  reduce 36
-
-
-state 102
-	termino : termino DIV factor .  (37)
-
-	.  reduce 37
-
-
-state 103
-	sentencia_if : IF PARENT_A condicion PARENT_C THEN . bloque_ejecutable ELSE bloque_ejecutable END_IF  (44)
-	sentencia_if : IF PARENT_A condicion PARENT_C THEN . bloque_ejecutable END_IF  (45)
-	bloque_ejecutable : .  (52)
+	sentencia_if : IF PARENT_A condicion PARENT_C THEN . bloque_ejecutable ELSE bloque_ejecutable END_IF  (75)
+	sentencia_if : IF PARENT_A condicion PARENT_C THEN . bloque_ejecutable END_IF  (76)
+	bloque_ejecutable : .  (83)
 
 	LLAVE_A  shift 117
-	ELSE  reduce 52
-	END_IF  reduce 52
+	ELSE  reduce 83
+	END_IF  reduce 83
 
 	bloque_ejecutable  goto 118
 
 
-state 104
-	parametro : ID ID .  (17)
+state 96
+	factor : ID .  (71)
 
-	.  reduce 17
+	.  reduce 71
+
+
+state 97
+	expresion : expresion SUMA termino .  (61)
+	termino : termino . MULT factor  (67)
+	termino : termino . DIV factor  (68)
+
+	MULT  shift 77
+	DIV  shift 78
+	PARENT_C  reduce 61
+	COMA  reduce 61
+	PUNTOCOMA  reduce 61
+	IGUAL  reduce 61
+	MAYOR  reduce 61
+	MENOR  reduce 61
+	MENORIGUAL  reduce 61
+	MAYORIGUAL  reduce 61
+	SUMA  reduce 61
+	RESTA  reduce 61
+
+
+state 98
+	expresion : expresion RESTA termino .  (62)
+	termino : termino . MULT factor  (67)
+	termino : termino . DIV factor  (68)
+
+	MULT  shift 77
+	DIV  shift 78
+	PARENT_C  reduce 62
+	COMA  reduce 62
+	PUNTOCOMA  reduce 62
+	IGUAL  reduce 62
+	MAYOR  reduce 62
+	MENOR  reduce 62
+	MENORIGUAL  reduce 62
+	MAYORIGUAL  reduce 62
+	SUMA  reduce 62
+	RESTA  reduce 62
+
+
+state 99
+	expresion : expresion . SUMA termino  (61)
+	expresion : expresion . RESTA termino  (62)
+	condicion : expresion comparacion expresion .  (77)
+
+	SUMA  shift 72
+	RESTA  shift 73
+	PARENT_C  reduce 77
+	PUNTOCOMA  reduce 77
+
+
+state 100
+	expresion : sentencia_for ELSE cte .  (65)
+
+	.  reduce 65
+
+
+state 101
+	expresion : sentencia_while ELSE cte .  (66)
+
+	.  reduce 66
+
+
+state 102
+	termino : termino MULT factor .  (67)
+
+	.  reduce 67
+
+
+state 103
+	termino : termino DIV factor .  (68)
+
+	.  reduce 68
+
+
+state 104
+	parametro : ID ID .  (50)
+
+	.  reduce 50
 
 
 state 105
@@ -1122,73 +1161,73 @@ state 107
 
 
 state 108
-	sentencia_when : WHEN PARENT_A condicion PARENT_C THEN . LLAVE_A bloque_sentencias LLAVE_C  (55)
+	sentencia_when : WHEN PARENT_A condicion PARENT_C THEN . LLAVE_A bloque_sentencias LLAVE_C  (86)
 
 	LLAVE_A  shift 122
 	.  error
 
 
 state 109
-	sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS . PARENT_A asignacion PARENT_C bloque_break_continue  (56)
+	sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS . PARENT_A asignacion PARENT_C bloque_break_continue  (87)
 
 	PARENT_A  shift 123
 	.  error
 
 
 state 110
-	encabezado_for : asignacion PUNTOCOMA condicion . PUNTOCOMA SUMA cte  (75)
-	encabezado_for : asignacion PUNTOCOMA condicion . PUNTOCOMA RESTA cte  (76)
+	encabezado_for : asignacion PUNTOCOMA condicion . PUNTOCOMA SUMA cte  (106)
+	encabezado_for : asignacion PUNTOCOMA condicion . PUNTOCOMA RESTA cte  (107)
 
 	PUNTOCOMA  shift 124
 	.  error
 
 
 state 111
-	bloque_break_continue : LLAVE_A . bloque_break_continue ejecutables_break_continue PUNTOCOMA LLAVE_C  (59)
-	bloque_break_continue : .  (58)
+	bloque_break_continue : LLAVE_A . bloque_break_continue ejecutables_break_continue PUNTOCOMA LLAVE_C  (90)
+	bloque_break_continue : .  (89)
 
 	LLAVE_A  shift 111
-	IF  reduce 58
-	OUT  reduce 58
-	BREAK  reduce 58
-	WHEN  reduce 58
-	WHILE  reduce 58
-	FOR  reduce 58
-	CONTINUE  reduce 58
-	ID  reduce 58
+	IF  reduce 89
+	OUT  reduce 89
+	BREAK  reduce 89
+	WHEN  reduce 89
+	WHILE  reduce 89
+	FOR  reduce 89
+	CONTINUE  reduce 89
+	ID  reduce 89
 
 	bloque_break_continue  goto 125
 
 
 state 112
-	sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_break_continue .  (73)
+	sentencia_for : FOR PARENT_A encabezado_for PARENT_C bloque_break_continue .  (104)
 
-	.  reduce 73
+	.  reduce 104
 
 
 state 113
-	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion . PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (57)
+	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion . PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (88)
 
 	PARENT_C  shift 126
 	.  error
 
 
 state 114
-	sentencia_for : ID DOSPUNTOS FOR PARENT_A encabezado_for . PARENT_C bloque_break_continue  (74)
+	sentencia_for : ID DOSPUNTOS FOR PARENT_A encabezado_for . PARENT_C bloque_break_continue  (105)
 
 	PARENT_C  shift 127
 	.  error
 
 
 state 115
-	llamado_func : ID PARENT_A list_param_real PARENT_C .  (81)
+	llamado_func : ID PARENT_A list_param_real PARENT_C .  (112)
 
-	.  reduce 81
+	.  reduce 112
 
 
 state 116
-	list_param_real : list_param_real COMA . ID  (77)
-	list_param_real : list_param_real COMA . cte  (78)
+	list_param_real : list_param_real COMA . ID  (108)
+	list_param_real : list_param_real COMA . cte  (109)
 
 	ID  shift 128
 	I32  shift 42
@@ -1199,23 +1238,23 @@ state 116
 
 
 state 117
-	bloque_ejecutable : LLAVE_A . bloque_ejecutable sentencia_ejecutable PUNTOCOMA LLAVE_C  (53)
-	bloque_ejecutable : .  (52)
+	bloque_ejecutable : LLAVE_A . bloque_ejecutable sentencia_ejecutable PUNTOCOMA LLAVE_C  (84)
+	bloque_ejecutable : .  (83)
 
 	LLAVE_A  shift 117
-	IF  reduce 52
-	OUT  reduce 52
-	WHEN  reduce 52
-	WHILE  reduce 52
-	FOR  reduce 52
-	ID  reduce 52
+	IF  reduce 83
+	OUT  reduce 83
+	WHEN  reduce 83
+	WHILE  reduce 83
+	FOR  reduce 83
+	ID  reduce 83
 
 	bloque_ejecutable  goto 130
 
 
 state 118
-	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable . ELSE bloque_ejecutable END_IF  (44)
-	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable . END_IF  (45)
+	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable . ELSE bloque_ejecutable END_IF  (75)
+	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable . END_IF  (76)
 
 	ELSE  shift 131
 	END_IF  shift 132
@@ -1244,7 +1283,7 @@ state 121
 
 
 state 122
-	sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A . bloque_sentencias LLAVE_C  (55)
+	sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A . bloque_sentencias LLAVE_C  (86)
 	bloque_sentencias : .  (3)
 
 	.  reduce 3
@@ -1253,7 +1292,7 @@ state 122
 
 
 state 123
-	sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A . asignacion PARENT_C bloque_break_continue  (56)
+	sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A . asignacion PARENT_C bloque_break_continue  (87)
 
 	ID  shift 37
 	.  error
@@ -1262,8 +1301,8 @@ state 123
 
 
 state 124
-	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA . SUMA cte  (75)
-	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA . RESTA cte  (76)
+	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA . SUMA cte  (106)
+	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA . RESTA cte  (107)
 
 	SUMA  shift 138
 	RESTA  shift 139
@@ -1271,7 +1310,7 @@ state 124
 
 
 state 125
-	bloque_break_continue : LLAVE_A bloque_break_continue . ejecutables_break_continue PUNTOCOMA LLAVE_C  (59)
+	bloque_break_continue : LLAVE_A bloque_break_continue . ejecutables_break_continue PUNTOCOMA LLAVE_C  (90)
 
 	IF  shift 140
 	OUT  shift 7
@@ -1293,37 +1332,37 @@ state 125
 
 
 state 126
-	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C . DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (57)
+	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C . DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (88)
 
 	DOSPUNTOS  shift 151
 	.  error
 
 
 state 127
-	sentencia_for : ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C . bloque_break_continue  (74)
-	bloque_break_continue : .  (58)
+	sentencia_for : ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C . bloque_break_continue  (105)
+	bloque_break_continue : .  (89)
 
 	LLAVE_A  shift 111
-	ELSE  reduce 58
-	PUNTOCOMA  reduce 58
+	ELSE  reduce 89
+	PUNTOCOMA  reduce 89
 
 	bloque_break_continue  goto 152
 
 
 state 128
-	list_param_real : list_param_real COMA ID .  (77)
+	list_param_real : list_param_real COMA ID .  (108)
 
-	.  reduce 77
+	.  reduce 108
 
 
 state 129
-	list_param_real : list_param_real COMA cte .  (78)
+	list_param_real : list_param_real COMA cte .  (109)
 
-	.  reduce 78
+	.  reduce 109
 
 
 state 130
-	bloque_ejecutable : LLAVE_A bloque_ejecutable . sentencia_ejecutable PUNTOCOMA LLAVE_C  (53)
+	bloque_ejecutable : LLAVE_A bloque_ejecutable . sentencia_ejecutable PUNTOCOMA LLAVE_C  (84)
 
 	IF  shift 6
 	OUT  shift 7
@@ -1335,34 +1374,34 @@ state 130
 
 	sentencia_ejecutable  goto 153
 	asignacion  goto 21
-	sentencia_if  goto 22
-	sentencia_out  goto 23
+	sentencia_out  goto 22
+	sentencia_if  goto 23
 	sentencia_when  goto 24
 	sentencia_for  goto 25
 	sentencia_while  goto 26
 
 
 state 131
-	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable ELSE . bloque_ejecutable END_IF  (44)
-	bloque_ejecutable : .  (52)
+	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable ELSE . bloque_ejecutable END_IF  (75)
+	bloque_ejecutable : .  (83)
 
 	LLAVE_A  shift 117
-	END_IF  reduce 52
+	END_IF  reduce 83
 
 	bloque_ejecutable  goto 154
 
 
 state 132
-	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable END_IF .  (45)
+	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable END_IF .  (76)
 
-	.  reduce 45
+	.  reduce 76
 
 
 state 133
 	sentencia_decl_fun : FUN ID PARENT_A PARENT_C DOSPUNTOS ID LLAVE_A . cuerpo_fun LLAVE_C  (15)
-	cuerpo_fun : .  (18)
+	cuerpo_fun : .  (16)
 
-	.  reduce 18
+	.  reduce 16
 
 	cuerpo_fun  goto 155
 
@@ -1383,7 +1422,7 @@ state 135
 
 state 136
 	bloque_sentencias : bloque_sentencias . sentencia PUNTOCOMA  (4)
-	sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias . LLAVE_C  (55)
+	sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias . LLAVE_C  (86)
 
 	IF  shift 6
 	OUT  shift 7
@@ -1403,22 +1442,22 @@ state 136
 	sentencia_decl_fun  goto 19
 	lista_const  goto 20
 	asignacion  goto 21
-	sentencia_if  goto 22
-	sentencia_out  goto 23
+	sentencia_out  goto 22
+	sentencia_if  goto 23
 	sentencia_when  goto 24
 	sentencia_for  goto 25
 	sentencia_while  goto 26
 
 
 state 137
-	sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion . PARENT_C bloque_break_continue  (56)
+	sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion . PARENT_C bloque_break_continue  (87)
 
 	PARENT_C  shift 159
 	.  error
 
 
 state 138
-	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA SUMA . cte  (75)
+	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA SUMA . cte  (106)
 
 	I32  shift 42
 	F32  shift 43
@@ -1428,7 +1467,7 @@ state 138
 
 
 state 139
-	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA RESTA . cte  (76)
+	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA RESTA . cte  (107)
 
 	I32  shift 42
 	F32  shift 43
@@ -1438,38 +1477,38 @@ state 139
 
 
 state 140
-	sentencia_if_break : IF . PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF  (71)
-	sentencia_if_break : IF . PARENT_A condicion PARENT_C THEN bloque_break_continue END_IF  (72)
+	sentencia_if_break : IF . PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF  (102)
+	sentencia_if_break : IF . PARENT_A condicion PARENT_C THEN bloque_break_continue END_IF  (103)
 
 	PARENT_A  shift 162
 	.  error
 
 
 state 141
-	ejecutables_break_continue : BREAK .  (67)
-	ejecutables_break_continue : BREAK . cte  (68)
+	ejecutables_break_continue : BREAK .  (98)
+	ejecutables_break_continue : BREAK . cte  (99)
 
 	I32  shift 42
 	F32  shift 43
-	PUNTOCOMA  reduce 67
+	PUNTOCOMA  reduce 98
 
 	cte  goto 163
 
 
 state 142
-	ejecutables_break_continue : CONTINUE . tag  (66)
-	tag : .  (69)
+	ejecutables_break_continue : CONTINUE . tag  (97)
+	tag : .  (100)
 
 	DOSPUNTOS  shift 164
-	PUNTOCOMA  reduce 69
+	PUNTOCOMA  reduce 100
 
 	tag  goto 165
 
 
 state 143
-	asignacion : ID . ASIG expresion  (29)
-	sentencia_while : ID . DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (57)
-	sentencia_for : ID . DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C bloque_break_continue  (74)
+	asignacion : ID . ASIG expresion  (60)
+	sentencia_while : ID . DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue  (88)
+	sentencia_for : ID . DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C bloque_break_continue  (105)
 
 	DOSPUNTOS  shift 34
 	ASIG  shift 35
@@ -1477,70 +1516,70 @@ state 143
 
 
 state 144
-	ejecutables_break_continue : asignacion .  (60)
+	ejecutables_break_continue : asignacion .  (91)
 
-	.  reduce 60
+	.  reduce 91
 
 
 state 145
-	ejecutables_break_continue : sentencia_out .  (62)
+	ejecutables_break_continue : sentencia_out .  (93)
 
-	.  reduce 62
+	.  reduce 93
 
 
 state 146
-	ejecutables_break_continue : sentencia_when .  (63)
+	ejecutables_break_continue : sentencia_when .  (94)
 
-	.  reduce 63
+	.  reduce 94
 
 
 state 147
-	ejecutables_break_continue : sentencia_for .  (65)
+	ejecutables_break_continue : sentencia_for .  (96)
 
-	.  reduce 65
+	.  reduce 96
 
 
 state 148
-	ejecutables_break_continue : sentencia_while .  (64)
+	ejecutables_break_continue : sentencia_while .  (95)
 
-	.  reduce 64
+	.  reduce 95
 
 
 state 149
-	bloque_break_continue : LLAVE_A bloque_break_continue ejecutables_break_continue . PUNTOCOMA LLAVE_C  (59)
+	bloque_break_continue : LLAVE_A bloque_break_continue ejecutables_break_continue . PUNTOCOMA LLAVE_C  (90)
 
 	PUNTOCOMA  shift 166
 	.  error
 
 
 state 150
-	ejecutables_break_continue : sentencia_if_break .  (61)
+	ejecutables_break_continue : sentencia_if_break .  (92)
 
-	.  reduce 61
+	.  reduce 92
 
 
 state 151
-	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS . PARENT_A asignacion PARENT_C bloque_break_continue  (57)
+	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS . PARENT_A asignacion PARENT_C bloque_break_continue  (88)
 
 	PARENT_A  shift 167
 	.  error
 
 
 state 152
-	sentencia_for : ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C bloque_break_continue .  (74)
+	sentencia_for : ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C bloque_break_continue .  (105)
 
-	.  reduce 74
+	.  reduce 105
 
 
 state 153
-	bloque_ejecutable : LLAVE_A bloque_ejecutable sentencia_ejecutable . PUNTOCOMA LLAVE_C  (53)
+	bloque_ejecutable : LLAVE_A bloque_ejecutable sentencia_ejecutable . PUNTOCOMA LLAVE_C  (84)
 
 	PUNTOCOMA  shift 168
 	.  error
 
 
 state 154
-	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable . END_IF  (44)
+	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable . END_IF  (75)
 
 	END_IF  shift 169
 	.  error
@@ -1548,71 +1587,81 @@ state 154
 
 state 155
 	sentencia_decl_fun : FUN ID PARENT_A PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun . LLAVE_C  (15)
-	cuerpo_fun : cuerpo_fun . bloque_sentencias retorno  (19)
-	bloque_sentencias : .  (3)
+	cuerpo_fun : cuerpo_fun . sentencias_fun PUNTOCOMA  (17)
 
-	LLAVE_C  shift 170
-	IF  reduce 3
-	OUT  reduce 3
-	FUN  reduce 3
-	RETURN  reduce 3
-	WHEN  reduce 3
-	WHILE  reduce 3
-	FOR  reduce 3
-	ID  reduce 3
-	CONST  reduce 3
+	IF  shift 170
+	OUT  shift 7
+	FUN  shift 8
+	RETURN  shift 171
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	ID  shift 175
+	LLAVE_C  shift 176
+	CONST  shift 14
+	.  error
 
-	bloque_sentencias  goto 171
+	sentencia_decl_datos  goto 177
+	sentencia_decl_fun  goto 178
+	lista_const  goto 179
+	sentencias_fun  goto 180
+	asignacion  goto 181
+	sentencia_if_fun  goto 182
+	sentencia_out  goto 183
+	sentencia_when_fun  goto 184
+	sentencia_for_fun  goto 185
+	sentencia_while_fun  goto 186
+	retorno  goto 187
 
 
 state 156
 	sentencia_decl_fun : FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A . cuerpo_fun LLAVE_C  (14)
-	cuerpo_fun : .  (18)
+	cuerpo_fun : .  (16)
 
-	.  reduce 18
+	.  reduce 16
 
-	cuerpo_fun  goto 172
+	cuerpo_fun  goto 188
 
 
 state 157
 	sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS . ID LLAVE_A cuerpo_fun LLAVE_C  (13)
 
-	ID  shift 173
+	ID  shift 189
 	.  error
 
 
 state 158
-	sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C .  (55)
+	sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C .  (86)
 
-	.  reduce 55
+	.  reduce 86
 
 
 state 159
-	sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C . bloque_break_continue  (56)
-	bloque_break_continue : .  (58)
+	sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C . bloque_break_continue  (87)
+	bloque_break_continue : .  (89)
 
 	LLAVE_A  shift 111
-	ELSE  reduce 58
-	PUNTOCOMA  reduce 58
+	ELSE  reduce 89
+	PUNTOCOMA  reduce 89
 
-	bloque_break_continue  goto 174
+	bloque_break_continue  goto 190
 
 
 state 160
-	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte .  (75)
+	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte .  (106)
 
-	.  reduce 75
+	.  reduce 106
 
 
 state 161
-	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte .  (76)
+	encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte .  (107)
 
-	.  reduce 76
+	.  reduce 107
 
 
 state 162
-	sentencia_if_break : IF PARENT_A . condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF  (71)
-	sentencia_if_break : IF PARENT_A . condicion PARENT_C THEN bloque_break_continue END_IF  (72)
+	sentencia_if_break : IF PARENT_A . condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF  (102)
+	sentencia_if_break : IF PARENT_A . condicion PARENT_C THEN bloque_break_continue END_IF  (103)
 
 	WHILE  shift 10
 	FOR  shift 11
@@ -1622,214 +1671,265 @@ state 162
 	RESTA  shift 44
 	.  error
 
-	expresion  goto 45
-	sentencia_for  goto 46
-	sentencia_while  goto 47
-	termino  goto 48
-	llamado_func  goto 49
-	cte  goto 50
-	factor  goto 51
-	condicion  goto 175
+	condicion  goto 191
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
 state 163
-	ejecutables_break_continue : BREAK cte .  (68)
+	ejecutables_break_continue : BREAK cte .  (99)
 
-	.  reduce 68
+	.  reduce 99
 
 
 state 164
-	tag : DOSPUNTOS . ID  (70)
+	tag : DOSPUNTOS . ID  (101)
 
-	ID  shift 176
+	ID  shift 192
 	.  error
 
 
 state 165
-	ejecutables_break_continue : CONTINUE tag .  (66)
+	ejecutables_break_continue : CONTINUE tag .  (97)
 
-	.  reduce 66
+	.  reduce 97
 
 
 state 166
-	bloque_break_continue : LLAVE_A bloque_break_continue ejecutables_break_continue PUNTOCOMA . LLAVE_C  (59)
+	bloque_break_continue : LLAVE_A bloque_break_continue ejecutables_break_continue PUNTOCOMA . LLAVE_C  (90)
 
-	LLAVE_C  shift 177
+	LLAVE_C  shift 193
 	.  error
 
 
 state 167
-	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A . asignacion PARENT_C bloque_break_continue  (57)
+	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A . asignacion PARENT_C bloque_break_continue  (88)
 
 	ID  shift 37
 	.  error
 
-	asignacion  goto 178
+	asignacion  goto 194
 
 
 state 168
-	bloque_ejecutable : LLAVE_A bloque_ejecutable sentencia_ejecutable PUNTOCOMA . LLAVE_C  (53)
+	bloque_ejecutable : LLAVE_A bloque_ejecutable sentencia_ejecutable PUNTOCOMA . LLAVE_C  (84)
 
-	LLAVE_C  shift 179
+	LLAVE_C  shift 195
 	.  error
 
 
 state 169
-	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable END_IF .  (44)
+	sentencia_if : IF PARENT_A condicion PARENT_C THEN bloque_ejecutable ELSE bloque_ejecutable END_IF .  (75)
 
-	.  reduce 44
+	.  reduce 75
 
 
 state 170
+	sentencia_if_fun : IF . PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF  (28)
+	sentencia_if_fun : IF . PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C END_IF  (29)
+
+	PARENT_A  shift 196
+	.  error
+
+
+state 171
+	retorno : RETURN . PARENT_A expresion PARENT_C  (49)
+
+	PARENT_A  shift 197
+	.  error
+
+
+state 172
+	sentencia_when_fun : WHEN . PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C  (30)
+
+	PARENT_A  shift 198
+	.  error
+
+
+state 173
+	sentencia_while_fun : WHILE . PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (31)
+
+	PARENT_A  shift 199
+	.  error
+
+
+state 174
+	sentencia_for_fun : FOR . PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (33)
+
+	PARENT_A  shift 200
+	.  error
+
+
+state 175
+	sentencia_decl_datos : ID . list_var  (10)
+	sentencia_while_fun : ID . DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+	sentencia_for_fun : ID . DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (34)
+	asignacion : ID . ASIG expresion  (60)
+
+	ID  shift 33
+	DOSPUNTOS  shift 201
+	ASIG  shift 35
+	.  error
+
+	list_var  goto 36
+
+
+state 176
 	sentencia_decl_fun : FUN ID PARENT_A PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C .  (15)
 
 	.  reduce 15
 
 
-state 171
-	bloque_sentencias : bloque_sentencias . sentencia PUNTOCOMA  (4)
-	cuerpo_fun : cuerpo_fun bloque_sentencias . retorno  (19)
-
-	IF  shift 6
-	OUT  shift 7
-	FUN  shift 8
-	RETURN  shift 180
-	WHEN  shift 9
-	WHILE  shift 10
-	FOR  shift 11
-	ID  shift 12
-	CONST  shift 14
-	.  error
-
-	sentencia  goto 15
-	sentencia_declarativa  goto 16
-	sentencia_ejecutable  goto 17
-	sentencia_decl_datos  goto 18
-	sentencia_decl_fun  goto 19
-	lista_const  goto 20
-	retorno  goto 181
-	asignacion  goto 21
-	sentencia_if  goto 22
-	sentencia_out  goto 23
-	sentencia_when  goto 24
-	sentencia_for  goto 25
-	sentencia_while  goto 26
-
-
-state 172
-	sentencia_decl_fun : FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun . LLAVE_C  (14)
-	cuerpo_fun : cuerpo_fun . bloque_sentencias retorno  (19)
-	bloque_sentencias : .  (3)
-
-	LLAVE_C  shift 182
-	IF  reduce 3
-	OUT  reduce 3
-	FUN  reduce 3
-	RETURN  reduce 3
-	WHEN  reduce 3
-	WHILE  reduce 3
-	FOR  reduce 3
-	ID  reduce 3
-	CONST  reduce 3
-
-	bloque_sentencias  goto 171
-
-
-state 173
-	sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID . LLAVE_A cuerpo_fun LLAVE_C  (13)
-
-	LLAVE_A  shift 183
-	.  error
-
-
-state 174
-	sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue .  (56)
-
-	.  reduce 56
-
-
-state 175
-	sentencia_if_break : IF PARENT_A condicion . PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF  (71)
-	sentencia_if_break : IF PARENT_A condicion . PARENT_C THEN bloque_break_continue END_IF  (72)
-
-	PARENT_C  shift 184
-	.  error
-
-
-state 176
-	tag : DOSPUNTOS ID .  (70)
-
-	.  reduce 70
-
-
 state 177
-	bloque_break_continue : LLAVE_A bloque_break_continue ejecutables_break_continue PUNTOCOMA LLAVE_C .  (59)
+	sentencias_fun : sentencia_decl_datos .  (18)
 
-	.  reduce 59
+	.  reduce 18
 
 
 state 178
-	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion . PARENT_C bloque_break_continue  (57)
-
-	PARENT_C  shift 185
-	.  error
-
-
-state 179
-	bloque_ejecutable : LLAVE_A bloque_ejecutable sentencia_ejecutable PUNTOCOMA LLAVE_C .  (53)
-
-	.  reduce 53
-
-
-state 180
-	retorno : RETURN . PARENT_A expresion PARENT_C PUNTOCOMA  (16)
-
-	PARENT_A  shift 186
-	.  error
-
-
-state 181
-	cuerpo_fun : cuerpo_fun bloque_sentencias retorno .  (19)
+	sentencias_fun : sentencia_decl_fun .  (19)
 
 	.  reduce 19
 
 
-state 182
-	sentencia_decl_fun : FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C .  (14)
+state 179
+	sentencias_fun : lista_const .  (20)
 
-	.  reduce 14
-
-
-state 183
-	sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID LLAVE_A . cuerpo_fun LLAVE_C  (13)
-	cuerpo_fun : .  (18)
-
-	.  reduce 18
-
-	cuerpo_fun  goto 187
+	.  reduce 20
 
 
-state 184
-	sentencia_if_break : IF PARENT_A condicion PARENT_C . THEN bloque_break_continue ELSE bloque_break_continue END_IF  (71)
-	sentencia_if_break : IF PARENT_A condicion PARENT_C . THEN bloque_break_continue END_IF  (72)
+state 180
+	cuerpo_fun : cuerpo_fun sentencias_fun . PUNTOCOMA  (17)
 
-	THEN  shift 188
+	PUNTOCOMA  shift 202
 	.  error
 
 
+state 181
+	sentencias_fun : asignacion .  (21)
+
+	.  reduce 21
+
+
+state 182
+	sentencias_fun : sentencia_if_fun .  (22)
+
+	.  reduce 22
+
+
+state 183
+	sentencias_fun : sentencia_out .  (23)
+
+	.  reduce 23
+
+
+state 184
+	sentencias_fun : sentencia_when_fun .  (24)
+
+	.  reduce 24
+
+
 state 185
-	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C . bloque_break_continue  (57)
-	bloque_break_continue : .  (58)
+	sentencias_fun : sentencia_for_fun .  (25)
 
-	LLAVE_A  shift 111
-	ELSE  reduce 58
-	PUNTOCOMA  reduce 58
-
-	bloque_break_continue  goto 189
+	.  reduce 25
 
 
 state 186
-	retorno : RETURN PARENT_A . expresion PARENT_C PUNTOCOMA  (16)
+	sentencias_fun : sentencia_while_fun .  (26)
+
+	.  reduce 26
+
+
+state 187
+	sentencias_fun : retorno .  (27)
+
+	.  reduce 27
+
+
+state 188
+	sentencia_decl_fun : FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun . LLAVE_C  (14)
+	cuerpo_fun : cuerpo_fun . sentencias_fun PUNTOCOMA  (17)
+
+	IF  shift 170
+	OUT  shift 7
+	FUN  shift 8
+	RETURN  shift 171
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	ID  shift 175
+	LLAVE_C  shift 203
+	CONST  shift 14
+	.  error
+
+	sentencia_decl_datos  goto 177
+	sentencia_decl_fun  goto 178
+	lista_const  goto 179
+	sentencias_fun  goto 180
+	asignacion  goto 181
+	sentencia_if_fun  goto 182
+	sentencia_out  goto 183
+	sentencia_when_fun  goto 184
+	sentencia_for_fun  goto 185
+	sentencia_while_fun  goto 186
+	retorno  goto 187
+
+
+state 189
+	sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID . LLAVE_A cuerpo_fun LLAVE_C  (13)
+
+	LLAVE_A  shift 204
+	.  error
+
+
+state 190
+	sentencia_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue .  (87)
+
+	.  reduce 87
+
+
+state 191
+	sentencia_if_break : IF PARENT_A condicion . PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF  (102)
+	sentencia_if_break : IF PARENT_A condicion . PARENT_C THEN bloque_break_continue END_IF  (103)
+
+	PARENT_C  shift 205
+	.  error
+
+
+state 192
+	tag : DOSPUNTOS ID .  (101)
+
+	.  reduce 101
+
+
+state 193
+	bloque_break_continue : LLAVE_A bloque_break_continue ejecutables_break_continue PUNTOCOMA LLAVE_C .  (90)
+
+	.  reduce 90
+
+
+state 194
+	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion . PARENT_C bloque_break_continue  (88)
+
+	PARENT_C  shift 206
+	.  error
+
+
+state 195
+	bloque_ejecutable : LLAVE_A bloque_ejecutable sentencia_ejecutable PUNTOCOMA LLAVE_C .  (84)
+
+	.  reduce 84
+
+
+state 196
+	sentencia_if_fun : IF PARENT_A . condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF  (28)
+	sentencia_if_fun : IF PARENT_A . condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C END_IF  (29)
 
 	WHILE  shift 10
 	FOR  shift 11
@@ -1839,119 +1939,1030 @@ state 186
 	RESTA  shift 44
 	.  error
 
-	expresion  goto 190
-	sentencia_for  goto 46
-	sentencia_while  goto 47
-	termino  goto 48
-	llamado_func  goto 49
-	cte  goto 50
-	factor  goto 51
+	condicion  goto 207
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
-state 187
-	sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun . LLAVE_C  (13)
-	cuerpo_fun : cuerpo_fun . bloque_sentencias retorno  (19)
-	bloque_sentencias : .  (3)
+state 197
+	retorno : RETURN PARENT_A . expresion PARENT_C  (49)
 
-	LLAVE_C  shift 191
-	IF  reduce 3
-	OUT  reduce 3
-	FUN  reduce 3
-	RETURN  reduce 3
-	WHEN  reduce 3
-	WHILE  reduce 3
-	FOR  reduce 3
-	ID  reduce 3
-	CONST  reduce 3
+	WHILE  shift 10
+	FOR  shift 11
+	ID  shift 41
+	I32  shift 42
+	F32  shift 43
+	RESTA  shift 44
+	.  error
 
-	bloque_sentencias  goto 171
-
-
-state 188
-	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN . bloque_break_continue ELSE bloque_break_continue END_IF  (71)
-	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN . bloque_break_continue END_IF  (72)
-	bloque_break_continue : .  (58)
-
-	LLAVE_A  shift 111
-	ELSE  reduce 58
-	END_IF  reduce 58
-
-	bloque_break_continue  goto 192
+	cte  goto 46
+	expresion  goto 208
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
-state 189
-	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue .  (57)
+state 198
+	sentencia_when_fun : WHEN PARENT_A . condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C  (30)
 
-	.  reduce 57
+	WHILE  shift 10
+	FOR  shift 11
+	ID  shift 41
+	I32  shift 42
+	F32  shift 43
+	RESTA  shift 44
+	.  error
+
+	condicion  goto 209
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
 
 
-state 190
-	retorno : RETURN PARENT_A expresion . PARENT_C PUNTOCOMA  (16)
-	expresion : expresion . SUMA termino  (30)
-	expresion : expresion . RESTA termino  (31)
+state 199
+	sentencia_while_fun : WHILE PARENT_A . condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (31)
 
-	PARENT_C  shift 193
-	SUMA  shift 71
-	RESTA  shift 72
+	WHILE  shift 10
+	FOR  shift 11
+	ID  shift 41
+	I32  shift 42
+	F32  shift 43
+	RESTA  shift 44
+	.  error
+
+	condicion  goto 210
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
+
+
+state 200
+	sentencia_for_fun : FOR PARENT_A . encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (33)
+
+	ID  shift 37
+	.  error
+
+	asignacion  goto 57
+	encabezado_for  goto 211
+
+
+state 201
+	sentencia_while_fun : ID DOSPUNTOS . WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+	sentencia_for_fun : ID DOSPUNTOS . FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (34)
+
+	WHILE  shift 212
+	FOR  shift 213
 	.  error
 
 
-state 191
+state 202
+	cuerpo_fun : cuerpo_fun sentencias_fun PUNTOCOMA .  (17)
+
+	.  reduce 17
+
+
+state 203
+	sentencia_decl_fun : FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C .  (14)
+
+	.  reduce 14
+
+
+state 204
+	sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID LLAVE_A . cuerpo_fun LLAVE_C  (13)
+	cuerpo_fun : .  (16)
+
+	.  reduce 16
+
+	cuerpo_fun  goto 214
+
+
+state 205
+	sentencia_if_break : IF PARENT_A condicion PARENT_C . THEN bloque_break_continue ELSE bloque_break_continue END_IF  (102)
+	sentencia_if_break : IF PARENT_A condicion PARENT_C . THEN bloque_break_continue END_IF  (103)
+
+	THEN  shift 215
+	.  error
+
+
+state 206
+	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C . bloque_break_continue  (88)
+	bloque_break_continue : .  (89)
+
+	LLAVE_A  shift 111
+	ELSE  reduce 89
+	PUNTOCOMA  reduce 89
+
+	bloque_break_continue  goto 216
+
+
+state 207
+	sentencia_if_fun : IF PARENT_A condicion . PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF  (28)
+	sentencia_if_fun : IF PARENT_A condicion . PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C END_IF  (29)
+
+	PARENT_C  shift 217
+	.  error
+
+
+state 208
+	retorno : RETURN PARENT_A expresion . PARENT_C  (49)
+	expresion : expresion . SUMA termino  (61)
+	expresion : expresion . RESTA termino  (62)
+
+	PARENT_C  shift 218
+	SUMA  shift 72
+	RESTA  shift 73
+	.  error
+
+
+state 209
+	sentencia_when_fun : WHEN PARENT_A condicion . PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C  (30)
+
+	PARENT_C  shift 219
+	.  error
+
+
+state 210
+	sentencia_while_fun : WHILE PARENT_A condicion . PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (31)
+
+	PARENT_C  shift 220
+	.  error
+
+
+state 211
+	sentencia_for_fun : FOR PARENT_A encabezado_for . PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (33)
+
+	PARENT_C  shift 221
+	.  error
+
+
+state 212
+	sentencia_while_fun : ID DOSPUNTOS WHILE . PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+
+	PARENT_A  shift 222
+	.  error
+
+
+state 213
+	sentencia_for_fun : ID DOSPUNTOS FOR . PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (34)
+
+	PARENT_A  shift 223
+	.  error
+
+
+state 214
+	sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun . LLAVE_C  (13)
+	cuerpo_fun : cuerpo_fun . sentencias_fun PUNTOCOMA  (17)
+
+	IF  shift 170
+	OUT  shift 7
+	FUN  shift 8
+	RETURN  shift 171
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	ID  shift 175
+	LLAVE_C  shift 224
+	CONST  shift 14
+	.  error
+
+	sentencia_decl_datos  goto 177
+	sentencia_decl_fun  goto 178
+	lista_const  goto 179
+	sentencias_fun  goto 180
+	asignacion  goto 181
+	sentencia_if_fun  goto 182
+	sentencia_out  goto 183
+	sentencia_when_fun  goto 184
+	sentencia_for_fun  goto 185
+	sentencia_while_fun  goto 186
+	retorno  goto 187
+
+
+state 215
+	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN . bloque_break_continue ELSE bloque_break_continue END_IF  (102)
+	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN . bloque_break_continue END_IF  (103)
+	bloque_break_continue : .  (89)
+
+	LLAVE_A  shift 111
+	ELSE  reduce 89
+	END_IF  reduce 89
+
+	bloque_break_continue  goto 225
+
+
+state 216
+	sentencia_while : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C bloque_break_continue .  (88)
+
+	.  reduce 88
+
+
+state 217
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C . THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF  (28)
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C . THEN LLAVE_A cuerpo_fun LLAVE_C END_IF  (29)
+
+	THEN  shift 226
+	.  error
+
+
+state 218
+	retorno : RETURN PARENT_A expresion PARENT_C .  (49)
+
+	.  reduce 49
+
+
+state 219
+	sentencia_when_fun : WHEN PARENT_A condicion PARENT_C . THEN LLAVE_A cuerpo_fun LLAVE_C  (30)
+
+	THEN  shift 227
+	.  error
+
+
+state 220
+	sentencia_while_fun : WHILE PARENT_A condicion PARENT_C . DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (31)
+
+	DOSPUNTOS  shift 228
+	.  error
+
+
+state 221
+	sentencia_for_fun : FOR PARENT_A encabezado_for PARENT_C . LLAVE_A cuerpo_fun_break LLAVE_C  (33)
+
+	LLAVE_A  shift 229
+	.  error
+
+
+state 222
+	sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A . condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+
+	WHILE  shift 10
+	FOR  shift 11
+	ID  shift 41
+	I32  shift 42
+	F32  shift 43
+	RESTA  shift 44
+	.  error
+
+	condicion  goto 230
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
+
+
+state 223
+	sentencia_for_fun : ID DOSPUNTOS FOR PARENT_A . encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (34)
+
+	ID  shift 37
+	.  error
+
+	asignacion  goto 57
+	encabezado_for  goto 231
+
+
+state 224
 	sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C .  (13)
 
 	.  reduce 13
 
 
-state 192
-	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue . ELSE bloque_break_continue END_IF  (71)
-	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue . END_IF  (72)
+state 225
+	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue . ELSE bloque_break_continue END_IF  (102)
+	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue . END_IF  (103)
 
-	ELSE  shift 194
-	END_IF  shift 195
+	ELSE  shift 232
+	END_IF  shift 233
 	.  error
 
 
-state 193
-	retorno : RETURN PARENT_A expresion PARENT_C . PUNTOCOMA  (16)
+state 226
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN . LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF  (28)
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN . LLAVE_A cuerpo_fun LLAVE_C END_IF  (29)
 
-	PUNTOCOMA  shift 196
+	LLAVE_A  shift 234
 	.  error
 
 
-state 194
-	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE . bloque_break_continue END_IF  (71)
-	bloque_break_continue : .  (58)
+state 227
+	sentencia_when_fun : WHEN PARENT_A condicion PARENT_C THEN . LLAVE_A cuerpo_fun LLAVE_C  (30)
+
+	LLAVE_A  shift 235
+	.  error
+
+
+state 228
+	sentencia_while_fun : WHILE PARENT_A condicion PARENT_C DOSPUNTOS . PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (31)
+
+	PARENT_A  shift 236
+	.  error
+
+
+state 229
+	sentencia_for_fun : FOR PARENT_A encabezado_for PARENT_C LLAVE_A . cuerpo_fun_break LLAVE_C  (33)
+	cuerpo_fun_break : .  (35)
+
+	.  reduce 35
+
+	cuerpo_fun_break  goto 237
+
+
+state 230
+	sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion . PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+
+	PARENT_C  shift 238
+	.  error
+
+
+state 231
+	sentencia_for_fun : ID DOSPUNTOS FOR PARENT_A encabezado_for . PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (34)
+
+	PARENT_C  shift 239
+	.  error
+
+
+state 232
+	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE . bloque_break_continue END_IF  (102)
+	bloque_break_continue : .  (89)
 
 	LLAVE_A  shift 111
-	END_IF  reduce 58
+	END_IF  reduce 89
 
-	bloque_break_continue  goto 197
-
-
-state 195
-	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue END_IF .  (72)
-
-	.  reduce 72
+	bloque_break_continue  goto 240
 
 
-state 196
-	retorno : RETURN PARENT_A expresion PARENT_C PUNTOCOMA .  (16)
+state 233
+	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue END_IF .  (103)
+
+	.  reduce 103
+
+
+state 234
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A . cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF  (28)
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A . cuerpo_fun LLAVE_C END_IF  (29)
+	cuerpo_fun : .  (16)
 
 	.  reduce 16
 
+	cuerpo_fun  goto 241
 
-state 197
-	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue . END_IF  (71)
 
-	END_IF  shift 198
+state 235
+	sentencia_when_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A . cuerpo_fun LLAVE_C  (30)
+	cuerpo_fun : .  (16)
+
+	.  reduce 16
+
+	cuerpo_fun  goto 242
+
+
+state 236
+	sentencia_while_fun : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A . asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (31)
+
+	ID  shift 37
+	.  error
+
+	asignacion  goto 243
+
+
+state 237
+	sentencia_for_fun : FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break . LLAVE_C  (33)
+	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (36)
+
+	IF  shift 244
+	OUT  shift 7
+	RETURN  shift 171
+	BREAK  shift 245
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	CONTINUE  shift 246
+	ID  shift 247
+	LLAVE_C  shift 248
+	.  error
+
+	asignacion  goto 249
+	sentencia_out  goto 250
+	sentencia_when_fun  goto 251
+	sentencia_for_fun  goto 252
+	sentencia_while_fun  goto 253
+	retorno  goto 254
+	sentencias_fun_break  goto 255
+	sentencia_if_break_fun  goto 256
+
+
+state 238
+	sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C . DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+
+	DOSPUNTOS  shift 257
 	.  error
 
 
-state 198
-	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF .  (71)
+state 239
+	sentencia_for_fun : ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C . LLAVE_A cuerpo_fun_break LLAVE_C  (34)
 
-	.  reduce 71
+	LLAVE_A  shift 258
+	.  error
 
 
-41 terminals, 35 nonterminals
-83 grammar rules, 199 states
+state 240
+	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue . END_IF  (102)
+
+	END_IF  shift 259
+	.  error
+
+
+state 241
+	cuerpo_fun : cuerpo_fun . sentencias_fun PUNTOCOMA  (17)
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun . LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF  (28)
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun . LLAVE_C END_IF  (29)
+
+	IF  shift 170
+	OUT  shift 7
+	FUN  shift 8
+	RETURN  shift 171
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	ID  shift 175
+	LLAVE_C  shift 260
+	CONST  shift 14
+	.  error
+
+	sentencia_decl_datos  goto 177
+	sentencia_decl_fun  goto 178
+	lista_const  goto 179
+	sentencias_fun  goto 180
+	asignacion  goto 181
+	sentencia_if_fun  goto 182
+	sentencia_out  goto 183
+	sentencia_when_fun  goto 184
+	sentencia_for_fun  goto 185
+	sentencia_while_fun  goto 186
+	retorno  goto 187
+
+
+state 242
+	cuerpo_fun : cuerpo_fun . sentencias_fun PUNTOCOMA  (17)
+	sentencia_when_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun . LLAVE_C  (30)
+
+	IF  shift 170
+	OUT  shift 7
+	FUN  shift 8
+	RETURN  shift 171
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	ID  shift 175
+	LLAVE_C  shift 261
+	CONST  shift 14
+	.  error
+
+	sentencia_decl_datos  goto 177
+	sentencia_decl_fun  goto 178
+	lista_const  goto 179
+	sentencias_fun  goto 180
+	asignacion  goto 181
+	sentencia_if_fun  goto 182
+	sentencia_out  goto 183
+	sentencia_when_fun  goto 184
+	sentencia_for_fun  goto 185
+	sentencia_while_fun  goto 186
+	retorno  goto 187
+
+
+state 243
+	sentencia_while_fun : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion . PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (31)
+
+	PARENT_C  shift 262
+	.  error
+
+
+state 244
+	sentencia_if_break_fun : IF . PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (47)
+	sentencia_if_break_fun : IF . PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (48)
+
+	PARENT_A  shift 263
+	.  error
+
+
+state 245
+	sentencias_fun_break : BREAK .  (44)
+	sentencias_fun_break : BREAK . cte  (45)
+
+	I32  shift 42
+	F32  shift 43
+	PUNTOCOMA  reduce 44
+
+	cte  goto 264
+
+
+state 246
+	sentencias_fun_break : CONTINUE . tag  (43)
+	tag : .  (100)
+
+	DOSPUNTOS  shift 164
+	PUNTOCOMA  reduce 100
+
+	tag  goto 265
+
+
+state 247
+	sentencia_while_fun : ID . DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+	sentencia_for_fun : ID . DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (34)
+	asignacion : ID . ASIG expresion  (60)
+
+	DOSPUNTOS  shift 201
+	ASIG  shift 35
+	.  error
+
+
+state 248
+	sentencia_for_fun : FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C .  (33)
+
+	.  reduce 33
+
+
+state 249
+	sentencias_fun_break : asignacion .  (37)
+
+	.  reduce 37
+
+
+state 250
+	sentencias_fun_break : sentencia_out .  (39)
+
+	.  reduce 39
+
+
+state 251
+	sentencias_fun_break : sentencia_when_fun .  (40)
+
+	.  reduce 40
+
+
+state 252
+	sentencias_fun_break : sentencia_for_fun .  (42)
+
+	.  reduce 42
+
+
+state 253
+	sentencias_fun_break : sentencia_while_fun .  (41)
+
+	.  reduce 41
+
+
+state 254
+	sentencias_fun_break : retorno .  (46)
+
+	.  reduce 46
+
+
+state 255
+	cuerpo_fun_break : cuerpo_fun_break sentencias_fun_break . PUNTOCOMA  (36)
+
+	PUNTOCOMA  shift 266
+	.  error
+
+
+state 256
+	sentencias_fun_break : sentencia_if_break_fun .  (38)
+
+	.  reduce 38
+
+
+state 257
+	sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS . PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+
+	PARENT_A  shift 267
+	.  error
+
+
+state 258
+	sentencia_for_fun : ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A . cuerpo_fun_break LLAVE_C  (34)
+	cuerpo_fun_break : .  (35)
+
+	.  reduce 35
+
+	cuerpo_fun_break  goto 268
+
+
+state 259
+	sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF .  (102)
+
+	.  reduce 102
+
+
+state 260
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C . ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF  (28)
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C . END_IF  (29)
+
+	ELSE  shift 269
+	END_IF  shift 270
+	.  error
+
+
+state 261
+	sentencia_when_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C .  (30)
+
+	.  reduce 30
+
+
+state 262
+	sentencia_while_fun : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C . LLAVE_A cuerpo_fun_break LLAVE_C  (31)
+
+	LLAVE_A  shift 271
+	.  error
+
+
+state 263
+	sentencia_if_break_fun : IF PARENT_A . condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (47)
+	sentencia_if_break_fun : IF PARENT_A . condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (48)
+
+	WHILE  shift 10
+	FOR  shift 11
+	ID  shift 41
+	I32  shift 42
+	F32  shift 43
+	RESTA  shift 44
+	.  error
+
+	condicion  goto 272
+	cte  goto 46
+	expresion  goto 47
+	sentencia_for  goto 48
+	sentencia_while  goto 49
+	termino  goto 50
+	llamado_func  goto 51
+	factor  goto 52
+
+
+state 264
+	sentencias_fun_break : BREAK cte .  (45)
+
+	.  reduce 45
+
+
+state 265
+	sentencias_fun_break : CONTINUE tag .  (43)
+
+	.  reduce 43
+
+
+state 266
+	cuerpo_fun_break : cuerpo_fun_break sentencias_fun_break PUNTOCOMA .  (36)
+
+	.  reduce 36
+
+
+state 267
+	sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A . asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+
+	ID  shift 37
+	.  error
+
+	asignacion  goto 273
+
+
+state 268
+	sentencia_for_fun : ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break . LLAVE_C  (34)
+	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (36)
+
+	IF  shift 244
+	OUT  shift 7
+	RETURN  shift 171
+	BREAK  shift 245
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	CONTINUE  shift 246
+	ID  shift 247
+	LLAVE_C  shift 274
+	.  error
+
+	asignacion  goto 249
+	sentencia_out  goto 250
+	sentencia_when_fun  goto 251
+	sentencia_for_fun  goto 252
+	sentencia_while_fun  goto 253
+	retorno  goto 254
+	sentencias_fun_break  goto 255
+	sentencia_if_break_fun  goto 256
+
+
+state 269
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE . LLAVE_A cuerpo_fun LLAVE_C END_IF  (28)
+
+	LLAVE_A  shift 275
+	.  error
+
+
+state 270
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C END_IF .  (29)
+
+	.  reduce 29
+
+
+state 271
+	sentencia_while_fun : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A . cuerpo_fun_break LLAVE_C  (31)
+	cuerpo_fun_break : .  (35)
+
+	.  reduce 35
+
+	cuerpo_fun_break  goto 276
+
+
+state 272
+	sentencia_if_break_fun : IF PARENT_A condicion . PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (47)
+	sentencia_if_break_fun : IF PARENT_A condicion . PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (48)
+
+	PARENT_C  shift 277
+	.  error
+
+
+state 273
+	sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion . PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+
+	PARENT_C  shift 278
+	.  error
+
+
+state 274
+	sentencia_for_fun : ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C .  (34)
+
+	.  reduce 34
+
+
+state 275
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A . cuerpo_fun LLAVE_C END_IF  (28)
+	cuerpo_fun : .  (16)
+
+	.  reduce 16
+
+	cuerpo_fun  goto 279
+
+
+state 276
+	sentencia_while_fun : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break . LLAVE_C  (31)
+	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (36)
+
+	IF  shift 244
+	OUT  shift 7
+	RETURN  shift 171
+	BREAK  shift 245
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	CONTINUE  shift 246
+	ID  shift 247
+	LLAVE_C  shift 280
+	.  error
+
+	asignacion  goto 249
+	sentencia_out  goto 250
+	sentencia_when_fun  goto 251
+	sentencia_for_fun  goto 252
+	sentencia_while_fun  goto 253
+	retorno  goto 254
+	sentencias_fun_break  goto 255
+	sentencia_if_break_fun  goto 256
+
+
+state 277
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C . THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (47)
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C . THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (48)
+
+	THEN  shift 281
+	.  error
+
+
+state 278
+	sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C . LLAVE_A cuerpo_fun_break LLAVE_C  (32)
+
+	LLAVE_A  shift 282
+	.  error
+
+
+state 279
+	cuerpo_fun : cuerpo_fun . sentencias_fun PUNTOCOMA  (17)
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun . LLAVE_C END_IF  (28)
+
+	IF  shift 170
+	OUT  shift 7
+	FUN  shift 8
+	RETURN  shift 171
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	ID  shift 175
+	LLAVE_C  shift 283
+	CONST  shift 14
+	.  error
+
+	sentencia_decl_datos  goto 177
+	sentencia_decl_fun  goto 178
+	lista_const  goto 179
+	sentencias_fun  goto 180
+	asignacion  goto 181
+	sentencia_if_fun  goto 182
+	sentencia_out  goto 183
+	sentencia_when_fun  goto 184
+	sentencia_for_fun  goto 185
+	sentencia_while_fun  goto 186
+	retorno  goto 187
+
+
+state 280
+	sentencia_while_fun : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C .  (31)
+
+	.  reduce 31
+
+
+state 281
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN . LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (47)
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN . LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (48)
+
+	LLAVE_A  shift 284
+	.  error
+
+
+state 282
+	sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A . cuerpo_fun_break LLAVE_C  (32)
+	cuerpo_fun_break : .  (35)
+
+	.  reduce 35
+
+	cuerpo_fun_break  goto 285
+
+
+state 283
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C . END_IF  (28)
+
+	END_IF  shift 286
+	.  error
+
+
+state 284
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A . cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (47)
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A . cuerpo_fun_break LLAVE_C END_IF  (48)
+	cuerpo_fun_break : .  (35)
+
+	.  reduce 35
+
+	cuerpo_fun_break  goto 287
+
+
+state 285
+	sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break . LLAVE_C  (32)
+	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (36)
+
+	IF  shift 244
+	OUT  shift 7
+	RETURN  shift 171
+	BREAK  shift 245
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	CONTINUE  shift 246
+	ID  shift 247
+	LLAVE_C  shift 288
+	.  error
+
+	asignacion  goto 249
+	sentencia_out  goto 250
+	sentencia_when_fun  goto 251
+	sentencia_for_fun  goto 252
+	sentencia_while_fun  goto 253
+	retorno  goto 254
+	sentencias_fun_break  goto 255
+	sentencia_if_break_fun  goto 256
+
+
+state 286
+	sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF .  (28)
+
+	.  reduce 28
+
+
+state 287
+	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (36)
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break . LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (47)
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break . LLAVE_C END_IF  (48)
+
+	IF  shift 244
+	OUT  shift 7
+	RETURN  shift 171
+	BREAK  shift 245
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	CONTINUE  shift 246
+	ID  shift 247
+	LLAVE_C  shift 289
+	.  error
+
+	asignacion  goto 249
+	sentencia_out  goto 250
+	sentencia_when_fun  goto 251
+	sentencia_for_fun  goto 252
+	sentencia_while_fun  goto 253
+	retorno  goto 254
+	sentencias_fun_break  goto 255
+	sentencia_if_break_fun  goto 256
+
+
+state 288
+	sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C .  (32)
+
+	.  reduce 32
+
+
+state 289
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C . ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (47)
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C . END_IF  (48)
+
+	ELSE  shift 290
+	END_IF  shift 291
+	.  error
+
+
+state 290
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE . LLAVE_A cuerpo_fun_break LLAVE_C END_IF  (47)
+
+	LLAVE_A  shift 292
+	.  error
+
+
+state 291
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF .  (48)
+
+	.  reduce 48
+
+
+state 292
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A . cuerpo_fun_break LLAVE_C END_IF  (47)
+	cuerpo_fun_break : .  (35)
+
+	.  reduce 35
+
+	cuerpo_fun_break  goto 293
+
+
+state 293
+	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (36)
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break . LLAVE_C END_IF  (47)
+
+	IF  shift 244
+	OUT  shift 7
+	RETURN  shift 171
+	BREAK  shift 245
+	WHEN  shift 172
+	WHILE  shift 173
+	FOR  shift 174
+	CONTINUE  shift 246
+	ID  shift 247
+	LLAVE_C  shift 294
+	.  error
+
+	asignacion  goto 249
+	sentencia_out  goto 250
+	sentencia_when_fun  goto 251
+	sentencia_for_fun  goto 252
+	sentencia_while_fun  goto 253
+	retorno  goto 254
+	sentencias_fun_break  goto 255
+	sentencia_if_break_fun  goto 256
+
+
+state 294
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C . END_IF  (47)
+
+	END_IF  shift 295
+	.  error
+
+
+state 295
+	sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF .  (47)
+
+	.  reduce 47
+
+
+41 terminals, 43 nonterminals
+114 grammar rules, 296 states
