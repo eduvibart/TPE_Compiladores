@@ -1,1 +1,2 @@
-program {hola =: 3}
+program { a =: 3.40282346F+38;
+        }

@@ -1,8 +1,10 @@
 package Principal;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+
 
 import AnalizadorLexico.AnalizadorLexico;
 
@@ -21,6 +23,7 @@ public class Inicializador{
         //Mostramos la tabla de simbolos
         System.out.println("Tabla de simbolos \n \n");
         TablaSimbolos.imprimirTabla();
+
         	
     }
 }

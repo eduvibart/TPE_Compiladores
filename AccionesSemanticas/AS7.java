@@ -10,6 +10,7 @@ import Principal.TablaSimbolos;
 public class AS7 extends AccionSemantica{
 	private final Double maximo = Math.pow(3.40282347, 38);
 	private final Double minimo = Math.pow(1.17549435, -38);
+	private final Double cero = 0.0;
     
 	@Override
     public void ejecutar(Token t, Reader entrada) {
@@ -29,7 +30,7 @@ public class AS7 extends AccionSemantica{
 		
 		Double d = Double.parseDouble(digito); //d va a tener la parte numerica
 		
-		for (int j=i ; j < (lexema.length()); j++) {
+		for (int j=i+1 ; j < (lexema.length()); j++) {
 			caracter = lexema.charAt(j);
 			exponente += caracter;
 			j++;
@@ -38,8 +39,9 @@ public class AS7 extends AccionSemantica{
 		Double e = Double.parseDouble(exponente);
 		
 		Double numero = Math.pow(d, e); //numero del lexema convertido a double
-		
-		if ((numero >= maximo)|| (numero <= minimo)) {
+		System.out.println("D: " + d + " E: " + e );
+		System.out.println("Numero: " + numero);
+		if ((numero > maximo)|| (numero < minimo) || numero != cero) {
 			//Fuera de rango
 			AnalizadorLexico.addError("Numero fuera de rango");
 		}else{
