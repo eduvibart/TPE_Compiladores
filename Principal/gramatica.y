@@ -18,11 +18,11 @@ program : nombre_program LLAVE_A bloque_sentencias LLAVE_C
 nombre_program : ID 
 ;
 bloque_sentencias :
-                  | bloque_sentencias sentencia PUNTOCOMA
+                | bloque_sentencias sentencia 
 ;
-sentencia : sentencia_declarativa
-        | sentencia_ejecutable 
-        | error {System.out.println("La sentencia no esta definida.");}
+sentencia : sentencia_declarativa PUNTOCOMA
+        | sentencia_ejecutable PUNTOCOMA
+        | error {System.out.println("Se esperaba ;");}
 ;
 sentencia_declarativa : sentencia_decl_datos 
                         | sentencia_decl_fun 

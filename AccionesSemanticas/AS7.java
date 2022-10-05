@@ -32,7 +32,6 @@ public class AS7 extends AccionSemantica{
 		
 		for (int j=i ; j < (lexema.length()); j++) {
 			caracter = lexema.charAt(j);
-			System.out.println("caracter leido "+caracter);
 			exponente += caracter;
 		}
 		

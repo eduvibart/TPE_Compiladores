@@ -1,2 +1,3 @@
-program { a =: 3.40282346F+38;
+program {
+        fun cumple 
         }
