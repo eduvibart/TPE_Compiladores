@@ -2,9 +2,8 @@ package AccionesSemanticas;
 
 import java.io.IOException;
 import java.io.Reader;
-
+import Principal.TablaSimbolos;
 import AnalizadorLexico.AnalizadorLexico;
-import AnalizadorLexico.TablaSimbolos;
 import AnalizadorLexico.Token;
 
 public class AS4 extends AccionSemantica {
@@ -14,7 +13,7 @@ public class AS4 extends AccionSemantica {
     @Override
     public void ejecutar(Token t, Reader entrada) {
     	t.delCarac(); //se saca el ultimo caracter
-    	int valor = Integer.parseInt(t.getLexema()); //convierto el lexema del token a un entero para chekear el rango
+    	int valor = Integer.parseInt(t.getLexema()); //convierto el lexema del token a un entero para checkear el rango
     	
     	if ((valor <= maximo)&&(valor >= minimo)) {
             try {

@@ -1,4 +1,5 @@
-package AnalizadorLexico;
+package Principal;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +7,7 @@ import java.util.Map;
 
 public class TablaSimbolos {
     
-    private static Map<String,Map<String,Object>> simbolos = new HashMap<>();
+    private static Map<String,Map<String,Object>> simbolos = new HashMap<>(); //Lexema, y atributos del mismo.
 
     public static final String VALOR="valor";
     public static final String ID="ID";
@@ -28,5 +29,15 @@ public class TablaSimbolos {
         return simbolos.get(lexema).get(atributo);
     }
 
+    public static void imprimirTabla(){
+    	for (String lex: simbolos.keySet()) {
+    		System.out.print("Lexema : "+ lex +". Atributos ->");
+    		Map<String, Object> atributos = simbolos.get(lex);
+    		for(String atributo : atributos.keySet()) {
+    			System.out.print(atributo+" "+ atributos.get(atributo)+ ", ");
+    		}
+    		System.out.println("");
+    	}
+    }
 
 }

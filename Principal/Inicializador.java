@@ -1,3 +1,4 @@
+package Principal;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,5 +17,10 @@ public class Inicializador{
         Parser parser = new Parser();
         parser.run();
         System.out.println(AnalizadorLexico.getErrores());
+        
+        //Mostramos la tabla de simbolos
+        System.out.println("Tabla de simbolos \n \n");
+        TablaSimbolos.imprimirTabla();
+        	
     }
 }
