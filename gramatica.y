@@ -15,6 +15,8 @@ bloque_sentencias :
 ;
 sentencia : sentencia_declarativa
         | sentencia_ejecutable
+        | error
+
 ;
 sentencia_declarativa : sentencia_decl_datos 
                         | sentencia_decl_fun
@@ -43,7 +45,7 @@ sentencias_fun : sentencia_decl_datos
                 | sentencia_while_fun 
                 | retorno
 ;
-sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF
+sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF 
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C END_IF
 ;
 sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C
@@ -192,4 +194,5 @@ public static void main(String[] args) throws IOException {
         AnalizadorLexico.setEntrada(entrada);
         Parser parser = new Parser();
         parser.run();
+        System.out.println(AnalizadorLexico.getErrores());
 }

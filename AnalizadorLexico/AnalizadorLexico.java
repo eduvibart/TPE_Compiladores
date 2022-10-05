@@ -27,7 +27,7 @@ public class AnalizadorLexico{
     }
     
     public static void addError(String s){
-        errores += "\n" + s + " Error en la linea " + lineaAct;
+        errores += "Linea: " + lineaAct +"Error: " + s + "\n";
     }
 
     public static String getErrores(){
