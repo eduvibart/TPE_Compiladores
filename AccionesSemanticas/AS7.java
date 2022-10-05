@@ -8,8 +8,8 @@ import AnalizadorLexico.Token;
 import Principal.TablaSimbolos;
 
 public class AS7 extends AccionSemantica{
-	private final Double maximo = Math.pow(3.40282347, 38);
-	private final Double minimo = Math.pow(1.17549435, -38);
+	private final Double maximo = Math.pow(3.40282347, 38.0);
+	private final Double minimo = Math.pow(1.17549435, -38.0);
 	private final Double cero = 0.0;
     
 	@Override
@@ -30,18 +30,16 @@ public class AS7 extends AccionSemantica{
 		
 		Double d = Double.parseDouble(digito); //d va a tener la parte numerica
 		
-		for (int j=i+1 ; j < (lexema.length()); j++) {
+		for (int j=i ; j < (lexema.length()); j++) {
 			caracter = lexema.charAt(j);
+			System.out.println("caracter leido "+caracter);
 			exponente += caracter;
-			j++;
 		}
 		
 		Double e = Double.parseDouble(exponente);
 		
 		Double numero = Math.pow(d, e); //numero del lexema convertido a double
-		System.out.println("D: " + d + " E: " + e );
-		System.out.println("Numero: " + numero);
-		if ((numero > maximo)|| (numero < minimo) || numero != cero) {
+		if (((numero > maximo)|| (numero < minimo)) && numero != cero) {
 			//Fuera de rango
 			AnalizadorLexico.addError("Numero fuera de rango");
 		}else{
