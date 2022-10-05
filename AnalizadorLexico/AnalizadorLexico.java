@@ -18,7 +18,9 @@ public class AnalizadorLexico{
     public static String errores = "";
     private static TPR tablaPalabrasReservadas = new TPR();
 
-
+    public static int getLineaAct(){
+        return lineaAct;
+    }
     public static void setEntrada(Reader entrada){
         AnalizadorLexico.entrada = entrada;
     }
@@ -27,7 +29,7 @@ public class AnalizadorLexico{
     }
     
     public static void addError(String s){
-        errores += "Linea: " + lineaAct +"Error: " + s + "\n";
+        errores += "Linea: " + lineaAct +" Error: " + s + "\n";
     }
 
     public static String getErrores(){

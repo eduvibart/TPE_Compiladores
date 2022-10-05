@@ -9,7 +9,7 @@ public class ASE extends AccionSemantica{
     @Override
     public void ejecutar(Token t, Reader entrada) {
         
-        AnalizadorLexico.addError("!!ERROR!!");
+        AnalizadorLexico.addError("Error Lexico");
     }
     
 }
