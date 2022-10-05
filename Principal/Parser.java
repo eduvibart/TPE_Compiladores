@@ -1,3 +1,4 @@
+package Principal;
 //### This file created by BYACC 1.8(/Java extension  1.15)
 //### Java capabilities added 7 Jan 97, Bob Jamison
 //### Updated : 27 Nov 97  -- Bob Jamison, Joe Nieten
@@ -14,8 +15,6 @@
 
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
@@ -613,13 +612,6 @@ int yylex() throws IOException{
         }else
           System.out.println("TERMINO LA EJECUCION");
         return t.getId();
-}
-public static void main(String[] args) throws IOException {
-        BufferedReader entrada = new BufferedReader(new FileReader("archivos/entradas/entrada.txt"));
-        AnalizadorLexico.setEntrada(entrada);
-        Parser parser = new Parser();
-        parser.run();
-        System.out.println(AnalizadorLexico.getErrores());
 }
 //#line 553 "Parser.java"
 //###############################################################

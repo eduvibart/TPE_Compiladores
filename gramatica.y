@@ -189,10 +189,3 @@ int yylex() throws IOException{
           System.out.println("TERMINO LA EJECUCION");
         return t.getId();
 }
-public static void main(String[] args) throws IOException {
-        BufferedReader entrada = new BufferedReader(new FileReader("archivos/entradas/entrada_sent_eje.txt"));
-        AnalizadorLexico.setEntrada(entrada);
-        Parser parser = new Parser();
-        parser.run();
-        System.out.println(AnalizadorLexico.getErrores());
-}

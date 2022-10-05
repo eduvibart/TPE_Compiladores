@@ -2,9 +2,10 @@ package AccionesSemanticas;
 
 import java.io.IOException;
 import java.io.Reader;
+
 import AnalizadorLexico.AnalizadorLexico;
-import AnalizadorLexico.TablaSimbolos;
 import AnalizadorLexico.Token;
+import Principal.TablaSimbolos;
 
 public class AS8 extends AccionSemantica{
 
