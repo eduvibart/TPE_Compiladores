@@ -50,9 +50,12 @@ public class AnalizadorLexico{
             //System.out.println("El lexema del token antes: -" + t.getLexema()+"-");
             //System.out.println("El id del token antes: " + t.getId());
             //System.out.println("El valor de la columna es: " + valor);
+            //System.out.println("Numero de lineas antes : " + lineaAct);
             matrizAS[estadoAct][valor].ejecutar(t,entrada);
             //System.out.println("El lexema del token despues: -" + t.getLexema()+"-");
             //System.out.println("El id del token despues: " + t.getId());
+            //System.out.println("Numero de lineas despues : " + lineaAct);
+
             estadoAct = matrizEstados[estadoAct][valor]; 
             entrada.mark(1);
         }
@@ -82,10 +85,10 @@ public class AnalizadorLexico{
                 valor = 0;
                 break;
             case '\t':
+            case '\r':
                 valor = 1;
                 break;
             case '\n':
-            case '\r':
                 valor = 2;
                 break;
             case 'a':
