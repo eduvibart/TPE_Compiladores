@@ -1,12 +1,16 @@
 program {
-        << IF OUT WHEN
-            if (tobi(a) < b) then 
-                { out (`hola }
-            else 
-                {when( a > b ) then 
-                    { 
-                        a =: 3 ;
-                    };
-                }
-            end_if;
+        << IF
+        <<   if (a < b) then {
+        <<        a =: 4; 
+        <<    }
+        <<    else {
+        <<        a =: 4; 
+        <<    }
+        <<    end_if;
+        << OUT 
+        <<  out (`hola`);
+        when( a<b ) { 
+            a =: 3 ;
+        };
+
         }
