@@ -1,29 +1,34 @@
 program {
-        << IF
-        <<   if (a < b) then {
-        <<        a =: 4; 
-        <<    }
-        <<    else {
-        <<        a =: 4; 
-        <<    }
-        <<    end_if;
-        << OUT 
-        <<  out (`hola`);
-        << WHEN
-        <<when( a<b )then {
-        <<    a =: 3 ;
-        <<};
-        << WHILE
-        <<while ( i < 10 ) : ( i =: i + 1 ) {
-        <<        out ( `test` );
-        <<    };
-        << FOR
-        <<for  (i =: n ; i < 10 ; +1) {
-        <<        a =: 3; 
-        <<    };
-        << FUN 
-        fun cumple (int a,int b) : int  {
-            int z;
-            return (z);
-        };
+        x =: 3.40282347F38; << Punto flotante en el limite del rango superior, funciona correctamente
+	  y =: 3.40282348F38; << Punto flotante fuera del limite del rango superior, arroja error fuera de rango
+	  z =: 1.17549435F-38; << Punto flotante en el limite del rango inferior, funciona correctamente
+	  w =: 1.17549436F-38; << Punto flotante fuera del limite del rango inferior, arroja error fuera de rango
+	  i =: 2147483647; << maximo entero positivo
+	  i =: 2147483648; << maximo entero positivo fuera de rango, arroja error fuera de rango
+	  i =: -2147483648;  << maximo entero negativo
+	  i =: -2147483649; << maximo entero negativo fuera de rango, arroja error fuera de rango
+	  << Testeo numeros flotantes y sus alternativas.
+	  i =: .08;
+	  i =: 3.00;
+	  i =: 3.00F2;
+	  i =: 3.00F-2;
+	  << Identificadores de mas y menos de 25 caracteres
+	  int pruebadeidentificadordemasdeveinticincocaracteres;
+	  int identificador;
+	  << Identificadores con letras, digitos y -
+	  int hola;
+        int hola123;
+	  int hola_prueba;
+	  <<Intento de incluir en el nombre de un identificador un carácter que no sea letra, dígito o -.
+	  int prueba;
+	  <<Palabras reservadas escritas en minúsculas y mayúsculas .
+	  if (hola < 3) then {
+	  } end_if;
+	  IF (hola < 3) THEN {
+		} END_IF;
+	<<cadena mal escrita, arroja error lexico
+	<<'hola
+	<< cadena bien escrita
+	a =: `cadena`;
         }
+

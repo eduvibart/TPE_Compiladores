@@ -889,20 +889,20 @@ void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
 }
 void chequearRangoI32(String sval){
-  String s = "2147483648";
+  String s = "2147483647";
   long l = Long.valueOf(s);
   if(Long.valueOf(sval) > l){
-    System.out.println("La constante esta fuera de rango");
+    yyerror("La constante esta fuera de rango");
   }
 }
 
 int yylex() throws IOException{
         Token t = AnalizadorLexico.getToken();
         this.yylval = new ParserVal(t.getLexema());
-        //if(t.getId() != -1){
-        //  System.out.println("Id: " + t.getId()+" Lexema: " + t.getLexema());
-        //}else
-        //  System.out.println("TERMINO LA EJECUCION");
+        /*if(t.getId() != -1){
+          System.out.println("Id: " + t.getId()+" Lexema: " + t.getLexema());
+        }else
+          System.out.println("TERMINO LA EJECUCION");*/
         return t.getId();
 }
 //#line 837 "Parser.java"

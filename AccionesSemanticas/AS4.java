@@ -14,13 +14,13 @@ public class AS4 extends AccionSemantica {
     public void ejecutar(Token t, Reader entrada) {
     	t.delCarac(); //se saca el ultimo caracter
     	long valor = Long.valueOf(t.getLexema()); //convierto el lexema del token a un entero para checkear el rango
-    	
+    	try {
+            entrada.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     	if ((valor <= maximo)&&(valor >= minimo)) {
-            try {
-                entrada.reset();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            
             if (TablaSimbolos.existeSimbolo(t.getLexema())){
                 TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, valor);
                 TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());

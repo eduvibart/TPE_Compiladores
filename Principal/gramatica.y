@@ -14,7 +14,7 @@ import AnalizadorLexico.Token;
 
 %% 
 program : nombre_program LLAVE_A bloque_sentencias LLAVE_C
-        | error {yyerror("Hay un error sintactico en la entrada que arrastra errores.a");}
+        | error {yyerror("Hay un error sintactico en la entrada que arrastra errores");}
 ;
 nombre_program : ID 
 ;
@@ -279,10 +279,10 @@ void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
 }
 void chequearRangoI32(String sval){
-  String s = "2147483648";
+  String s = "2147483647";
   long l = Long.valueOf(s);
   if(Long.valueOf(sval) > l){
-    System.out.println("La constante esta fuera de rango");
+    yyerror("La constante esta fuera de rango");
   }
 }
 
