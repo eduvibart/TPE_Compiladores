@@ -9,8 +9,21 @@ program {
         <<    end_if;
         << OUT 
         <<  out (`hola`);
-        when( a<b ) { 
-            a =: 3 ;
+        << WHEN
+        <<when( a<b )then {
+        <<    a =: 3 ;
+        <<};
+        << WHILE
+        <<while ( i < 10 ) : ( i =: i + 1 ) {
+        <<        out ( `test` );
+        <<    };
+        << FOR
+        <<for  (i =: n ; i < 10 ; +1) {
+        <<        a =: 3; 
+        <<    };
+        << FUN 
+        fun cumple (int a,int b) : int  {
+            int z;
+            return (z);
         };
-
         }

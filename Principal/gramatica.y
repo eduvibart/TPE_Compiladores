@@ -44,8 +44,8 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                 | FUN ID PARENT_A parametro COMA parametro error {yyerror("Se esperaba )");}
                 | FUN ID PARENT_A parametro error {yyerror("Se esperaba )");}
                 | FUN ID PARENT_A error  {yyerror("Se esperaba )");}
-                | FUN ID error {System.out.println("Falta declaracion de parametro en la funcion");}
-                | FUN error {System.out.println("Si declaras una funcion hacelo bien!");}
+                | FUN ID error {yyerror("Se esperaba (");}
+                | FUN error {yyerror("Se esperaba un nombre de funcion");}
 ;
 cuerpo_fun : 
                 | cuerpo_fun sentencias_fun PUNTOCOMA
@@ -187,6 +187,8 @@ sentencia_if :IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAV
                 | IF error {yyerror("Se esperaba ( ");}
 ;
 condicion : expresion comparacion expresion
+        | expresion comparacion error {yyerror("Se esperaba otra expresion para comparar.");}
+        | expresion error expresion {yyerror("Se esperaba un tipo de comparacion.");}
 ;
 comparacion: IGUAL
         | MAYOR 
@@ -225,7 +227,8 @@ sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARE
                 | WHILE error {yyerror("Se esperaba (");}
 ;
 bloque_break_continue : 
-        | LLAVE_A bloque_break_continue ejecutables_break_continue LLAVE_C
+        | bloque_break_continue ejecutables_break_continue PUNTOCOMA
+        | bloque_break_continue ejecutables_break_continue {yyerror("Se esperaba ;");}
 ;
 
 ejecutables_break_continue :  asignacion 
@@ -246,6 +249,10 @@ sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue E
         | IF PARENT_A condicion PARENT_C THEN bloque_break_continue END_IF {System.out.println("Sentencia IF");}
 ;
 sentencia_for :ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");}
+                | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
+                | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C error {yyerror("Se esperaba {");}
+                | ID DOSPUNTOS FOR PARENT_A encabezado_for error {yyerror("Se esperaba )");}
+                | ID DOSPUNTOS error {yyerror("Se esperaba (");}
                 | FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");}
                 | FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
                 | FOR PARENT_A encabezado_for PARENT_C error {yyerror("Se esperaba {");}
@@ -282,9 +289,9 @@ void chequearRangoI32(String sval){
 int yylex() throws IOException{
         Token t = AnalizadorLexico.getToken();
         this.yylval = new ParserVal(t.getLexema());
-        if(t.getId() != -1){
-          System.out.println("Id: " + t.getId()+" Lexema: " + t.getLexema());
-        }else
-          System.out.println("TERMINO LA EJECUCION");
+        //if(t.getId() != -1){
+        //  System.out.println("Id: " + t.getId()+" Lexema: " + t.getLexema());
+        //}else
+        //  System.out.println("TERMINO LA EJECUCION");
         return t.getId();
 }
