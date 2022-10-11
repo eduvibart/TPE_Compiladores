@@ -81,7 +81,7 @@ sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLA
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
                 | WHEN PARENT_A condicion error {yyerror("Se esperaba )");}
                 | WHEN PARENT_A error {yyerror("Se esperaba condicion");}
-                | WHEN error {yyerror("Se esperaba (");}
+                | WHEN error condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {yyerror("Se esperaba (");}
 ; 
 sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHILE");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHILE");} 
@@ -203,12 +203,11 @@ sentencia_out : OUT PARENT_A CADENA PARENT_C {System.out.println("Sentencia OUT"
                 | OUT error {yyerror("Se esperaba (");}
 ;
 sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias error {yyerror("Se esperaba }");}
-                | WHEN PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba {");}
-                | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
-                | WHEN PARENT_A condicion error {yyerror("Se esperaba )");}
-                | WHEN PARENT_A error {yyerror("Se esperaba condicion");}
-                | WHEN error {yyerror("Se esperaba (");}
+                | WHEN PARENT_A condicion PARENT_C THEN error bloque_sentencias LLAVE_C {yyerror("Se esperaba { en el when");}
+                | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba then en el when");}
+                | WHEN PARENT_A error PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba condicion en el when");}
+                | WHEN error condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba ( en el when");}
+                | WHEN PARENT_A condicion THEN LLAVE_A bloque_sentencias LLAVE_C{yyerror("Se esperaba ) en el when");}
 ;
 sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHILE");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHILE");} 
