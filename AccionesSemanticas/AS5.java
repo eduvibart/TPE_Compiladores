@@ -8,7 +8,7 @@ public class AS5 extends AccionSemantica{
 
     @Override
     public void ejecutar(Token t, Reader entrada) {
-        t.setId(I32);
+        t.setId(ENTERO);
         
     }
     

@@ -2,7 +2,7 @@ program {
         << DECLARACION DE VARIABLES
         int a, b,c;
         << DECLARACION DE FUNCION
-        fun cumple(int a,int b): int {
+        fun cumple(i32 a,i32 b): int {
             int z;
             return (z);
         };

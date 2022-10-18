@@ -7,8 +7,8 @@ import AnalizadorLexico.*;
 public abstract class AccionSemantica {
 
     protected static final int ID = 269;
-    protected static final int I32 = 270;
-    protected static final int F32 = 271;
+    protected static final int ENTERO = 296;
+    protected static final int FLOAT = 297 ;
     protected static final int PUNTO = 272;
     protected static final int PARENT_A = 273;
     protected static final int PARENT_C = 274;

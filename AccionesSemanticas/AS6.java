@@ -8,7 +8,7 @@ public class AS6 extends AccionSemantica {
 
     @Override
     public void ejecutar(Token t, Reader entrada) {
-        t.setId(F32);
+        t.setId(FLOAT);
         
     }
     

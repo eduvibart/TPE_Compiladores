@@ -5,7 +5,7 @@ import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
 %}
 
-%token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST SUMA RESTA MULT DIV
+%token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST SUMA RESTA MULT DIV ENTERO FLOAT
 
 %start program 
 
@@ -29,17 +29,21 @@ sentencia_declarativa : sentencia_decl_datos
                         | sentencia_decl_fun 
                         | lista_const  
 ;
-sentencia_decl_datos : ID list_var {System.out.println("Declaracion de datos");}
+tipo : I32 
+        | F32
+;
+sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos");}
+                        | list_var {yyerror("No esta permitido el tipo declarado");}
 ;
 list_var : list_var COMA ID 
         |  ID
 ;
-sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C  {System.out.println("Declaracion de Funcion");}
-                | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
-                | FUN ID PARENT_A PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
-                | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
-                | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ID error {yyerror("Se esperaba {");}
-                | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS error  {yyerror("Se esperaba ID");}
+sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {System.out.println("Declaracion de Funcion");}
+                | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
+                | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
+                | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
+                | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo error {yyerror("Se esperaba {");}
+                | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS error  {yyerror("El tipo declarado no esta permitido");}
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C error {yyerror("Se esperaba :");}
                 | FUN ID PARENT_A parametro COMA parametro error {yyerror("Se esperaba )");}
                 | FUN ID PARENT_A parametro error {yyerror("Se esperaba )");}
@@ -133,7 +137,8 @@ sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_
 ;
 retorno : RETURN PARENT_A expresion PARENT_C 
 ;
-parametro : ID ID
+parametro : tipo ID
+        |  ID {yyerror("No esta permitido el tipo declarado");}
 ;
 
 lista_const : CONST lista_asignacion {System.out.println("Declaracion de Constante/s");}
@@ -166,10 +171,10 @@ termino: termino MULT factor
 factor: ID
         | cte      
 ;
-cte : I32 {  chequearRangoI32($1.sval);}
-        | F32
-        | RESTA I32 
-        | RESTA F32 
+cte : ENTERO {  chequearRangoI32($1.sval);}
+        | FLOAT
+        | RESTA ENTERO 
+        | RESTA FLOAT 
 
 ;
 
