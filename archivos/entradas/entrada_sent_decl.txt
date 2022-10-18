@@ -1,25 +1,25 @@
 program {
         << DECLARACION DE VARIABLES
-        int a, b,c;
-        << DECLARACION DE FUNCION
-        fun cumple(i32 a,i32 b): int {
-            int z;
-            return (z);
-        };
+        <<i32 a, b,c;
+        << >>DECLARACION DE FUNCION
+        <<fun cumple(i32 a,i32 b): i32 {
+        <<    int z;
+        <<    return (z);
+        <<};
         << FUNCION CON VARIOS RETORNOS
-        fun cumple(int a,int b): int {
-            if (a < b) then { 
-                return (a);
-            }
-            else {
-                return (3);
-            }
-            end_if;
-        };
-        const a =: 3,b =:2;
+        <<fun cumple(i32 a,f32 b): f32 {
+        <<    if (a < b) then { 
+        <<        return (a);
+        <<   }
+        <<    else {
+        <<        return (3);
+        <<   }
+        <<    end_if;
+        <<};
+        <<const a =: 3,b =:2;
 
         <<FUNCION CON VARIOS RETORNOS Y CONTINUE CON ETIQUETADO
-        fun cumple(int a,int b): int {
+        fun cumple(i32 a,i32 b): f32 {
             if (a < b) then { 
                 outer:  while ( i < 10 ) : (i =: i + 1 ) {
                         while ( j < 5 ) : (j =: j + 1 ) {

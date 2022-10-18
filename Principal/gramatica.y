@@ -33,7 +33,7 @@ tipo : I32
         | F32
 ;
 sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos");}
-                        | list_var {yyerror("No esta permitido el tipo declarado");}
+                        | ID list_var {yyerror("No esta permitido el tipo declarado");}
 ;
 list_var : list_var COMA ID 
         |  ID
@@ -47,7 +47,6 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C error {yyerror("Se esperaba :");}
                 | FUN ID PARENT_A parametro COMA parametro error {yyerror("Se esperaba )");}
                 | FUN ID PARENT_A parametro error {yyerror("Se esperaba )");}
-                | FUN ID PARENT_A error  {yyerror("Se esperaba )");}
                 | FUN ID error {yyerror("Se esperaba (");}
                 | FUN error {yyerror("Se esperaba un nombre de funcion");}
 ;
@@ -108,7 +107,8 @@ sentencia_for_fun:  ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A cu
                 | FOR error {yyerror("Se esperaba (");}
 ;
 cuerpo_fun_break : 
-                |cuerpo_fun_break sentencias_fun_break 
+                | cuerpo_fun_break sentencias_fun_break PUNTOCOMA
+                | cuerpo_fun_break sentencias_fun_break error {yyerror("Se esperaba ;");}
 ;
 sentencias_fun_break :   asignacion 
                 | sentencia_if_break_fun 
@@ -138,7 +138,7 @@ sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_
 retorno : RETURN PARENT_A expresion PARENT_C 
 ;
 parametro : tipo ID
-        |  ID {yyerror("No esta permitido el tipo declarado");}
+        |  ID ID {yyerror("No esta permitido el tipo declarado");}
 ;
 
 lista_const : CONST lista_asignacion {System.out.println("Declaracion de Constante/s");}

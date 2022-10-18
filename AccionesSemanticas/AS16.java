@@ -21,7 +21,6 @@ public class AS16 extends AccionSemantica{
             TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, t.getLexema());
         	TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
         } else{
-        	System.out.println("hola me estoy ejecutando");
             TablaSimbolos.addNuevoSimbolo(t.getLexema());
             TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, t.getLexema());
             TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
