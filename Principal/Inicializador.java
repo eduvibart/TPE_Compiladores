@@ -23,7 +23,7 @@ public class Inicializador{
         //Mostramos la tabla de simbolos
         System.out.println("Tabla de simbolos \n \n");
         TablaSimbolos.imprimirTabla();
-
+        lector.close();
         	
     }
 }
