@@ -250,8 +250,8 @@ tag :
         |DOSPUNTOS ID 
 ;
 
-sentencia_if_break : IF PARENT_A condicion PARENT_C THEN bloque_break_continue ELSE bloque_break_continue END_IF {System.out.println("Sentencia IF");}
-        | IF PARENT_A condicion PARENT_C THEN bloque_break_continue END_IF {System.out.println("Sentencia IF");}
+sentencia_if_break : IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF {System.out.println("Sentencia IF");}
+        | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C END_IF {System.out.println("Sentencia IF");}
 ;
 sentencia_for :ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");}
                 | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}

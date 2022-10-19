@@ -3,7 +3,7 @@ program {
             << FUNCION COMO EXPRESION
             a =: cumple(a,b);
             << IF OUT WHEN
-            if (tobi(a) < b) then 
+            if (tobi(a) < b ) then 
                 { out (`hola`); }
             else 
                 {when( a > b ) then 
