@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 
 import AnalizadorLexico.AnalizadorLexico;
+import GeneracionCodigoIntermedio.*;
 
 public class Inicializador{
     
@@ -23,7 +24,12 @@ public class Inicializador{
         //Mostramos la tabla de simbolos
         System.out.println("Tabla de simbolos \n \n");
         TablaSimbolos.imprimirTabla();
+        NodoControl raiz = parser.getRaiz();
+        System.out.println("Arbol Sintactico \n \n");
+        raiz.recorrerArbol("");
         lector.close();
+
+        
         	
     }
 }

@@ -3,6 +3,7 @@ package Principal;
 import java.io.IOException;
 import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
+import GeneracionCodigoIntermedio.*;
 %}
 
 %token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST SUMA RESTA MULT DIV ENTERO FLOAT
@@ -13,17 +14,24 @@ import AnalizadorLexico.Token;
 %left MULT DIV
 
 %% 
-program : nombre_program LLAVE_A bloque_sentencias LLAVE_C
+program : nombre_program LLAVE_A bloque_sentencias LLAVE_C {raiz = new NodoControl("PROGRAMA",(ArbolSintactico)$3);
+                                                            System.out.println("Raiz---$$ : " + $$ + " $1 :" + $1);
+                                                            System.out.println("Raiz : " + raiz);
+                                                           }
         | error {yyerror("Hay un error sintactico en la entrada que arrastra errores");}
 ;
 nombre_program : ID 
 ;
 bloque_sentencias :
-                | bloque_sentencias sentencia PUNTOCOMA
+                | bloque_sentencias sentencia PUNTOCOMA {$$=$2;
+                                                        System.out.println("BloqueSentencia---$$ : " + $$ + " $1 :" + $1);
+                                                        }
                 | bloque_sentencias sentencia {yyerror("Se esperaba ;");}
 ;
-sentencia : sentencia_declarativa
-        | sentencia_ejecutable
+sentencia : sentencia_declarativa 
+        | sentencia_ejecutable {$$ = $1;
+                                System.out.println("Sentencia---$$ : " + $$ + " $1 :" + $1);
+                                }
 ;
 sentencia_declarativa : sentencia_decl_datos 
                         | sentencia_decl_fun 
@@ -146,7 +154,9 @@ lista_const : CONST lista_asignacion {System.out.println("Declaracion de Constan
 lista_asignacion : lista_asignacion COMA asignacion
         | asignacion
 ;
-sentencia_ejecutable : asignacion 
+sentencia_ejecutable : asignacion {$$ = $1;
+                                   System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);
+                                  }
         | sentencia_if       
         | sentencia_out 
         | sentencia_when 
@@ -154,22 +164,52 @@ sentencia_ejecutable : asignacion
         | sentencia_while 
         | llamado_func
 ;
-asignacion : ID ASIG expresion  {System.out.println("Asignacion");}
+asignacion : ID ASIG expresion  {
+                                 System.out.println("Asignacion");
+                                 $$ = new NodoComun($2.sval,new NodoHoja($1.sval),(ArbolSintactico3);
+                                 System.out.println("Asignacino---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
+                                }
 ;
-expresion: expresion SUMA termino
-        | expresion RESTA termino
-        | termino
+expresion: expresion SUMA termino {
+                                   $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                                   System.out.println("ExpresionSuma---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
+                                  }
+        | expresion RESTA termino {
+                                   $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                                   System.out.println("ExpresionResta---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
+                                  }
+        | termino {
+                   $$ = $1;
+                   System.out.println("ExpresionTermino---$$ : " + $$ + " $1 :" + $1);
+                  } 
         | llamado_func
         | sentencia_for ELSE cte
         | sentencia_while ELSE cte 
         
 ;
-termino: termino MULT factor     
-        | termino DIV factor    
-        | factor
+termino: termino MULT factor  {
+                                $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                                System.out.println("TerminoMult---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
+                                }   
+        | termino DIV factor 
+                                {
+                                 $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                                 System.out.println("TerminoDiv---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
+                                }   
+        | factor 
+                {
+                  $$ = $1;
+                  System.out.println("TerminoFactor---$$ : " + $$ + " $1 :" + $1);
+                 }  
 ;
-factor: ID
-        | cte      
+factor: ID {
+            $$ = new NodoHoja($1.sval);
+            System.out.println("FactorID----$$ : " + $$ + " $1 :" + $1);                                                             
+           }
+        | cte {
+               $$ = new NodoHoja($1.sval);
+               System.out.println("factorCTE---$$ : " + $$ + " $1 :" + $1);
+              }  
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}
         | FLOAT
@@ -279,6 +319,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C
         | ID PARENT_A error {System.out.println("Se esperaba )");}
 ;
 %%
+private NodoControl raiz;
 
 void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
@@ -299,4 +340,7 @@ int yylex() throws IOException{
         //}else
         //  System.out.println("TERMINO LA EJECUCION");
         return t.getId();
+}
+public NodoControl getRaiz(){
+	return raiz;
 }

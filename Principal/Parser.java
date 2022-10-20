@@ -21,7 +21,8 @@ package Principal;
 import java.io.IOException;
 import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
-//#line 22 "Parser.java"
+import GeneracionCodigoIntermedio.*;
+//#line 23 "Parser.java"
 
 
 
@@ -925,7 +926,8 @@ final static String yyrule[] = {
 "llamado_func : ID PARENT_A error",
 };
 
-//#line 282 "gramatica.y"
+//#line 322 "gramatica.y"
+private NodoControl raiz;
 
 void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
@@ -947,7 +949,10 @@ int yylex() throws IOException{
         //  System.out.println("TERMINO LA EJECUCION");
         return t.getId();
 }
-//#line 879 "Parser.java"
+public NodoControl getRaiz(){
+	return raiz;
+}
+//#line 884 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -1101,499 +1106,584 @@ boolean doaction;
     switch(yyn)
       {
 //########## USER-SUPPLIED ACTIONS ##########
-case 2:
+case 1:
 //#line 17 "gramatica.y"
+{raiz = new NodoControl("PROGRAMA",(ArbolSintactico)val_peek(1));
+                                                            System.out.println("Raiz---$$ : " + yyval + " $1 :" + val_peek(3));
+                                                            System.out.println("Raiz : " + raiz);
+                                                           }
+break;
+case 2:
+//#line 21 "gramatica.y"
 {yyerror("Hay un error sintactico en la entrada que arrastra errores");}
 break;
+case 5:
+//#line 26 "gramatica.y"
+{yyval=val_peek(1);
+                                                        System.out.println("BloqueSentencia---$$ : " + yyval + " $1 :" + val_peek(2));
+                                                        }
+break;
 case 6:
-//#line 23 "gramatica.y"
+//#line 29 "gramatica.y"
 {yyerror("Se esperaba ;");}
 break;
+case 8:
+//#line 32 "gramatica.y"
+{yyval = val_peek(0);
+                                System.out.println("Sentencia---$$ : " + yyval + " $1 :" + val_peek(0));
+                                }
+break;
 case 14:
-//#line 35 "gramatica.y"
+//#line 43 "gramatica.y"
 {System.out.println("Declaracion de datos");}
 break;
 case 15:
-//#line 36 "gramatica.y"
+//#line 44 "gramatica.y"
 {yyerror("No esta permitido el tipo declarado");}
 break;
 case 18:
-//#line 41 "gramatica.y"
+//#line 49 "gramatica.y"
 {System.out.println("Declaracion de Funcion");}
 break;
 case 19:
-//#line 42 "gramatica.y"
+//#line 50 "gramatica.y"
 {System.out.println("Declaracion de Funcion");}
 break;
 case 20:
-//#line 43 "gramatica.y"
+//#line 51 "gramatica.y"
 {System.out.println("Declaracion de Funcion");}
 break;
 case 21:
-//#line 44 "gramatica.y"
+//#line 52 "gramatica.y"
 {yyerror("Se esperaba } ");}
 break;
 case 22:
-//#line 45 "gramatica.y"
+//#line 53 "gramatica.y"
 {yyerror("Se esperaba {");}
 break;
 case 23:
-//#line 46 "gramatica.y"
+//#line 54 "gramatica.y"
 {yyerror("El tipo declarado no esta permitido");}
 break;
 case 24:
-//#line 47 "gramatica.y"
+//#line 55 "gramatica.y"
 {yyerror("Se esperaba :");}
 break;
 case 25:
-//#line 48 "gramatica.y"
+//#line 56 "gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 26:
-//#line 49 "gramatica.y"
+//#line 57 "gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 27:
-//#line 50 "gramatica.y"
+//#line 58 "gramatica.y"
 {yyerror("Se esperaba (");}
 break;
 case 28:
-//#line 51 "gramatica.y"
+//#line 59 "gramatica.y"
 {yyerror("Se esperaba un nombre de funcion");}
 break;
 case 31:
-//#line 55 "gramatica.y"
+//#line 63 "gramatica.y"
 {System.out.println("Se esperaba ;");}
 break;
 case 43:
-//#line 69 "gramatica.y"
+//#line 77 "gramatica.y"
 {System.out.println("Sentencia IF");}
 break;
 case 44:
-//#line 70 "gramatica.y"
+//#line 78 "gramatica.y"
 {System.out.println("Sentencia IF");}
 break;
 case 45:
-//#line 71 "gramatica.y"
+//#line 79 "gramatica.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 46:
-//#line 72 "gramatica.y"
+//#line 80 "gramatica.y"
 {yyerror("Se esperaba } ");}
 break;
 case 47:
-//#line 73 "gramatica.y"
+//#line 81 "gramatica.y"
 {yyerror("Se esperaba { ");}
 break;
 case 48:
-//#line 74 "gramatica.y"
+//#line 82 "gramatica.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 49:
-//#line 75 "gramatica.y"
+//#line 83 "gramatica.y"
 {yyerror("Se esperaba } ");}
 break;
 case 50:
-//#line 76 "gramatica.y"
+//#line 84 "gramatica.y"
 {yyerror("Se esperaba { ");}
 break;
 case 51:
-//#line 77 "gramatica.y"
-{yyerror("Se esperaba then ");}
-break;
-case 52:
-//#line 78 "gramatica.y"
-{yyerror("Se esperaba ) ");}
-break;
-case 53:
-//#line 79 "gramatica.y"
-{yyerror("Se esperaba una condicion ");}
-break;
-case 54:
-//#line 80 "gramatica.y"
-{yyerror("Se esperaba ( ");}
-break;
-case 55:
-//#line 82 "gramatica.y"
-{System.out.println("Sentencia WHEN");}
-break;
-case 56:
-//#line 83 "gramatica.y"
-{yyerror("Se esperaba }");}
-break;
-case 57:
-//#line 84 "gramatica.y"
-{yyerror("Se esperaba {");}
-break;
-case 58:
 //#line 85 "gramatica.y"
 {yyerror("Se esperaba then ");}
 break;
-case 59:
+case 52:
 //#line 86 "gramatica.y"
-{yyerror("Se esperaba )");}
+{yyerror("Se esperaba ) ");}
 break;
-case 60:
+case 53:
 //#line 87 "gramatica.y"
-{yyerror("Se esperaba condicion");}
+{yyerror("Se esperaba una condicion ");}
 break;
-case 61:
+case 54:
 //#line 88 "gramatica.y"
-{yyerror("Se esperaba (");}
+{yyerror("Se esperaba ( ");}
 break;
-case 62:
+case 55:
 //#line 90 "gramatica.y"
-{System.out.println("Sentencia WHILE");}
+{System.out.println("Sentencia WHEN");}
 break;
-case 63:
+case 56:
 //#line 91 "gramatica.y"
-{System.out.println("Sentencia WHILE");}
-break;
-case 64:
-//#line 92 "gramatica.y"
 {yyerror("Se esperaba }");}
 break;
-case 65:
-//#line 93 "gramatica.y"
+case 57:
+//#line 92 "gramatica.y"
 {yyerror("Se esperaba {");}
 break;
-case 66:
+case 58:
+//#line 93 "gramatica.y"
+{yyerror("Se esperaba then ");}
+break;
+case 59:
 //#line 94 "gramatica.y"
 {yyerror("Se esperaba )");}
 break;
-case 67:
+case 60:
 //#line 95 "gramatica.y"
-{yyerror("Se esperaba una asignacion");}
+{yyerror("Se esperaba condicion");}
 break;
-case 68:
+case 61:
 //#line 96 "gramatica.y"
 {yyerror("Se esperaba (");}
 break;
+case 62:
+//#line 98 "gramatica.y"
+{System.out.println("Sentencia WHILE");}
+break;
+case 63:
+//#line 99 "gramatica.y"
+{System.out.println("Sentencia WHILE");}
+break;
+case 64:
+//#line 100 "gramatica.y"
+{yyerror("Se esperaba }");}
+break;
+case 65:
+//#line 101 "gramatica.y"
+{yyerror("Se esperaba {");}
+break;
+case 66:
+//#line 102 "gramatica.y"
+{yyerror("Se esperaba )");}
+break;
+case 67:
+//#line 103 "gramatica.y"
+{yyerror("Se esperaba una asignacion");}
+break;
+case 68:
+//#line 104 "gramatica.y"
+{yyerror("Se esperaba (");}
+break;
 case 69:
-//#line 97 "gramatica.y"
+//#line 105 "gramatica.y"
 {yyerror("Se esperaba :");}
 break;
 case 70:
-//#line 98 "gramatica.y"
-{yyerror("Se esperaba )");}
-break;
-case 71:
-//#line 99 "gramatica.y"
-{yyerror("Se esperaba una condicion");}
-break;
-case 72:
-//#line 100 "gramatica.y"
-{yyerror("Se esperaba (");}
-break;
-case 73:
-//#line 102 "gramatica.y"
-{System.out.println("Sentencia FOR");}
-break;
-case 74:
-//#line 103 "gramatica.y"
-{System.out.println("Sentencia FOR");}
-break;
-case 75:
-//#line 104 "gramatica.y"
-{yyerror("Se esperaba }");}
-break;
-case 76:
-//#line 105 "gramatica.y"
-{yyerror("Se esperaba {");}
-break;
-case 77:
 //#line 106 "gramatica.y"
 {yyerror("Se esperaba )");}
 break;
-case 78:
+case 71:
 //#line 107 "gramatica.y"
+{yyerror("Se esperaba una condicion");}
+break;
+case 72:
+//#line 108 "gramatica.y"
+{yyerror("Se esperaba (");}
+break;
+case 73:
+//#line 110 "gramatica.y"
+{System.out.println("Sentencia FOR");}
+break;
+case 74:
+//#line 111 "gramatica.y"
+{System.out.println("Sentencia FOR");}
+break;
+case 75:
+//#line 112 "gramatica.y"
+{yyerror("Se esperaba }");}
+break;
+case 76:
+//#line 113 "gramatica.y"
+{yyerror("Se esperaba {");}
+break;
+case 77:
+//#line 114 "gramatica.y"
+{yyerror("Se esperaba )");}
+break;
+case 78:
+//#line 115 "gramatica.y"
 {yyerror("Se esperaba (");}
 break;
 case 81:
-//#line 111 "gramatica.y"
+//#line 119 "gramatica.y"
 {yyerror("Se esperaba ;");}
 break;
 case 92:
-//#line 125 "gramatica.y"
+//#line 133 "gramatica.y"
 {System.out.println("Sentencia IF");}
 break;
 case 93:
-//#line 126 "gramatica.y"
+//#line 134 "gramatica.y"
 {System.out.println("Sentencia IF");}
 break;
 case 94:
-//#line 127 "gramatica.y"
+//#line 135 "gramatica.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 95:
-//#line 128 "gramatica.y"
+//#line 136 "gramatica.y"
 {yyerror("Se esperaba } ");}
 break;
 case 96:
-//#line 129 "gramatica.y"
+//#line 137 "gramatica.y"
 {yyerror("Se esperaba { ");}
 break;
 case 97:
-//#line 130 "gramatica.y"
+//#line 138 "gramatica.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 98:
-//#line 131 "gramatica.y"
+//#line 139 "gramatica.y"
 {yyerror("Se esperaba } ");}
 break;
 case 99:
-//#line 132 "gramatica.y"
+//#line 140 "gramatica.y"
 {yyerror("Se esperaba { ");}
 break;
 case 100:
-//#line 133 "gramatica.y"
+//#line 141 "gramatica.y"
 {yyerror("Se esperaba then ");}
 break;
 case 101:
-//#line 134 "gramatica.y"
+//#line 142 "gramatica.y"
 {yyerror("Se esperaba ) ");}
 break;
 case 102:
-//#line 135 "gramatica.y"
+//#line 143 "gramatica.y"
 {yyerror("Se esperaba una condicion ");}
 break;
 case 103:
-//#line 136 "gramatica.y"
+//#line 144 "gramatica.y"
 {yyerror("Se esperaba ( ");}
 break;
 case 106:
-//#line 141 "gramatica.y"
+//#line 149 "gramatica.y"
 {yyerror("No esta permitido el tipo declarado");}
 break;
 case 107:
-//#line 144 "gramatica.y"
+//#line 152 "gramatica.y"
 {System.out.println("Declaracion de Constante/s");}
 break;
-case 117:
+case 110:
 //#line 157 "gramatica.y"
-{System.out.println("Asignacion");}
+{yyval = val_peek(0);
+                                   System.out.println("SentenciaEjecutable---$$ : " + yyval + " $1 :" + val_peek(0));
+                                  }
+break;
+case 117:
+//#line 167 "gramatica.y"
+{
+                                 System.out.println("Asignacion");
+                                 yyval = new NodoComun(val_peek(1).sval,new NodoHoja(val_peek(2).sval),(ArbolSintactico) val_peek(0));
+                                 System.out.println("Asignacino---$$ : " + yyval + " $1 :" + val_peek(2)+" $3 :" + val_peek(0));
+                                }
+break;
+case 118:
+//#line 173 "gramatica.y"
+{
+                                   yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
+                                   System.out.println("ExpresionSuma---$$ : " + yyval + " $1 :" + val_peek(2)+" $3 :" + val_peek(0));
+                                  }
+break;
+case 119:
+//#line 177 "gramatica.y"
+{
+                                   yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
+                                   System.out.println("ExpresionResta---$$ : " + yyval + " $1 :" + val_peek(2)+" $3 :" + val_peek(0));
+                                  }
+break;
+case 120:
+//#line 181 "gramatica.y"
+{
+                   yyval = val_peek(0);
+                   System.out.println("ExpresionTermino---$$ : " + yyval + " $1 :" + val_peek(0));
+                  }
+break;
+case 124:
+//#line 190 "gramatica.y"
+{
+                                yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
+                                System.out.println("TerminoMult---$$ : " + yyval + " $1 :" + val_peek(2)+" $3 :" + val_peek(0));
+                                }
+break;
+case 125:
+//#line 195 "gramatica.y"
+{
+                                 yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
+                                 System.out.println("TerminoDiv---$$ : " + yyval + " $1 :" + val_peek(2)+" $3 :" + val_peek(0));
+                                }
+break;
+case 126:
+//#line 200 "gramatica.y"
+{
+                  yyval = val_peek(0);
+                  System.out.println("TerminoFactor---$$ : " + yyval + " $1 :" + val_peek(0));
+                 }
+break;
+case 127:
+//#line 205 "gramatica.y"
+{
+            yyval = new NodoHoja(val_peek(0).sval);
+            System.out.println("FactorID----$$ : " + yyval + " $1 :" + val_peek(0));                                                             
+           }
+break;
+case 128:
+//#line 209 "gramatica.y"
+{
+               yyval = new NodoHoja(val_peek(0).sval);
+               System.out.println("factorCTE---$$ : " + yyval + " $1 :" + val_peek(0));
+              }
 break;
 case 129:
-//#line 174 "gramatica.y"
+//#line 214 "gramatica.y"
 {  chequearRangoI32(val_peek(0).sval);}
 break;
 case 133:
-//#line 181 "gramatica.y"
+//#line 221 "gramatica.y"
 {System.out.println("Sentencia IF");}
 break;
 case 134:
-//#line 182 "gramatica.y"
+//#line 222 "gramatica.y"
 {System.out.println("Sentencia IF");}
 break;
 case 135:
-//#line 183 "gramatica.y"
+//#line 223 "gramatica.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 136:
-//#line 184 "gramatica.y"
+//#line 224 "gramatica.y"
 {yyerror("Se esperaba } ");}
 break;
 case 137:
-//#line 185 "gramatica.y"
+//#line 225 "gramatica.y"
 {yyerror("Se esperaba { ");}
 break;
 case 138:
-//#line 186 "gramatica.y"
+//#line 226 "gramatica.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 139:
-//#line 187 "gramatica.y"
+//#line 227 "gramatica.y"
 {yyerror("Se esperaba } ");}
 break;
 case 140:
-//#line 188 "gramatica.y"
+//#line 228 "gramatica.y"
 {yyerror("Se esperaba { ");}
 break;
 case 141:
-//#line 189 "gramatica.y"
+//#line 229 "gramatica.y"
 {yyerror("Se esperaba then ");}
 break;
 case 142:
-//#line 190 "gramatica.y"
+//#line 230 "gramatica.y"
 {yyerror("Se esperaba ) ");}
 break;
 case 143:
-//#line 191 "gramatica.y"
+//#line 231 "gramatica.y"
 {yyerror("Se esperaba una condicion ");}
 break;
 case 144:
-//#line 192 "gramatica.y"
+//#line 232 "gramatica.y"
 {yyerror("Se esperaba ( ");}
 break;
 case 146:
-//#line 195 "gramatica.y"
+//#line 235 "gramatica.y"
 {yyerror("Se esperaba otra expresion para comparar.");}
 break;
 case 147:
-//#line 196 "gramatica.y"
+//#line 236 "gramatica.y"
 {yyerror("Se esperaba un tipo de comparacion.");}
 break;
 case 155:
-//#line 206 "gramatica.y"
+//#line 246 "gramatica.y"
 {yyerror("Se esperaba ;");}
 break;
 case 156:
-//#line 208 "gramatica.y"
+//#line 248 "gramatica.y"
 {System.out.println("Sentencia OUT");}
 break;
 case 157:
-//#line 209 "gramatica.y"
+//#line 249 "gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 158:
-//#line 210 "gramatica.y"
+//#line 250 "gramatica.y"
 {yyerror("Se esperaba una CADENA");}
 break;
 case 159:
-//#line 211 "gramatica.y"
+//#line 251 "gramatica.y"
 {yyerror("Se esperaba (");}
 break;
 case 160:
-//#line 213 "gramatica.y"
+//#line 253 "gramatica.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 161:
-//#line 214 "gramatica.y"
+//#line 254 "gramatica.y"
 {yyerror("Se esperaba } en el when");}
 break;
 case 162:
-//#line 215 "gramatica.y"
+//#line 255 "gramatica.y"
 {yyerror("Se esperaba { en el when");}
 break;
 case 163:
-//#line 216 "gramatica.y"
+//#line 256 "gramatica.y"
 {yyerror("Se esperaba then en el when");}
 break;
 case 164:
-//#line 217 "gramatica.y"
+//#line 257 "gramatica.y"
 {yyerror("Se esperaba condicion en el when");}
 break;
 case 165:
-//#line 218 "gramatica.y"
+//#line 258 "gramatica.y"
 {yyerror("Se esperaba ( en el when");}
 break;
 case 166:
-//#line 219 "gramatica.y"
+//#line 259 "gramatica.y"
 {yyerror("Se esperaba ) en el when");}
 break;
 case 167:
-//#line 220 "gramatica.y"
+//#line 260 "gramatica.y"
 {yyerror("Se esperaba then en el when");}
 break;
 case 168:
-//#line 222 "gramatica.y"
+//#line 262 "gramatica.y"
 {System.out.println("Sentencia WHILE");}
 break;
 case 169:
-//#line 223 "gramatica.y"
+//#line 263 "gramatica.y"
 {System.out.println("Sentencia WHILE");}
 break;
 case 170:
-//#line 224 "gramatica.y"
+//#line 264 "gramatica.y"
 {yyerror("Se esperaba }");}
 break;
 case 171:
-//#line 225 "gramatica.y"
+//#line 265 "gramatica.y"
 {yyerror("Se esperaba {");}
 break;
 case 172:
-//#line 226 "gramatica.y"
+//#line 266 "gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 173:
-//#line 227 "gramatica.y"
+//#line 267 "gramatica.y"
 {yyerror("Se esperaba una asignacion");}
 break;
 case 174:
-//#line 228 "gramatica.y"
+//#line 268 "gramatica.y"
 {yyerror("Se esperaba (");}
 break;
 case 175:
-//#line 229 "gramatica.y"
+//#line 269 "gramatica.y"
 {yyerror("Se esperaba :");}
 break;
 case 176:
-//#line 230 "gramatica.y"
+//#line 270 "gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 177:
-//#line 231 "gramatica.y"
+//#line 271 "gramatica.y"
 {yyerror("Se esperaba una condicion");}
 break;
 case 178:
-//#line 232 "gramatica.y"
+//#line 272 "gramatica.y"
 {yyerror("Se esperaba (");}
 break;
 case 181:
-//#line 236 "gramatica.y"
+//#line 276 "gramatica.y"
 {yyerror("Se esperaba ;");}
 break;
 case 193:
-//#line 253 "gramatica.y"
+//#line 293 "gramatica.y"
 {System.out.println("Sentencia IF");}
 break;
 case 194:
-//#line 254 "gramatica.y"
+//#line 294 "gramatica.y"
 {System.out.println("Sentencia IF");}
 break;
 case 195:
-//#line 256 "gramatica.y"
+//#line 296 "gramatica.y"
 {System.out.println("Sentencia FOR");}
 break;
 case 196:
-//#line 257 "gramatica.y"
+//#line 297 "gramatica.y"
 {yyerror("Se esperaba }");}
 break;
 case 197:
-//#line 258 "gramatica.y"
+//#line 298 "gramatica.y"
 {yyerror("Se esperaba {");}
 break;
 case 198:
-//#line 259 "gramatica.y"
+//#line 299 "gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 199:
-//#line 260 "gramatica.y"
+//#line 300 "gramatica.y"
 {yyerror("Se esperaba (");}
 break;
 case 200:
-//#line 261 "gramatica.y"
+//#line 301 "gramatica.y"
 {System.out.println("Sentencia FOR");}
 break;
 case 201:
-//#line 262 "gramatica.y"
+//#line 302 "gramatica.y"
 {yyerror("Se esperaba }");}
 break;
 case 202:
-//#line 263 "gramatica.y"
+//#line 303 "gramatica.y"
 {yyerror("Se esperaba {");}
 break;
 case 203:
-//#line 264 "gramatica.y"
+//#line 304 "gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 204:
-//#line 265 "gramatica.y"
+//#line 305 "gramatica.y"
 {yyerror("Se esperaba (");}
 break;
 case 212:
-//#line 277 "gramatica.y"
+//#line 317 "gramatica.y"
 {System.out.println("Se esperaba )");}
 break;
 case 213:
-//#line 278 "gramatica.y"
+//#line 318 "gramatica.y"
 {System.out.println("Se esperaba )");}
 break;
 case 214:
-//#line 279 "gramatica.y"
+//#line 319 "gramatica.y"
 {System.out.println("Se esperaba )");}
 break;
-//#line 1520 "Parser.java"
+//#line 1610 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
