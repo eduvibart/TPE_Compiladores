@@ -22,8 +22,8 @@ program : nombre_program LLAVE_A bloque_sentencias LLAVE_C {raiz = new NodoContr
 ;
 nombre_program : ID 
 ;
-bloque_sentencias :
-                | bloque_sentencias sentencia PUNTOCOMA {$$=$2;
+bloque_sentencias :{$$=new NodoHoja("Fin");}
+                | bloque_sentencias sentencia PUNTOCOMA {$$=new NodoComun("Sentencia", (ArbolSintactico) $2, (ArbolSintactico) $1);
                                                         System.out.println("BloqueSentencia---$$ : " + $$ + " $1 :" + $1);
                                                         }
                 | bloque_sentencias sentencia {yyerror("Se esperaba ;");}
@@ -157,7 +157,9 @@ lista_asignacion : lista_asignacion COMA asignacion
 sentencia_ejecutable : asignacion {$$ = $1;
                                    System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);
                                   }
-        | sentencia_if       
+        | sentencia_if   {
+                        $$ = $1;
+                        }    
         | sentencia_out 
         | sentencia_when 
         | sentencia_for 
@@ -166,7 +168,7 @@ sentencia_ejecutable : asignacion {$$ = $1;
 ;
 asignacion : ID ASIG expresion  {
                                  System.out.println("Asignacion");
-                                 $$ = new NodoComun($2.sval,new NodoHoja($1.sval),(ArbolSintactico3);
+                                 $$ = new NodoComun($2.sval,new NodoHoja($1.sval), (ArbolSintactico) $3);
                                  System.out.println("Asignacino---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
                                 }
 ;
@@ -218,7 +220,9 @@ cte : ENTERO {  chequearRangoI32($1.sval);}
 
 ;
 
-sentencia_if :IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF {System.out.println("Sentencia IF");}
+sentencia_if :IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF {
+                                                                                                                                $$= new NodoComun("IF",(ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",(ArbolSintactico) $7,(ArbolSintactico) $11));
+                System.out.println("Sentencia IF");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C END_IF {System.out.println("Sentencia IF");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } ");}
@@ -231,18 +235,20 @@ sentencia_if :IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAV
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
                 | IF error {yyerror("Se esperaba ( ");}
 ;
-condicion : expresion comparacion expresion
+condicion : expresion comparacion expresion {$$= new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);}
         | expresion comparacion error {yyerror("Se esperaba otra expresion para comparar.");}
         | expresion error expresion {yyerror("Se esperaba un tipo de comparacion.");}
 ;
-comparacion: IGUAL
-        | MAYOR 
-        | MENOR 
-        | MENORIGUAL 
-        | MAYORIGUAL
+comparacion: IGUAL {$$= $1;}
+        | MAYOR {$$= $1;}
+        | MENOR {$$= $1;}
+        | MENORIGUAL {$$= $1;}
+        | MAYORIGUAL {$$= $1;}
 ;
-bloque_ejecutable : 
-                | bloque_ejecutable sentencia_ejecutable PUNTOCOMA
+bloque_ejecutable : {$$=new NodoHoja("Fin");}
+                | bloque_ejecutable sentencia_ejecutable PUNTOCOMA {
+                                                                $$=new NodoComun("Bloque Ejecutable", (ArbolSintactico) $2, (ArbolSintactico) $1);
+                                                                }
                 | bloque_ejecutable sentencia_ejecutable {yyerror("Se esperaba ;");}
 ;
 sentencia_out : OUT PARENT_A CADENA PARENT_C {System.out.println("Sentencia OUT");}

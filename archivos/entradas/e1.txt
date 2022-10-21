@@ -1,3 +1,10 @@
 program {
-        a =: a + b;
+        if (a < b ) then 
+                {  
+                    a=:b;    
+                }
+            else 
+                {
+                }
+            end_if;
         }   

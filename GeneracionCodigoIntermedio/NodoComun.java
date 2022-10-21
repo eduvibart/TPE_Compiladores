@@ -12,10 +12,16 @@ public class NodoComun extends ArbolSintactico{
     @Override
     public void recorrerArbol(String s) {
         System.out.print(s+"Lexama Nodo: " + super.getLex() + "\n");
-        System.out.print(s+"Hijo Izquierdo: " + "\n");
-        super.getIzq().recorrerArbol(s+"    ");
-        System.out.print(s+"Hijo Derecho: "+ "\n");
-        super.getDer().recorrerArbol(s+"    ");
+        
+        if (!(super.getIzq() == null)){
+            System.out.print(s+"Hijo Izquierdo: " + "\n");
+            super.getIzq().recorrerArbol(s+"    ");
+        }
+        
+        if (!(super.getDer() == null)){
+            System.out.print(s+"Hijo Derecho: "+ "\n");
+            super.getDer().recorrerArbol(s+"    ");
+        }
         
     }
 
