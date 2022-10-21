@@ -9,8 +9,8 @@ public class TablaSimbolos {
     
     private static Map<String,Map<String,Object>> simbolos = new HashMap<>(); //Lexema, y atributos del mismo.
 
-    public static final String VALOR="valor";
-    public static final String ID="ID";
+    public static final String VALOR="Valor";
+    public static final String ID="Id";
 
     public static void addNuevoSimbolo(String lexema) {
         Map<String,Object> aux=new HashMap<>();

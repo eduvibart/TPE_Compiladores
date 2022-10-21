@@ -24,10 +24,12 @@ public class AS4 extends AccionSemantica {
             if (TablaSimbolos.existeSimbolo(t.getLexema())){
                 TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, valor);
                 TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
+                TablaSimbolos.addAtributo(t.getLexema(), "Tipo", "Entero");
             } else{
                 TablaSimbolos.addNuevoSimbolo(t.getLexema());
                 TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, valor);
                 TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
+                TablaSimbolos.addAtributo(t.getLexema(), "Tipo", "Entero");
 
             }
     	}else {

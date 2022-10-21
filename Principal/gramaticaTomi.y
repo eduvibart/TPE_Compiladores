@@ -49,7 +49,8 @@ tipo : I32 {
 ;
 sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos");
                                       for (String s : ((NodoTipos)$2).getList()){
-                                        TablaSimbolos.addAtributo(s,"tipo",((ArbolSintactico) $1).getTipo());
+                                        TablaSimbolos.addAtributo(s,"Tipo",((ArbolSintactico) $1).getTipo());
+                                        TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
                                       }
                                      }
                         | ID list_var {yyerror("No esta permitido el tipo declarado");}
@@ -342,6 +343,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C
 ;
 %%
 private NodoControl raiz;
+private String ambitoActual = "Global";
 
 void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
