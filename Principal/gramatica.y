@@ -28,7 +28,7 @@ bloque_sentencias :{$$=new NodoHoja("Fin");}
                                                         }
                 | bloque_sentencias sentencia {yyerror("Se esperaba ;");}
 ;
-sentencia : sentencia_declarativa 
+sentencia : sentencia_declarativa  {$$=new NodoHoja("Sentencia Declarativa");}
         | sentencia_ejecutable {$$ = $1;
                                 System.out.println("Sentencia---$$ : " + $$ + " $1 :" + $1);
                                 }
@@ -37,14 +37,30 @@ sentencia_declarativa : sentencia_decl_datos
                         | sentencia_decl_fun 
                         | lista_const  
 ;
-tipo : I32 
-        | F32
+tipo : I32 {
+            $$ = new NodoHoja("Entero");
+            ((NodoHoja)$$).setTipo("Entero");
+           }
+     | F32 {
+            $$ = new NodoHoja("Float");
+            ((NodoHoja)$$).setTipo("Float");
+           }
 ;
-sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos");}
+sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos");
+                                      for (String s : ((NodoTipos)$2).getList()){
+                                        TablaSimbolos.addAtributo(s,"Tipo",((ArbolSintactico) $1).getTipo());
+                                        TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
+                                      }
+                                     }
                         | ID list_var {yyerror("No esta permitido el tipo declarado");}
 ;
-list_var : list_var COMA ID 
-        |  ID
+list_var : list_var COMA ID {
+                            $$=$1;
+                            ((NodoTipos)$$).add((String)$3.sval);
+                            }
+        |  ID {
+               $$=new NodoTipos((String)$1.sval);
+              }
 ;
 sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
