@@ -9,9 +9,10 @@ public class NodoControl extends ArbolSintactico{
 
     @Override
     public void recorrerArbol(String identado) {
-        System.out.print("Nodo de control: " +super.getLex()+ "\n");
-        String s = "    ";
-        super.getIzq().recorrerArbol(s);
+        
+        System.out.print(identado+"Nodo de control: " +super.getLex()+ "\n");
+        identado += "    ";
+        super.getIzq().recorrerArbol(identado);
     }
     
     
