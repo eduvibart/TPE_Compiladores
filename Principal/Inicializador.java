@@ -14,11 +14,21 @@ public class Inicializador{
 	public static void main(String[] args) throws IOException{
         Scanner lector = new Scanner(System.in);
         System.out.println("Ingrese el nombre del archivo del cual se quiere leer seguido de '.' y la extención del archivo.");
+        
         String nombreArchivo = lector.nextLine();
         BufferedReader entrada = new BufferedReader(new FileReader("archivos/entradas/" + nombreArchivo)); //en nuestro caso gramatica.txt
+        
+        BufferedReader entradaAMostrar = new BufferedReader(new FileReader("archivos/entradas/" + nombreArchivo));
+        System.out.println("\nEntrada: \n");
+        ImpresorEntrada impresora = new ImpresorEntrada(entradaAMostrar);
+        impresora.imprimirEntrada();
+        System.out.println("\n\n");
+        
         AnalizadorLexico.setEntrada(entrada);
         Parser parser = new Parser();
         parser.run();
+
+        System.out.println("\nErrores lexicos : \n");
         System.out.println(AnalizadorLexico.getErrores());
         
         //Mostramos la tabla de simbolos

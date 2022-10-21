@@ -31,7 +31,7 @@ public class AS4 extends AccionSemantica {
 
             }
     	}else {
-    		AnalizadorLexico.addError("Constante fuera de rango");
+    		AnalizadorLexico.addError("Entero fuera de rango");
     	}
 
     	
