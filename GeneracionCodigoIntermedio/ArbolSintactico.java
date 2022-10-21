@@ -15,6 +15,7 @@ public abstract class ArbolSintactico extends ParserVal{
     }
 
     public String getTipo(){return this.tipo;}
+    public void setTipo(String tipo){this.tipo = tipo;}
     public ArbolSintactico getIzq(){return this.izq;}
     public ArbolSintactico getDer(){return this.der;}
     public String getLex() {return this.lex;}
