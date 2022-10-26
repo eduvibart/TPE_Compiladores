@@ -218,9 +218,15 @@ cte : ENTERO {chequearRangoI32($1.sval);}
         | RESTA FLOAT 
 
 ;
-
-sentencia_if :IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF { $$= new NodoComun("IF",(ArbolSintactico) $3,new NodoComun("Cuerpo_IF",new NodoControl("Then",(ArbolSintactico)$7),new NodoControl("Else",(ArbolSintactico)$11)));}
-                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C END_IF { $$ = new NodoComun("IF",(ArbolSintactico) $3, new NodoControl("Then",(ArbolSintactico)$7));}
+sentencia_if : IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE sentencia_ejecutable PUNTOCOMA END_IF
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE sentencia_ejecutable PUNTOCOMA END_IF
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA END_IF
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF { System.out.println("Sentencia IF");
+                                                                                                                                        $$= new NodoComun("IF",(ArbolSintactico) $3,new NodoComun("Cuerpo_IF",new NodoControl("Then",(ArbolSintactico)$7),new NodoControl("Else",(ArbolSintactico)$11)));
+                                                                                                                                        }
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C END_IF {System.out.println("Sentencia IF");
+                                                                                                $$ = new NodoComun("IF",(ArbolSintactico) $3, new NodoControl("Then",(ArbolSintactico)$7));}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE error {yyerror("Se esperaba { ");}
@@ -231,7 +237,8 @@ sentencia_if :IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAV
                 | IF PARENT_A condicion error {yyerror("Se esperaba ) ");}
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
                 | IF error {yyerror("Se esperaba ( ");}
-;
+                ;
+
 condicion : expresion comparacion expresion {$$= new NodoControl("Condicion",new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3)) ;}
         | expresion comparacion error {yyerror("Se esperaba otra expresion para comparar.");}
         | expresion error expresion {yyerror("Se esperaba un tipo de comparacion.");}
