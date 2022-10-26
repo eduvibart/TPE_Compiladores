@@ -14,30 +14,54 @@ import GeneracionCodigoIntermedio.*;
 %left MULT DIV
 
 %% 
-program : nombre_program LLAVE_A bloque_sentencias LLAVE_C 
+program : nombre_program LLAVE_A bloque_sentencias LLAVE_C {raiz = new NodoControl("PROGRAMA",(ArbolSintactico)$3);
+                                                            System.out.println("Raiz---$$ : " + $$ + " $1 :" + $1);
+                                                            System.out.println("Raiz : " + raiz);
+                                                           }
         | error {yyerror("Hay un error sintactico en la entrada que arrastra errores");}
 ;
 nombre_program : ID 
 ;
-bloque_sentencias :
-                | bloque_sentencias sentencia PUNTOCOMA 
+bloque_sentencias :{$$=new NodoHoja("Fin");}
+                | bloque_sentencias sentencia PUNTOCOMA {
+                                                        $$=new NodoComun("Sentencia", (ArbolSintactico) $2, (ArbolSintactico) $1);
+                                                        System.out.println("BloqueSentencia---$$ : " + $$ + " $1 :" + $1);
+                                                        }
                 | bloque_sentencias sentencia {yyerror("Se esperaba ;");}
 ;
-sentencia : sentencia_declarativa 
-        | sentencia_ejecutable 
+sentencia : sentencia_declarativa {$$=new NodoHoja("Sentencia Declarativa");}
+        | sentencia_ejecutable {$$ = $1;
+                                System.out.println("Sentencia---$$ : " + $$ + " $1 :" + $1);
+                                }
 ;
 sentencia_declarativa : sentencia_decl_datos 
                         | sentencia_decl_fun 
                         | lista_const  
 ;
-tipo : I32 
-        | F32
+tipo : I32 {
+            $$ = new NodoHoja("Entero");
+            ((NodoHoja)$$).setTipo("Entero");
+           }
+     | F32 {
+            $$ = new NodoHoja("Float");
+            ((NodoHoja)$$).setTipo("Float");
+           }
 ;
-sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos");}
+sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos");
+                                      for (String s : ((NodoTipos)$2).getList()){
+                                        TablaSimbolos.addAtributo(s,"Tipo",((ArbolSintactico) $1).getTipo());
+                                        TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
+                                      }
+                                     }
                         | ID list_var {yyerror("No esta permitido el tipo declarado");}
 ;
-list_var : list_var COMA ID 
-        |  ID
+list_var : list_var COMA ID {
+                            $$=$1;
+                            ((NodoTipos)$$).add((String)$3.sval);
+                            }
+        |  ID {
+               $$=new NodoTipos((String)$1.sval);
+              }
 ;
 sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
@@ -147,30 +171,64 @@ lista_const : CONST lista_asignacion {System.out.println("Declaracion de Constan
 lista_asignacion : lista_asignacion COMA asignacion
         | asignacion
 ;
-sentencia_ejecutable : asignacion 
-        | sentencia_if 
+sentencia_ejecutable : asignacion {$$ = $1;
+                                   System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);
+                                  }
+        | sentencia_if   {
+                        $$ = $1;
+                        }    
         | sentencia_out 
         | sentencia_when 
         | sentencia_for 
         | sentencia_while 
         | llamado_func
 ;
-asignacion : ID ASIG expresion
+asignacion : ID ASIG expresion  {
+                                 System.out.println("Asignacion");
+                                 $$ = new NodoComun($2.sval,new NodoHoja($1.sval), (ArbolSintactico) $3);
+                                 System.out.println("Asignacino---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
+                                }
 ;
-expresion: expresion SUMA termino
-        | expresion RESTA termino
-        | termino
+expresion: expresion SUMA termino {
+                                   $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                                   System.out.println("ExpresionSuma---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
+                                  }
+        | expresion RESTA termino {
+                                   $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                                   System.out.println("ExpresionResta---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
+                                  }
+        | termino {
+                   $$ = $1;
+                   System.out.println("ExpresionTermino---$$ : " + $$ + " $1 :" + $1);
+                  } 
         | llamado_func
         | sentencia_for ELSE cte
         | sentencia_while ELSE cte 
         
 ;
-termino: termino MULT factor
-        | termino DIV factor  
+termino: termino MULT factor  {
+                                $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                                System.out.println("TerminoMult---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
+                                }   
+        | termino DIV factor 
+                                {
+                                 $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                                 System.out.println("TerminoDiv---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
+                                }   
         | factor 
+                {
+                  $$ = $1;
+                  System.out.println("TerminoFactor---$$ : " + $$ + " $1 :" + $1);
+                 }  
 ;
-factor: ID 
-        | cte
+factor: ID {
+            $$ = new NodoHoja($1.sval);
+            System.out.println("FactorID----$$ : " + $$ + " $1 :" + $1);                                                             
+           }
+        | cte {
+               $$ = new NodoHoja($1.sval);
+               System.out.println("factorCTE---$$ : " + $$ + " $1 :" + $1);
+              }  
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}
         | FLOAT
@@ -182,7 +240,9 @@ sentencia_if : IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOM
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE sentencia_ejecutable PUNTOCOMA END_IF
                 | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE sentencia_ejecutable PUNTOCOMA END_IF
                 | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA END_IF
-                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF { System.out.println("Sentencia IF");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF {
+                                                                                                                                $$= new NodoComun("IF",(ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",(ArbolSintactico) $7,(ArbolSintactico) $11));
+                                                                                                               System.out.println("Sentencia IF");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C END_IF {System.out.println("Sentencia IF");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } ");}
@@ -195,18 +255,21 @@ sentencia_if : IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOM
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
                 | IF error {yyerror("Se esperaba ( ");}
 ;
-condicion : expresion comparacion expresion
+
+condicion : expresion comparacion expresion {$$= new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);}
         | expresion comparacion error {yyerror("Se esperaba otra expresion para comparar.");}
         | expresion error expresion {yyerror("Se esperaba un tipo de comparacion.");}
 ;
-comparacion: IGUAL 
-        | MAYOR 
-        | MENOR 
-        | MENORIGUAL 
-        | MAYORIGUAL 
+comparacion: IGUAL {$$= $1;}
+        | MAYOR {$$= $1;}
+        | MENOR {$$= $1;}
+        | MENORIGUAL {$$= $1;}
+        | MAYORIGUAL {$$= $1;}
 ;
-bloque_ejecutable : 
-                | bloque_ejecutable sentencia_ejecutable PUNTOCOMA
+bloque_ejecutable : {$$=new NodoHoja("Fin");}
+                | bloque_ejecutable sentencia_ejecutable PUNTOCOMA {
+                                                                $$=new NodoComun("Bloque Ejecutable", (ArbolSintactico) $2, (ArbolSintactico) $1);
+                                                                }
                 | bloque_ejecutable sentencia_ejecutable {yyerror("Se esperaba ;");}
 ;
 sentencia_out : OUT PARENT_A CADENA PARENT_C {System.out.println("Sentencia OUT");}
@@ -214,20 +277,17 @@ sentencia_out : OUT PARENT_A CADENA PARENT_C {System.out.println("Sentencia OUT"
                 |  OUT PARENT_A error {yyerror("Se esperaba una CADENA");}
                 | OUT error {yyerror("Se esperaba (");}
 ;
-sentencia_when :  WHEN PARENT_A condicion PARENT_C THEN sentencia_ejecutable {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } en el when");}
-                | WHEN PARENT_A condicion PARENT_C THEN error bloque_ejecutable LLAVE_C {yyerror("Se esperaba { en el when");}
-                | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_ejecutable LLAVE_C {yyerror("Se esperaba then en el when");}
-                | WHEN PARENT_A error PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {yyerror("Se esperaba condicion en el when");}
-                | WHEN error condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {yyerror("Se esperaba ( en el when");}
-                | WHEN PARENT_A condicion THEN LLAVE_A bloque_ejecutable LLAVE_C{yyerror("Se esperaba ) en el when");}
+sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {System.out.println("Sentencia WHEN");}
+                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias error {yyerror("Se esperaba } en el when");}
+                | WHEN PARENT_A condicion PARENT_C THEN error bloque_sentencias LLAVE_C {yyerror("Se esperaba { en el when");}
+                | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba then en el when");}
+                | WHEN PARENT_A error PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba condicion en el when");}
+                | WHEN error condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba ( en el when");}
+                | WHEN PARENT_A condicion THEN LLAVE_A bloque_sentencias LLAVE_C{yyerror("Se esperaba ) en el when");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then en el when");}
 ;
 sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHILE");}
-                |  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {System.out.println("Sentencia WHILE");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHILE");} 
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {System.out.println("Sentencia WHILE");} 
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {yyerror("Se esperaba {");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {yyerror("Se esperaba )");}
@@ -260,14 +320,12 @@ tag :
 sentencia_if_break : IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF {System.out.println("Sentencia IF");}
         | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C END_IF {System.out.println("Sentencia IF");}
 ;
-sentencia_for : ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");}
-                | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");}
+sentencia_for :ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");}
                 | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
                 | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C error {yyerror("Se esperaba {");}
                 | ID DOSPUNTOS FOR PARENT_A encabezado_for error {yyerror("Se esperaba )");}
                 | ID DOSPUNTOS error {yyerror("Se esperaba (");}
                 | FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");}
-                | FOR PARENT_A encabezado_for PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");}
                 | FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
                 | FOR PARENT_A encabezado_for PARENT_C error {yyerror("Se esperaba {");}
                 | FOR PARENT_A encabezado_for error {yyerror("Se esperaba )");}
@@ -289,6 +347,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C
 ;
 %%
 private NodoControl raiz;
+private String ambitoActual = "Global";
 
 void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
@@ -297,7 +356,7 @@ void chequearRangoI32(String sval){
   String s = "2147483647";
   long l = Long.valueOf(s);
   if(Long.valueOf(sval) > l){
-    yyerror("El numero esta fuera de rango");
+    yyerror("La constante esta fuera de rango");
   }
 }
 
