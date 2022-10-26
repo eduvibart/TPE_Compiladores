@@ -1,10 +1,8 @@
 program {
-        if (a < b ) then 
-                {  
-                    a=:b;    
-                }
-            else 
-                {
-                }
-            end_if;
+        if (a < b ) then{
+            a=:b;
+	  }
+	  else
+		b=:c;
+        end_if;
         }   
