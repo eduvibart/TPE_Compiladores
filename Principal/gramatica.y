@@ -187,80 +187,40 @@ lista_const : CONST lista_asignacion {System.out.println("Declaracion de Constan
 lista_asignacion : lista_asignacion COMA asignacion
         | asignacion
 ;
-sentencia_ejecutable : asignacion {$$ = $1;
-                                   System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);
-                                  }
-        | sentencia_if   {
-                        $$ = $1;
-                        }    
+sentencia_ejecutable : asignacion {$$ = $1;}
+        | sentencia_if   {$$ = $1;}    
         | sentencia_out 
         | sentencia_when 
         | sentencia_for 
         | sentencia_while 
         | llamado_func
 ;
-asignacion : ID ASIG expresion  {
-                                 System.out.println("Asignacion");
-                                 $$ = new NodoComun($2.sval,new NodoHoja($1.sval), (ArbolSintactico) $3);
-                                 System.out.println("Asignacino---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
-                                }
+asignacion : ID ASIG expresion  {$$ = new NodoComun($2.sval,new NodoHoja($1.sval), (ArbolSintactico) $3);}
 ;
-expresion: expresion SUMA termino {
-                                   $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
-                                   System.out.println("ExpresionSuma---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
-                                  }
-        | expresion RESTA termino {
-                                   $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
-                                   System.out.println("ExpresionResta---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
-                                  }
-        | termino {
-                   $$ = $1;
-                   System.out.println("ExpresionTermino---$$ : " + $$ + " $1 :" + $1);
-                  } 
+expresion: expresion SUMA termino {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);}
+        | expresion RESTA termino {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);}
+        | termino {$$ = $1;} 
         | llamado_func
         | sentencia_for ELSE cte
         | sentencia_while ELSE cte 
         
 ;
-termino: termino MULT factor  {
-                                $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
-                                System.out.println("TerminoMult---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
-                                }   
-        | termino DIV factor 
-                                {
-                                 $$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
-                                 System.out.println("TerminoDiv---$$ : " + $$ + " $1 :" + $1+" $3 :" + $3);
-                                }   
-        | factor 
-                {
-                  $$ = $1;
-                  System.out.println("TerminoFactor---$$ : " + $$ + " $1 :" + $1);
-                 }  
+termino: termino MULT factor  {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);}   
+        | termino DIV factor {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);}   
+        | factor {$$ = $1;}  
 ;
-factor: ID {
-            $$ = new NodoHoja($1.sval);
-            System.out.println("FactorID----$$ : " + $$ + " $1 :" + $1);                                                             
-           }
-        | cte {
-               $$ = new NodoHoja($1.sval);
-               System.out.println("factorCTE---$$ : " + $$ + " $1 :" + $1);
-              }  
+factor: ID {$$ = new NodoHoja($1.sval);}
+        | cte {$$ = new NodoHoja($1.sval);}  
 ;
-cte : ENTERO {  chequearRangoI32($1.sval);}
+cte : ENTERO {chequearRangoI32($1.sval);}
         | FLOAT
         | RESTA ENTERO 
         | RESTA FLOAT 
 
 ;
 
-sentencia_if :IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF {
-
-
-                $$= new NodoComun("IF",(ArbolSintactico) $3,new NodoComun("Cuerpo_IF",new NodoControl("Then",(ArbolSintactico)$7),new NodoControl("Else",(ArbolSintactico)$11)));
-                System.out.println("Sentencia IF");}
-                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C END_IF {
-                        $$= new NodoComun("Cuerpo_IF",(ArbolSintactico) $3, new NodoControl("Then",(ArbolSintactico)$7));
-                        System.out.println("Sentencia IF");}
+sentencia_if :IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF { $$= new NodoComun("IF",(ArbolSintactico) $3,new NodoComun("Cuerpo_IF",new NodoControl("Then",(ArbolSintactico)$7),new NodoControl("Else",(ArbolSintactico)$11)));}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C END_IF { $$ = new NodoComun("IF",(ArbolSintactico) $3, new NodoControl("Then",(ArbolSintactico)$7));}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE error {yyerror("Se esperaba { ");}
@@ -283,9 +243,7 @@ comparacion: IGUAL {$$= $1;}
         | MAYORIGUAL {$$= $1;}
 ;
 bloque_ejecutable : {$$=new NodoHoja("Fin");}
-                | bloque_ejecutable sentencia_ejecutable PUNTOCOMA {
-                                                                $$=new NodoComun("Bloque Ejecutable", (ArbolSintactico) $2, (ArbolSintactico) $1);
-                                                                }
+                | bloque_ejecutable sentencia_ejecutable PUNTOCOMA {$$=new NodoComun("Bloque Ejecutable", (ArbolSintactico) $2, (ArbolSintactico) $1);}
                 | bloque_ejecutable sentencia_ejecutable {yyerror("Se esperaba ;");}
 ;
 sentencia_out : OUT PARENT_A CADENA PARENT_C {System.out.println("Sentencia OUT");}
@@ -293,8 +251,7 @@ sentencia_out : OUT PARENT_A CADENA PARENT_C {System.out.println("Sentencia OUT"
                 |  OUT PARENT_A error {yyerror("Se esperaba una CADENA");}
                 | OUT error {yyerror("Se esperaba (");}
 ;
-sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {
-                        System.out.println("Sentencia WHEN");}
+sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {System.out.println("Sentencia WHEN");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias error {yyerror("Se esperaba } en el when");}
                 | WHEN PARENT_A condicion PARENT_C THEN error bloque_sentencias LLAVE_C {yyerror("Se esperaba { en el when");}
                 | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba then en el when");}
@@ -303,10 +260,10 @@ sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias
                 | WHEN PARENT_A condicion THEN LLAVE_A bloque_sentencias LLAVE_C{yyerror("Se esperaba ) en el when");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then en el when");}
 ;
-sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
-        $$= new NodoComun("IF",(ArbolSintactico) $3,new NodoComun("Cuerpo_IF",new NodoControl("Then",(ArbolSintactico)$7),new NodoControl("Else",(ArbolSintactico)$11)));
-                        $$= new NodoComun("sentencia_while", new NodoComun("Cuerpo_While",(ArbolSintactico) $5,(ArbolSintactico) $9), (ArbolSintactico) $12);
-                        System.out.println("Sentencia WHILE");}
+sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
+                        {
+                        $$= new NodoComun("While", new NodoComun("Cuerpo_While",(ArbolSintactico) $5,(ArbolSintactico) $9), (ArbolSintactico) $12);
+                        }
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
                         $$= new NodoComun("sentencia_while", new NodoComun("Cuerpo_While",(ArbolSintactico) $3,(ArbolSintactico) $7), (ArbolSintactico) $10);
                         System.out.println("Sentencia WHILE");} 
