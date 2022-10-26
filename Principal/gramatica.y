@@ -91,7 +91,11 @@ sentencias_fun :  sentencia_decl_datos
                 | sentencia_while_fun 
                 | retorno 
 ;
-sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF {System.out.println("Sentencia IF");}
+sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C PUNTOCOMA ELSE sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");}
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE LLAVE_A cuerpo_fun LLAVE_C PUNTOCOMA END_IF {System.out.println("Sentencia IF");}
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF {System.out.println("Sentencia IF");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C END_IF {System.out.println("Sentencia IF");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
@@ -105,6 +109,7 @@ sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_
                 | IF error {yyerror("Se esperaba ( ");}
 ;
 sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Sentencia WHEN");}
+                | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun {System.out.println("Sentencia WHEN");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun error {yyerror("Se esperaba }");}
                 | WHEN PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba {");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
@@ -113,7 +118,9 @@ sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLA
                 | WHEN error condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {yyerror("Se esperaba (");}
 ; 
 sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHILE");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHILE");} 
+                | | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE");} 
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {yyerror("Se esperaba {");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {yyerror("Se esperaba )");}
@@ -125,7 +132,9 @@ sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS P
                 | WHILE error {yyerror("Se esperaba (");}
 ;
 sentencia_for_fun:  ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");}
+                | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");}
                 | FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");}
+                | FOR PARENT_A encabezado_for PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");}
                 | FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
                 | FOR PARENT_A encabezado_for PARENT_C error {yyerror("Se esperaba {");}
                 | FOR PARENT_A encabezado_for error {yyerror("Se esperaba )");}
@@ -138,7 +147,7 @@ cuerpo_fun_break :
 sentencias_fun_break :   asignacion 
                 | sentencia_if_break_fun 
                 | sentencia_out 
-                | sentencia_when_fun 
+                | sentencia_when_break_fun 
                 | sentencia_while_fun 
                 | sentencia_for_fun 
                 | CONTINUE tag 
@@ -147,7 +156,20 @@ sentencias_fun_break :   asignacion
                 | retorno 
 
 ;
-sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF {System.out.println("Sentencia IF");}
+sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_break {System.out.println("Sentencia WHEN");}
+                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHEN");}
+                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
+                | WHEN PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba {");}
+                | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
+                | WHEN PARENT_A condicion error {yyerror("Se esperaba )");}
+                | WHEN PARENT_A error {yyerror("Se esperaba condicion");}
+                | WHEN error condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C {yyerror("Se esperaba (");}
+;
+sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA ELSE sentencias_fun_break PUNTOCOMA END_IF {System.out.println("Sentencia IF");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE sentencias_fun_break PUNTOCOMA END_IF {System.out.println("Sentencia IF");}
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF {System.out.println("Sentencia IF");}
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA END_IF {System.out.println("Sentencia IF");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF {System.out.println("Sentencia IF");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF {System.out.println("Sentencia IF");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba } ");}
@@ -264,7 +286,8 @@ sentencia_if : IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOM
                 | IF error {yyerror("Se esperaba ( ");}
 ;
 
-condicion : expresion comparacion expresion {$$= new NodoControl("Condicion", new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3));}
+
+condicion : expresion comparacion expresion {$$= new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);}
         | expresion comparacion error {yyerror("Se esperaba otra expresion para comparar.");}
         | expresion error expresion {yyerror("Se esperaba un tipo de comparacion.");}
 ;
@@ -285,17 +308,20 @@ sentencia_out : OUT PARENT_A CADENA PARENT_C {System.out.println("Sentencia OUT"
                 |  OUT PARENT_A error {yyerror("Se esperaba una CADENA");}
                 | OUT error {yyerror("Se esperaba (");}
 ;
-sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sentencias error {yyerror("Se esperaba } en el when");}
-                | WHEN PARENT_A condicion PARENT_C THEN error bloque_sentencias LLAVE_C {yyerror("Se esperaba { en el when");}
-                | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba then en el when");}
-                | WHEN PARENT_A error PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba condicion en el when");}
-                | WHEN error condicion PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba ( en el when");}
-                | WHEN PARENT_A condicion THEN LLAVE_A bloque_sentencias LLAVE_C{yyerror("Se esperaba ) en el when");}
+sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {System.out.println("Sentencia WHEN");}
+                | WHEN PARENT_A condicion PARENT_C THEN sentencia_ejecutable {System.out.println("Sentencia WHEN");}
+                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } en el when");}
+                | WHEN PARENT_A condicion PARENT_C THEN error bloque_ejecutable LLAVE_C {yyerror("Se esperaba { en el when");}
+                | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_ejecutable LLAVE_C {yyerror("Se esperaba then en el when");}
+                | WHEN PARENT_A error PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {yyerror("Se esperaba condicion en el when");}
+                | WHEN error condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {yyerror("Se esperaba ( en el when");}
+                | WHEN PARENT_A condicion THEN LLAVE_A bloque_ejecutable LLAVE_C{yyerror("Se esperaba ) en el when");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then en el when");}
 ;
 sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHILE");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {System.out.println("Sentencia WHILE");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHILE");} 
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {System.out.println("Sentencia WHILE");} 
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {yyerror("Se esperaba {");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {yyerror("Se esperaba )");}
@@ -314,7 +340,7 @@ bloque_break_continue :
 ejecutables_break_continue :  asignacion 
                 | sentencia_if_break
                 | sentencia_out 
-                | sentencia_when
+                | sentencia_when_break
                 | sentencia_while
                 | sentencia_for
                 | CONTINUE tag
@@ -324,16 +350,42 @@ ejecutables_break_continue :  asignacion
 tag : 
         |DOSPUNTOS ID 
 ;
-
-sentencia_if_break : IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF {System.out.println("Sentencia IF");}
-        | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C END_IF {System.out.println("Sentencia IF");}
+sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHEN");}
+                | WHEN PARENT_A condicion PARENT_C THEN ejecutables_break_continue {System.out.println("Sentencia WHEN");}
+                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue error {yyerror("Se esperaba } en el when");}
+                | WHEN PARENT_A condicion PARENT_C THEN error bloque_break_continue LLAVE_C {yyerror("Se esperaba { en el when");}
+                | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_break_continue LLAVE_C {yyerror("Se esperaba then en el when");}
+                | WHEN PARENT_A error PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C {yyerror("Se esperaba condicion en el when");}
+                | WHEN error condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C {yyerror("Se esperaba ( en el when");}
+                | WHEN PARENT_A condicion THEN LLAVE_A bloque_break_continue LLAVE_C{yyerror("Se esperaba ) en el when");}
+                | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then en el when");}
 ;
+sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE ejecutables_break_continue PUNTOCOMA END_IF
+                | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE ejecutables_break_continue PUNTOCOMA END_IF
+                | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA END_IF
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF 
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C END_IF {System.out.println("Sentencia IF");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue LLAVE_C error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue error {yyerror("Se esperaba } ");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE error {yyerror("Se esperaba { ");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue error {yyerror("Se esperaba } ");}
+                | IF PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba { ");}
+                | IF PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
+                | IF PARENT_A condicion error {yyerror("Se esperaba ) ");}
+                | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
+                | IF error {yyerror("Se esperaba ( ");}
+;
+
 sentencia_for :ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");}
+                |ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C ejecutables_break_continue{System.out.println("Sentencia FOR");}
                 | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
                 | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C error {yyerror("Se esperaba {");}
                 | ID DOSPUNTOS FOR PARENT_A encabezado_for error {yyerror("Se esperaba )");}
                 | ID DOSPUNTOS error {yyerror("Se esperaba (");}
                 | FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");}
+                | FOR PARENT_A encabezado_for PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");}
                 | FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
                 | FOR PARENT_A encabezado_for PARENT_C error {yyerror("Se esperaba {");}
                 | FOR PARENT_A encabezado_for error {yyerror("Se esperaba )");}
