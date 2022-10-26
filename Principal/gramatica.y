@@ -120,7 +120,7 @@ sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLA
 sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHILE");}
                 | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHILE");} 
-                | | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE");} 
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE");} 
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {yyerror("Se esperaba {");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {yyerror("Se esperaba )");}
@@ -196,11 +196,12 @@ lista_asignacion : lista_asignacion COMA asignacion
 sentencia_ejecutable : asignacion {$$ = $1;
                                    System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);
                                   }
-        | sentencia_if   {
-                        $$ = $1;
-                        }    
-        | sentencia_out 
-        | sentencia_when 
+        | sentencia_if   {$$ = $1;
+                                System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);}    
+        | sentencia_out {$$ = $1;
+                                System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);}
+        | sentencia_when {$$ = $1;
+                                System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);}
         | sentencia_for 
         | sentencia_while 
         | llamado_func
@@ -303,13 +304,19 @@ bloque_ejecutable : {$$=new NodoHoja("Fin");}
                                                                 }
                 | bloque_ejecutable sentencia_ejecutable {yyerror("Se esperaba ;");}
 ;
-sentencia_out : OUT PARENT_A CADENA PARENT_C {System.out.println("Sentencia OUT");}
+sentencia_out : OUT PARENT_A CADENA PARENT_C {
+                        $$ = new NodoControl($1.sval, (ArbolSintactico) new NodoHoja($3.sval));
+                        System.out.println("Sentencia OUT");}
                 |  OUT PARENT_A CADENA error {yyerror("Se esperaba )");}
                 |  OUT PARENT_A error {yyerror("Se esperaba una CADENA");}
                 | OUT error {yyerror("Se esperaba (");}
 ;
-sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN sentencia_ejecutable {System.out.println("Sentencia WHEN");}
+sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {
+                        $$ = new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
+                        System.out.println("Sentencia WHEN con llaves");}
+                | WHEN PARENT_A condicion PARENT_C THEN sentencia_ejecutable {
+                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
+                        System.out.println("Sentencia WHEN sin llaves");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } en el when");}
                 | WHEN PARENT_A condicion PARENT_C THEN error bloque_ejecutable LLAVE_C {yyerror("Se esperaba { en el when");}
                 | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_ejecutable LLAVE_C {yyerror("Se esperaba then en el when");}
