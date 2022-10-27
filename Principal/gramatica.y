@@ -75,21 +75,21 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                 | FUN ID error {yyerror("Se esperaba (");}
                 | FUN error {yyerror("Se esperaba un nombre de funcion");}
 ;
-cuerpo_fun : 
-                | cuerpo_fun sentencias_fun PUNTOCOMA
-                | cuerpo_fun sentencias_fun {System.out.println("Se esperaba ;");}
+cuerpo_fun :    {$$=new NodoHoja("Fin");}
+                | cuerpo_fun sentencias_fun PUNTOCOMA {$$=new NodoComun("Sentencia_Funcion", (ArbolSintactico) $2, (ArbolSintactico) $1);}
+                | cuerpo_fun sentencias_fun error {yyerror("Se esperaba ;");}
 ;
-sentencias_fun :  sentencia_decl_datos 
-                | sentencia_decl_fun 
-                | lista_const  
-                | asignacion 
-                | llamado_func
-                | sentencia_if_fun 
-                | sentencia_out 
+sentencias_fun :  sentencia_decl_datos {$$=new NodoHoja("Sentencia Declarativa Datos");}
+                | sentencia_decl_fun {$$=new NodoHoja("Sentencia Declarativa Funcion");}
+                | lista_const  {$$ = $1;}
+                | asignacion {$$ = $1;}
+                | llamado_func {$$=$1;}
+                | sentencia_if_fun {$$=$1;}
+                | sentencia_out {$$ = $1;}
                 | sentencia_when_fun 
-                | sentencia_for_fun 
-                | sentencia_while_fun 
-                | retorno 
+                | sentencia_for_fun {$$=$1;}
+                | sentencia_while_fun {$$=$1;}
+                | retorno {$$=$1;}
 ;
 sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");
                         $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $6),new NodoControl("else fun", (ArbolSintactico)$9)));
@@ -126,10 +126,18 @@ sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLA
                 | WHEN PARENT_A error {yyerror("Se esperaba condicion");}
                 | WHEN error condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {yyerror("Se esperaba (");}
 ; 
-sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHILE");}
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE");}
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHILE");} 
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE");} 
+sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
+    $$ = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja($1.sval)) , new NodoComun("While", (ArbolSintactico) $5, new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $12 , (ArbolSintactico) $9)) );
+                        System.out.println("Sentencia WHILE con etiqueta y con llaves");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE con etiqueta y sin llaves");
+                    $$ = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja($1.sval)) , new NodoComun("While", (ArbolSintactico) $5, new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $11 , (ArbolSintactico) $9)) );}
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
+                        $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $7) );
+                        System.out.println("Sentencia WHILE con llaves");} 
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {
+                    $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $9 , (ArbolSintactico) $7) );
+                        System.out.println("Sentencia WHILE sin llaves");
+                } 
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {yyerror("Se esperaba {");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {yyerror("Se esperaba )");}
