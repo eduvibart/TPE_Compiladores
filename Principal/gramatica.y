@@ -131,13 +131,43 @@ sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS P
                 | WHILE PARENT_A error {yyerror("Se esperaba una condicion");}
                 | WHILE error {yyerror("Se esperaba (");}
 ;
-sentencia_for_fun:  ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");}
-                | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");}
-                | FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");}
-                | FOR PARENT_A encabezado_for PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");}
-                | FOR PARENT_A encabezado_for PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
-                | FOR PARENT_A encabezado_for PARENT_C error {yyerror("Se esperaba {");}
-                | FOR PARENT_A encabezado_for error {yyerror("Se esperaba )");}
+sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");
+                                                                                                        $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$13,new NodoHoja($9.sval + $10.sval))));
+                                                                                                       }
+                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");
+                                                                                                        $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$13,new NodoHoja($9.sval + $10.sval))));
+                                                                                                       }
+                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break{System.out.println("Sentencia FOR");
+                                                                                                                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$12,new NodoHoja($9.sval + $10.sval))));
+                                                                                                                                }
+                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break{System.out.println("Sentencia FOR");
+                                                                                                                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$12,new NodoHoja($9.sval + $10.sval))));
+                                                                                                                                }
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {yyerror("Se esperaba {");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {yyerror("Se esperaba {");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {yyerror("Se esperaba )");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
+                | ID DOSPUNTOS error {yyerror("Se esperaba (");}
+                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");
+                                                                                             $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$11,new NodoHoja($7.sval + $8.sval)));
+                                                                                             }
+                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");
+                                                                                             $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$11,new NodoHoja($7.sval + $8.sval)));
+                                                                                             }
+                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");
+                                                                                    $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$10,new NodoHoja($7.sval + $8.sval)));
+                                                                                  }
+                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");
+                                                                                    $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$10,new NodoHoja($7.sval + $8.sval)));
+                                                                                  }
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {yyerror("Se esperaba {");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {yyerror("Se esperaba {");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {yyerror("Se esperaba )");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
                 | FOR error {yyerror("Se esperaba (");}
 ;
 cuerpo_fun_break : 
@@ -398,19 +428,46 @@ sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_conti
                 | IF error {yyerror("Se esperaba ( ");}
 ;
 
-sentencia_for :ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");}
-                |ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C ejecutables_break_continue{System.out.println("Sentencia FOR");}
-                | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
-                | ID DOSPUNTOS FOR PARENT_A encabezado_for PARENT_C error {yyerror("Se esperaba {");}
-                | ID DOSPUNTOS FOR PARENT_A encabezado_for error {yyerror("Se esperaba )");}
+sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
+                                                                                                        $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$13,new NodoHoja($9.sval + $10.sval))));
+                                                                                                       }
+                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
+                                                                                                        $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$13,new NodoHoja($9.sval + $10.sval))));
+                                                                                                       }
+                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue{System.out.println("Sentencia FOR");
+                                                                                                                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$12,new NodoHoja($9.sval + $10.sval))));
+                                                                                                                                }
+                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue{System.out.println("Sentencia FOR");
+                                                                                                                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$12,new NodoHoja($9.sval + $10.sval))));
+                                                                                                                                }
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {yyerror("Se esperaba {");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {yyerror("Se esperaba {");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {yyerror("Se esperaba )");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
                 | ID DOSPUNTOS error {yyerror("Se esperaba (");}
-                | FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");}
-                | FOR PARENT_A encabezado_for PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");}
-                | FOR PARENT_A encabezado_for PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
-                | FOR PARENT_A encabezado_for PARENT_C error {yyerror("Se esperaba {");}
-                | FOR PARENT_A encabezado_for error {yyerror("Se esperaba )");}
+                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
+                                                                                             $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$11,new NodoHoja($7.sval + $8.sval)));
+                                                                                             }
+                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
+                                                                                             $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$11,new NodoHoja($7.sval + $8.sval)));
+                                                                                             }
+                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
+                                                                                    $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$10,new NodoHoja($7.sval + $8.sval)));
+                                                                                  }
+                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
+                                                                                    $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$10,new NodoHoja($7.sval + $8.sval)));
+                                                                                  }
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {yyerror("Se esperaba {");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {yyerror("Se esperaba {");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {yyerror("Se esperaba )");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
                 | FOR error {yyerror("Se esperaba (");}
 ;
+
 
 encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte 
         | asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte 

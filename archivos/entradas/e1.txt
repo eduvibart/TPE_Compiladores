@@ -1,5 +1,5 @@
 program {
-      while (a < b ) : (i =: 3) {
+      tag : while (a < b ) : (i =: 3) {
             a=:b;
 	};
 }   
