@@ -356,11 +356,11 @@ bloque_break_continue : {$$=new NodoHoja("Fin");}
 
 ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_if_break
-                | sentencia_out 
+                | sentencia_out {$$ = $1}
                 | sentencia_when_break
-                | sentencia_while
-                | sentencia_for
-                | CONTINUE tag
+                | sentencia_while {$$ = $1}
+                | sentencia_for {$$ = $1}
+                | CONTINUE tag 
                 | BREAK 
                 | BREAK cte
 ;
@@ -378,6 +378,9 @@ sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_bre
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then en el when");}
 ;
 sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF
+                        {
+                                $$ = new NodoComun
+                        }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE ejecutables_break_continue PUNTOCOMA END_IF
                 | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE ejecutables_break_continue PUNTOCOMA END_IF
                 | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA END_IF
