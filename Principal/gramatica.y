@@ -104,7 +104,7 @@ sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA 
                 }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF {System.out.println("Sentencia IF");
                         $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $7),new NodoControl("else fun", (ArbolSintactico)$11)));}
-}
+
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C END_IF {System.out.println("Sentencia IF");
                         $$ = new NodoComun("IF FUN", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$7) );}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C error {yyerror("Se esperaba end_if ");}
@@ -116,8 +116,7 @@ sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA 
                 | IF PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
                 | IF PARENT_A condicion error {yyerror("Se esperaba ) ");}
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
-                | IF error {yyerror("Se esperaba ( ");}
-;
+  
 sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Sentencia WHEN");}
                 | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun {System.out.println("Sentencia WHEN");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun error {yyerror("Se esperaba }");}
@@ -205,12 +204,36 @@ sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_
                 | WHEN PARENT_A error {yyerror("Se esperaba condicion");}
                 | WHEN error condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C {yyerror("Se esperaba (");}
 ;
-sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA ELSE sentencias_fun_break PUNTOCOMA END_IF {System.out.println("Sentencia IF");}
-                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE sentencias_fun_break PUNTOCOMA END_IF {System.out.println("Sentencia IF");}
-                | IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF {System.out.println("Sentencia IF");}
-                | IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA END_IF {System.out.println("Sentencia IF");}
-                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF {System.out.println("Sentencia IF");}
-                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF {System.out.println("Sentencia IF");}
+sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA ELSE sentencias_fun_break PUNTOCOMA END_IF 
+                        {
+                        $$ = new NodoComun("IF", (ArbolSintactico) $3, new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)$9)));
+                        System.out.println("Sentencia IF sin corchetes y con else sin corchetes");
+                        }
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE sentencias_fun_break PUNTOCOMA END_IF 
+                        {
+                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $10))); 
+                        System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");
+                        }
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF 
+                        {
+                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $6), new NodoControl("Else",(ArbolSintactico) $10))); 
+                        System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");
+                        }
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA END_IF 
+                        {
+                        $$ = new NodoComun("IF", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
+                        System.out.println("Sentencia IF sin corchetes y sin else");
+                        }
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF 
+                        {
+                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $11))); 
+                        System.out.println("Sentencia IF con corchetes y else");
+                        }
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF 
+                        {
+                        $$ = new NodoComun("IF", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)$7));
+                        System.out.println("Sentencia IF con corchetes y sin else");
+                        }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba } ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE error {yyerror("Se esperaba { ");}
@@ -242,8 +265,10 @@ sentencia_ejecutable : asignacion {$$ = $1;
                                 System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);}
         | sentencia_when {$$ = $1;
                                 System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);}
-        | sentencia_for 
-        | sentencia_while {$$ = $1;}
+        | sentencia_for {$$ = $1;
+                                System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);}
+        | sentencia_while {$$ = $1;
+                                System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);}
         | llamado_func
 ;
 asignacion : ID ASIG expresion  {
@@ -396,10 +421,10 @@ bloque_break_continue : {$$=new NodoHoja("Fin");}
 
 ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_if_break
-                | sentencia_out {$$ = $1}
+                | sentencia_out {$$ = $1;}
                 | sentencia_when_break
-                | sentencia_while {$$ = $1}
-                | sentencia_for {$$ = $1}
+                | sentencia_while {$$ = $1;}
+                | sentencia_for {$$ = $1;}
                 | CONTINUE tag 
                 | BREAK 
                 | BREAK cte
@@ -419,13 +444,34 @@ sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_bre
 ;
 sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF
                         {
-                                $$ = new NodoComun
+                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $6), new NodoControl("Else",(ArbolSintactico) $10))); 
+                        System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE ejecutables_break_continue PUNTOCOMA END_IF
+                        {
+                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $10))); 
+                        System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");
+                        }
                 | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE ejecutables_break_continue PUNTOCOMA END_IF
+                        {
+                        $$ = new NodoComun("IF", (ArbolSintactico) $3, new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)$9)));
+                        System.out.println("Sentencia IF sin corchetes y con else sin corchetes");
+                        }
                 | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA END_IF
-                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF 
-                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C END_IF {System.out.println("Sentencia IF");}
+                        {
+                        $$ = new NodoComun("IF", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
+                        System.out.println("Sentencia IF sin corchetes y sin else");
+                        }
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF
+                        {
+                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $11))); 
+                        System.out.println("Sentencia IF con corchetes y else");
+                        } 
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C END_IF 
+                        {
+                        $$ = new NodoComun("IF", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)$7));
+                        System.out.println("Sentencia IF con corchetes y sin else");
+                        }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue error {yyerror("Se esperaba } ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE error {yyerror("Se esperaba { ");}
@@ -478,10 +524,6 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                 | FOR error {yyerror("Se esperaba (");}
 ;
 
-
-encabezado_for : asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte 
-        | asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte 
-;
 param_real : cte
                 | ID
 ;
