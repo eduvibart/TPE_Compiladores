@@ -422,7 +422,7 @@ bloque_break_continue : {$$=new NodoHoja("Fin");}
 ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_if_break {$$ = $1;}
                 | sentencia_out {$$ = $1;}
-                | sentencia_when_break
+                | sentencia_when_break {$$ = $1;}
                 | sentencia_while {$$ = $1;}
                 | sentencia_for {$$ = $1;}
                 | CONTINUE tag 
@@ -432,8 +432,16 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
 tag : 
         |DOSPUNTOS ID 
 ;
-sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN ejecutables_break_continue {System.out.println("Sentencia WHEN");}
+sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C 
+                        {
+                        $$ = new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
+                        System.out.println("Sentencia WHEN con llaves");
+                        }
+                | WHEN PARENT_A condicion PARENT_C THEN ejecutables_break_continue 
+                        {
+                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
+                        System.out.println("Sentencia WHEN sin llaves");
+                        }
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue error {yyerror("Se esperaba } en el when");}
                 | WHEN PARENT_A condicion PARENT_C THEN error bloque_break_continue LLAVE_C {yyerror("Se esperaba { en el when");}
                 | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_break_continue LLAVE_C {yyerror("Se esperaba then en el when");}

@@ -1,5 +1,7 @@
 program {
       tag : while (a < b ) : (i =: 3) {
-            a=:b;
+            if (a < b) then
+			a=:b;
+		end_if;
 	};
 }   
