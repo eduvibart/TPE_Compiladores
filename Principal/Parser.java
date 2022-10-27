@@ -1196,7 +1196,7 @@ final static String yyrule[] = {
 "llamado_func : ID PARENT_A error",
 };
 
-//#line 416 ".\gramatica.y"
+//#line 426 ".\gramatica.y"
 private NodoControl raiz;
 private String ambitoActual = "Global";
 
@@ -1810,6 +1810,10 @@ case 134:
 {yyval = val_peek(0);
                                 System.out.println("SentenciaEjecutable---$$ : " + yyval + " $1 :" + val_peek(0));}
 break;
+case 136:
+//#line 206 ".\gramatica.y"
+{yyval = val_peek(0);}
+break;
 case 138:
 //#line 209 ".\gramatica.y"
 {
@@ -2058,201 +2062,223 @@ case 193:
 break;
 case 194:
 //#line 328 ".\gramatica.y"
-{System.out.println("Sentencia WHILE");}
+{
+                        yyval = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja(val_peek(12).sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) val_peek(8), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(1) , (ArbolSintactico) val_peek(4))) );
+                        System.out.println("Sentencia WHILE con etiqueta y con llaves");}
 break;
 case 195:
-//#line 329 ".\gramatica.y"
-{System.out.println("Sentencia WHILE");}
+//#line 331 ".\gramatica.y"
+{
+                        yyval = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja(val_peek(10).sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(0) , (ArbolSintactico) val_peek(2))) );
+                        System.out.println("Sentencia WHILE con etiqueta y sin llaves");}
 break;
 case 196:
-//#line 330 ".\gramatica.y"
-{System.out.println("Sentencia WHILE");}
+//#line 334 ".\gramatica.y"
+{
+                        yyval = new NodoComun("While", (ArbolSintactico) val_peek(8), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(1) , (ArbolSintactico) val_peek(4)) );
+                        System.out.println("Sentencia WHILE con llaves");}
 break;
 case 197:
-//#line 331 ".\gramatica.y"
-{System.out.println("Sentencia WHILE");}
+//#line 337 ".\gramatica.y"
+{
+                        yyval = new NodoComun("While", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(0) , (ArbolSintactico) val_peek(2)) );
+                        System.out.println("Sentencia WHILE sin llaves");}
 break;
 case 198:
-//#line 332 ".\gramatica.y"
+//#line 340 ".\gramatica.y"
 {yyerror("Se esperaba }");}
 break;
 case 199:
-//#line 333 ".\gramatica.y"
+//#line 341 ".\gramatica.y"
 {yyerror("Se esperaba {");}
 break;
 case 200:
-//#line 334 ".\gramatica.y"
+//#line 342 ".\gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 201:
-//#line 335 ".\gramatica.y"
+//#line 343 ".\gramatica.y"
 {yyerror("Se esperaba una asignacion");}
 break;
 case 202:
-//#line 336 ".\gramatica.y"
+//#line 344 ".\gramatica.y"
 {yyerror("Se esperaba (");}
 break;
 case 203:
-//#line 337 ".\gramatica.y"
+//#line 345 ".\gramatica.y"
 {yyerror("Se esperaba :");}
 break;
 case 204:
-//#line 338 ".\gramatica.y"
+//#line 346 ".\gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 205:
-//#line 339 ".\gramatica.y"
+//#line 347 ".\gramatica.y"
 {yyerror("Se esperaba una condicion");}
 break;
 case 206:
-//#line 340 ".\gramatica.y"
+//#line 348 ".\gramatica.y"
 {yyerror("Se esperaba (");}
 break;
+case 207:
+//#line 350 ".\gramatica.y"
+{yyval=new NodoHoja("Fin");}
+break;
+case 208:
+//#line 351 ".\gramatica.y"
+{
+                yyval = new NodoComun("Bloque Break con Continue",(ArbolSintactico) val_peek(1), (ArbolSintactico) val_peek(2));
+                }
+break;
 case 209:
-//#line 344 ".\gramatica.y"
+//#line 354 ".\gramatica.y"
 {yyerror("Se esperaba ;");}
 break;
+case 210:
+//#line 357 ".\gramatica.y"
+{yyval = val_peek(0);}
+break;
 case 221:
-//#line 360 ".\gramatica.y"
+//#line 370 ".\gramatica.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 222:
-//#line 361 ".\gramatica.y"
+//#line 371 ".\gramatica.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 223:
-//#line 362 ".\gramatica.y"
+//#line 372 ".\gramatica.y"
 {yyerror("Se esperaba } en el when");}
 break;
 case 224:
-//#line 363 ".\gramatica.y"
+//#line 373 ".\gramatica.y"
 {yyerror("Se esperaba { en el when");}
 break;
 case 225:
-//#line 364 ".\gramatica.y"
+//#line 374 ".\gramatica.y"
 {yyerror("Se esperaba then en el when");}
 break;
 case 226:
-//#line 365 ".\gramatica.y"
+//#line 375 ".\gramatica.y"
 {yyerror("Se esperaba condicion en el when");}
 break;
 case 227:
-//#line 366 ".\gramatica.y"
+//#line 376 ".\gramatica.y"
 {yyerror("Se esperaba ( en el when");}
 break;
 case 228:
-//#line 367 ".\gramatica.y"
+//#line 377 ".\gramatica.y"
 {yyerror("Se esperaba ) en el when");}
 break;
 case 229:
-//#line 368 ".\gramatica.y"
+//#line 378 ".\gramatica.y"
 {yyerror("Se esperaba then en el when");}
 break;
 case 235:
-//#line 375 ".\gramatica.y"
+//#line 385 ".\gramatica.y"
 {System.out.println("Sentencia IF");}
 break;
 case 236:
-//#line 376 ".\gramatica.y"
+//#line 386 ".\gramatica.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 237:
-//#line 377 ".\gramatica.y"
+//#line 387 ".\gramatica.y"
 {yyerror("Se esperaba } ");}
 break;
 case 238:
-//#line 378 ".\gramatica.y"
+//#line 388 ".\gramatica.y"
 {yyerror("Se esperaba { ");}
 break;
 case 239:
-//#line 379 ".\gramatica.y"
+//#line 389 ".\gramatica.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 240:
-//#line 380 ".\gramatica.y"
+//#line 390 ".\gramatica.y"
 {yyerror("Se esperaba } ");}
 break;
 case 241:
-//#line 381 ".\gramatica.y"
+//#line 391 ".\gramatica.y"
 {yyerror("Se esperaba { ");}
 break;
 case 242:
-//#line 382 ".\gramatica.y"
+//#line 392 ".\gramatica.y"
 {yyerror("Se esperaba then ");}
 break;
 case 243:
-//#line 383 ".\gramatica.y"
+//#line 393 ".\gramatica.y"
 {yyerror("Se esperaba ) ");}
 break;
 case 244:
-//#line 384 ".\gramatica.y"
+//#line 394 ".\gramatica.y"
 {yyerror("Se esperaba una condicion ");}
 break;
 case 245:
-//#line 385 ".\gramatica.y"
+//#line 395 ".\gramatica.y"
 {yyerror("Se esperaba ( ");}
 break;
 case 246:
-//#line 388 ".\gramatica.y"
+//#line 398 ".\gramatica.y"
 {System.out.println("Sentencia FOR");}
 break;
 case 247:
-//#line 389 ".\gramatica.y"
+//#line 399 ".\gramatica.y"
 {System.out.println("Sentencia FOR");}
 break;
 case 248:
-//#line 390 ".\gramatica.y"
+//#line 400 ".\gramatica.y"
 {yyerror("Se esperaba }");}
 break;
 case 249:
-//#line 391 ".\gramatica.y"
+//#line 401 ".\gramatica.y"
 {yyerror("Se esperaba {");}
 break;
 case 250:
-//#line 392 ".\gramatica.y"
+//#line 402 ".\gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 251:
-//#line 393 ".\gramatica.y"
+//#line 403 ".\gramatica.y"
 {yyerror("Se esperaba (");}
 break;
 case 252:
-//#line 394 ".\gramatica.y"
+//#line 404 ".\gramatica.y"
 {System.out.println("Sentencia FOR");}
 break;
 case 253:
-//#line 395 ".\gramatica.y"
+//#line 405 ".\gramatica.y"
 {System.out.println("Sentencia FOR");}
 break;
 case 254:
-//#line 396 ".\gramatica.y"
+//#line 406 ".\gramatica.y"
 {yyerror("Se esperaba }");}
 break;
 case 255:
-//#line 397 ".\gramatica.y"
+//#line 407 ".\gramatica.y"
 {yyerror("Se esperaba {");}
 break;
 case 256:
-//#line 398 ".\gramatica.y"
+//#line 408 ".\gramatica.y"
 {yyerror("Se esperaba )");}
 break;
 case 257:
-//#line 399 ".\gramatica.y"
+//#line 409 ".\gramatica.y"
 {yyerror("Se esperaba (");}
 break;
 case 265:
-//#line 411 ".\gramatica.y"
+//#line 421 ".\gramatica.y"
 {System.out.println("Se esperaba )");}
 break;
 case 266:
-//#line 412 ".\gramatica.y"
+//#line 422 ".\gramatica.y"
 {System.out.println("Se esperaba )");}
 break;
 case 267:
-//#line 413 ".\gramatica.y"
+//#line 423 ".\gramatica.y"
 {System.out.println("Se esperaba )");}
 break;
-//#line 2179 "Parser.java"
+//#line 2205 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

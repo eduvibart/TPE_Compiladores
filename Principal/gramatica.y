@@ -203,7 +203,7 @@ sentencia_ejecutable : asignacion {$$ = $1;
         | sentencia_when {$$ = $1;
                                 System.out.println("SentenciaEjecutable---$$ : " + $$ + " $1 :" + $1);}
         | sentencia_for 
-        | sentencia_while 
+        | sentencia_while {$$ = $1;}
         | llamado_func
 ;
 asignacion : ID ASIG expresion  {
@@ -325,10 +325,18 @@ sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable
                 | WHEN PARENT_A condicion THEN LLAVE_A bloque_ejecutable LLAVE_C{yyerror("Se esperaba ) en el when");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then en el when");}
 ;
-sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHILE");}
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {System.out.println("Sentencia WHILE");}
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHILE");} 
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {System.out.println("Sentencia WHILE");} 
+sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
+                        $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $5, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $12 , (ArbolSintactico) $9)) );
+                        System.out.println("Sentencia WHILE con etiqueta y con llaves");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {
+                        $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $5, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $11 , (ArbolSintactico) $9)) );
+                        System.out.println("Sentencia WHILE con etiqueta y sin llaves");}
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
+                        $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $7) );
+                        System.out.println("Sentencia WHILE con llaves");} 
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {
+                        $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $9 , (ArbolSintactico) $7) );
+                        System.out.println("Sentencia WHILE sin llaves");} 
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {yyerror("Se esperaba {");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {yyerror("Se esperaba )");}
@@ -339,12 +347,14 @@ sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARE
                 | WHILE PARENT_A error {yyerror("Se esperaba una condicion");}
                 | WHILE error {yyerror("Se esperaba (");}
 ;
-bloque_break_continue : 
-        | bloque_break_continue ejecutables_break_continue PUNTOCOMA
+bloque_break_continue : {$$=new NodoHoja("Fin");}
+        | bloque_break_continue ejecutables_break_continue PUNTOCOMA {
+                $$ = new NodoComun("Bloque Break con Continue",(ArbolSintactico) $2, (ArbolSintactico) $1);
+                }
         | bloque_break_continue ejecutables_break_continue {yyerror("Se esperaba ;");}
 ;
 
-ejecutables_break_continue :  asignacion 
+ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_if_break
                 | sentencia_out 
                 | sentencia_when_break

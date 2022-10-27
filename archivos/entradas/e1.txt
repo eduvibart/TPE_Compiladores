@@ -1,5 +1,5 @@
 program {
-      when (a < b ) then {
+      while (a < b ) : (i =: 3) {
             a=:b;
 	};
 }   
