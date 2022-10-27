@@ -425,12 +425,12 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_when_break {$$ = $1;}
                 | sentencia_while {$$ = $1;}
                 | sentencia_for {$$ = $1;}
-                | CONTINUE tag 
-                | BREAK 
-                | BREAK cte
+                | CONTINUE tag {$$ = new NodoControl("Continue",(ArbolSintactico)$2);}
+                | BREAK {$$ = new NodoHoja("Break");}
+                | BREAK cte {$$ = NodoControl("Break", new NodoHoja(cte.sval));}
 ;
-tag : 
-        |DOSPUNTOS ID 
+tag : {$$ = new NodoHoja("Fin");}
+        | DOSPUNTOS ID {$$ = new NodoControl("Tag",$2.sval);}
 ;
 sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C 
                         {
