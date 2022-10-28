@@ -1,7 +1,10 @@
 program {
-      tag : while (a < b ) : (i =: 3) {
-            if (a < b) then
-			a=:b;
-		end_if;
-	};
+      	fun cumple(i32 a,i32 b): i32 {
+            f32 z;
+            return (z);
+        };
+		fun cumple1(i32 a,i32 b): i32 {
+            f32 z;
+            return (z);
+        };
 }   

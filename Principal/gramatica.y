@@ -35,7 +35,7 @@ sentencia : sentencia_declarativa {$$=new NodoHoja("Sentencia Declarativa");}
                                 }
 ;
 sentencia_declarativa : sentencia_decl_datos 
-                        | sentencia_decl_fun 
+                        | sentencia_decl_fun {funciones.put((String)((ArbolSintactico)$1).getLex(),(ArbolSintactico)$1);}
                         | lista_const  
 ;
 tipo : I32 {
@@ -63,7 +63,9 @@ list_var : list_var COMA ID {
                $$=new NodoTipos((String)$1.sval);
               }
 ;
-sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {System.out.println("Declaracion de Funcion");}
+sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {System.out.println("Declaracion de Funcion");
+                                                                                                                   $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$11);
+                                                                                                                  }
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
@@ -253,7 +255,7 @@ sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_brea
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
                 | IF error {yyerror("Se esperaba ( ");}
 ;
-retorno : RETURN PARENT_A expresion PARENT_C 
+retorno : RETURN PARENT_A expresion PARENT_C {$$ = new NodoControl("Retorno", (ArbolSintactico)$3);}
 ;
 parametro : tipo ID
         |  ID ID {yyerror("No esta permitido el tipo declarado");}
@@ -545,6 +547,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {$$=new NodoComun(
 %%
 private NodoControl raiz;
 private String ambitoActual = "Global";
+private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
 
 void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
@@ -576,4 +579,7 @@ int yylex() throws IOException{
 }
 public NodoControl getRaiz(){
 	return raiz;
+}
+public Map<String,ArbolSintactico> getFuncion(){
+        return funciones;
 }
