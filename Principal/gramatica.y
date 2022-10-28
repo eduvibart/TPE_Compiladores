@@ -4,6 +4,8 @@ import java.io.IOException;
 import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
 import GeneracionCodigoIntermedio.*;
+import java.util.HashMap;
+import java.util.Map;
 %}
 
 %token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST SUMA RESTA MULT DIV ENTERO FLOAT
@@ -35,7 +37,9 @@ sentencia : sentencia_declarativa {$$=new NodoHoja("Sentencia Declarativa");}
                                 }
 ;
 sentencia_declarativa : sentencia_decl_datos 
-                        | sentencia_decl_fun 
+                        | sentencia_decl_fun {//$$ = new NodoHoja("Sentencia Declarativa Funcion");
+                                              funciones.put((ArbolSintactico)$1.getLex(),(ArbolSintactico)$1);
+                                             }
                         | lista_const  
 ;
 tipo : I32 {
@@ -52,6 +56,7 @@ sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos")
                                         TablaSimbolos.addAtributo(s,"Tipo",((ArbolSintactico) $1).getTipo());
                                         TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
                                       }
+                                      $$ = new NodoHoja("Sentencia Declaracion de datos");
                                      }
                         | ID list_var {yyerror("No esta permitido el tipo declarado");}
 ;
@@ -63,7 +68,9 @@ list_var : list_var COMA ID {
                $$=new NodoTipos((String)$1.sval);
               }
 ;
-sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {System.out.println("Declaracion de Funcion");}
+sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {System.out.println("Declaracion de Funcion");
+                                                                                                                   $$ = new NodoControl("Funcion: "+$2.sval,(ArbolSintactico)$11 );
+                                                                                                                  }
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
@@ -76,7 +83,8 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                 | FUN error {yyerror("Se esperaba un nombre de funcion");}
 ;
 cuerpo_fun :    {$$=new NodoHoja("Fin");}
-                | cuerpo_fun sentencias_fun PUNTOCOMA {$$=new NodoComun("Sentencia_Funcion", (ArbolSintactico) $2, (ArbolSintactico) $1);}
+                | cuerpo_fun sentencias_fun PUNTOCOMA { System.out.println("$2" + $2);
+                                                        $$=new NodoComun("Sentencia_Funcion", (ArbolSintactico)$2, (ArbolSintactico) $1);}
                 | cuerpo_fun sentencias_fun error {yyerror("Se esperaba ;");}
 ;
 sentencias_fun :  sentencia_decl_datos {$$=new NodoHoja("Sentencia Declarativa Datos");}
@@ -253,7 +261,7 @@ sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_brea
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
                 | IF error {yyerror("Se esperaba ( ");}
 ;
-retorno : RETURN PARENT_A expresion PARENT_C 
+retorno : RETURN PARENT_A expresion PARENT_C {$$ = new NodoControl("RETORNO",(ArbolSintactico)$3);}
 ;
 parametro : tipo ID
         |  ID ID {yyerror("No esta permitido el tipo declarado");}
@@ -545,6 +553,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C
 %%
 private NodoControl raiz;
 private String ambitoActual = "Global";
+private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
 
 void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
@@ -568,4 +577,7 @@ int yylex() throws IOException{
 }
 public NodoControl getRaiz(){
 	return raiz;
+}
+public Map<String,ArbolSintactico> getFunciones(){
+  return funciones;
 }

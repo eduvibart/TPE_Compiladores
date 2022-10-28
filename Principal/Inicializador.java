@@ -3,6 +3,7 @@ package Principal;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Scanner;
 
 
@@ -25,7 +26,7 @@ public class Inicializador{
         System.out.println("\n\n");
         
         AnalizadorLexico.setEntrada(entrada);
-        Parser parser = new Parser();
+        Parser parser = new Parser(true);
         parser.run();
 
         System.out.println("\nErrores lexicos : \n");
@@ -39,7 +40,10 @@ public class Inicializador{
         raiz.recorrerArbol("");
         lector.close();
 
-        
-        	
+        System.out.println("FUNCIONES");
+        for (Map.Entry<String,ArbolSintactico> entry : parser.getFunciones().entrySet()) {
+            System.out.println("Key = " + entry.getKey() + ", Value = " ); 
+            entry.getValue().recorrerArbol("");    	
+        }
     }
 }
