@@ -41,7 +41,7 @@ public class Inicializador{
         lector.close();
 
         System.out.println("FUNCIONES");
-        for (Map.Entry<String,ArbolSintactico> entry : parser.getFunciones().entrySet()) {
+        for (Map.Entry<String,ArbolSintactico> entry : parser.getFuncion().entrySet()) {
             System.out.println("Key = " + entry.getKey() + ", Value = " ); 
             entry.getValue().recorrerArbol("");    	
         }

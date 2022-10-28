@@ -4,6 +4,8 @@ import java.io.IOException;
 import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
 import GeneracionCodigoIntermedio.*;
+import java.util.HashMap;
+import java.util.Map;
 %}
 
 %token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST SUMA RESTA MULT DIV ENTERO FLOAT
@@ -367,11 +369,11 @@ condicion : expresion comparacion expresion {$$= new NodoComun($2.sval,(ArbolSin
         | expresion comparacion error {yyerror("Se esperaba otra expresion para comparar.");}
         | expresion error expresion {yyerror("Se esperaba un tipo de comparacion.");}
 ;
-comparacion: IGUAL {$$= $1.sval;}
-        | MAYOR {$$= $1.sval;}
-        | MENOR {$$= $1.sval;}
-        | MENORIGUAL {$$= $1.sval;}
-        | MAYORIGUAL {$$= $1.sval;}
+comparacion: IGUAL {$$= $1;}
+        | MAYOR {$$= $1;}
+        | MENOR {$$= $1;}
+        | MENORIGUAL {$$= $1;}
+        | MAYORIGUAL {$$= $1;}
 ;
 bloque_ejecutable : {$$=new NodoHoja("Fin");}
                 | bloque_ejecutable sentencia_ejecutable PUNTOCOMA {

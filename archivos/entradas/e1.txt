@@ -3,8 +3,4 @@ program {
             f32 z;
             return (z);
         };
-		fun cumple1(i32 a,i32 b): i32 {
-            f32 z;
-            return (z);
-        };
 }   
