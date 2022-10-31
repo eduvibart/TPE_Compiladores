@@ -4,6 +4,8 @@ import java.io.IOException;
 import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
 import GeneracionCodigoIntermedio.*;
+import java.util.HashMap;
+import java.util.Map;
 %}
 
 %token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST SUMA RESTA MULT DIV ENTERO FLOAT
@@ -35,7 +37,7 @@ sentencia : sentencia_declarativa {$$=new NodoHoja("Sentencia Declarativa");}
                                 }
 ;
 sentencia_declarativa : sentencia_decl_datos 
-                        | sentencia_decl_fun 
+                        | sentencia_decl_fun {funciones.put((String)((ArbolSintactico)$1).getLex(),(ArbolSintactico)$1);}
                         | lista_const  
 ;
 tipo : I32 {
@@ -50,8 +52,9 @@ tipo : I32 {
 sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos");
                                       for (String s : ((NodoTipos)$2).getList()){
                                         TablaSimbolos.addAtributo(s,"Tipo",((ArbolSintactico) $1).getTipo());
-                                        TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
+                                        putVariableEnAmbito(s);
                                       }
+                                      $$ = $2;
                                      }
                         | ID list_var {yyerror("No esta permitido el tipo declarado");}
 ;
@@ -63,7 +66,14 @@ list_var : list_var COMA ID {
                $$=new NodoTipos((String)$1.sval);
               }
 ;
-sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {System.out.println("Declaracion de Funcion");}
+sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {
+                                System.out.println("Declaracion de Funcion");
+                                $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$11);
+                                ambitoActual += "Fun_"+$2.sval;
+                                for (String s : getListaVariablesDelAmbito()){
+                                        TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
+                                }
+                        }
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
@@ -75,24 +85,24 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                 | FUN ID error {yyerror("Se esperaba (");}
                 | FUN error {yyerror("Se esperaba un nombre de funcion");}
 ;
-cuerpo_fun : 
-                | cuerpo_fun sentencias_fun PUNTOCOMA
-                | cuerpo_fun sentencias_fun {System.out.println("Se esperaba ;");}
+cuerpo_fun :    {$$=new NodoHoja("Fin");}
+                | cuerpo_fun sentencias_fun PUNTOCOMA {$$=new NodoComun("Sentencia_Funcion", (ArbolSintactico) $2, (ArbolSintactico) $1);}
+                | cuerpo_fun sentencias_fun error {yyerror("Se esperaba ;");}
 ;
-sentencias_fun :  sentencia_decl_datos 
-                | sentencia_decl_fun 
-                | lista_const  
-                | asignacion 
-                | llamado_func
-                | sentencia_if_fun 
-                | sentencia_out 
+sentencias_fun :  sentencia_decl_datos {$$=new NodoHoja("Sentencia Declarativa Datos");}
+                | sentencia_decl_fun {$$=new NodoHoja("Sentencia Declarativa Funcion");}
+                | lista_const  {$$ = $1;}
+                | asignacion {$$ = $1;}
+                | llamado_func {$$=$1;}
+                | sentencia_if_fun {$$=$1;}
+                | sentencia_out {$$ = $1;}
                 | sentencia_when_fun 
-                | sentencia_for_fun 
-                | sentencia_while_fun 
-                | retorno 
+                | sentencia_for_fun {$$=$1;}
+                | sentencia_while_fun {$$=$1;}
+                | retorno {$$=$1;}
 ;
 sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");
-                        $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $6),new NodoControl("else fun", (ArbolSintactico)$9)));
+                                $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $6),new NodoControl("else fun", (ArbolSintactico)$9)));
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C PUNTOCOMA ELSE sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");
                         $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $7),new NodoControl("else fun", (ArbolSintactico)$11)));}
@@ -126,10 +136,18 @@ sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLA
                 | WHEN PARENT_A error {yyerror("Se esperaba condicion");}
                 | WHEN error condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {yyerror("Se esperaba (");}
 ; 
-sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHILE");}
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE");}
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHILE");} 
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE");} 
+sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
+    $$ = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja($1.sval)) , new NodoComun("While", (ArbolSintactico) $5, new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $12 , (ArbolSintactico) $9)) );
+                        System.out.println("Sentencia WHILE con etiqueta y con llaves");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {System.out.println("Sentencia WHILE con etiqueta y sin llaves");
+                    $$ = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja($1.sval)) , new NodoComun("While", (ArbolSintactico) $5, new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $11 , (ArbolSintactico) $9)) );}
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
+                        $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $7) );
+                        System.out.println("Sentencia WHILE con llaves");} 
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {
+                    $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $9 , (ArbolSintactico) $7) );
+                        System.out.println("Sentencia WHILE sin llaves");
+                } 
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {yyerror("Se esperaba {");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {yyerror("Se esperaba )");}
@@ -245,7 +263,7 @@ sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_brea
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
                 | IF error {yyerror("Se esperaba ( ");}
 ;
-retorno : RETURN PARENT_A expresion PARENT_C 
+retorno : RETURN PARENT_A expresion PARENT_C {$$ = new NodoControl("Retorno", (ArbolSintactico)$3);}
 ;
 parametro : tipo ID
         |  ID ID {yyerror("No esta permitido el tipo declarado");}
@@ -319,8 +337,8 @@ factor: ID {
               }  
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}
-        | FLOAT
-        | RESTA ENTERO 
+        | FLOAT {}
+        | RESTA ENTERO {chequearRangoI32Neg($2.sval);}
         | RESTA FLOAT 
 
 ;
@@ -427,21 +445,13 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_for {$$ = $1;}
                 | CONTINUE tag {$$ = new NodoControl("Continue",(ArbolSintactico)$2);}
                 | BREAK {$$ = new NodoHoja("Break");}
-                | BREAK cte {$$ = NodoControl("Break", new NodoHoja(cte.sval));}
+                | BREAK cte {$$ = new NodoControl("Break", new NodoHoja($2.sval));}
 ;
 tag : {$$ = new NodoHoja("Fin");}
-        | DOSPUNTOS ID {$$ = new NodoControl("Tag",$2.sval);}
+        | DOSPUNTOS ID {$$ = new NodoControl("Tag", new NodoHoja($2.sval) );}
 ;
-sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C 
-                        {
-                        $$ = new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
-                        System.out.println("Sentencia WHEN con llaves");
-                        }
-                | WHEN PARENT_A condicion PARENT_C THEN ejecutables_break_continue 
-                        {
-                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
-                        System.out.println("Sentencia WHEN sin llaves");
-                        }
+sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHEN");}
+                | WHEN PARENT_A condicion PARENT_C THEN ejecutables_break_continue {System.out.println("Sentencia WHEN");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue error {yyerror("Se esperaba } en el when");}
                 | WHEN PARENT_A condicion PARENT_C THEN error bloque_break_continue LLAVE_C {yyerror("Se esperaba { en el when");}
                 | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_break_continue LLAVE_C {yyerror("Se esperaba then en el when");}
@@ -532,19 +542,21 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                 | FOR error {yyerror("Se esperaba (");}
 ;
 
-param_real : cte
-                | ID
+param_real : cte{$$ = new NodoHoja($1.sval);}
+                | ID {$$=new NodoHoja($1.sval);}
 ;
-llamado_func: ID PARENT_A param_real COMA param_real PARENT_C
-        | ID PARENT_A param_real PARENT_C
-        | ID PARENT_A PARENT_C
-        | ID PARENT_A param_real COMA param_real error {System.out.println("Se esperaba )");}
-        | ID PARENT_A param_real error {System.out.println("Se esperaba )");}
-        | ID PARENT_A error {System.out.println("Se esperaba )");}
+llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {$$=new NodoComun("llamado funcion",(ArbolSintactico)$3,(ArbolSintactico)$5);}
+        | ID PARENT_A param_real PARENT_C {$$=new NodoComun("llamado funcion",(ArbolSintactico)$3,new NodoHoja("Un solo parametro"));}
+        | ID PARENT_A PARENT_C {$$=new NodoHoja("llamado funcion sin parametros");}
+        | ID PARENT_A param_real COMA param_real error {yyerror("Se esperaba )");}
+        | ID PARENT_A param_real error {yyerror("Se esperaba )");}
+        | ID PARENT_A error {yyerror("Se esperaba )");}
 ;
 %%
 private NodoControl raiz;
 private String ambitoActual = "Global";
+private List<String> variablesEnElAmbito = new List<String>();
+private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
 
 void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
@@ -555,6 +567,14 @@ void chequearRangoI32(String sval){
   if(Long.valueOf(sval) > l){
     yyerror("La constante esta fuera de rango");
   }
+}
+
+void chequearRangoI32Neg(String sval){
+       String s = "2147483648";
+        long l = Long.valueOf(s);
+        if(Long.valueOf(sval) > l){
+                yyerror("La constante esta fuera de rango");
+  } 
 }
 
 int yylex() throws IOException{
@@ -568,4 +588,23 @@ int yylex() throws IOException{
 }
 public NodoControl getRaiz(){
 	return raiz;
+}
+public Map<String,ArbolSintactico> getFuncion(){
+        return funciones;
+}
+
+void actualizarAmbito(String lex, String amb){
+        TablaSimbolos.cambiarAtributo(lex,"Ambito",amb);
+}
+
+void putVariableEnAmbito(String s){
+        this.variablesEnElAmbito.add(s);
+}
+
+void limpiarVariablesDeAmbito(){
+        this.variablesEnElAmbito = new List<String>();
+}
+
+List<String> getListaVariablesDelAmbito(){
+        return this.variablesEnElAmbito;
 }
