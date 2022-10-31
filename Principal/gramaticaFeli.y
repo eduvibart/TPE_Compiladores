@@ -54,8 +54,10 @@ tipo : I32 {
 ;
 sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos");
                                       for (String s : ((NodoTipos)$2).getList()){
+                                        System.out.println("variable ->"+s);
                                         TablaSimbolos.addAtributo(s,"Tipo",((ArbolSintactico) $1).getTipo());
                                         putVariableEnAmbito(s);
+                                        TablaSimbolos.addAtributo(s,"Linea",AnalizadorLexico.getLineaAct());
                                       }
                                       $$ = $2;
                                      }
@@ -71,11 +73,24 @@ list_var : list_var COMA ID {
 ;
 sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {
                                 System.out.println("Declaracion de Funcion");
+                                System.out.println("LineaActual" + AnalizadorLexico.getLineaAct());
                                 $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$11);
-                                ambitoActual += "Fun_"+$2.sval;
-                                for (String s : getListaVariablesDelAmbito()){
-                                        TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
+                                String ambitoAnterior = ambitoActual;
+                                ambitoActual += ":"+$2.sval;
+                                Integer tope = getTope();
+                                ArrayList<String> listaVariables = new ArrayList<String>();
+                                for(String s1 : getListaVariablesDelAmbito()){
+                                        listaVariables.add(s1);
                                 }
+                                for (String s : listaVariables){
+                                        Integer i = (Integer) TablaSimbolos.getAtributo(s,"Linea");
+                                        if((i >= tope) && (i <=(Integer)AnalizadorLexico.getLineaAct())){
+                                                TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
+                                                removeVarDeAmbito(s);
+                                        }
+                                }
+                                ambitoActual = ambitoAnterior;
+                                
                         }
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
@@ -560,6 +575,7 @@ private NodoControl raiz;
 private String ambitoActual = "Global";
 private List<String> variablesEnElAmbito = new ArrayList<String>();
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
+private static List<Integer> linFun = new ArrayList<Integer>();
 
 void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
@@ -607,7 +623,17 @@ void putVariableEnAmbito(String s){
 void limpiarVariablesDeAmbito(){
         this.variablesEnElAmbito = new ArrayList<String>();
 }
-
+void removeVarDeAmbito(String s){
+        this.variablesEnElAmbito.remove(s);
+}
 List<String> getListaVariablesDelAmbito(){
         return this.variablesEnElAmbito;
+}
+public static void addLinFun(int i){
+        linFun.add(i);
+}
+public static Integer getTope(){
+
+        Integer i = linFun.remove(linFun.size()-1);
+        return i;
 }

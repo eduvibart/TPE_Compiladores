@@ -4,8 +4,11 @@ import java.io.IOException;
 import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
 import GeneracionCodigoIntermedio.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 %}
 
 %token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST SUMA RESTA MULT DIV ENTERO FLOAT
@@ -19,6 +22,24 @@ import java.util.Map;
 program : nombre_program LLAVE_A bloque_sentencias LLAVE_C {raiz = new NodoControl("PROGRAMA",(ArbolSintactico)$3);
                                                             System.out.println("Raiz---$$ : " + $$ + " $1 :" + $1);
                                                             System.out.println("Raiz : " + raiz);
+                                                            Integer tope = 1;
+                                                                ArrayList<String> listaVariables = new ArrayList<String>();
+                                                                for(String s1 : getListaVariablesDelAmbito()){
+                                                                        listaVariables.add(s1);
+                                                                }
+                                                                for (String s : listaVariables){
+                                                                        Integer i = (Integer) TablaSimbolos.getAtributo(s,"Linea");
+                                                                        if((i >= tope) && (i <=(Integer)AnalizadorLexico.getLineaAct())){
+                                                                                String ambito =(String) TablaSimbolos.getAtributo(s,"Ambito");
+                                                                                if ( ambito == null){
+                                                                                        TablaSimbolos.addAtributo(s,"Ambito","Global");
+                                                                                }
+                                                                                else{
+                                                                                        ambito+="Global";
+                                                                                        TablaSimbolos.addAtributo(s,"Ambito",ambito);
+                                                                                }
+                                                                        }
+                                                                }
                                                            }
         | error {yyerror("Hay un error sintactico en la entrada que arrastra errores");}
 ;
@@ -51,9 +72,12 @@ tipo : I32 {
 ;
 sentencia_decl_datos : tipo list_var {System.out.println("Declaracion de datos");
                                       for (String s : ((NodoTipos)$2).getList()){
+                                        System.out.println("variable ->"+s);
                                         TablaSimbolos.addAtributo(s,"Tipo",((ArbolSintactico) $1).getTipo());
-                                        TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
+                                        putVariableEnAmbito(s);
+                                        TablaSimbolos.addAtributo(s,"Linea",AnalizadorLexico.getLineaAct());
                                       }
+                                      $$ = $2;
                                      }
                         | ID list_var {yyerror("No esta permitido el tipo declarado");}
 ;
@@ -65,9 +89,30 @@ list_var : list_var COMA ID {
                $$=new NodoTipos((String)$1.sval);
               }
 ;
-sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {System.out.println("Declaracion de Funcion");
-                                                                                                                   $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$11);
-                                                                                                                  }
+sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {
+                                System.out.println("Declaracion de Funcion");
+                                System.out.println("LineaActual" + AnalizadorLexico.getLineaAct());
+                                $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$11);
+                                Integer tope = getTope();
+                                ArrayList<String> listaVariables = new ArrayList<String>();
+                                for(String s1 : getListaVariablesDelAmbito()){
+                                        listaVariables.add(s1);
+                                }
+                                for (String s : listaVariables){
+                                        Integer i = (Integer) TablaSimbolos.getAtributo(s,"Linea");
+                                        if((i >= tope) && (i <=(Integer)AnalizadorLexico.getLineaAct())){
+                                                String ambito = (String)TablaSimbolos.getAtributo(s,"Ambito");
+                                                if ( ambito == null){
+                                                        TablaSimbolos.addAtributo(s,"Ambito",$2.sval+":");
+                                                }
+                                                else{
+                                                        ambito+=$2.sval+":";
+                                                        TablaSimbolos.addAtributo(s,"Ambito",ambito);
+                                                }
+                                        }
+                                }
+                                
+                        }
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
@@ -96,7 +141,7 @@ sentencias_fun :  sentencia_decl_datos {$$=new NodoHoja("Sentencia Declarativa D
                 | retorno {$$=$1;}
 ;
 sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");
-                        $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $6),new NodoControl("else fun", (ArbolSintactico)$9)));
+                                $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $6),new NodoControl("else fun", (ArbolSintactico)$9)));
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C PUNTOCOMA ELSE sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");
                         $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $7),new NodoControl("else fun", (ArbolSintactico)$11)));}
@@ -549,7 +594,9 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {$$=new NodoComun(
 %%
 private NodoControl raiz;
 private String ambitoActual = "Global";
+private List<String> variablesEnElAmbito = new ArrayList<String>();
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
+private static List<Integer> linFun = new ArrayList<Integer>();
 
 void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
@@ -584,4 +631,30 @@ public NodoControl getRaiz(){
 }
 public Map<String,ArbolSintactico> getFuncion(){
         return funciones;
+}
+
+void actualizarAmbito(String lex, String amb){
+        TablaSimbolos.addAtributo(lex,"Ambito",amb);
+}
+
+void putVariableEnAmbito(String s){
+        this.variablesEnElAmbito.add(s);
+}
+
+void limpiarVariablesDeAmbito(){
+        this.variablesEnElAmbito = new ArrayList<String>();
+}
+void removeVarDeAmbito(String s){
+        this.variablesEnElAmbito.remove(s);
+}
+List<String> getListaVariablesDelAmbito(){
+        return this.variablesEnElAmbito;
+}
+public static void addLinFun(int i){
+        linFun.add(i);
+}
+public static Integer getTope(){
+
+        Integer i = linFun.remove(linFun.size()-1);
+        return i;
 }
