@@ -74,10 +74,17 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                 System.out.println("Declaracion de Funcion");
                                 System.out.println("LineaActual" + AnalizadorLexico.getLineaAct());
                                 $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$11);
+                                String ambitoAnterior = ambitoActual;
                                 ambitoActual += "Fun_"+$2.sval;
+                                Integer tope = getTope();
                                 for (String s : getListaVariablesDelAmbito()){
-                                        TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
+                                        Integer i = (Integer) TablaSimbolos.getAtributo(s,"Linea");
+                                        if((tope <= i) && (i <=(Integer)AnalizadorLexico.getLineaAct())){
+                                                TablaSimbolos.addAtributo(s,"Ambito",ambitoActual);
+                                                removeVarDeAmbito(s);
+                                        }
                                 }
+                                ambitoActual = ambitoAnterior;
                                 
                         }
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Declaracion de Funcion");}
@@ -611,7 +618,9 @@ void putVariableEnAmbito(String s){
 void limpiarVariablesDeAmbito(){
         this.variablesEnElAmbito = new ArrayList<String>();
 }
-
+void removeVarDeAmbito(String s){
+        this.variablesEnElAmbito.remove(s);
+}
 List<String> getListaVariablesDelAmbito(){
         return this.variablesEnElAmbito;
 }
@@ -619,6 +628,7 @@ public static void addLinFun(int i){
         linFun.add(i);
 }
 public static Integer getTope(){
-        Integer i = linFun.remove(linFun.size() -1);
+
+        Integer i = linFun.remove(linFun.size()-1);
         return i;
 }

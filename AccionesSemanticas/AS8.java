@@ -24,8 +24,9 @@ public class AS8 extends AccionSemantica{
             AnalizadorLexico.addError("Warning: la variable "+t.getLexema()+" supera la longitud maxima: "+ AccionSemantica.TAMANIO_VAR);
         }
         Integer idPR = AnalizadorLexico.isPR(t.getLexema());
+        
         if(idPR != null){
-            if(t.getLexema() == "fun"){
+            if(t.getLexema().equals("fun")){
                 Parser.addLinFun((Integer)AnalizadorLexico.getLineaAct());
             }
             t.setId(idPR);

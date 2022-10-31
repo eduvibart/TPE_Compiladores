@@ -26,7 +26,7 @@ public class Inicializador{
         System.out.println("\n\n");
         
         AnalizadorLexico.setEntrada(entrada);
-        Parser parser = new Parser(true);
+        Parser parser = new Parser();
         parser.run();
 
         System.out.println("\nErrores lexicos : \n");
