@@ -5,6 +5,7 @@ import java.io.Reader;
 
 import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
+import Principal.Parser;
 import Principal.TablaSimbolos;
 
 public class AS8 extends AccionSemantica{
@@ -24,6 +25,9 @@ public class AS8 extends AccionSemantica{
         }
         Integer idPR = AnalizadorLexico.isPR(t.getLexema());
         if(idPR != null){
+            if(t.getLexema() == "fun"){
+                Parser.addLinFun(AnalizadorLexico.getLineaAct());
+            }
             t.setId(idPR);
         }else{
             if (TablaSimbolos.existeSimbolo(t.getLexema())){
