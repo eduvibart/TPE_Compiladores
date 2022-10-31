@@ -4,8 +4,11 @@ import java.io.IOException;
 import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
 import GeneracionCodigoIntermedio.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 %}
 
 %token IF THEN ELSE END_IF OUT FUN RETURN BREAK WHEN WHILE FOR CONTINUE ID I32 F32 PUNTO PARENT_A PARENT_C COMILLA COMA DOSPUNTOS PUNTOCOMA IGUAL MAYOR MENOR MENORIGUAL MAYORIGUAL LLAVE_A LLAVE_C EXCL DIST ASIG CADENA COMENT CONST SUMA RESTA MULT DIV ENTERO FLOAT
@@ -555,7 +558,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {$$=new NodoComun(
 %%
 private NodoControl raiz;
 private String ambitoActual = "Global";
-private List<String> variablesEnElAmbito = new List<String>();
+private List<String> variablesEnElAmbito = new ArrayList<String>();
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
 
 void yyerror(String mensaje){
@@ -594,7 +597,7 @@ public Map<String,ArbolSintactico> getFuncion(){
 }
 
 void actualizarAmbito(String lex, String amb){
-        TablaSimbolos.cambiarAtributo(lex,"Ambito",amb);
+        TablaSimbolos.addAtributo(lex,"Ambito",amb);
 }
 
 void putVariableEnAmbito(String s){
@@ -602,7 +605,7 @@ void putVariableEnAmbito(String s){
 }
 
 void limpiarVariablesDeAmbito(){
-        this.variablesEnElAmbito = new List<String>();
+        this.variablesEnElAmbito = new ArrayList<String>();
 }
 
 List<String> getListaVariablesDelAmbito(){
