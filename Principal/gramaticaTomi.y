@@ -563,7 +563,7 @@ private NodoControl raiz;
 private String ambitoActual = "Global";
 private List<String> variablesEnElAmbito = new ArrayList<String>();
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
-private List<Integer> linFun = new ArrayList<Integer>();
+private static List<Integer> linFun = new ArrayList<Integer>();
 
 void yyerror(String mensaje){
         System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
@@ -615,7 +615,7 @@ void limpiarVariablesDeAmbito(){
 List<String> getListaVariablesDelAmbito(){
         return this.variablesEnElAmbito;
 }
-public static void addLinFun(Integer i){
+public static void addLinFun(int i){
         linFun.add(i);
 }
 public static Integer getTope(){

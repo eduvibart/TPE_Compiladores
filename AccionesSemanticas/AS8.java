@@ -26,7 +26,7 @@ public class AS8 extends AccionSemantica{
         Integer idPR = AnalizadorLexico.isPR(t.getLexema());
         if(idPR != null){
             if(t.getLexema() == "fun"){
-                Parser.addLinFun(AnalizadorLexico.getLineaAct());
+                Parser.addLinFun((Integer)AnalizadorLexico.getLineaAct());
             }
             t.setId(idPR);
         }else{
