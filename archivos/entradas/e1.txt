@@ -1,14 +1,6 @@
 program {
-        i32 a;
-        f32 b;
-        if (a < b) then {
-
-        }end_if
-
         
-
-
-
-
-
-}   
+        if(a<b)then {
+        
+        }end_if;
+        }   

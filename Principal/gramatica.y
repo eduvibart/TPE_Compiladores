@@ -474,11 +474,22 @@ termino: termino MULT factor  {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(A
 ;
 factor: ID {
             $$ = new NodoHoja($1.sval);
-            ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));                                                            
+            String s = (String)TablaSimbolos.getAtributo($1.sval,"Tipo");
+            if (s != null){
+                ((ArbolSintactico)$$).setTipo(s);  
+            }else {
+                System.out.println("Variable no declarada " + $1.sval);
+            }
+                                                                      
            }
         | cte {
                 $$ = new NodoHoja($1.sval);
-                ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));  
+                String s = (String)TablaSimbolos.getAtributo($1.sval,"Tipo");
+                if (s != null){
+                        ((ArbolSintactico)$$).setTipo(s);  
+                }else {
+                        System.out.println("Variable no declarada " + $1.sval);
+                }
               }  
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}

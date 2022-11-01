@@ -473,10 +473,23 @@ termino: termino MULT factor  {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(A
                  }  
 ;
 factor: ID {
-            $$ = new NodoHoja($1.sval);                                                            
+            $$ = new NodoHoja($1.sval);
+            String s = (String)TablaSimbolos.getAtributo($1.sval,"Tipo");
+            if (s != null){
+                ((ArbolSintactico)$$).setTipo(s);  
+            }else {
+                System.out.println("Variable no declarada " + $1.sval);
+            }
+                                                                      
            }
         | cte {
-               $$ = new NodoHoja($1.sval);
+                $$ = new NodoHoja($1.sval);
+                String s = (String)TablaSimbolos.getAtributo($1.sval,"Tipo");
+                if (s != null){
+                        ((ArbolSintactico)$$).setTipo(s);  
+                }else {
+                        System.out.println("Variable no declarada " + $1.sval);
+                }
               }  
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}
@@ -514,7 +527,13 @@ sentencia_if : IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOM
 ;
 
 
-condicion : expresion comparacion expresion {$$= new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);}
+condicion : expresion comparacion expresion 
+                {
+                        $$= new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                        if (!((((ArbolSintactico)$1).getTipo()).equals(((ArbolSintactico)$3).getTipo()))){
+                               System.out.println("error en la comparacion entre expresiones de distintos tipos");
+                        }
+                }
         | expresion comparacion error {yyerror("Se esperaba otra expresion para comparar.");}
         | expresion error expresion {yyerror("Se esperaba un tipo de comparacion.");}
 ;
