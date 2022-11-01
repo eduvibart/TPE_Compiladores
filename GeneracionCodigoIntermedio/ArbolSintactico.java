@@ -6,12 +6,14 @@ public abstract class ArbolSintactico extends ParserVal{
     private ArbolSintactico der; 
     private String lex;
     private String tipo;
+    private Integer linea;
 
     public ArbolSintactico(String lex){
         izq = null;
         der = null;
         this.lex = lex;
         tipo = "";
+        linea = null;
     }
 
     public String getTipo(){return this.tipo;}
@@ -22,5 +24,7 @@ public abstract class ArbolSintactico extends ParserVal{
     public void setIzq(ArbolSintactico izq) { this.izq = izq; }
 	public void setDer(ArbolSintactico der) { this.der = der; }
 	public void setLex(String lex) { this.lex= lex; }
+    public Integer getLinea(){return this.linea;}
+    public void setLinea(Integer linea){this.linea = linea;}
     public abstract void recorrerArbol(String identado);
 }

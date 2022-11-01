@@ -26,7 +26,9 @@ public class TablaSimbolos {
     }
 
     public static Object getAtributo(String lexema, String atributo ) {
-        return simbolos.get(lexema).get(atributo);
+        if(simbolos.get(lexema) != null)
+            return simbolos.get(lexema).get(atributo);
+        return null;
     }
 
     public static void imprimirTabla(){
