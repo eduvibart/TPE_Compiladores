@@ -3,6 +3,10 @@ import AccionesSemanticas.AccionSemantica;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AnalizadorLexico{
 	private static final String pathTE = "archivos/TransicionDeEstados.txt";
@@ -15,7 +19,7 @@ public class AnalizadorLexico{
     private static Reader entrada;
     private static int estadoAct = 0;
     private static int lineaAct = 1;
-    public static String errores = "";
+    public static HashMap<Integer,ArrayList<String>> erroresLexicos = new HashMap<Integer,ArrayList<String>>();
     private static TPR tablaPalabrasReservadas = new TPR();
 
     public static int getLineaAct(){
@@ -29,11 +33,19 @@ public class AnalizadorLexico{
     }
     
     public static void addError(String s){
-        errores += "Linea: " + lineaAct +" Error: " + s + "\n";
+        //erroresLexicos.put(lineaAct,s);
+        if (erroresLexicos.get(lineaAct) == null){
+            ArrayList<String> mnsj = new ArrayList<String>();
+            mnsj.add(s); 
+            erroresLexicos.put(AnalizadorLexico.getLineaAct(), mnsj);
+        }
+        else{
+                erroresLexicos.get(lineaAct).add(s);
+        }
     }
 
-    public static String getErrores(){
-        return errores;
+    public static HashMap<Integer,ArrayList<String>> getErroresLexicos(){
+        return erroresLexicos;
     }
     public static Token getToken() throws IOException{
         

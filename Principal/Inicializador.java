@@ -3,6 +3,8 @@ package Principal;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -28,22 +30,45 @@ public class Inicializador{
         AnalizadorLexico.setEntrada(entrada);
         Parser parser = new Parser();
         parser.run();
+        
+        //Agrupar Errores sintacticos y lexicos
+        HashMap<Integer,ArrayList<String>> erroresTotales = AnalizadorLexico.getErroresLexicos();
+        HashMap<Integer,ArrayList<String>> erroresSintacticos = Parser.getErroresSintacticos();
+        for (Integer i : erroresSintacticos.keySet()){
+            if (erroresTotales.get(i)==null){
+                erroresTotales.put(i,erroresSintacticos.get(i));
+            }  
+            else{
+                erroresTotales.get(i).addAll(erroresSintacticos.get(i));
+            }
+        }
 
-        System.out.println("\nErrores lexicos : \n");
-        System.out.println(AnalizadorLexico.getErrores());
+        //Mostrar Errores totales:
+        System.out.println("\n\nErrores de Compilacion: ");
+        for(Integer i : erroresTotales.keySet()){
+            System.out.println("Linea"+i+":");
+            for(String e : erroresTotales.get(i)){
+                System.out.println("    "+e);
+            }
+        }
+        
+        
         
         //Mostramos la tabla de simbolos
-        System.out.println("Tabla de simbolos \n \n");
+        System.out.println("\nTabla de simbolos \n");
         TablaSimbolos.imprimirTabla();
-        NodoControl raiz = parser.getRaiz();
-        System.out.println("Arbol Sintactico \n \n");
-        raiz.recorrerArbol("");
-        lector.close();
 
-        System.out.println("FUNCIONES");
-        for (Map.Entry<String,ArbolSintactico> entry : parser.getFuncion().entrySet()) {
-            System.out.println("Key = " + entry.getKey() + ", Value = " ); 
-            entry.getValue().recorrerArbol("");    	
+        if (erroresTotales.keySet() == null){
+            NodoControl raiz = parser.getRaiz();
+            System.out.println("\nArbol Sintactico \n \n");
+            raiz.recorrerArbol("");
+            lector.close();
+
+            System.out.println("FUNCIONES");
+            for (Map.Entry<String,ArbolSintactico> entry : parser.getFuncion().entrySet()) {
+                System.out.println("Key = " + entry.getKey() + ", Value = " ); 
+                entry.getValue().recorrerArbol("");    	
+            }
         }
     }
 }

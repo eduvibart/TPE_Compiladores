@@ -47,7 +47,11 @@ bloque_sentencias :{$$=new NodoHoja("Fin");}
                 | bloque_sentencias sentencia PUNTOCOMA {
                                                         $$=new NodoComun("Sentencia", (ArbolSintactico) $2, (ArbolSintactico) $1);
                                                         }
-                | bloque_sentencias sentencia {yyerror("Se esperaba ;");}
+                | bloque_sentencias sentencia 
+                        {
+                                $$ = new NodoControl("Error",(ArbolSintactico)null);
+                                yyerror("Se esperaba ;");
+                        }
 ;
 sentencia : sentencia_declarativa {$$=new NodoHoja("Sentencia Declarativa");}
         | sentencia_ejecutable {$$ = $1;}
@@ -370,12 +374,12 @@ asignacion : ID ASIG expresion  {
                                         s2 = ((ArbolSintactico)$3).getTipo();
                                  }
                                  if(s1 == null){
-                                        System.out.println("Variable no declarada  " + $1.sval);
+                                        yyerror("La vaariable "+$1.sval+ "no esta declarada");
                                  }else{
                                         if((s2 == "null")){
-                                                System.out.println("Falta declarar alguna variable para realizar la asignacion.");
+                                                yyerror("Falta declarar alguna variable para realizar la asignacion.");
                                         }else{
-                                                System.out.println("No se puede realizar una asignacion con tipos diferentes.");
+                                                yyerror("No se puede realizar una asignacion con tipos diferentes.");
                                         }
                                         
                                  }
@@ -474,11 +478,22 @@ termino: termino MULT factor  {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(A
 ;
 factor: ID {
             $$ = new NodoHoja($1.sval);
-            ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));                                                            
+            String s = (String)TablaSimbolos.getAtributo($1.sval,"Tipo");
+            if (s != null){
+                ((ArbolSintactico)$$).setTipo(s);  
+            }else {
+                System.out.println("Variable no declarada " + $1.sval);
+            }
+                                                                      
            }
         | cte {
                 $$ = new NodoHoja($1.sval);
-                ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));  
+                String s = (String)TablaSimbolos.getAtributo($1.sval,"Tipo");
+                if (s != null){
+                        ((ArbolSintactico)$$).setTipo(s);  
+                }else {
+                        System.out.println("Variable no declarada " + $1.sval);
+                }
               }  
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}
@@ -708,10 +723,23 @@ private NodoControl raiz;
 private List<String> variablesEnElAmbito = new ArrayList<String>();
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
 private static List<Integer> linFun = new ArrayList<Integer>();
+private static HashMap<Integer,ArrayList<String>> erroresSintacticos = new HashMap<Integer,ArrayList<String>>();
 
 void yyerror(String mensaje){
-        System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
+        if (erroresSintacticos.get(AnalizadorLexico.getLineaAct())== null){
+                ArrayList<String> mnsj = new ArrayList<String>();
+                mnsj.add(mensaje); 
+                erroresSintacticos.put(AnalizadorLexico.getLineaAct(), mnsj);
+        }
+        else{
+                erroresSintacticos.get(AnalizadorLexico.getLineaAct()).add(mensaje);
+        }
 }
+
+static HashMap<Integer,ArrayList<String>> getErroresSintacticos(){
+        return erroresSintacticos;
+}
+
 void chequearRangoI32(String sval){
   String s = "2147483647";
   long l = Long.valueOf(s);
