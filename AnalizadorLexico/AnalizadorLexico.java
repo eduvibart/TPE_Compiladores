@@ -20,6 +20,7 @@ public class AnalizadorLexico{
     private static int estadoAct = 0;
     private static int lineaAct = 1;
     public static HashMap<Integer,ArrayList<String>> erroresLexicos = new HashMap<Integer,ArrayList<String>>();
+    public static HashMap<Integer,ArrayList<String>> warnings = new HashMap<Integer,ArrayList<String>>();
     private static TPR tablaPalabrasReservadas = new TPR();
 
     public static int getLineaAct(){
@@ -43,10 +44,25 @@ public class AnalizadorLexico{
                 erroresLexicos.get(lineaAct).add(s);
         }
     }
+    public static void addWarning(String s){
+        if (warnings.get(lineaAct) == null){
+            ArrayList<String> mnsj = new ArrayList<String>();
+            mnsj.add(s); 
+            warnings.put(AnalizadorLexico.getLineaAct(), mnsj);
+        }
+        else{
+                erroresLexicos.get(lineaAct).add(s);
+        }
+    }
 
     public static HashMap<Integer,ArrayList<String>> getErroresLexicos(){
         return erroresLexicos;
     }
+
+    public static HashMap<Integer,ArrayList<String>> getWarningsLexicos(){
+        return warnings;
+    }
+
     public static Token getToken() throws IOException{
         
         Token t = new Token();

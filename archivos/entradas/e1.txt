@@ -1,7 +1,7 @@
 program {
-        i32 adklsajkdljasldsajlkdjsalkjasdasdkjsajkld
+        i32 aklasdlksadlkasdklsaldkasl
         i32 b;
-        if(a<b)then {
+        if(aklasdlksadlkasdklsaldkasl<b)then {
         
         }end_if;
         }   

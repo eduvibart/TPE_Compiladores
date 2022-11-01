@@ -30,6 +30,17 @@ public class Inicializador{
         AnalizadorLexico.setEntrada(entrada);
         Parser parser = new Parser();
         parser.run();
+
+        //Mostrar Warnings (permiten la ejecucion)
+        System.out.println("\nWarnings: ");
+        HashMap<Integer,ArrayList<String>> warnings = AnalizadorLexico.getWarningsLexicos();
+        for(Integer j : warnings.keySet()){
+            System.out.println("Linea"+j+":");
+            for(String w : warnings.get(j)){
+                System.out.println("    "+w);
+            }
+        }
+        
         
         //Agrupar Errores sintacticos y lexicos
         HashMap<Integer,ArrayList<String>> erroresTotales = AnalizadorLexico.getErroresLexicos();
@@ -55,10 +66,10 @@ public class Inicializador{
         
         
         //Mostramos la tabla de simbolos
-        System.out.println("\nTabla de simbolos \n");
+        System.out.println("\nTabla de simbolos:");
         TablaSimbolos.imprimirTabla();
 
-        if (erroresTotales.keySet() == null){
+        if (erroresTotales.keySet().isEmpty()){
             NodoControl raiz = parser.getRaiz();
             System.out.println("\nArbol Sintactico \n \n");
             raiz.recorrerArbol("");

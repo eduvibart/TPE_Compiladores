@@ -47,7 +47,10 @@ bloque_sentencias :{$$=new NodoHoja("Fin");}
                 | bloque_sentencias sentencia PUNTOCOMA {
                                                         $$=new NodoComun("Sentencia", (ArbolSintactico) $2, (ArbolSintactico) $1);
                                                         }
-                | bloque_sentencias sentencia {yyerror("Se esperaba ;");}
+                | bloque_sentencias sentencia {
+                                $$ = new NodoControl("Error",(ArbolSintactico)null);
+                                yyerror("Se esperaba ;");
+                        }
 ;
 sentencia : sentencia_declarativa {$$=new NodoHoja("Sentencia Declarativa");}
         | sentencia_ejecutable {$$ = $1;}
@@ -106,6 +109,20 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                                 }
                                         }
                                 }
+                                ArrayList<ArbolSintactico> r1 = new ArrayList<ArbolSintactico>();
+                                String tipo = ((ArbolSintactico)$9).getTipo();
+                                for (ArbolSintactico a1 : retornos){
+                                        r1.add(a1);
+                                }
+                                for (ArbolSintactico a : r1){
+                                        Integer i = a.getLinea();
+                                        if( (i>= tope) && (i<=(Integer)AnalizadorLexico.getLineaAct()) ){
+                                                if(!(a.getTipo().equals(tipo))  && !(a.getTipo().equals("null"))){
+                                                        yyerror("El retorno debe tener el mismo tipo que el de la funcion.");
+                                                }
+                                                retornos.remove(a);
+                                        }
+                                }
                                 
                         }
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {
@@ -129,10 +146,25 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                                         TablaSimbolos.addAtributo(s,"Ambito",ambito);
                                                 }
                                         }
-                                }}
+                                }
+                                ArrayList<ArbolSintactico> r1 = new ArrayList<ArbolSintactico>();
+                                String tipo = ((ArbolSintactico)$7).getTipo();
+                                for (ArbolSintactico a1 : retornos){
+                                        r1.add(a1);
+                                }
+                                for (ArbolSintactico a : r1){
+                                        Integer i = a.getLinea();
+                                        if( (i>= tope) && (i<=(Integer)AnalizadorLexico.getLineaAct()) ){
+                                                if(!(a.getTipo().equals(tipo))  && !(a.getTipo().equals("null"))){
+                                                        yyerror("El retorno debe tener el mismo tipo que el de la funcion.");
+                                                }
+                                                retornos.remove(a);
+                                        }
+                                }
+                                }
                 | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {
                                 System.out.println("Declaracion de Funcion");
-                                $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$7);
+                                $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$8);
                                 TablaSimbolos.addAtributo($2.sval,"Uso","NombreFuncion");
                                 Integer tope = getTope();
                                 ArrayList<String> listaVariables = new ArrayList<String>();
@@ -151,7 +183,22 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                                         TablaSimbolos.addAtributo(s,"Ambito",ambito);
                                                 }
                                         }
-                                }}
+                                }
+                                ArrayList<ArbolSintactico> r1 = new ArrayList<ArbolSintactico>();
+                                String tipo = ((ArbolSintactico)$6).getTipo();
+                                for (ArbolSintactico a1 : retornos){
+                                        r1.add(a1);
+                                }
+                                for (ArbolSintactico a : r1){
+                                        Integer i = a.getLinea();
+                                        if( (i>= tope) && (i<=(Integer)AnalizadorLexico.getLineaAct()) ){
+                                                if(!(a.getTipo().equals(tipo))  && !(a.getTipo().equals("null"))){
+                                                        yyerror("El retorno debe tener el mismo tipo que el de la funcion.");
+                                                }
+                                                retornos.remove(a);
+                                        }
+                                }
+                                }
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo error {yyerror("Se esperaba {");}
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS error  {yyerror("El tipo declarado no esta permitido");}
@@ -339,7 +386,13 @@ sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_brea
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
                 | IF error {yyerror("Se esperaba ( ");}
 ;
-retorno : RETURN PARENT_A expresion PARENT_C {$$ = new NodoControl("Retorno", (ArbolSintactico)$3);}
+retorno : RETURN PARENT_A expresion PARENT_C {$$ = new NodoControl("Retorno", (ArbolSintactico)$3);
+                                                NodoHoja retorno = new NodoHoja("Retorno");
+                                                retorno.setLinea(AnalizadorLexico.getLineaAct());
+                                                retorno.setTipo(((ArbolSintactico)$3).getTipo());
+                                                retornos.add(retorno);
+                                                }
+
 ;
 parametro : tipo ID
         |  ID ID {yyerror("No esta permitido el tipo declarado");}
@@ -370,12 +423,12 @@ asignacion : ID ASIG expresion  {
                                         s2 = ((ArbolSintactico)$3).getTipo();
                                  }
                                  if(s1 == null){
-                                        System.out.println("Variable no declarada  " + $1.sval);
+                                        System.out.println("Variable no declarada " + $1.sval);
                                  }else{
                                         if((s2 == "null")){
-                                                System.out.println("Falta declarar alguna variable para realizar la asignacion.");
+                                                yyerror("Falta declarar alguna variable para realizar la asignacion.");
                                         }else{
-                                                System.out.println("No se puede realizar una asignacion con tipos diferentes.");
+                                                yyerror("No se puede realizar una asignacion con tipos diferentes.");
                                         }
                                         
                                  }
@@ -388,7 +441,7 @@ expresion: expresion SUMA termino {$$ = new NodoComun($2.sval,(ArbolSintactico)$
                                         ((ArbolSintactico)$$).setTipo(s1);     
                                  }else{
                                         if(TablaSimbolos.existeSimbolo(((ArbolSintactico)$1).getLex())){
-                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)$1).getLex());
+                                                yyerror("Variable no declarada " + ((ArbolSintactico)$1).getLex());
                                                 ((ArbolSintactico)$$).setTipo("null"); 
                                         }
                                  }
@@ -396,7 +449,7 @@ expresion: expresion SUMA termino {$$ = new NodoComun($2.sval,(ArbolSintactico)$
                                  if(s2 != null) {
                                        ((ArbolSintactico)$$).setTipo(s2);
                                  }else{
-                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)$3).getLex());
+                                        yyerror("Variable no declarada " + ((ArbolSintactico)$3).getLex());
                                         ((ArbolSintactico)$$).setTipo("null"); 
                                  }
                                  
@@ -408,7 +461,7 @@ expresion: expresion SUMA termino {$$ = new NodoComun($2.sval,(ArbolSintactico)$
                                         ((ArbolSintactico)$$).setTipo(s1);     
                                  }else{
                                         if(TablaSimbolos.existeSimbolo(((ArbolSintactico)$1).getLex())){
-                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)$1).getLex());
+                                                yyerror("Variable no declarada " + ((ArbolSintactico)$1).getLex());
                                                 ((ArbolSintactico)$$).setTipo("null"); 
                                         }
                                  }
@@ -416,7 +469,7 @@ expresion: expresion SUMA termino {$$ = new NodoComun($2.sval,(ArbolSintactico)$
                                  if(s2 != null) {
                                        ((ArbolSintactico)$$).setTipo(s2);
                                  }else{
-                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)$3).getLex());
+                                        yyerror("Variable no declarada " + ((ArbolSintactico)$3).getLex());
                                         ((ArbolSintactico)$$).setTipo("null"); 
                                  }
                                  }
@@ -433,7 +486,7 @@ termino: termino MULT factor  {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(A
                                         ((ArbolSintactico)$$).setTipo(s1);     
                                  }else{
                                         if(TablaSimbolos.existeSimbolo(((ArbolSintactico)$1).getLex())){
-                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)$1).getLex());
+                                                yyerror("Variable no declarada " + ((ArbolSintactico)$1).getLex());
                                                 ((ArbolSintactico)$$).setTipo("null"); 
                                         }
                                  }
@@ -441,7 +494,7 @@ termino: termino MULT factor  {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(A
                                  if(s2 != null) {
                                        ((ArbolSintactico)$$).setTipo(s2);
                                  }else{
-                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)$3).getLex());
+                                        yyerror("Variable no declarada " + ((ArbolSintactico)$3).getLex());
                                         ((ArbolSintactico)$$).setTipo("null"); 
                                  }
                                  
@@ -455,7 +508,7 @@ termino: termino MULT factor  {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(A
                                         ((ArbolSintactico)$$).setTipo(s1);     
                                  }else{
                                         if(TablaSimbolos.existeSimbolo(((ArbolSintactico)$1).getLex())){
-                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)$1).getLex());
+                                                yyerror("Variable no declarada " + ((ArbolSintactico)$1).getLex());
                                                 ((ArbolSintactico)$$).setTipo("null"); 
                                         }
                                  }
@@ -463,7 +516,7 @@ termino: termino MULT factor  {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(A
                                  if(s2 != null) {
                                        ((ArbolSintactico)$$).setTipo(s2);
                                  }else{
-                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)$3).getLex());
+                                        yyerror("Variable no declarada " + ((ArbolSintactico)$3).getLex());
                                         ((ArbolSintactico)$$).setTipo("null"); 
                                  }
                                 }   
@@ -478,7 +531,7 @@ factor: ID {
             if (s != null){
                 ((ArbolSintactico)$$).setTipo(s);  
             }else {
-                System.out.println("Variable no declarada " + $1.sval);
+                yyerror("Variable no declarada " + $1.sval);
             }
                                                                       
            }
@@ -488,7 +541,7 @@ factor: ID {
                 if (s != null){
                         ((ArbolSintactico)$$).setTipo(s);  
                 }else {
-                        System.out.println("Variable no declarada " + $1.sval);
+                        yyerror("Variable no declarada " + $1.sval);
                 }
               }  
 ;
@@ -531,7 +584,7 @@ condicion : expresion comparacion expresion
                 {
                         $$= new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
                         if (!((((ArbolSintactico)$1).getTipo()).equals(((ArbolSintactico)$3).getTipo()))){
-                               System.out.println("error en la comparacion entre expresiones de distintos tipos");
+                               yyerror("error en la comparacion entre expresiones de distintos tipos");
                         }
                 }
         | expresion comparacion error {yyerror("Se esperaba otra expresion para comparar.");}
@@ -719,9 +772,22 @@ private NodoControl raiz;
 private List<String> variablesEnElAmbito = new ArrayList<String>();
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
 private static List<Integer> linFun = new ArrayList<Integer>();
+private List<ArbolSintactico> retornos = new ArrayList<ArbolSintactico>();
+private static HashMap<Integer,ArrayList<String>> erroresSintacticos = new HashMap<Integer,ArrayList<String>>();
 
 void yyerror(String mensaje){
-        System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
+        if (erroresSintacticos.get(AnalizadorLexico.getLineaAct()-1)== null){
+                ArrayList<String> mnsj = new ArrayList<String>();
+                mnsj.add(mensaje); 
+                erroresSintacticos.put(AnalizadorLexico.getLineaAct()-1, mnsj);
+        }
+        else{
+                erroresSintacticos.get(AnalizadorLexico.getLineaAct()-1).add(mensaje);
+        }
+}
+
+static HashMap<Integer,ArrayList<String>> getErroresSintacticos(){
+        return erroresSintacticos;
 }
 void chequearRangoI32(String sval){
   String s = "2147483647";
