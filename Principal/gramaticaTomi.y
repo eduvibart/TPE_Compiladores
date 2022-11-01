@@ -362,65 +362,62 @@ asignacion : ID ASIG expresion  {
                                  System.out.println("Asignacion");
                                  $$ = new NodoComun($2.sval,new NodoHoja($1.sval), (ArbolSintactico) $3);
                                  String s1 = (String) (TablaSimbolos.getAtributo(($1.sval),"Tipo"));
-                                 
-                                String s2;
-                                 System.out.println("s1:"+ s1);
-                           
+                                 String s2;
                                  if(TablaSimbolos.existeSimbolo(((ArbolSintactico) $3).getLex())) {
                                         s2 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $3).getLex()),"Tipo"));
                                         ((ArbolSintactico)$$).setTipo(s2);
                                  }else{
                                         s2 = ((ArbolSintactico)$3).getTipo();
                                  }
-                                 System.out.println("s2:"+ s2);
                                  if(s1 == null){
                                         System.out.println("Variable no declarada  " + $1.sval);
                                  }else{
-                                        if(!(s2 == null)){
+                                        if((s2 == "null")){
+                                                System.out.println("Falta declarar alguna variable para realizar la asignacion.");
+                                        }else{
                                                 System.out.println("No se puede realizar una asignacion con tipos diferentes.");
                                         }
+                                        
                                  }
                                 }
 ;
 expresion: expresion SUMA termino {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
                                 String s1,s2;
-                                s1 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $1).getLex()),"Tipo"));
-                                 if(TablaSimbolos.existeSimbolo(((ArbolSintactico) $1).getLex())) {
+                                 s1 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $1).getLex()),"Tipo"));
+                                 if(s1 != null) {
                                         ((ArbolSintactico)$$).setTipo(s1);     
                                  }else{
-                                        if(s1 ==null){
-                                                System.out.println("Variable no declarada  " + $1.sval);
+                                        if(TablaSimbolos.existeSimbolo(((ArbolSintactico)$1).getLex())){
+                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)$1).getLex());
+                                                ((ArbolSintactico)$$).setTipo("null"); 
                                         }
                                  }
-                                 
                                  s2 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $3).getLex()),"Tipo"));
-                                 if(TablaSimbolos.existeSimbolo(((ArbolSintactico) $3).getLex())) {
+                                 if(s2 != null) {
                                        ((ArbolSintactico)$$).setTipo(s2);
                                  }else{
-                                        if(s2 ==null){
-                                                System.out.println("Variable no declarada  " + $3.sval);
-                                        }
+                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)$3).getLex());
+                                        ((ArbolSintactico)$$).setTipo("null"); 
                                  }
                                  
                                  }
         | expresion RESTA termino {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
                                 String s1,s2;
-                                 s1 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $1).getLex()),"Tipo"));
-                                 if(TablaSimbolos.existeSimbolo(((ArbolSintactico) $1).getLex())) {
+                                s1 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $1).getLex()),"Tipo"));
+                                 if(s1 != null) {
                                         ((ArbolSintactico)$$).setTipo(s1);     
                                  }else{
-                                        if(s1 ==null){
-                                                System.out.println("Variable no declarada  " + $1.sval);
+                                        if(TablaSimbolos.existeSimbolo(((ArbolSintactico)$1).getLex())){
+                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)$1).getLex());
+                                                ((ArbolSintactico)$$).setTipo("null"); 
                                         }
                                  }
-                                 
                                  s2 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $3).getLex()),"Tipo"));
-                                 if(TablaSimbolos.existeSimbolo(((ArbolSintactico) $3).getLex())) {
+                                 if(s2 != null) {
                                        ((ArbolSintactico)$$).setTipo(s2);
                                  }else{
-                                        if(s2 ==null){
-                                                System.out.println("Variable no declarada  " + $3.sval);
-                                        }
+                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)$3).getLex());
+                                        ((ArbolSintactico)$$).setTipo("null"); 
                                  }
                                  }
         | termino {$$ = $1;} 
@@ -431,22 +428,21 @@ expresion: expresion SUMA termino {$$ = new NodoComun($2.sval,(ArbolSintactico)$
 ;
 termino: termino MULT factor  {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
                                 String s1,s2;
-                                 s1 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $1).getLex()),"Tipo"));
-                                 if(TablaSimbolos.existeSimbolo(((ArbolSintactico) $1).getLex())) {
+                                s1 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $1).getLex()),"Tipo"));
+                                 if(s1 != null) {
                                         ((ArbolSintactico)$$).setTipo(s1);     
                                  }else{
-                                        if(s1 ==null){
-                                                System.out.println("Variable no declarada  " + $1.sval);
+                                        if(TablaSimbolos.existeSimbolo(((ArbolSintactico)$1).getLex())){
+                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)$1).getLex());
+                                                ((ArbolSintactico)$$).setTipo("null"); 
                                         }
                                  }
-                                 
                                  s2 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $3).getLex()),"Tipo"));
-                                 if(TablaSimbolos.existeSimbolo(((ArbolSintactico) $3).getLex())) {
+                                 if(s2 != null) {
                                        ((ArbolSintactico)$$).setTipo(s2);
                                  }else{
-                                        if(s2 ==null){
-                                                System.out.println("Variable no declarada  " + $3.sval);
-                                        }
+                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)$3).getLex());
+                                        ((ArbolSintactico)$$).setTipo("null"); 
                                  }
                                  
                                  }   
@@ -460,13 +456,15 @@ termino: termino MULT factor  {$$ = new NodoComun($2.sval,(ArbolSintactico)$1,(A
                                  }else{
                                         if(TablaSimbolos.existeSimbolo(((ArbolSintactico)$1).getLex())){
                                                 System.out.println("Variable no declarada  " + ((ArbolSintactico)$1).getLex());
+                                                ((ArbolSintactico)$$).setTipo("null"); 
                                         }
                                  }
                                  s2 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) $3).getLex()),"Tipo"));
                                  if(s2 != null) {
                                        ((ArbolSintactico)$$).setTipo(s2);
                                  }else{
-                                        System.out.println("Variable no declarada  " + $3.sval);
+                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)$3).getLex());
+                                        ((ArbolSintactico)$$).setTipo("null"); 
                                  }
                                 }   
         | factor 

@@ -16,7 +16,7 @@
 
 
 
-//#line 2 ".\gramaticaTomi.y"
+//#line 2 "gramaticaTomi.y"
 package Principal;
 import java.io.IOException;
 import AnalizadorLexico.AnalizadorLexico;
@@ -1278,9 +1278,8 @@ final static String yyrule[] = {
 "llamado_func : ID PARENT_A error",
 };
 
-//#line 595 ".\gramaticaTomi.y"
+//#line 699 "gramaticaTomi.y"
 private NodoControl raiz;
-private String ambitoActual = "Global";
 private List<String> variablesEnElAmbito = new ArrayList<String>();
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
 private static List<Integer> linFun = new ArrayList<Integer>();
@@ -1345,7 +1344,7 @@ public static Integer getTope(){
         Integer i = linFun.remove(linFun.size()-1);
         return i;
 }
-//#line 1277 "Parser.java"
+//#line 1276 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -1500,10 +1499,8 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
-//#line 22 ".\gramaticaTomi.y"
+//#line 22 "gramaticaTomi.y"
 {raiz = new NodoControl("PROGRAMA",(ArbolSintactico)val_peek(1));
-                                                            System.out.println("Raiz---$$ : " + yyval + " $1 :" + val_peek(3));
-                                                            System.out.println("Raiz : " + raiz);
                                                             Integer tope = 1;
                                                                 ArrayList<String> listaVariables = new ArrayList<String>();
                                                                 for(String s1 : getListaVariablesDelAmbito()){
@@ -1525,87 +1522,84 @@ case 1:
                                                            }
 break;
 case 2:
-//#line 44 ".\gramaticaTomi.y"
+//#line 42 "gramaticaTomi.y"
 {yyerror("Hay un error sintactico en la entrada que arrastra errores");}
 break;
 case 4:
-//#line 48 ".\gramaticaTomi.y"
+//#line 46 "gramaticaTomi.y"
 {yyval=new NodoHoja("Fin");}
 break;
 case 5:
-//#line 49 ".\gramaticaTomi.y"
+//#line 47 "gramaticaTomi.y"
 {
                                                         yyval=new NodoComun("Sentencia", (ArbolSintactico) val_peek(1), (ArbolSintactico) val_peek(2));
-                                                        System.out.println("BloqueSentencia---$$ : " + yyval + " $1 :" + val_peek(2));
                                                         }
 break;
 case 6:
-//#line 53 ".\gramaticaTomi.y"
+//#line 50 "gramaticaTomi.y"
 {yyerror("Se esperaba ;");}
 break;
 case 7:
-//#line 55 ".\gramaticaTomi.y"
+//#line 52 "gramaticaTomi.y"
 {yyval=new NodoHoja("Sentencia Declarativa");}
 break;
 case 8:
-//#line 56 ".\gramaticaTomi.y"
-{yyval = val_peek(0);
-                                System.out.println("Sentencia---$$ : " + yyval + " $1 :" + val_peek(0));
-                                }
+//#line 53 "gramaticaTomi.y"
+{yyval = val_peek(0);}
 break;
 case 10:
-//#line 61 ".\gramaticaTomi.y"
+//#line 56 "gramaticaTomi.y"
 {funciones.put((String)((ArbolSintactico)val_peek(0)).getLex(),(ArbolSintactico)val_peek(0));}
 break;
 case 12:
-//#line 64 ".\gramaticaTomi.y"
+//#line 59 "gramaticaTomi.y"
 {
             yyval = new NodoHoja("Entero");
             ((NodoHoja)yyval).setTipo("Entero");
            }
 break;
 case 13:
-//#line 68 ".\gramaticaTomi.y"
+//#line 63 "gramaticaTomi.y"
 {
             yyval = new NodoHoja("Float");
             ((NodoHoja)yyval).setTipo("Float");
            }
 break;
 case 14:
-//#line 73 ".\gramaticaTomi.y"
+//#line 68 "gramaticaTomi.y"
 {System.out.println("Declaracion de datos");
                                       for (String s : ((NodoTipos)val_peek(0)).getList()){
-                                        System.out.println("variable ->"+s);
                                         TablaSimbolos.addAtributo(s,"Tipo",((ArbolSintactico) val_peek(1)).getTipo());
                                         putVariableEnAmbito(s);
                                         TablaSimbolos.addAtributo(s,"Linea",AnalizadorLexico.getLineaAct());
+                                        TablaSimbolos.addAtributo(s,"Uso","Variable");
                                       }
                                       yyval = val_peek(0);
                                      }
 break;
 case 15:
-//#line 82 ".\gramaticaTomi.y"
+//#line 77 "gramaticaTomi.y"
 {yyerror("No esta permitido el tipo declarado");}
 break;
 case 16:
-//#line 84 ".\gramaticaTomi.y"
+//#line 79 "gramaticaTomi.y"
 {
                             yyval=val_peek(2);
                             ((NodoTipos)yyval).add((String)val_peek(0).sval);
                             }
 break;
 case 17:
-//#line 88 ".\gramaticaTomi.y"
+//#line 83 "gramaticaTomi.y"
 {
                yyval=new NodoTipos((String)val_peek(0).sval);
               }
 break;
 case 18:
-//#line 92 ".\gramaticaTomi.y"
+//#line 87 "gramaticaTomi.y"
 {
                                 System.out.println("Declaracion de Funcion");
-                                System.out.println("LineaActual" + AnalizadorLexico.getLineaAct());
                                 yyval = new NodoControl("Funcion:"+val_peek(10).sval,(ArbolSintactico)val_peek(1));
+                                TablaSimbolos.addAtributo(val_peek(10).sval,"Uso","NombreFuncion");
                                 Integer tope = getTope();
                                 ArrayList<String> listaVariables = new ArrayList<String>();
                                 for(String s1 : getListaVariablesDelAmbito()){
@@ -1628,1149 +1622,1262 @@ case 18:
                         }
 break;
 case 19:
-//#line 116 ".\gramaticaTomi.y"
-{System.out.println("Declaracion de Funcion");}
+//#line 111 "gramaticaTomi.y"
+{
+                                System.out.println("Declaracion de Funcion");                                                               
+                                yyval = new NodoControl("Funcion:"+val_peek(8).sval,(ArbolSintactico)val_peek(1));
+                                TablaSimbolos.addAtributo(val_peek(8).sval,"Uso","NombreFuncion");
+                                Integer tope = getTope();
+                                ArrayList<String> listaVariables = new ArrayList<String>();
+                                for(String s1 : getListaVariablesDelAmbito()){
+                                        listaVariables.add(s1);
+                                }
+                                for (String s : listaVariables){
+                                        Integer i = (Integer) TablaSimbolos.getAtributo(s,"Linea");
+                                        if((i >= tope) && (i <=(Integer)AnalizadorLexico.getLineaAct())){
+                                                String ambito = (String)TablaSimbolos.getAtributo(s,"Ambito");
+                                                if ( ambito == null){
+                                                        TablaSimbolos.addAtributo(s,"Ambito",val_peek(8).sval+":");
+                                                }
+                                                else{
+                                                        ambito+=val_peek(8).sval+":";
+                                                        TablaSimbolos.addAtributo(s,"Ambito",ambito);
+                                                }
+                                        }
+                                }}
 break;
 case 20:
-//#line 117 ".\gramaticaTomi.y"
-{System.out.println("Declaracion de Funcion");}
+//#line 133 "gramaticaTomi.y"
+{
+                                System.out.println("Declaracion de Funcion");
+                                yyval = new NodoControl("Funcion:"+val_peek(7).sval,(ArbolSintactico)val_peek(2));
+                                TablaSimbolos.addAtributo(val_peek(7).sval,"Uso","NombreFuncion");
+                                Integer tope = getTope();
+                                ArrayList<String> listaVariables = new ArrayList<String>();
+                                for(String s1 : getListaVariablesDelAmbito()){
+                                        listaVariables.add(s1);
+                                }
+                                for (String s : listaVariables){
+                                        Integer i = (Integer) TablaSimbolos.getAtributo(s,"Linea");
+                                        if((i >= tope) && (i <=(Integer)AnalizadorLexico.getLineaAct())){
+                                                String ambito = (String)TablaSimbolos.getAtributo(s,"Ambito");
+                                                if ( ambito == null){
+                                                        TablaSimbolos.addAtributo(s,"Ambito",val_peek(7).sval+":");
+                                                }
+                                                else{
+                                                        ambito+=val_peek(7).sval+":";
+                                                        TablaSimbolos.addAtributo(s,"Ambito",ambito);
+                                                }
+                                        }
+                                }}
 break;
 case 21:
-//#line 118 ".\gramaticaTomi.y"
+//#line 155 "gramaticaTomi.y"
 {yyerror("Se esperaba } ");}
 break;
 case 22:
-//#line 119 ".\gramaticaTomi.y"
+//#line 156 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 23:
-//#line 120 ".\gramaticaTomi.y"
+//#line 157 "gramaticaTomi.y"
 {yyerror("El tipo declarado no esta permitido");}
 break;
 case 24:
-//#line 121 ".\gramaticaTomi.y"
+//#line 158 "gramaticaTomi.y"
 {yyerror("Se esperaba :");}
 break;
 case 25:
-//#line 122 ".\gramaticaTomi.y"
+//#line 159 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 26:
-//#line 123 ".\gramaticaTomi.y"
+//#line 160 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 27:
-//#line 124 ".\gramaticaTomi.y"
+//#line 161 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 28:
-//#line 125 ".\gramaticaTomi.y"
+//#line 162 "gramaticaTomi.y"
 {yyerror("Se esperaba un nombre de funcion");}
 break;
 case 29:
-//#line 127 ".\gramaticaTomi.y"
+//#line 164 "gramaticaTomi.y"
 {yyval=new NodoHoja("Fin");}
 break;
 case 30:
-//#line 128 ".\gramaticaTomi.y"
+//#line 165 "gramaticaTomi.y"
 {yyval=new NodoComun("Sentencia_Funcion", (ArbolSintactico) val_peek(1), (ArbolSintactico) val_peek(2));}
 break;
 case 31:
-//#line 129 ".\gramaticaTomi.y"
+//#line 166 "gramaticaTomi.y"
 {yyerror("Se esperaba ;");}
 break;
 case 32:
-//#line 131 ".\gramaticaTomi.y"
+//#line 168 "gramaticaTomi.y"
 {yyval=new NodoHoja("Sentencia Declarativa Datos");}
 break;
 case 33:
-//#line 132 ".\gramaticaTomi.y"
+//#line 169 "gramaticaTomi.y"
 {yyval=new NodoHoja("Sentencia Declarativa Funcion");}
 break;
 case 34:
-//#line 133 ".\gramaticaTomi.y"
+//#line 170 "gramaticaTomi.y"
 {yyval = val_peek(0);}
 break;
 case 35:
-//#line 134 ".\gramaticaTomi.y"
+//#line 171 "gramaticaTomi.y"
 {yyval = val_peek(0);}
 break;
 case 36:
-//#line 135 ".\gramaticaTomi.y"
+//#line 172 "gramaticaTomi.y"
 {yyval=val_peek(0);}
 break;
 case 37:
-//#line 136 ".\gramaticaTomi.y"
+//#line 173 "gramaticaTomi.y"
 {yyval=val_peek(0);}
 break;
 case 38:
-//#line 137 ".\gramaticaTomi.y"
+//#line 174 "gramaticaTomi.y"
 {yyval = val_peek(0);}
 break;
 case 40:
-//#line 139 ".\gramaticaTomi.y"
+//#line 176 "gramaticaTomi.y"
 {yyval=val_peek(0);}
 break;
 case 41:
-//#line 140 ".\gramaticaTomi.y"
+//#line 177 "gramaticaTomi.y"
 {yyval=val_peek(0);}
 break;
 case 42:
-//#line 141 ".\gramaticaTomi.y"
+//#line 178 "gramaticaTomi.y"
 {yyval=val_peek(0);}
 break;
 case 43:
-//#line 143 ".\gramaticaTomi.y"
+//#line 180 "gramaticaTomi.y"
 {System.out.println("Sentencia IF");
                                 yyval= new NodoComun("IF_FUN",(ArbolSintactico)val_peek(8),(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) val_peek(5)),new NodoControl("else fun", (ArbolSintactico)val_peek(2))));
                         }
 break;
 case 44:
-//#line 146 ".\gramaticaTomi.y"
+//#line 183 "gramaticaTomi.y"
 {System.out.println("Sentencia IF");
                         yyval= new NodoComun("IF_FUN",(ArbolSintactico)val_peek(10),(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) val_peek(6)),new NodoControl("else fun", (ArbolSintactico)val_peek(2))));}
 break;
 case 45:
-//#line 148 ".\gramaticaTomi.y"
+//#line 185 "gramaticaTomi.y"
 {System.out.println("Sentencia IF");
                         yyval= new NodoComun("IF_FUN",(ArbolSintactico)val_peek(10),(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) val_peek(7)),new NodoControl("else fun", (ArbolSintactico)val_peek(3))));}
 break;
 case 46:
-//#line 151 ".\gramaticaTomi.y"
+//#line 188 "gramaticaTomi.y"
 {System.out.println("Sentencia IF");
                         yyval = new NodoComun("IF FUN", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(2)) );
                 }
 break;
 case 47:
-//#line 154 ".\gramaticaTomi.y"
+//#line 191 "gramaticaTomi.y"
 {System.out.println("Sentencia IF");
                         yyval= new NodoComun("IF_FUN",(ArbolSintactico)val_peek(10),(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) val_peek(6)),new NodoControl("else fun", (ArbolSintactico)val_peek(2))));}
 break;
 case 48:
-//#line 157 ".\gramaticaTomi.y"
+//#line 194 "gramaticaTomi.y"
 {System.out.println("Sentencia IF");
                         yyval = new NodoComun("IF FUN", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(2)) );}
 break;
 case 49:
-//#line 159 ".\gramaticaTomi.y"
+//#line 196 "gramaticaTomi.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 50:
-//#line 160 ".\gramaticaTomi.y"
+//#line 197 "gramaticaTomi.y"
 {yyerror("Se esperaba } ");}
 break;
 case 51:
-//#line 161 ".\gramaticaTomi.y"
+//#line 198 "gramaticaTomi.y"
 {yyerror("Se esperaba { ");}
 break;
 case 52:
-//#line 162 ".\gramaticaTomi.y"
+//#line 199 "gramaticaTomi.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 53:
-//#line 163 ".\gramaticaTomi.y"
+//#line 200 "gramaticaTomi.y"
 {yyerror("Se esperaba } ");}
 break;
 case 54:
-//#line 164 ".\gramaticaTomi.y"
+//#line 201 "gramaticaTomi.y"
 {yyerror("Se esperaba { ");}
 break;
 case 55:
-//#line 165 ".\gramaticaTomi.y"
+//#line 202 "gramaticaTomi.y"
 {yyerror("Se esperaba then ");}
 break;
 case 56:
-//#line 166 ".\gramaticaTomi.y"
+//#line 203 "gramaticaTomi.y"
 {yyerror("Se esperaba ) ");}
 break;
 case 57:
-//#line 167 ".\gramaticaTomi.y"
+//#line 204 "gramaticaTomi.y"
 {yyerror("Se esperaba una condicion ");}
 break;
 case 58:
-//#line 169 ".\gramaticaTomi.y"
+//#line 206 "gramaticaTomi.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 59:
-//#line 170 ".\gramaticaTomi.y"
+//#line 207 "gramaticaTomi.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 60:
-//#line 171 ".\gramaticaTomi.y"
+//#line 208 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 61:
-//#line 172 ".\gramaticaTomi.y"
+//#line 209 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 62:
-//#line 173 ".\gramaticaTomi.y"
+//#line 210 "gramaticaTomi.y"
 {yyerror("Se esperaba then ");}
 break;
 case 63:
-//#line 174 ".\gramaticaTomi.y"
+//#line 211 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 64:
-//#line 175 ".\gramaticaTomi.y"
+//#line 212 "gramaticaTomi.y"
 {yyerror("Se esperaba condicion");}
 break;
 case 65:
-//#line 176 ".\gramaticaTomi.y"
+//#line 213 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 66:
-//#line 178 ".\gramaticaTomi.y"
+//#line 215 "gramaticaTomi.y"
 {
     yyval = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja(val_peek(12).sval)) , new NodoComun("While", (ArbolSintactico) val_peek(8), new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(1) , (ArbolSintactico) val_peek(4))) );
                         System.out.println("Sentencia WHILE con etiqueta y con llaves");}
 break;
 case 67:
-//#line 181 ".\gramaticaTomi.y"
+//#line 218 "gramaticaTomi.y"
 {System.out.println("Sentencia WHILE con etiqueta y sin llaves");
                     yyval = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja(val_peek(10).sval)) , new NodoComun("While", (ArbolSintactico) val_peek(6), new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(0) , (ArbolSintactico) val_peek(2))) );}
 break;
 case 68:
-//#line 183 ".\gramaticaTomi.y"
+//#line 220 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("While", (ArbolSintactico) val_peek(8), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(1) , (ArbolSintactico) val_peek(4)) );
                         System.out.println("Sentencia WHILE con llaves");}
 break;
 case 69:
-//#line 186 ".\gramaticaTomi.y"
+//#line 223 "gramaticaTomi.y"
 {
                     yyval = new NodoComun("While", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(0) , (ArbolSintactico) val_peek(2)) );
                         System.out.println("Sentencia WHILE sin llaves");
                 }
 break;
 case 70:
-//#line 190 ".\gramaticaTomi.y"
+//#line 227 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 71:
-//#line 191 ".\gramaticaTomi.y"
+//#line 228 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 72:
-//#line 192 ".\gramaticaTomi.y"
+//#line 229 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 73:
-//#line 193 ".\gramaticaTomi.y"
+//#line 230 "gramaticaTomi.y"
 {yyerror("Se esperaba una asignacion");}
 break;
 case 74:
-//#line 194 ".\gramaticaTomi.y"
+//#line 231 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 75:
-//#line 195 ".\gramaticaTomi.y"
+//#line 232 "gramaticaTomi.y"
 {yyerror("Se esperaba :");}
 break;
 case 76:
-//#line 196 ".\gramaticaTomi.y"
+//#line 233 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 77:
-//#line 197 ".\gramaticaTomi.y"
+//#line 234 "gramaticaTomi.y"
 {yyerror("Se esperaba una condicion");}
 break;
 case 78:
-//#line 198 ".\gramaticaTomi.y"
+//#line 235 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 79:
-//#line 200 ".\gramaticaTomi.y"
+//#line 237 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                                         yyval = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja(val_peek(13).sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(9),(ArbolSintactico)val_peek(7)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(1),new NodoHoja(val_peek(5).sval + val_peek(4).sval))));
                                                                                                        }
 break;
 case 80:
-//#line 203 ".\gramaticaTomi.y"
+//#line 240 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                                         yyval = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja(val_peek(13).sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(9),(ArbolSintactico)val_peek(7)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(1),new NodoHoja(val_peek(5).sval + val_peek(4).sval))));
                                                                                                        }
 break;
 case 81:
-//#line 206 ".\gramaticaTomi.y"
+//#line 243 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                                                                 yyval = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja(val_peek(11).sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(7),(ArbolSintactico)val_peek(5)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(0),new NodoHoja(val_peek(3).sval + val_peek(2).sval))));
                                                                                                                                 }
 break;
 case 82:
-//#line 209 ".\gramaticaTomi.y"
+//#line 246 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                                                                 yyval = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja(val_peek(11).sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(7),(ArbolSintactico)val_peek(5)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(0),new NodoHoja(val_peek(3).sval + val_peek(2).sval))));
                                                                                                                                 }
 break;
 case 83:
-//#line 212 ".\gramaticaTomi.y"
+//#line 249 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 84:
-//#line 213 ".\gramaticaTomi.y"
+//#line 250 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 85:
-//#line 214 ".\gramaticaTomi.y"
+//#line 251 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 86:
-//#line 215 ".\gramaticaTomi.y"
+//#line 252 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 87:
-//#line 216 ".\gramaticaTomi.y"
+//#line 253 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 88:
-//#line 217 ".\gramaticaTomi.y"
+//#line 254 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 89:
-//#line 218 ".\gramaticaTomi.y"
+//#line 255 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 90:
-//#line 219 ".\gramaticaTomi.y"
+//#line 256 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                              yyval = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(9),(ArbolSintactico)val_peek(7)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(1),new NodoHoja(val_peek(5).sval + val_peek(4).sval)));
                                                                                              }
 break;
 case 91:
-//#line 222 ".\gramaticaTomi.y"
+//#line 259 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                              yyval = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(9),(ArbolSintactico)val_peek(7)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(1),new NodoHoja(val_peek(5).sval + val_peek(4).sval)));
                                                                                              }
 break;
 case 92:
-//#line 225 ".\gramaticaTomi.y"
+//#line 262 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                     yyval = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(7),(ArbolSintactico)val_peek(5)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(0),new NodoHoja(val_peek(3).sval + val_peek(2).sval)));
                                                                                   }
 break;
 case 93:
-//#line 228 ".\gramaticaTomi.y"
+//#line 265 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                     yyval = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(7),(ArbolSintactico)val_peek(5)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(0),new NodoHoja(val_peek(3).sval + val_peek(2).sval)));
                                                                                   }
 break;
 case 94:
-//#line 231 ".\gramaticaTomi.y"
+//#line 268 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 95:
-//#line 232 ".\gramaticaTomi.y"
+//#line 269 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 96:
-//#line 233 ".\gramaticaTomi.y"
+//#line 270 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 97:
-//#line 234 ".\gramaticaTomi.y"
+//#line 271 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 98:
-//#line 235 ".\gramaticaTomi.y"
+//#line 272 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 99:
-//#line 236 ".\gramaticaTomi.y"
+//#line 273 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 100:
-//#line 237 ".\gramaticaTomi.y"
+//#line 274 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 103:
-//#line 241 ".\gramaticaTomi.y"
+//#line 278 "gramaticaTomi.y"
 {yyerror("Se esperaba ;");}
 break;
 case 114:
-//#line 255 ".\gramaticaTomi.y"
+//#line 292 "gramaticaTomi.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 115:
-//#line 256 ".\gramaticaTomi.y"
+//#line 293 "gramaticaTomi.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 116:
-//#line 257 ".\gramaticaTomi.y"
+//#line 294 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 117:
-//#line 258 ".\gramaticaTomi.y"
+//#line 295 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 118:
-//#line 259 ".\gramaticaTomi.y"
+//#line 296 "gramaticaTomi.y"
 {yyerror("Se esperaba then ");}
 break;
 case 119:
-//#line 260 ".\gramaticaTomi.y"
+//#line 297 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 120:
-//#line 261 ".\gramaticaTomi.y"
+//#line 298 "gramaticaTomi.y"
 {yyerror("Se esperaba condicion");}
 break;
 case 121:
-//#line 262 ".\gramaticaTomi.y"
+//#line 299 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 122:
-//#line 265 ".\gramaticaTomi.y"
+//#line 302 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("IF", (ArbolSintactico) val_peek(8), new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(5)), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)val_peek(2))));
                         System.out.println("Sentencia IF sin corchetes y con else sin corchetes");
                         }
 break;
 case 123:
-//#line 270 ".\gramaticaTomi.y"
+//#line 307 "gramaticaTomi.y"
 {
                         yyval= new NodoComun("IF", (ArbolSintactico) val_peek(9),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(5)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");
                         }
 break;
 case 124:
-//#line 275 ".\gramaticaTomi.y"
+//#line 312 "gramaticaTomi.y"
 {
                         yyval= new NodoComun("IF", (ArbolSintactico) val_peek(9),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");
                         }
 break;
 case 125:
-//#line 280 ".\gramaticaTomi.y"
+//#line 317 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("IF", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(2)) );
                         System.out.println("Sentencia IF sin corchetes y sin else");
                         }
 break;
 case 126:
-//#line 285 ".\gramaticaTomi.y"
+//#line 322 "gramaticaTomi.y"
 {
                         yyval= new NodoComun("IF", (ArbolSintactico) val_peek(10),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF con corchetes y else");
                         }
 break;
 case 127:
-//#line 290 ".\gramaticaTomi.y"
+//#line 327 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("IF", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)val_peek(2)));
                         System.out.println("Sentencia IF con corchetes y sin else");
                         }
 break;
 case 128:
-//#line 294 ".\gramaticaTomi.y"
+//#line 331 "gramaticaTomi.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 129:
-//#line 295 ".\gramaticaTomi.y"
+//#line 332 "gramaticaTomi.y"
 {yyerror("Se esperaba } ");}
 break;
 case 130:
-//#line 296 ".\gramaticaTomi.y"
+//#line 333 "gramaticaTomi.y"
 {yyerror("Se esperaba { ");}
 break;
 case 131:
-//#line 297 ".\gramaticaTomi.y"
+//#line 334 "gramaticaTomi.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 132:
-//#line 298 ".\gramaticaTomi.y"
+//#line 335 "gramaticaTomi.y"
 {yyerror("Se esperaba } ");}
 break;
 case 133:
-//#line 299 ".\gramaticaTomi.y"
+//#line 336 "gramaticaTomi.y"
 {yyerror("Se esperaba { ");}
 break;
 case 134:
-//#line 300 ".\gramaticaTomi.y"
+//#line 337 "gramaticaTomi.y"
 {yyerror("Se esperaba then ");}
 break;
 case 135:
-//#line 301 ".\gramaticaTomi.y"
+//#line 338 "gramaticaTomi.y"
 {yyerror("Se esperaba ) ");}
 break;
 case 136:
-//#line 302 ".\gramaticaTomi.y"
+//#line 339 "gramaticaTomi.y"
 {yyerror("Se esperaba una condicion ");}
 break;
 case 137:
-//#line 303 ".\gramaticaTomi.y"
+//#line 340 "gramaticaTomi.y"
 {yyerror("Se esperaba ( ");}
 break;
 case 138:
-//#line 305 ".\gramaticaTomi.y"
+//#line 342 "gramaticaTomi.y"
 {yyval = new NodoControl("Retorno", (ArbolSintactico)val_peek(1));}
 break;
 case 140:
-//#line 308 ".\gramaticaTomi.y"
+//#line 345 "gramaticaTomi.y"
 {yyerror("No esta permitido el tipo declarado");}
 break;
 case 141:
-//#line 311 ".\gramaticaTomi.y"
+//#line 348 "gramaticaTomi.y"
 {System.out.println("Declaracion de Constante/s");}
 break;
 case 144:
-//#line 316 ".\gramaticaTomi.y"
-{yyval = val_peek(0);
-                                   System.out.println("SentenciaEjecutable---$$ : " + yyval + " $1 :" + val_peek(0));
-                                  }
+//#line 353 "gramaticaTomi.y"
+{yyval = val_peek(0);}
 break;
 case 145:
-//#line 319 ".\gramaticaTomi.y"
-{yyval = val_peek(0);
-                                System.out.println("SentenciaEjecutable---$$ : " + yyval + " $1 :" + val_peek(0));}
+//#line 354 "gramaticaTomi.y"
+{yyval = val_peek(0); }
 break;
 case 146:
-//#line 321 ".\gramaticaTomi.y"
-{yyval = val_peek(0);
-                                System.out.println("SentenciaEjecutable---$$ : " + yyval + " $1 :" + val_peek(0));}
+//#line 355 "gramaticaTomi.y"
+{yyval = val_peek(0);}
 break;
 case 147:
-//#line 323 ".\gramaticaTomi.y"
-{yyval = val_peek(0);
-                                System.out.println("SentenciaEjecutable---$$ : " + yyval + " $1 :" + val_peek(0));}
+//#line 356 "gramaticaTomi.y"
+{yyval = val_peek(0);}
 break;
 case 148:
-//#line 325 ".\gramaticaTomi.y"
-{yyval = val_peek(0);
-                                System.out.println("SentenciaEjecutable---$$ : " + yyval + " $1 :" + val_peek(0));}
+//#line 357 "gramaticaTomi.y"
+{yyval = val_peek(0);}
 break;
 case 149:
-//#line 327 ".\gramaticaTomi.y"
-{yyval = val_peek(0);
-                                System.out.println("SentenciaEjecutable---$$ : " + yyval + " $1 :" + val_peek(0));}
+//#line 358 "gramaticaTomi.y"
+{yyval = val_peek(0);}
+break;
+case 150:
+//#line 359 "gramaticaTomi.y"
+{}
 break;
 case 151:
-//#line 331 ".\gramaticaTomi.y"
+//#line 361 "gramaticaTomi.y"
 {
                                  System.out.println("Asignacion");
                                  yyval = new NodoComun(val_peek(1).sval,new NodoHoja(val_peek(2).sval), (ArbolSintactico) val_peek(0));
-                                 System.out.println("Asignacino---$$ : " + yyval + " $1 :" + val_peek(2)+" $3 :" + val_peek(0));
+                                 String s1 = (String) (TablaSimbolos.getAtributo((val_peek(2).sval),"Tipo"));
+                                 String s2;
+                                 if(TablaSimbolos.existeSimbolo(((ArbolSintactico) val_peek(0)).getLex())) {
+                                        s2 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) val_peek(0)).getLex()),"Tipo"));
+                                        ((ArbolSintactico)yyval).setTipo(s2);
+                                 }else{
+                                        s2 = ((ArbolSintactico)val_peek(0)).getTipo();
+                                 }
+                                 if(s1 == null){
+                                        System.out.println("Variable no declarada  " + val_peek(2).sval);
+                                 }else{
+                                        if((s2 == "null")){
+                                                System.out.println("Falta declarar alguna variable para realizar la asignacion.");
+                                        }else{
+                                                System.out.println("No se puede realizar una asignacion con tipos diferentes.");
+                                        }
+                                        
+                                 }
                                 }
 break;
 case 152:
-//#line 337 ".\gramaticaTomi.y"
-{
-                                   yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
-                                   System.out.println("ExpresionSuma---$$ : " + yyval + " $1 :" + val_peek(2)+" $3 :" + val_peek(0));
-                                  }
+//#line 384 "gramaticaTomi.y"
+{yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
+                                String s1,s2;
+                                 s1 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) val_peek(2)).getLex()),"Tipo"));
+                                 if(s1 != null) {
+                                        ((ArbolSintactico)yyval).setTipo(s1);     
+                                 }else{
+                                        if(TablaSimbolos.existeSimbolo(((ArbolSintactico)val_peek(2)).getLex())){
+                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)val_peek(2)).getLex());
+                                                ((ArbolSintactico)yyval).setTipo("null"); 
+                                        }
+                                 }
+                                 s2 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) val_peek(0)).getLex()),"Tipo"));
+                                 if(s2 != null) {
+                                       ((ArbolSintactico)yyval).setTipo(s2);
+                                 }else{
+                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)val_peek(0)).getLex());
+                                        ((ArbolSintactico)yyval).setTipo("null"); 
+                                 }
+                                 
+                                 }
 break;
 case 153:
-//#line 341 ".\gramaticaTomi.y"
-{
-                                   yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
-                                   System.out.println("ExpresionResta---$$ : " + yyval + " $1 :" + val_peek(2)+" $3 :" + val_peek(0));
-                                  }
+//#line 404 "gramaticaTomi.y"
+{yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
+                                String s1,s2;
+                                s1 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) val_peek(2)).getLex()),"Tipo"));
+                                 if(s1 != null) {
+                                        ((ArbolSintactico)yyval).setTipo(s1);     
+                                 }else{
+                                        if(TablaSimbolos.existeSimbolo(((ArbolSintactico)val_peek(2)).getLex())){
+                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)val_peek(2)).getLex());
+                                                ((ArbolSintactico)yyval).setTipo("null"); 
+                                        }
+                                 }
+                                 s2 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) val_peek(0)).getLex()),"Tipo"));
+                                 if(s2 != null) {
+                                       ((ArbolSintactico)yyval).setTipo(s2);
+                                 }else{
+                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)val_peek(0)).getLex());
+                                        ((ArbolSintactico)yyval).setTipo("null"); 
+                                 }
+                                 }
 break;
 case 154:
-//#line 345 ".\gramaticaTomi.y"
-{
-                   yyval = val_peek(0);
-                   System.out.println("ExpresionTermino---$$ : " + yyval + " $1 :" + val_peek(0));
-                  }
+//#line 423 "gramaticaTomi.y"
+{yyval = val_peek(0);}
 break;
 case 158:
-//#line 354 ".\gramaticaTomi.y"
-{
-                                yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
-                                System.out.println("TerminoMult---$$ : " + yyval + " $1 :" + val_peek(2)+" $3 :" + val_peek(0));
-                                }
+//#line 429 "gramaticaTomi.y"
+{yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
+                                String s1,s2;
+                                s1 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) val_peek(2)).getLex()),"Tipo"));
+                                 if(s1 != null) {
+                                        ((ArbolSintactico)yyval).setTipo(s1);     
+                                 }else{
+                                        if(TablaSimbolos.existeSimbolo(((ArbolSintactico)val_peek(2)).getLex())){
+                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)val_peek(2)).getLex());
+                                                ((ArbolSintactico)yyval).setTipo("null"); 
+                                        }
+                                 }
+                                 s2 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) val_peek(0)).getLex()),"Tipo"));
+                                 if(s2 != null) {
+                                       ((ArbolSintactico)yyval).setTipo(s2);
+                                 }else{
+                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)val_peek(0)).getLex());
+                                        ((ArbolSintactico)yyval).setTipo("null"); 
+                                 }
+                                 
+                                 }
 break;
 case 159:
-//#line 359 ".\gramaticaTomi.y"
+//#line 450 "gramaticaTomi.y"
 {
                                  yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
-                                 System.out.println("TerminoDiv---$$ : " + yyval + " $1 :" + val_peek(2)+" $3 :" + val_peek(0));
+                                 String s1,s2;
+                                 s1 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) val_peek(2)).getLex()),"Tipo"));
+                                 if(s1 != null) {
+                                        ((ArbolSintactico)yyval).setTipo(s1);     
+                                 }else{
+                                        if(TablaSimbolos.existeSimbolo(((ArbolSintactico)val_peek(2)).getLex())){
+                                                System.out.println("Variable no declarada  " + ((ArbolSintactico)val_peek(2)).getLex());
+                                                ((ArbolSintactico)yyval).setTipo("null"); 
+                                        }
+                                 }
+                                 s2 = (String) (TablaSimbolos.getAtributo((((ArbolSintactico) val_peek(0)).getLex()),"Tipo"));
+                                 if(s2 != null) {
+                                       ((ArbolSintactico)yyval).setTipo(s2);
+                                 }else{
+                                        System.out.println("Variable no declarada  " + ((ArbolSintactico)val_peek(0)).getLex());
+                                        ((ArbolSintactico)yyval).setTipo("null"); 
+                                 }
                                 }
 break;
 case 160:
-//#line 364 ".\gramaticaTomi.y"
+//#line 471 "gramaticaTomi.y"
 {
                   yyval = val_peek(0);
-                  System.out.println("TerminoFactor---$$ : " + yyval + " $1 :" + val_peek(0));
                  }
 break;
 case 161:
-//#line 369 ".\gramaticaTomi.y"
+//#line 475 "gramaticaTomi.y"
 {
-            yyval = new NodoHoja(val_peek(0).sval);
-            System.out.println("FactorID----$$ : " + yyval + " $1 :" + val_peek(0));                                                             
+            yyval = new NodoHoja(val_peek(0).sval);                                                            
            }
 break;
 case 162:
-//#line 373 ".\gramaticaTomi.y"
+//#line 478 "gramaticaTomi.y"
 {
                yyval = new NodoHoja(val_peek(0).sval);
-               System.out.println("factorCTE---$$ : " + yyval + " $1 :" + val_peek(0));
               }
 break;
 case 163:
-//#line 378 ".\gramaticaTomi.y"
+//#line 482 "gramaticaTomi.y"
 {  chequearRangoI32(val_peek(0).sval);}
 break;
 case 164:
-//#line 379 ".\gramaticaTomi.y"
+//#line 483 "gramaticaTomi.y"
 {}
 break;
 case 165:
-//#line 380 ".\gramaticaTomi.y"
+//#line 484 "gramaticaTomi.y"
 {chequearRangoI32Neg(val_peek(0).sval);}
 break;
 case 167:
-//#line 384 ".\gramaticaTomi.y"
+//#line 488 "gramaticaTomi.y"
 {
                                                                                                                                 yyval= new NodoComun("IF", (ArbolSintactico) val_peek(9),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                                                                                                                                 System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");}
 break;
 case 168:
-//#line 387 ".\gramaticaTomi.y"
+//#line 491 "gramaticaTomi.y"
 {
                                                                                                                                 yyval= new NodoComun("IF", (ArbolSintactico) val_peek(9),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(5)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                                                                                                                                 System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");}
 break;
 case 169:
-//#line 390 ".\gramaticaTomi.y"
+//#line 494 "gramaticaTomi.y"
 {yyval = new NodoComun("IF", (ArbolSintactico) val_peek(8), new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(5)), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)val_peek(2))));
                                                                                         System.out.println("Sentencia IF sin corchetes y con else sin corchetes");}
 break;
 case 170:
-//#line 392 ".\gramaticaTomi.y"
+//#line 496 "gramaticaTomi.y"
 {yyval = new NodoComun("IF", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(2)) );
                                                                                         System.out.println("Sentencia IF sin corchetes y sin else");}
 break;
 case 171:
-//#line 394 ".\gramaticaTomi.y"
+//#line 498 "gramaticaTomi.y"
 {
                                                                                                                                 yyval= new NodoComun("IF", (ArbolSintactico) val_peek(10),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                                                                                                                                 System.out.println("Sentencia IF con corchetes y else");}
 break;
 case 172:
-//#line 397 ".\gramaticaTomi.y"
+//#line 501 "gramaticaTomi.y"
 {
                                         yyval = new NodoComun("IF", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)val_peek(2)));
                                         System.out.println("Sentencia IF con corchetes y sin else");}
 break;
 case 173:
-//#line 400 ".\gramaticaTomi.y"
+//#line 504 "gramaticaTomi.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 174:
-//#line 401 ".\gramaticaTomi.y"
+//#line 505 "gramaticaTomi.y"
 {yyerror("Se esperaba } ");}
 break;
 case 175:
-//#line 402 ".\gramaticaTomi.y"
+//#line 506 "gramaticaTomi.y"
 {yyerror("Se esperaba { ");}
 break;
 case 176:
-//#line 403 ".\gramaticaTomi.y"
+//#line 507 "gramaticaTomi.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 177:
-//#line 404 ".\gramaticaTomi.y"
+//#line 508 "gramaticaTomi.y"
 {yyerror("Se esperaba } ");}
 break;
 case 178:
-//#line 405 ".\gramaticaTomi.y"
+//#line 509 "gramaticaTomi.y"
 {yyerror("Se esperaba { ");}
 break;
 case 179:
-//#line 406 ".\gramaticaTomi.y"
+//#line 510 "gramaticaTomi.y"
 {yyerror("Se esperaba then ");}
 break;
 case 180:
-//#line 407 ".\gramaticaTomi.y"
+//#line 511 "gramaticaTomi.y"
 {yyerror("Se esperaba ) ");}
 break;
 case 181:
-//#line 408 ".\gramaticaTomi.y"
+//#line 512 "gramaticaTomi.y"
 {yyerror("Se esperaba una condicion ");}
 break;
 case 182:
-//#line 409 ".\gramaticaTomi.y"
+//#line 513 "gramaticaTomi.y"
 {yyerror("Se esperaba ( ");}
 break;
 case 183:
-//#line 413 ".\gramaticaTomi.y"
+//#line 517 "gramaticaTomi.y"
 {yyval= new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));}
 break;
 case 184:
-//#line 414 ".\gramaticaTomi.y"
+//#line 518 "gramaticaTomi.y"
 {yyerror("Se esperaba otra expresion para comparar.");}
 break;
 case 185:
-//#line 415 ".\gramaticaTomi.y"
+//#line 519 "gramaticaTomi.y"
 {yyerror("Se esperaba un tipo de comparacion.");}
 break;
 case 186:
-//#line 417 ".\gramaticaTomi.y"
+//#line 521 "gramaticaTomi.y"
 {yyval= val_peek(0);}
 break;
 case 187:
-//#line 418 ".\gramaticaTomi.y"
+//#line 522 "gramaticaTomi.y"
 {yyval= val_peek(0);}
 break;
 case 188:
-//#line 419 ".\gramaticaTomi.y"
+//#line 523 "gramaticaTomi.y"
 {yyval= val_peek(0);}
 break;
 case 189:
-//#line 420 ".\gramaticaTomi.y"
+//#line 524 "gramaticaTomi.y"
 {yyval= val_peek(0);}
 break;
 case 190:
-//#line 421 ".\gramaticaTomi.y"
+//#line 525 "gramaticaTomi.y"
 {yyval= val_peek(0);}
 break;
 case 191:
-//#line 423 ".\gramaticaTomi.y"
+//#line 527 "gramaticaTomi.y"
 {yyval=new NodoHoja("Fin");}
 break;
 case 192:
-//#line 424 ".\gramaticaTomi.y"
+//#line 528 "gramaticaTomi.y"
 {
                                                                 yyval=new NodoComun("Bloque Ejecutable", (ArbolSintactico) val_peek(1), (ArbolSintactico) val_peek(2));
                                                                 }
 break;
 case 193:
-//#line 427 ".\gramaticaTomi.y"
+//#line 531 "gramaticaTomi.y"
 {yyerror("Se esperaba ;");}
 break;
 case 194:
-//#line 429 ".\gramaticaTomi.y"
+//#line 533 "gramaticaTomi.y"
 {
                         yyval = new NodoControl(val_peek(3).sval, (ArbolSintactico) new NodoHoja(val_peek(1).sval));
                         System.out.println("Sentencia OUT");}
 break;
 case 195:
-//#line 432 ".\gramaticaTomi.y"
+//#line 536 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 196:
-//#line 433 ".\gramaticaTomi.y"
+//#line 537 "gramaticaTomi.y"
 {yyerror("Se esperaba una CADENA");}
 break;
 case 197:
-//#line 434 ".\gramaticaTomi.y"
+//#line 538 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 198:
-//#line 436 ".\gramaticaTomi.y"
+//#line 540 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("When",(ArbolSintactico) val_peek(5), (ArbolSintactico) val_peek(1));
                         System.out.println("Sentencia WHEN con llaves");}
 break;
 case 199:
-//#line 439 ".\gramaticaTomi.y"
+//#line 543 "gramaticaTomi.y"
 {
                         yyval = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) val_peek(3), (ArbolSintactico) val_peek(0));
                         System.out.println("Sentencia WHEN sin llaves");}
 break;
 case 200:
-//#line 442 ".\gramaticaTomi.y"
+//#line 546 "gramaticaTomi.y"
 {yyerror("Se esperaba } en el when");}
 break;
 case 201:
-//#line 443 ".\gramaticaTomi.y"
+//#line 547 "gramaticaTomi.y"
 {yyerror("Se esperaba { en el when");}
 break;
 case 202:
-//#line 444 ".\gramaticaTomi.y"
+//#line 548 "gramaticaTomi.y"
 {yyerror("Se esperaba then en el when");}
 break;
 case 203:
-//#line 445 ".\gramaticaTomi.y"
+//#line 549 "gramaticaTomi.y"
 {yyerror("Se esperaba condicion en el when");}
 break;
 case 204:
-//#line 446 ".\gramaticaTomi.y"
+//#line 550 "gramaticaTomi.y"
 {yyerror("Se esperaba ( en el when");}
 break;
 case 205:
-//#line 447 ".\gramaticaTomi.y"
+//#line 551 "gramaticaTomi.y"
 {yyerror("Se esperaba ) en el when");}
 break;
 case 206:
-//#line 448 ".\gramaticaTomi.y"
+//#line 552 "gramaticaTomi.y"
 {yyerror("Se esperaba then en el when");}
 break;
 case 207:
-//#line 450 ".\gramaticaTomi.y"
+//#line 554 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja(val_peek(12).sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) val_peek(8), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(1) , (ArbolSintactico) val_peek(4))) );
                         System.out.println("Sentencia WHILE con etiqueta y con llaves");}
 break;
 case 208:
-//#line 453 ".\gramaticaTomi.y"
+//#line 557 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja(val_peek(10).sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(0) , (ArbolSintactico) val_peek(2))) );
                         System.out.println("Sentencia WHILE con etiqueta y sin llaves");}
 break;
 case 209:
-//#line 456 ".\gramaticaTomi.y"
+//#line 560 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("While", (ArbolSintactico) val_peek(8), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(1) , (ArbolSintactico) val_peek(4)) );
                         System.out.println("Sentencia WHILE con llaves");}
 break;
 case 210:
-//#line 459 ".\gramaticaTomi.y"
+//#line 563 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("While", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(0) , (ArbolSintactico) val_peek(2)) );
                         System.out.println("Sentencia WHILE sin llaves");}
 break;
 case 211:
-//#line 462 ".\gramaticaTomi.y"
+//#line 566 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 212:
-//#line 463 ".\gramaticaTomi.y"
+//#line 567 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 213:
-//#line 464 ".\gramaticaTomi.y"
+//#line 568 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 214:
-//#line 465 ".\gramaticaTomi.y"
+//#line 569 "gramaticaTomi.y"
 {yyerror("Se esperaba una asignacion");}
 break;
 case 215:
-//#line 466 ".\gramaticaTomi.y"
+//#line 570 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 216:
-//#line 467 ".\gramaticaTomi.y"
+//#line 571 "gramaticaTomi.y"
 {yyerror("Se esperaba :");}
 break;
 case 217:
-//#line 468 ".\gramaticaTomi.y"
+//#line 572 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 218:
-//#line 469 ".\gramaticaTomi.y"
+//#line 573 "gramaticaTomi.y"
 {yyerror("Se esperaba una condicion");}
 break;
 case 219:
-//#line 470 ".\gramaticaTomi.y"
+//#line 574 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 220:
-//#line 472 ".\gramaticaTomi.y"
+//#line 576 "gramaticaTomi.y"
 {yyval=new NodoHoja("Fin");}
 break;
 case 221:
-//#line 473 ".\gramaticaTomi.y"
+//#line 577 "gramaticaTomi.y"
 {
                 yyval = new NodoComun("Bloque Break con Continue",(ArbolSintactico) val_peek(1), (ArbolSintactico) val_peek(2));
                 }
 break;
 case 222:
-//#line 476 ".\gramaticaTomi.y"
+//#line 580 "gramaticaTomi.y"
 {yyerror("Se esperaba ;");}
 break;
 case 223:
-//#line 479 ".\gramaticaTomi.y"
+//#line 583 "gramaticaTomi.y"
 {yyval = val_peek(0);}
 break;
 case 224:
-//#line 480 ".\gramaticaTomi.y"
+//#line 584 "gramaticaTomi.y"
 {yyval = val_peek(0);}
 break;
 case 225:
-//#line 481 ".\gramaticaTomi.y"
+//#line 585 "gramaticaTomi.y"
 {yyval = val_peek(0);}
 break;
 case 226:
-//#line 482 ".\gramaticaTomi.y"
+//#line 586 "gramaticaTomi.y"
 {yyval = val_peek(0);}
 break;
 case 227:
-//#line 483 ".\gramaticaTomi.y"
+//#line 587 "gramaticaTomi.y"
 {yyval = val_peek(0);}
 break;
 case 228:
-//#line 484 ".\gramaticaTomi.y"
+//#line 588 "gramaticaTomi.y"
 {yyval = val_peek(0);}
 break;
 case 229:
-//#line 485 ".\gramaticaTomi.y"
+//#line 589 "gramaticaTomi.y"
 {yyval = new NodoControl("Continue",(ArbolSintactico)val_peek(0));}
 break;
 case 230:
-//#line 486 ".\gramaticaTomi.y"
+//#line 590 "gramaticaTomi.y"
 {yyval = new NodoHoja("Break");}
 break;
 case 231:
-//#line 487 ".\gramaticaTomi.y"
+//#line 591 "gramaticaTomi.y"
 {yyval = new NodoControl("Break", new NodoHoja(val_peek(0).sval));}
 break;
 case 232:
-//#line 489 ".\gramaticaTomi.y"
+//#line 593 "gramaticaTomi.y"
 {yyval = new NodoHoja("Fin");}
 break;
 case 233:
-//#line 490 ".\gramaticaTomi.y"
+//#line 594 "gramaticaTomi.y"
 {yyval = new NodoControl("Tag", new NodoHoja(val_peek(0).sval) );}
 break;
 case 234:
-//#line 492 ".\gramaticaTomi.y"
+//#line 596 "gramaticaTomi.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 235:
-//#line 493 ".\gramaticaTomi.y"
+//#line 597 "gramaticaTomi.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 236:
-//#line 494 ".\gramaticaTomi.y"
+//#line 598 "gramaticaTomi.y"
 {yyerror("Se esperaba } en el when");}
 break;
 case 237:
-//#line 495 ".\gramaticaTomi.y"
+//#line 599 "gramaticaTomi.y"
 {yyerror("Se esperaba { en el when");}
 break;
 case 238:
-//#line 496 ".\gramaticaTomi.y"
+//#line 600 "gramaticaTomi.y"
 {yyerror("Se esperaba then en el when");}
 break;
 case 239:
-//#line 497 ".\gramaticaTomi.y"
+//#line 601 "gramaticaTomi.y"
 {yyerror("Se esperaba condicion en el when");}
 break;
 case 240:
-//#line 498 ".\gramaticaTomi.y"
+//#line 602 "gramaticaTomi.y"
 {yyerror("Se esperaba ( en el when");}
 break;
 case 241:
-//#line 499 ".\gramaticaTomi.y"
+//#line 603 "gramaticaTomi.y"
 {yyerror("Se esperaba ) en el when");}
 break;
 case 242:
-//#line 500 ".\gramaticaTomi.y"
+//#line 604 "gramaticaTomi.y"
 {yyerror("Se esperaba then en el when");}
 break;
 case 243:
-//#line 503 ".\gramaticaTomi.y"
+//#line 607 "gramaticaTomi.y"
 {
                         yyval= new NodoComun("IF", (ArbolSintactico) val_peek(9),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");
                         }
 break;
 case 244:
-//#line 508 ".\gramaticaTomi.y"
+//#line 612 "gramaticaTomi.y"
 {
                         yyval= new NodoComun("IF", (ArbolSintactico) val_peek(9),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(5)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");
                         }
 break;
 case 245:
-//#line 513 ".\gramaticaTomi.y"
+//#line 617 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("IF", (ArbolSintactico) val_peek(8), new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(5)), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)val_peek(2))));
                         System.out.println("Sentencia IF sin corchetes y con else sin corchetes");
                         }
 break;
 case 246:
-//#line 518 ".\gramaticaTomi.y"
+//#line 622 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("IF", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(2)) );
                         System.out.println("Sentencia IF sin corchetes y sin else");
                         }
 break;
 case 247:
-//#line 523 ".\gramaticaTomi.y"
+//#line 627 "gramaticaTomi.y"
 {
                         yyval= new NodoComun("IF", (ArbolSintactico) val_peek(10),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF con corchetes y else");
                         }
 break;
 case 248:
-//#line 528 ".\gramaticaTomi.y"
+//#line 632 "gramaticaTomi.y"
 {
                         yyval = new NodoComun("IF", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)val_peek(2)));
                         System.out.println("Sentencia IF con corchetes y sin else");
                         }
 break;
 case 249:
-//#line 532 ".\gramaticaTomi.y"
+//#line 636 "gramaticaTomi.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 250:
-//#line 533 ".\gramaticaTomi.y"
+//#line 637 "gramaticaTomi.y"
 {yyerror("Se esperaba } ");}
 break;
 case 251:
-//#line 534 ".\gramaticaTomi.y"
+//#line 638 "gramaticaTomi.y"
 {yyerror("Se esperaba { ");}
 break;
 case 252:
-//#line 535 ".\gramaticaTomi.y"
+//#line 639 "gramaticaTomi.y"
 {yyerror("Se esperaba end_if ");}
 break;
 case 253:
-//#line 536 ".\gramaticaTomi.y"
+//#line 640 "gramaticaTomi.y"
 {yyerror("Se esperaba } ");}
 break;
 case 254:
-//#line 537 ".\gramaticaTomi.y"
+//#line 641 "gramaticaTomi.y"
 {yyerror("Se esperaba { ");}
 break;
 case 255:
-//#line 538 ".\gramaticaTomi.y"
+//#line 642 "gramaticaTomi.y"
 {yyerror("Se esperaba then ");}
 break;
 case 256:
-//#line 539 ".\gramaticaTomi.y"
+//#line 643 "gramaticaTomi.y"
 {yyerror("Se esperaba ) ");}
 break;
 case 257:
-//#line 540 ".\gramaticaTomi.y"
+//#line 644 "gramaticaTomi.y"
 {yyerror("Se esperaba una condicion ");}
 break;
 case 258:
-//#line 541 ".\gramaticaTomi.y"
+//#line 645 "gramaticaTomi.y"
 {yyerror("Se esperaba ( ");}
 break;
 case 259:
-//#line 544 ".\gramaticaTomi.y"
+//#line 648 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                                         yyval = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja(val_peek(13).sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(9),(ArbolSintactico)val_peek(7)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(1),new NodoHoja(val_peek(5).sval + val_peek(4).sval))));
                                                                                                        }
 break;
 case 260:
-//#line 547 ".\gramaticaTomi.y"
+//#line 651 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                                         yyval = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja(val_peek(13).sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(9),(ArbolSintactico)val_peek(7)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(1),new NodoHoja(val_peek(5).sval + val_peek(4).sval))));
                                                                                                        }
 break;
 case 261:
-//#line 550 ".\gramaticaTomi.y"
+//#line 654 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                                                                 yyval = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja(val_peek(11).sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(7),(ArbolSintactico)val_peek(5)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(0),new NodoHoja(val_peek(3).sval + val_peek(2).sval))));
                                                                                                                                 }
 break;
 case 262:
-//#line 553 ".\gramaticaTomi.y"
+//#line 657 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                                                                 yyval = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja(val_peek(11).sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(7),(ArbolSintactico)val_peek(5)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(0),new NodoHoja(val_peek(3).sval + val_peek(2).sval))));
                                                                                                                                 }
 break;
 case 263:
-//#line 556 ".\gramaticaTomi.y"
+//#line 660 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 264:
-//#line 557 ".\gramaticaTomi.y"
+//#line 661 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 265:
-//#line 558 ".\gramaticaTomi.y"
+//#line 662 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 266:
-//#line 559 ".\gramaticaTomi.y"
+//#line 663 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 267:
-//#line 560 ".\gramaticaTomi.y"
+//#line 664 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 268:
-//#line 561 ".\gramaticaTomi.y"
+//#line 665 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 269:
-//#line 562 ".\gramaticaTomi.y"
+//#line 666 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 270:
-//#line 563 ".\gramaticaTomi.y"
+//#line 667 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                              yyval = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(9),(ArbolSintactico)val_peek(7)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(1),new NodoHoja(val_peek(5).sval + val_peek(4).sval)));
                                                                                              }
 break;
 case 271:
-//#line 566 ".\gramaticaTomi.y"
+//#line 670 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                              yyval = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(9),(ArbolSintactico)val_peek(7)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(1),new NodoHoja(val_peek(5).sval + val_peek(4).sval)));
                                                                                              }
 break;
 case 272:
-//#line 569 ".\gramaticaTomi.y"
+//#line 673 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                     yyval = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(7),(ArbolSintactico)val_peek(5)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(0),new NodoHoja(val_peek(3).sval + val_peek(2).sval)));
                                                                                   }
 break;
 case 273:
-//#line 572 ".\gramaticaTomi.y"
+//#line 676 "gramaticaTomi.y"
 {System.out.println("Sentencia FOR");
                                                                                     yyval = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)val_peek(7),(ArbolSintactico)val_peek(5)),new NodoComun("Cuerpo FOR",(ArbolSintactico)val_peek(0),new NodoHoja(val_peek(3).sval + val_peek(2).sval)));
                                                                                   }
 break;
 case 274:
-//#line 575 ".\gramaticaTomi.y"
+//#line 679 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 275:
-//#line 576 ".\gramaticaTomi.y"
+//#line 680 "gramaticaTomi.y"
 {yyerror("Se esperaba }");}
 break;
 case 276:
-//#line 577 ".\gramaticaTomi.y"
+//#line 681 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 277:
-//#line 578 ".\gramaticaTomi.y"
+//#line 682 "gramaticaTomi.y"
 {yyerror("Se esperaba {");}
 break;
 case 278:
-//#line 579 ".\gramaticaTomi.y"
+//#line 683 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 279:
-//#line 580 ".\gramaticaTomi.y"
+//#line 684 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 280:
-//#line 581 ".\gramaticaTomi.y"
+//#line 685 "gramaticaTomi.y"
 {yyerror("Se esperaba (");}
 break;
 case 281:
-//#line 584 ".\gramaticaTomi.y"
+//#line 688 "gramaticaTomi.y"
 {yyval = new NodoHoja(val_peek(0).sval);}
 break;
 case 282:
-//#line 585 ".\gramaticaTomi.y"
+//#line 689 "gramaticaTomi.y"
 {yyval=new NodoHoja(val_peek(0).sval);}
 break;
 case 283:
-//#line 587 ".\gramaticaTomi.y"
+//#line 691 "gramaticaTomi.y"
 {yyval=new NodoComun("llamado funcion",(ArbolSintactico)val_peek(3),(ArbolSintactico)val_peek(1));}
 break;
 case 284:
-//#line 588 ".\gramaticaTomi.y"
+//#line 692 "gramaticaTomi.y"
 {yyval=new NodoComun("llamado funcion",(ArbolSintactico)val_peek(1),new NodoHoja("Un solo parametro"));}
 break;
 case 285:
-//#line 589 ".\gramaticaTomi.y"
+//#line 693 "gramaticaTomi.y"
 {yyval=new NodoHoja("llamado funcion sin parametros");}
 break;
 case 286:
-//#line 590 ".\gramaticaTomi.y"
+//#line 694 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 287:
-//#line 591 ".\gramaticaTomi.y"
+//#line 695 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
 case 288:
-//#line 592 ".\gramaticaTomi.y"
+//#line 696 "gramaticaTomi.y"
 {yyerror("Se esperaba )");}
 break;
-//#line 2697 "Parser.java"
+//#line 2804 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
