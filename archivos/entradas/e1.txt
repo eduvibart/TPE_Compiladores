@@ -1,5 +1,6 @@
 program {
-        
+        i32 adklsajkdljasldsajlkdjsalkjasdasdkjsajkld
+        i32 b;
         if(a<b)then {
         
         }end_if;
