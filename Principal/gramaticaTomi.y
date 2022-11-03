@@ -20,7 +20,6 @@ import java.util.Map;
 
 %% 
 program : nombre_program LLAVE_A bloque_sentencias LLAVE_C {raiz = new NodoControl("PROGRAMA",(ArbolSintactico)$3);
-                                                                System.out.println("RAIZ");
                                                             Integer tope = 1;
                                                                 ArrayList<String> listaVariables = new ArrayList<String>();
                                                                 for(String s1 : getListaVariablesDelAmbito()){
@@ -45,7 +44,7 @@ program : nombre_program LLAVE_A bloque_sentencias LLAVE_C {raiz = new NodoContr
                                                                                 String ambitoDecl = (String)TablaSimbolos.getAtributo(var.getVariable(),"Ambito");
                                                                                 String ambitoUsado = var.getAmbito();
                                                                                 if(!(ambitoUsado.contains(ambitoDecl))){
-                                                                                        yyerror("La variable "+ var.getVariable()+ " no se puede utilizar en el ambito " + ambitoUsado);
+                                                                                        yyerror("La variable "+ var.getVariable()+ " no se puede  utilizar en el ambito " + ambitoUsado);
                                                                                 }
 
                                                                         }
@@ -197,6 +196,30 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                                 retornos.remove(a);
                                         }
                                 }
+                                NodoFuncion funcion = getTopeFuncion();
+                                removeTopeFuncion();
+                                funcion.setNombre($2.sval);
+                                NodoFuncion sig = getTopeFuncion();
+                                for (NodoVariableUsada n : funcion.getListaVariables()){
+                                        String ambito = n.getAmbito();
+                                        ambito = ambito +":" +funcion.getNombre();
+                                        n.setAmbito(ambito);
+                                        if(!(sig==null)){
+                                                if(sig.getNombre().equals("Global")){
+                                                        ambito = ambito + ":" + "Global";
+                                                        n.setAmbito(ambito);
+                                                }
+                                                sig.addVariable(n);
+                                        }else{
+                                                NodoFuncion global = new NodoFuncion(1);
+                                                global.setNombre("Global");
+                                                ambito = ambito + ":" + "Global";
+                                                n.setAmbito(ambito);
+                                                global.addVariable(n);
+                                                addFuncionPila(global);
+                                                sig = global;
+                                        }
+                                }
                                 }
                 | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {
                                 System.out.println("Declaracion de Funcion");
@@ -228,6 +251,30 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                                         yyerror("El retorno debe tener el mismo tipo que el de la funcion.");
                                                 }
                                                 retornos.remove(a);
+                                        }
+                                }
+                                NodoFuncion funcion = getTopeFuncion();
+                                removeTopeFuncion();
+                                funcion.setNombre($2.sval);
+                                NodoFuncion sig = getTopeFuncion();
+                                for (NodoVariableUsada n : funcion.getListaVariables()){
+                                        String ambito = n.getAmbito();
+                                        ambito = ambito +":" +funcion.getNombre();
+                                        n.setAmbito(ambito);
+                                        if(!(sig==null)){
+                                                if(sig.getNombre().equals("Global")){
+                                                        ambito = ambito + ":" + "Global";
+                                                        n.setAmbito(ambito);
+                                                }
+                                                sig.addVariable(n);
+                                        }else{
+                                                NodoFuncion global = new NodoFuncion(1);
+                                                global.setNombre("Global");
+                                                ambito = ambito + ":" + "Global";
+                                                n.setAmbito(ambito);
+                                                global.addVariable(n);
+                                                addFuncionPila(global);
+                                                sig = global;
                                         }
                                 }
                                 }
@@ -438,6 +485,32 @@ lista_asignacion : lista_asignacion COMA asignacion_const
 ;
 asignacion_const : ID ASIG cte{ TablaSimbolos.addAtributo($1.sval,"Tipo",TablaSimbolos.getAtributo($3.sval,"Tipo"));
                                 TablaSimbolos.addAtributo($1.sval,"Uso","Constante");
+                                NodoFuncion n = getTopeFuncion();
+                                if(!(n == null)){
+                                        if(!(n.getNombre().equals("Global"))){
+                                                NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                                n.addVariable(var);
+                                                NodoVariableUsada var1 = new NodoVariableUsada($3.sval,AnalizadorLexico.getLineaAct());
+                                                n.addVariable(var1);
+                                        }else{
+                                                NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                                var.setAmbito("Global");
+                                                n.addVariable(var);
+                                                NodoVariableUsada var1 = new NodoVariableUsada($3.sval,AnalizadorLexico.getLineaAct());
+                                                var1.setAmbito("Global");
+                                                n.addVariable(var1);
+                                        }
+                                }else{
+                                        NodoFuncion global = new NodoFuncion(1);
+                                        NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                        var.setAmbito("Global");
+                                        global.setNombre("Global");
+                                        global.addVariable(var);
+                                        NodoVariableUsada var1 = new NodoVariableUsada($3.sval,AnalizadorLexico.getLineaAct());
+                                        var1.setAmbito("Global");
+                                        global.addVariable(var1);
+                                        addFuncionPila(global);
+                                }
                                 }
 sentencia_ejecutable : asignacion {$$ = $1;}
         | sentencia_if   {$$ = $1; }
@@ -445,7 +518,7 @@ sentencia_ejecutable : asignacion {$$ = $1;}
         | sentencia_when {$$ = $1;}
         | sentencia_for {$$ = $1;}
         | sentencia_while {$$ = $1;}
-        | llamado_func{}
+        | llamado_func{$$=$1;}
 ;
 asignacion : ID ASIG expresion  {
                                  System.out.println("Asignacion");
@@ -482,9 +555,9 @@ asignacion : ID ASIG expresion  {
                                                 NodoFuncion global = new NodoFuncion(1);
                                                 NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
                                                 var.setAmbito("Global");
-                                                TablaSimbolos.addAtributo($1.sval,"Ambito","Global");
                                                 global.setNombre("Global");
                                                 global.addVariable(var);
+                                                addFuncionPila(global);
                                         }
                                         
                                  }
@@ -530,7 +603,7 @@ expresion: expresion SUMA termino {$$ = new NodoComun($2.sval,(ArbolSintactico)$
                                  }
                                  }
         | termino {$$ = $1;} 
-        | llamado_func
+        | llamado_func {$$=$1;}
         | sentencia_for ELSE cte
         | sentencia_while ELSE cte 
         
@@ -600,9 +673,9 @@ factor: ID {
                         NodoFuncion global = new NodoFuncion(1);
                         NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
                         var.setAmbito("Global");
-                        TablaSimbolos.addAtributo($1.sval,"Ambito","Global");
                         global.setNombre("Global");
                         global.addVariable(var);
+                        addFuncionPila(global);
                 }
             }else {
                 yyerror("Variable no declarada " + $1.sval);
@@ -832,7 +905,34 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
 ;
 
 param_real : cte{$$ = new NodoHoja($1.sval);}
-                | ID {$$=new NodoHoja($1.sval);}
+                | ID {$$=new NodoHoja($1.sval);
+                        String s = (String)TablaSimbolos.getAtributo($1.sval,"Tipo");
+                        if (s != null){
+                                
+                                ((ArbolSintactico)$$).setTipo(s);  
+                                NodoFuncion n = getTopeFuncion();
+                                if(!(n == null)){
+                                        if(!(n.getNombre().equals("Global"))){
+                                                NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                                n.addVariable(var);
+                                        }else{
+                                                NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                                var.setAmbito("Global");
+                                                n.addVariable(var);
+                                        }
+                                }else{
+                                        NodoFuncion global = new NodoFuncion(1);
+                                        NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                        var.setAmbito("Global");
+                                        global.setNombre("Global");
+                                        global.addVariable(var);
+                                        addFuncionPila(global);
+                                }
+                        }else {
+                                
+                                yyerror("Variable no declarada " + $1.sval);
+                        }
+                     }
 ;
 llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {$$=new NodoComun("llamado funcion",(ArbolSintactico)$3,(ArbolSintactico)$5);}
         | ID PARENT_A param_real PARENT_C {$$=new NodoComun("llamado funcion",(ArbolSintactico)$3,new NodoHoja("Un solo parametro"));}
