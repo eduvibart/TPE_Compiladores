@@ -45,11 +45,13 @@ public class AS7 extends AccionSemantica{
 			if (TablaSimbolos.existeSimbolo(t.getLexema())){
                 TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, numero);
 				TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
+                TablaSimbolos.addAtributo(t.getLexema(), "Tipo", "Float");
 
             } else{
                 TablaSimbolos.addNuevoSimbolo(t.getLexema());
                 TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.VALOR, numero);
 				TablaSimbolos.addAtributo(t.getLexema(), TablaSimbolos.ID, t.getId());
+                TablaSimbolos.addAtributo(t.getLexema(), "Tipo", "Float");
 
             }
 		}

@@ -20,6 +20,7 @@ import java.util.Map;
 
 %% 
 program : nombre_program LLAVE_A bloque_sentencias LLAVE_C {raiz = new NodoControl("PROGRAMA",(ArbolSintactico)$3);
+                                                                System.out.println("RAIZ");
                                                             Integer tope = 1;
                                                                 ArrayList<String> listaVariables = new ArrayList<String>();
                                                                 for(String s1 : getListaVariablesDelAmbito()){
@@ -38,7 +39,21 @@ program : nombre_program LLAVE_A bloque_sentencias LLAVE_C {raiz = new NodoContr
                                                                                 }
                                                                         }
                                                                 }
-                                                           }
+                                                                NodoFuncion nf = getTopeFuncion();
+                                                                if(!(nf==null)){
+                                                                        for (NodoVariableUsada var : nf.getListaVariables()){
+                                                                                String ambitoDecl = (String)TablaSimbolos.getAtributo(var.getVariable(),"Ambito");
+                                                                                String ambitoUsado = var.getAmbito();
+                                                                                if(!(ambitoUsado.contains(ambitoDecl))){
+                                                                                        yyerror("La variable "+ var.getVariable()+ " no se puede utilizar en el ambito " + ambitoUsado);
+                                                                                }
+
+                                                                        }
+                                                                }
+                                                                
+                                                        }
+
+                                                           
         | error {yyerror("Hay un error sintactico en la entrada que arrastra errores");}
 ;
 nombre_program : ID 
@@ -47,7 +62,10 @@ bloque_sentencias :{$$=new NodoHoja("Fin");}
                 | bloque_sentencias sentencia PUNTOCOMA {
                                                         $$=new NodoComun("Sentencia", (ArbolSintactico) $2, (ArbolSintactico) $1);
                                                         }
-                | bloque_sentencias sentencia {yyerror("Se esperaba ;");}
+                | bloque_sentencias sentencia {
+                                $$ = new NodoControl("Error",(ArbolSintactico)null);
+                                yyerror("Se esperaba ;");
+                        }
 ;
 sentencia : sentencia_declarativa {$$=new NodoHoja("Sentencia Declarativa");}
         | sentencia_ejecutable {$$ = $1;}
@@ -89,13 +107,12 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                 $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$11);
                                 TablaSimbolos.addAtributo($2.sval,"Uso","NombreFuncion");
                                 Integer tope = getTope();
-                                ArrayList<String> listaVariables = new ArrayList<String>();
-                                for(String s1 : getListaVariablesDelAmbito()){
-                                        listaVariables.add(s1);
-                                }
-                                for (String s : listaVariables){
+                                
+                                for (String s : getListaVariablesDelAmbito()){
                                         Integer i = (Integer) TablaSimbolos.getAtributo(s,"Linea");
+                                        
                                         if((i >= tope) && (i <=(Integer)AnalizadorLexico.getLineaAct())){
+
                                                 String ambito = (String)TablaSimbolos.getAtributo(s,"Ambito");
                                                 if ( ambito == null){
                                                         TablaSimbolos.addAtributo(s,"Ambito",$2.sval+":");
@@ -106,6 +123,7 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                                 }
                                         }
                                 }
+                                
                                 ArrayList<ArbolSintactico> r1 = new ArrayList<ArbolSintactico>();
                                 String tipo = ((ArbolSintactico)$9).getTipo();
                                 for (ArbolSintactico a1 : retornos){
@@ -120,18 +138,39 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                                 retornos.remove(a);
                                         }
                                 }
+                                NodoFuncion funcion = getTopeFuncion();
+                                removeTopeFuncion();
+                                funcion.setNombre($2.sval);
+                                NodoFuncion sig = getTopeFuncion();
+                                for (NodoVariableUsada n : funcion.getListaVariables()){
+                                        String ambito = n.getAmbito();
+                                        ambito = ambito +":" +funcion.getNombre();
+                                        n.setAmbito(ambito);
+                                        if(!(sig==null)){
+                                                if(sig.getNombre().equals("Global")){
+                                                        ambito = ambito + ":" + "Global";
+                                                        n.setAmbito(ambito);
+                                                }
+                                                sig.addVariable(n);
+                                        }else{
+                                                NodoFuncion global = new NodoFuncion(1);
+                                                global.setNombre("Global");
+                                                ambito = ambito + ":" + "Global";
+                                                n.setAmbito(ambito);
+                                                global.addVariable(n);
+                                                addFuncionPila(global);
+                                                sig = global;
+                                        }
+                                }
                                 
+
                         }
                 | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {
                                 System.out.println("Declaracion de Funcion");                                                               
                                 $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$9);
                                 TablaSimbolos.addAtributo($2.sval,"Uso","NombreFuncion");
-                                Integer tope = getTope();
-                                ArrayList<String> listaVariables = new ArrayList<String>();
-                                for(String s1 : getListaVariablesDelAmbito()){
-                                        listaVariables.add(s1);
-                                }
-                                for (String s : listaVariables){
+                                Integer tope = getTope();  
+                                for (String s : getListaVariablesDelAmbito()){
                                         Integer i = (Integer) TablaSimbolos.getAtributo(s,"Linea");
                                         if((i >= tope) && (i <=(Integer)AnalizadorLexico.getLineaAct())){
                                                 String ambito = (String)TablaSimbolos.getAtributo(s,"Ambito");
@@ -164,11 +203,7 @@ sentencia_decl_fun : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                 $$ = new NodoControl("Funcion:"+$2.sval,(ArbolSintactico)$8);
                                 TablaSimbolos.addAtributo($2.sval,"Uso","NombreFuncion");
                                 Integer tope = getTope();
-                                ArrayList<String> listaVariables = new ArrayList<String>();
-                                for(String s1 : getListaVariablesDelAmbito()){
-                                        listaVariables.add(s1);
-                                }
-                                for (String s : listaVariables){
+                                for (String s : getListaVariablesDelAmbito()){
                                         Integer i = (Integer) TablaSimbolos.getAtributo(s,"Linea");
                                         if((i >= tope) && (i <=(Integer)AnalizadorLexico.getLineaAct())){
                                                 String ambito = (String)TablaSimbolos.getAtributo(s,"Ambito");
@@ -397,9 +432,13 @@ parametro : tipo ID
 
 lista_const : CONST lista_asignacion {System.out.println("Declaracion de Constante/s");}
 ;
-lista_asignacion : lista_asignacion COMA asignacion
-        | asignacion
+
+lista_asignacion : lista_asignacion COMA asignacion_const
+        | asignacion_const
 ;
+asignacion_const : ID ASIG cte{ TablaSimbolos.addAtributo($1.sval,"Tipo",TablaSimbolos.getAtributo($3.sval,"Tipo"));
+                                TablaSimbolos.addAtributo($1.sval,"Uso","Constante");
+                                }
 sentencia_ejecutable : asignacion {$$ = $1;}
         | sentencia_if   {$$ = $1; }
         | sentencia_out {$$ = $1;}
@@ -420,12 +459,32 @@ asignacion : ID ASIG expresion  {
                                         s2 = ((ArbolSintactico)$3).getTipo();
                                  }
                                  if(s1 == null){
-                                        System.out.println("Variable no declarada " + $1.sval);
+                                        yyerror("Variable no declarada " + $1.sval);
                                  }else{
                                         if((s2 == "null")){
                                                 yyerror("Falta declarar alguna variable para realizar la asignacion.");
                                         }else{
-                                                yyerror("No se puede realizar una asignacion con tipos diferentes.");
+                                                if(!(s1.equals(s2))){
+                                                        yyerror("No se puede realizar una asignacion con tipos diferentes.");
+                                                }
+                                        }
+                                        NodoFuncion n = getTopeFuncion();
+                                        if(!(n == null)){
+                                                if(!(n.getNombre().equals("Global"))){
+                                                        NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                                        n.addVariable(var);
+                                                }else{
+                                                        NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                                        var.setAmbito("Global");
+                                                        n.addVariable(var);
+                                                }
+                                        }else{
+                                                NodoFuncion global = new NodoFuncion(1);
+                                                NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                                var.setAmbito("Global");
+                                                TablaSimbolos.addAtributo($1.sval,"Ambito","Global");
+                                                global.setNombre("Global");
+                                                global.addVariable(var);
                                         }
                                         
                                  }
@@ -527,6 +586,24 @@ factor: ID {
             String s = (String)TablaSimbolos.getAtributo($1.sval,"Tipo");
             if (s != null){
                 ((ArbolSintactico)$$).setTipo(s);  
+                NodoFuncion n = getTopeFuncion();
+                if(!(n == null)){
+                        if(!(n.getNombre().equals("Global"))){
+                                NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                n.addVariable(var);
+                        }else{
+                                NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                                var.setAmbito("Global");
+                                n.addVariable(var);
+                        }
+                }else{
+                        NodoFuncion global = new NodoFuncion(1);
+                        NodoVariableUsada var = new NodoVariableUsada($1.sval,AnalizadorLexico.getLineaAct());
+                        var.setAmbito("Global");
+                        TablaSimbolos.addAtributo($1.sval,"Ambito","Global");
+                        global.setNombre("Global");
+                        global.addVariable(var);
+                }
             }else {
                 yyerror("Variable no declarada " + $1.sval);
             }
@@ -581,7 +658,7 @@ condicion : expresion comparacion expresion
                 {
                         $$= new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
                         if (!((((ArbolSintactico)$1).getTipo()).equals(((ArbolSintactico)$3).getTipo()))){
-                               System.out.println("error en la comparacion entre expresiones de distintos tipos");
+                               yyerror("error en la comparacion entre expresiones de distintos tipos");
                         }
                 }
         | expresion comparacion error {yyerror("Se esperaba otra expresion para comparar.");}
@@ -770,9 +847,24 @@ private List<String> variablesEnElAmbito = new ArrayList<String>();
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
 private static List<Integer> linFun = new ArrayList<Integer>();
 private List<ArbolSintactico> retornos = new ArrayList<ArbolSintactico>();
+private static HashMap<Integer,ArrayList<String>> erroresSintacticos = new HashMap<Integer,ArrayList<String>>();
+private static List<NodoFuncion> pilaFunciones = new ArrayList<NodoFuncion>();
+
+
 
 void yyerror(String mensaje){
-        System.out.println("Linea"+ AnalizadorLexico.getLineaAct() +"| Error sintactico: " + mensaje);
+        if (erroresSintacticos.get(AnalizadorLexico.getLineaAct())== null){
+                ArrayList<String> mnsj = new ArrayList<String>();
+                mnsj.add(mensaje); 
+                erroresSintacticos.put(AnalizadorLexico.getLineaAct(), mnsj);
+        }
+        else{
+                erroresSintacticos.get(AnalizadorLexico.getLineaAct()).add(mensaje);
+        }
+}
+
+static HashMap<Integer,ArrayList<String>> getErroresSintacticos(){
+        return erroresSintacticos;
 }
 void chequearRangoI32(String sval){
   String s = "2147483647";
@@ -830,4 +922,20 @@ public static Integer getTope(){
 
         Integer i = linFun.remove(linFun.size()-1);
         return i;
+}
+
+public static void addFuncionPila(NodoFuncion n){
+        pilaFunciones.add(n);
+}
+
+public static NodoFuncion getTopeFuncion(){
+        if(!pilaFunciones.isEmpty())
+          return pilaFunciones.get(pilaFunciones.size()-1);
+        return null;
+}
+public static void removeTopeFuncion(){
+        pilaFunciones.remove(pilaFunciones.size()-1);
+}
+public static List<NodoFuncion> getPilaFunciones(){
+        return pilaFunciones;
 }

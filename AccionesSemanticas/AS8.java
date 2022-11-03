@@ -5,6 +5,7 @@ import java.io.Reader;
 
 import AnalizadorLexico.AnalizadorLexico;
 import AnalizadorLexico.Token;
+import GeneracionCodigoIntermedio.NodoFuncion;
 import Principal.Parser;
 import Principal.TablaSimbolos;
 
@@ -28,6 +29,8 @@ public class AS8 extends AccionSemantica{
         if(idPR != null){
             if(t.getLexema().equals("fun")){
                 Parser.addLinFun((Integer)AnalizadorLexico.getLineaAct());
+                NodoFuncion n = new NodoFuncion((Integer)AnalizadorLexico.getLineaAct());
+                Parser.addFuncionPila(n);
             }
             t.setId(idPR);
         }else{

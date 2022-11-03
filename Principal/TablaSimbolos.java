@@ -33,12 +33,12 @@ public class TablaSimbolos {
 
     public static void imprimirTabla(){
     	for (String lex: simbolos.keySet()) {
-    		System.out.print("Lexema : "+ lex +". Atributos ->");
+    		System.out.print("| Lexema : "+ lex +" | Atributos ->");
     		Map<String, Object> atributos = simbolos.get(lex);
     		for(String atributo : atributos.keySet()) {
     			System.out.print(atributo+" "+ atributos.get(atributo)+ ", ");
     		}
-    		System.out.println("");
+    		System.out.println("|");
     	}
     }
 
