@@ -30,7 +30,9 @@ public class TablaSimbolos {
             return simbolos.get(lexema).get(atributo);
         return null;
     }
-
+    public static void removeAtributo(String lexema){
+        simbolos.remove(lexema);
+    }
     public static void imprimirTabla(){
     	for (String lex: simbolos.keySet()) {
     		System.out.print("| Lexema : "+ lex +" | Atributos ->");

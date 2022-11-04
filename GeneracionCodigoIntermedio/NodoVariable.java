@@ -1,10 +1,10 @@
 package GeneracionCodigoIntermedio;
 
-public class NodoVariableUsada {
+public class NodoVariable {
     private Integer linea = null;
     private String variable = "";
     private String ambito = "";
-    public NodoVariableUsada(String variable, Integer linea){
+    public NodoVariable(String variable, Integer linea){
         this.variable = variable;
         this.linea = linea;
     }
