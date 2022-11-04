@@ -1,14 +1,9 @@
-program {i32 f;
-        fun a():i32{
-                i32 g;
-                g =: f + 3 ;
+program {
+        i32 a;
+        i32 hola;
+        fun b(i32 a,i32 hola): i32 {
         };
-        fun b():i32{
-                i32 g;
-                fun a():i32{
-                        i32 g;
-                };
-        };
-        i32 g;
-        
-        }   
+        hola =: b(hola) + a;
+
+
+}   
