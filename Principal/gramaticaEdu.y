@@ -130,7 +130,6 @@ sentencia_decl_fun : fun_id PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                                 retornos.remove(a);
                                         }
                                 }
-                                
                                 char [] a = ambitoActual.toCharArray();
                                 for (int i = a.length;i>=0;i--){
                                         if(a[i-1] == ':'){
@@ -138,8 +137,7 @@ sentencia_decl_fun : fun_id PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                                 break;
                                         }
                                 }
-                                TablaSimbolos.addAtributo($1.sval +":"+ambitoActual,"Parametro1",$3.sval);
-                                TablaSimbolos.addAtributo($1.sval +":"+ambitoActual,"Parametro2",$5.sval);
+
                         }
                 | fun_id PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {
                                 System.out.println("Declaracion de Funcion");                                                               
@@ -391,11 +389,7 @@ retorno : RETURN PARENT_A expresion PARENT_C {$$ = new NodoControl("Retorno", (A
                                                 }
 
 ;
-parametro : tipo ID{    $$ = new ParserVal($2.sval+":"+ambitoActual);
-                        TablaSimbolos.addNuevoSimbolo($2.sval + ":"+ ambitoActual);
-                        TablaSimbolos.addAtributo($2.sval + ":"+ ambitoActual,"Tipo",((ArbolSintactico)$1).getTipo());
-                        TablaSimbolos.addAtributo($2.sval + ":"+ ambitoActual,"Uso","Parametro Funcion");
-}
+parametro : tipo ID
         |  ID ID {yyerror("No esta permitido el tipo declarado");}
 ;
 
@@ -724,51 +718,16 @@ param_real : cte{
                      }
 ;
 llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
-                                                        $$=new NodoComun("llamado funcion",(ArbolSintactico)$3,(ArbolSintactico)$5);
-                                                        String ambito = buscarAmbito(ambitoActual,$1.sval);
-                                                        if (ambito=="" ){
-                                                                if( !TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Variable") ){
-                                                                        yyerror("La funcion "+$1.sval+" no fue declarada");
-                                                                }else{
-                                                                        String par1 = (String) TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Parametro1");
-                                                                        String par2 = (String) TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Parametro2");
-                                                                        if(tipoPar1 != null)
-                                                                                if(tipoPar2 != null){
-                                                                                        if( !((ArbolSintatico)$3).getTipo().equals((String)TablaSimbolos.getAtributo(par1,"Tipo") ) ){
-                                                                                                yyerror("El tipo del parametro"+ ((ArbolSintactico)$3.getNombre())+" no coincide con el tipo declarado en la funcion.");
-                                                                                        }
-                                                                                        if( !((ArbolSintatico)$5).getTipo().equals((String)TablaSimbolos.getAtributo(par2,"Tipo") ) ){
-                                                                                                yyerror("El tipo del parametro"+ ((ArbolSintactico)$5.getNombre())+" no coincide con el tipo declarado en la funcion.");
-                                                                                        }
-                                                                                }else{
-                                                                                        yyerror("La declaracion de la funcion no cuenta con dos parametros.");
-                                                                                }
-                                                                        else{
-                                                                                yyerror("La declaracion de la funcion no cuenta con dos parametros.");
-                                                                        }
-                                                                }
-                                                        }
-                                                }
+        $$=new NodoComun("llamado funcion",(ArbolSintactico)$3,(ArbolSintactico)$5);
+        String ambito = buscarAmbito(ambitoActual,$1.sval);
+        if (ambito=="" || TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Variable")){
+            yyerror("La funcion "+$1.sval+" no fue declarada");
+        }
+    }
         | ID PARENT_A param_real PARENT_C {$$=new NodoComun("llamado funcion",(ArbolSintactico)$3,new NodoHoja("Un solo parametro"));
             String ambito = buscarAmbito(ambitoActual,$1.sval);
-            if (ambito==""){
-                if (!TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Variable")){
-                        yyerror("La funcion "+$1.sval+" no fue declarada");
-                }else{
-                        String par1 = (String) TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Parametro1");
-                        String par2 = (String) TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Parametro2");
-                        if(par2 ==null){
-                                if(par1!=null){
-                                        if( !((ArbolSintatico)$3).getTipo().equals((String)TablaSimbolos.getAtributo(par1,"Tipo") ) ){
-                                                yyerror("El tipo del parametro"+ ((ArbolSintactico)$3.getNombre())+" no coincide con el tipo declarado en la funcion.");
-                                        }
-                                }else{
-                                        yyerror("La funcion esta declarada sin parametros.");
-                                }
-                        }else{
-                                yyerror("La funcion esta declarada con dos parametros.");
-                        }
-                }
+            if (ambito=="" || TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Variable")){
+                yyerror("La funcion "+$1.sval+" no fue declarada");
             }
         }
         | ID PARENT_A PARENT_C {$$=new NodoHoja("llamado funcion sin parametros");
@@ -781,7 +740,6 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
         | ID PARENT_A param_real error {yyerror("Se esperaba )");}
         | ID PARENT_A error {yyerror("Se esperaba )");}
 ;
-
 %%
 private NodoControl raiz;
 private List<String> variablesEnElAmbito = new ArrayList<String>();
@@ -884,7 +842,7 @@ public String buscarAmbito(String ambitoActual,String lexema){
         String ambito = ambitoActual;
         while(!TablaSimbolos.existeSimbolo(lexema+":"+ambito)){
                 if(ambito.equals("Global")){
-                        yyerror("La variable " + lexema + " no se encuentra declarada en el ambito " + ambitoActual);
+                        yyerror("El identificador " + lexema + " no se encuentra declarado en el ambito " + ambitoActual);
                         ambito = "";
                         break;
                 }else{
