@@ -983,6 +983,5 @@ public String buscarAmbito(String ambitoActual,String lexema){
                         }
                 }
         }
-        System.out.println("Retorno " + ambito);
         return ambito;
 }
