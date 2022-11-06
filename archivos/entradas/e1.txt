@@ -1,19 +1,10 @@
-<<<<<<< HEAD
-program {i32 f;
-        fun a (i32 a1):i32{
-
-        };
-        i32 g;
-        g =: f(i);
-        }   
-=======
 program {
         i32 a;
-        i32 hola;
-        fun b(i32 a,i32 hola): i32 {
+        i32 b;
+        eti : for (a =: 1; a>b ; +1){
         };
-        hola =: b(hola) + a;
+        
+        eti : while (a>b) : (b=: b + 1){
 
-
+        };
 }   
->>>>>>> cc73dab8cae6bbd24e18ef249f644df2e51b4db7
