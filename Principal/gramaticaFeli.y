@@ -244,6 +244,15 @@ sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS P
                                         yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
                                 }
                         }
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {yyerror("Se esperaba {");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {yyerror("Se esperaba )");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A error {yyerror("Se esperaba una asignacion");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS error {yyerror("Se esperaba (");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C error {yyerror("Se esperaba :");}
+                | ID DOSPUNTOS WHILE PARENT_A condicion error {yyerror("Se esperaba )");}
+                | ID DOSPUNTOS WHILE PARENT_A error {yyerror("Se esperaba una condicion");}
+                | ID DOSPUNTOS WHILE error {yyerror("Se esperaba (");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
                         $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $7) );
                         System.out.println("Sentencia WHILE con llaves");} 

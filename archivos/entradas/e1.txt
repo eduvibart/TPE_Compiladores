@@ -1,18 +1,9 @@
 program {
-        i32 a,i,j;
-        f32 b;
-        fun cumple(f32 a,f32 b): f32 {
-            if (a < b) then { 
-                outer:  while ( i < 10 ) : (i =: i + 1 ) {
-                        while ( j < 5 ) : (j =: j + 1 ) {
-                            continue :outer;
-                            return (a);    
-                        };           
-                    };
-            }
-            else {
-                return (3.0);
-            }
-            end_if;
+        i32 a;
+        i32 b;
+        fun hola() : i32{
+                eti : while (a>b) : (b=: b + 1){
+
+                };
         };
 }   
