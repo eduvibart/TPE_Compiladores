@@ -132,8 +132,8 @@
  113                       | BREAK cte
  114                       | retorno
 
- 115  sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_break
- 116                           | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C
+ 115  sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C
+ 116                           | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_break
  117                           | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break error
  118                           | WHEN PARENT_A condicion PARENT_C THEN error
  119                           | WHEN PARENT_A condicion PARENT_C error
@@ -5490,8 +5490,8 @@ state 419
 
 
 state 420
-	sentencia_when_break_fun : WHEN . PARENT_A condicion PARENT_C THEN sentencias_fun_break  (115)
-	sentencia_when_break_fun : WHEN . PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C  (116)
+	sentencia_when_break_fun : WHEN . PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C  (115)
+	sentencia_when_break_fun : WHEN . PARENT_A condicion PARENT_C THEN sentencias_fun_break  (116)
 	sentencia_when_break_fun : WHEN . PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break error  (117)
 	sentencia_when_break_fun : WHEN . PARENT_A condicion PARENT_C THEN error  (118)
 	sentencia_when_break_fun : WHEN . PARENT_A condicion PARENT_C error  (119)
@@ -6049,8 +6049,8 @@ state 459
 
 
 state 460
-	sentencia_when_break_fun : WHEN PARENT_A . condicion PARENT_C THEN sentencias_fun_break  (115)
-	sentencia_when_break_fun : WHEN PARENT_A . condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C  (116)
+	sentencia_when_break_fun : WHEN PARENT_A . condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C  (115)
+	sentencia_when_break_fun : WHEN PARENT_A . condicion PARENT_C THEN sentencias_fun_break  (116)
 	sentencia_when_break_fun : WHEN PARENT_A . condicion PARENT_C THEN LLAVE_A cuerpo_fun_break error  (117)
 	sentencia_when_break_fun : WHEN PARENT_A . condicion PARENT_C THEN error  (118)
 	sentencia_when_break_fun : WHEN PARENT_A . condicion PARENT_C error  (119)
@@ -6436,8 +6436,8 @@ state 493
 
 
 state 494
-	sentencia_when_break_fun : WHEN PARENT_A condicion . PARENT_C THEN sentencias_fun_break  (115)
-	sentencia_when_break_fun : WHEN PARENT_A condicion . PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C  (116)
+	sentencia_when_break_fun : WHEN PARENT_A condicion . PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C  (115)
+	sentencia_when_break_fun : WHEN PARENT_A condicion . PARENT_C THEN sentencias_fun_break  (116)
 	sentencia_when_break_fun : WHEN PARENT_A condicion . PARENT_C THEN LLAVE_A cuerpo_fun_break error  (117)
 	sentencia_when_break_fun : WHEN PARENT_A condicion . PARENT_C THEN error  (118)
 	sentencia_when_break_fun : WHEN PARENT_A condicion . PARENT_C error  (119)
@@ -6857,8 +6857,8 @@ state 521
 
 
 state 522
-	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C . THEN sentencias_fun_break  (115)
-	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C . THEN LLAVE_A cuerpo_fun_break LLAVE_C  (116)
+	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C . THEN LLAVE_A cuerpo_fun_break LLAVE_C  (115)
+	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C . THEN sentencias_fun_break  (116)
 	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C . THEN LLAVE_A cuerpo_fun_break error  (117)
 	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C . THEN error  (118)
 	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C . error  (119)
@@ -7143,8 +7143,8 @@ state 553
 
 
 state 554
-	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN . sentencias_fun_break  (115)
-	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN . LLAVE_A cuerpo_fun_break LLAVE_C  (116)
+	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN . LLAVE_A cuerpo_fun_break LLAVE_C  (115)
+	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN . sentencias_fun_break  (116)
 	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN . LLAVE_A cuerpo_fun_break error  (117)
 	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN . error  (118)
 
@@ -7338,7 +7338,7 @@ state 567
 
 
 state 568
-	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A . cuerpo_fun_break LLAVE_C  (116)
+	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A . cuerpo_fun_break LLAVE_C  (115)
 	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A . cuerpo_fun_break error  (117)
 	cuerpo_fun_break : .  (102)
 
@@ -7348,9 +7348,9 @@ state 568
 
 
 state 569
-	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_break .  (115)
+	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_break .  (116)
 
-	.  reduce 115
+	.  reduce 116
 
 
 state 570
@@ -7508,7 +7508,7 @@ state 581
 state 582
 	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (103)
 	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break error  (104)
-	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break . LLAVE_C  (116)
+	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break . LLAVE_C  (115)
 	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break . error  (117)
 
 	error  shift 592
@@ -7648,9 +7648,9 @@ state 592
 
 
 state 593
-	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C .  (116)
+	sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C .  (115)
 
-	.  reduce 116
+	.  reduce 115
 
 
 state 594

@@ -107,7 +107,6 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                                 TablaSimbolos.addAtributo($2.sval +":"+ambitoActual,"Parametro1",((ArbolSintactico)$4).getLex() + ":"+ ambitoActual +":"+ $2.sval);
                                 TablaSimbolos.addAtributo($2.sval +":"+ambitoActual,"Parametro2",((ArbolSintactico)$6).getLex()+ ":"+ ambitoActual +":"+ $2.sval);
                                 ambitoActual += ":"+$2.sval;
-                                cambiarFunActual($2.sval);
                                 cambiarTipoActual(((ArbolSintactico)$9).getTipo());
                                 //Agrego los parametros en la tabla de simbolos
                                 TablaSimbolos.addNuevoSimbolo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual);
@@ -133,7 +132,6 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                                 TablaSimbolos.addAtributo($2.sval+":"+ambitoActual,"Tipo",((ArbolSintactico)$7).getTipo());
                                 TablaSimbolos.addAtributo($2.sval +":"+ambitoActual,"Parametro1", ((ArbolSintactico)$4).getLex()+ ":"+ ambitoActual +":"+ $2.sval);
                                 ambitoActual += ":"+$2.sval;
-                                cambiarFunActual($2.sval);
                                 cambiarTipoActual(((ArbolSintactico)$7).getTipo());
                                 //Agrego el parametro en la tabla de simbolos
                                 TablaSimbolos.addNuevoSimbolo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual);
@@ -154,7 +152,6 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                                 TablaSimbolos.removeAtributo($2.sval);
                                 TablaSimbolos.addAtributo($2.sval+":"+ambitoActual,"Tipo",((ArbolSintactico)$6).getTipo());
                                 ambitoActual += ":"+$2.sval;
-                                cambiarFunActual($2.sval);
                                 cambiarTipoActual(((ArbolSintactico)$6).getTipo());
 
                         }else{
@@ -182,7 +179,6 @@ sentencia_decl_fun : encabezado_fun LLAVE_A cuerpo_fun LLAVE_C  {
                                                 break;
                                         }
                                 }
-                                removeFunActual();
                                 removeTipoActual();
                         }
                 | encabezado_fun LLAVE_A cuerpo_fun error{yyerror("Se esperaba } ");}
@@ -199,7 +195,7 @@ sentencias_fun :  sentencia_decl_datos {$$=new NodoHoja("Sentencia Declarativa D
                 | llamado_func {$$=$1;}
                 | sentencia_if_fun {$$=$1;}
                 | sentencia_out {$$ = $1;}
-                | sentencia_when_fun 
+                | sentencia_when_fun {$$ = $1;}
                 | sentencia_for_fun {$$=$1;}
                 | sentencia_while_fun {$$=$1;}
                 | retorno {$$=$1;}
@@ -229,9 +225,13 @@ sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA 
                 | IF PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
                 | IF PARENT_A condicion error {yyerror("Se esperaba ) ");}
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
-  
-sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun {System.out.println("Sentencia WHEN");}
+; 
+sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {
+                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
+                        System.out.println("Sentencia WHEN con llaves");}
+                | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun {
+                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
+                        System.out.println("Sentencia WHEN sin llaves");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun error {yyerror("Se esperaba }");}
                 | WHEN PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba {");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
@@ -367,24 +367,28 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
                 | FOR error {yyerror("Se esperaba (");}
 ;
-cuerpo_fun_break : 
-                | cuerpo_fun_break sentencias_fun_break PUNTOCOMA
+cuerpo_fun_break : {$$=new NodoHoja("Fin");}
+                | cuerpo_fun_break sentencias_fun_break PUNTOCOMA {$$=new NodoComun("Sentencia_Funcion_Break", (ArbolSintactico) $2, (ArbolSintactico) $1);}
                 | cuerpo_fun_break sentencias_fun_break error {yyerror("Se esperaba ;");}
 ;
-sentencias_fun_break :   asignacion 
-                | sentencia_if_break_fun 
-                | sentencia_out 
-                | sentencia_when_break_fun 
-                | sentencia_while_fun 
-                | sentencia_for_fun 
-                | CONTINUE tag 
-                | BREAK 
-                | BREAK cte 
-                | retorno 
+sentencias_fun_break :   asignacion  {$$ = $1;}
+                | sentencia_if_break_fun  {$$ = $1;}
+                | sentencia_out  {$$ = $1;}
+                | sentencia_when_break_fun  {$$ = $1;}
+                | sentencia_while_fun  {$$ = $1;}
+                | sentencia_for_fun  {$$ = $1;}
+                | CONTINUE tag {$$ = new NodoControl("Continue",(ArbolSintactico)$2);}
+                | BREAK {$$ = new NodoHoja("Break");}
+                | BREAK cte {$$ = new NodoControl("Break", new NodoHoja($2.sval));}
+                | retorno {$$=$1;}
 
 ;
-sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_break {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHEN");}
+sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C {
+                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
+                        System.out.println("Sentencia WHEN con llaves");}
+                | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_break {
+                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
+                        System.out.println("Sentencia WHEN sin llaves");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
                 | WHEN PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba {");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
@@ -435,8 +439,7 @@ sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_brea
 ;
 retorno : RETURN PARENT_A expresion PARENT_C {$$ = new NodoControl("Retorno", (ArbolSintactico)$3);
                                                 String tipoRet = ((ArbolSintactico)$3).getTipo();
-                                                String funActual = getFunActual();
-                                                if(funActual != null){
+                                                if(!ambitoActual.equals("Global")){
                                                         String tipoFun = getTipoActual();
                                                         if(!tipoRet.equals(tipoFun)){
                                                                 yyerror("El retorno debe ser del mismo tipo que el retorno de la funcion.");
@@ -940,7 +943,6 @@ private NodoControl raiz;
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
 private static HashMap<Integer,ArrayList<String>> erroresSintacticos = new HashMap<Integer,ArrayList<String>>();
 public String ambitoActual = "Global";
-private List<String> funActual = new ArrayList<String>();
 private List<String> tipoActual = new ArrayList<String>();
 
 
@@ -992,20 +994,6 @@ public Map<String,ArbolSintactico> getFuncion(){
 
 void actualizarAmbito(String lex, String amb){
         TablaSimbolos.addAtributo(lex,"Ambito",amb);
-}
-public String getFunActual(){
-        if(!this.funActual.isEmpty()){
-                return (this.funActual.get(funActual.size()-1));
-        }
-        return null;
-}
-public void cambiarFunActual(String f){
-        funActual.add(f);
-}
-public void removeFunActual(){
-        if(!this.funActual.isEmpty()){
-                this.funActual.remove(funActual.size()-1);
-        }
 }
 public String getTipoActual(){
         if(!this.tipoActual.isEmpty()){

@@ -95,7 +95,7 @@ list_var : list_var COMA ID {
                $$=new NodoTipos((String)$1.sval);
               }
 ;
-fun_id : FUN ID {       
+encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo {       
 
                         if(!TablaSimbolos.existeSimbolo($2.sval+ ":" + ambitoActual)){
                                 $$ = new ParserVal($2.sval);
@@ -103,33 +103,75 @@ fun_id : FUN ID {
                                 TablaSimbolos.addAtributo($2.sval+ ":" + ambitoActual,"Uso","Funcion");
                                 TablaSimbolos.addAtributo($2.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($2.sval,"Id"));
                                 TablaSimbolos.removeAtributo($2.sval);
+                                TablaSimbolos.addAtributo($2.sval+":"+ambitoActual,"Tipo",((ArbolSintactico)$9).getTipo());
+                                TablaSimbolos.addAtributo($2.sval +":"+ambitoActual,"Parametro1",((ArbolSintactico)$4).getLex() + ":"+ ambitoActual +":"+ $2.sval);
+                                TablaSimbolos.addAtributo($2.sval +":"+ambitoActual,"Parametro2",((ArbolSintactico)$6).getLex()+ ":"+ ambitoActual +":"+ $2.sval);
                                 ambitoActual += ":"+$2.sval;
+                                cambiarTipoActual(((ArbolSintactico)$9).getTipo());
+                                //Agrego los parametros en la tabla de simbolos
+                                TablaSimbolos.addNuevoSimbolo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual);
+                                TablaSimbolos.addAtributo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual,"Tipo",((ArbolSintactico)$4).getTipo());
+                                TablaSimbolos.addAtributo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual,"Uso","Variable");
+                                TablaSimbolos.addNuevoSimbolo(((ArbolSintactico)$6).getLex() + ":"+ ambitoActual);
+                                TablaSimbolos.addAtributo(((ArbolSintactico)$6).getLex() + ":"+ ambitoActual,"Tipo",((ArbolSintactico)$6).getTipo());
+                                TablaSimbolos.addAtributo(((ArbolSintactico)$6).getLex() + ":"+ ambitoActual,"Uso","Variable");
 
                         }else{
                                 yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
                                 ambitoActual += ":"+$2.sval;
                         }
-
+                        
 }
-;
-sentencia_decl_fun : fun_id PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C  {
-                                System.out.println("Declaracion de Funcion");
-                                $$ = new NodoControl("Funcion:"+$1.sval,(ArbolSintactico)$10);
-                                char [] a = ambitoActual.toCharArray();
-                                for (int i = a.length;i>=0;i--){
-                                        if(a[i-1] == ':'){
-                                                ambitoActual = ambitoActual.substring(0,i-1);
-                                                break;
-                                        }
-                                }
-                                TablaSimbolos.addAtributo($1.sval +":"+ambitoActual,"Parametro1",$3.sval);
-                                TablaSimbolos.addAtributo($1.sval +":"+ambitoActual,"Parametro2",$5.sval);
-                                TablaSimbolos.addAtributo($1.sval+":"+ambitoActual,"Tipo",((ArbolSintactico)$8).getTipo());
+                | FUN ID PARENT_A parametro  PARENT_C DOSPUNTOS tipo {
+                        if(!TablaSimbolos.existeSimbolo($2.sval+ ":" + ambitoActual)){
+                                $$ = new ParserVal($2.sval);
+                                TablaSimbolos.addNuevoSimbolo($2.sval+ ":" + ambitoActual);
+                                TablaSimbolos.addAtributo($2.sval+ ":" + ambitoActual,"Uso","Funcion");
+                                TablaSimbolos.addAtributo($2.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($2.sval,"Id"));
+                                TablaSimbolos.removeAtributo($2.sval);
+                                TablaSimbolos.addAtributo($2.sval+":"+ambitoActual,"Tipo",((ArbolSintactico)$7).getTipo());
+                                TablaSimbolos.addAtributo($2.sval +":"+ambitoActual,"Parametro1", ((ArbolSintactico)$4).getLex()+ ":"+ ambitoActual +":"+ $2.sval);
+                                ambitoActual += ":"+$2.sval;
+                                cambiarTipoActual(((ArbolSintactico)$7).getTipo());
+                                //Agrego el parametro en la tabla de simbolos
+                                TablaSimbolos.addNuevoSimbolo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual);
+                                TablaSimbolos.addAtributo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual,"Tipo",((ArbolSintactico)$4).getTipo());
+                                TablaSimbolos.addAtributo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual,"Uso","Variable");
 
+                        }else{
+                                yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
+                                ambitoActual += ":"+$2.sval;
                         }
-                | fun_id PARENT_A parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {
-                                System.out.println("Declaracion de Funcion");                                                               
-                                $$ = new NodoControl("Funcion:"+$1.sval,(ArbolSintactico)$8);
+                }
+                | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo {
+                        if(!TablaSimbolos.existeSimbolo($2.sval+ ":" + ambitoActual)){
+                                $$ = new ParserVal($2.sval);
+                                TablaSimbolos.addNuevoSimbolo($2.sval+ ":" + ambitoActual);
+                                TablaSimbolos.addAtributo($2.sval+ ":" + ambitoActual,"Uso","Funcion");
+                                TablaSimbolos.addAtributo($2.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($2.sval,"Id"));
+                                TablaSimbolos.removeAtributo($2.sval);
+                                TablaSimbolos.addAtributo($2.sval+":"+ambitoActual,"Tipo",((ArbolSintactico)$6).getTipo());
+                                ambitoActual += ":"+$2.sval;
+                                cambiarTipoActual(((ArbolSintactico)$6).getTipo());
+
+                        }else{
+                                yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
+                                ambitoActual += ":"+$2.sval;
+                        }
+                }
+                
+                | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS error  {yyerror("El tipo declarado no esta permitido");}
+                | FUN ID PARENT_A parametro COMA parametro PARENT_C error {yyerror("Se esperaba :");}
+                | FUN ID PARENT_A parametro COMA parametro error {yyerror("Se esperaba )");}
+                | FUN ID PARENT_A parametro error {yyerror("Se esperaba )");}
+                | FUN ID error {yyerror("Se esperaba (");}
+                | FUN error {yyerror("Se esperaba un nombre de funcion");}
+
+
+;
+sentencia_decl_fun : encabezado_fun LLAVE_A cuerpo_fun LLAVE_C  {
+                                System.out.println("Declaracion de Funcion");
+                                $$ = new NodoControl("Funcion:"+$1.sval,(ArbolSintactico)$3);
                                 char [] a = ambitoActual.toCharArray();
                                 for (int i = a.length;i>=0;i--){
                                         if(a[i-1] == ':'){
@@ -137,33 +179,10 @@ sentencia_decl_fun : fun_id PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS
                                                 break;
                                         }
                                 }
-                                TablaSimbolos.addAtributo($1.sval +":"+ambitoActual,"Parametro1",$3.sval);
-                                TablaSimbolos.addAtributo($1.sval+":"+ambitoActual,"Tipo",((ArbolSintactico)$6).getTipo());
-
-                                }
-                | fun_id PARENT_A PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun LLAVE_C {
-                                System.out.println("Declaracion de Funcion");
-                                $$ = new NodoControl("Funcion:"+$1.sval,(ArbolSintactico)$7);
-                                char [] a = ambitoActual.toCharArray();
-                                for (int i = a.length;i>=0;i--){
-                                        if(i!=0){
-                                                if(a[i-1] == ':'){
-                                                        ambitoActual = ambitoActual.substring(0,i-1);
-                                                        break;
-                                                }
-                                        }
-                                }                                
-                                TablaSimbolos.addAtributo($1.sval+":"+ambitoActual,"Tipo",((ArbolSintactico)$5).getTipo());
-
-                                }
-                | fun_id PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
-                | fun_id PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo error {yyerror("Se esperaba {");}
-                | fun_id PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS error  {yyerror("El tipo declarado no esta permitido");}
-                | fun_id PARENT_A parametro COMA parametro PARENT_C error {yyerror("Se esperaba :");}
-                | fun_id PARENT_A parametro COMA parametro error {yyerror("Se esperaba )");}
-                | fun_id PARENT_A parametro error {yyerror("Se esperaba )");}
-                | fun_id error {yyerror("Se esperaba (");}
-                | FUN error {yyerror("Se esperaba un nombre de funcion");}
+                                removeTipoActual();
+                        }
+                | encabezado_fun LLAVE_A cuerpo_fun error{yyerror("Se esperaba } ");}
+                | encabezado_fun error {yyerror("Se esperaba {");}
 ;
 cuerpo_fun :    {$$=new NodoHoja("Fin");}
                 | cuerpo_fun sentencias_fun PUNTOCOMA {$$=new NodoComun("Sentencia_Funcion", (ArbolSintactico) $2, (ArbolSintactico) $1);}
@@ -176,7 +195,7 @@ sentencias_fun :  sentencia_decl_datos {$$=new NodoHoja("Sentencia Declarativa D
                 | llamado_func {$$=$1;}
                 | sentencia_if_fun {$$=$1;}
                 | sentencia_out {$$ = $1;}
-                | sentencia_when_fun 
+                | sentencia_when_fun {$$ = $1;}
                 | sentencia_for_fun {$$=$1;}
                 | sentencia_while_fun {$$=$1;}
                 | retorno {$$=$1;}
@@ -206,9 +225,13 @@ sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA 
                 | IF PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
                 | IF PARENT_A condicion error {yyerror("Se esperaba ) ");}
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
-  
-sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun {System.out.println("Sentencia WHEN");}
+; 
+sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {
+                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
+                        System.out.println("Sentencia WHEN con llaves");}
+                | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun {
+                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
+                        System.out.println("Sentencia WHEN sin llaves");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun error {yyerror("Se esperaba }");}
                 | WHEN PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba {");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
@@ -344,24 +367,28 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
                 | FOR error {yyerror("Se esperaba (");}
 ;
-cuerpo_fun_break : 
-                | cuerpo_fun_break sentencias_fun_break PUNTOCOMA
+cuerpo_fun_break : {$$=new NodoHoja("Fin");}
+                | cuerpo_fun_break sentencias_fun_break PUNTOCOMA {$$=new NodoComun("Sentencia_Funcion_Break", (ArbolSintactico) $2, (ArbolSintactico) $1);}
                 | cuerpo_fun_break sentencias_fun_break error {yyerror("Se esperaba ;");}
 ;
-sentencias_fun_break :   asignacion 
-                | sentencia_if_break_fun 
-                | sentencia_out 
-                | sentencia_when_break_fun 
-                | sentencia_while_fun 
-                | sentencia_for_fun 
-                | CONTINUE tag 
-                | BREAK 
-                | BREAK cte 
-                | retorno 
+sentencias_fun_break :   asignacion  {$$ = $1;}
+                | sentencia_if_break_fun  {$$ = $1;}
+                | sentencia_out  {$$ = $1;}
+                | sentencia_when_break_fun  {$$ = $1;}
+                | sentencia_while_fun  {$$ = $1;}
+                | sentencia_for_fun  {$$ = $1;}
+                | CONTINUE tag {$$ = new NodoControl("Continue",(ArbolSintactico)$2);}
+                | BREAK {$$ = new NodoHoja("Break");}
+                | BREAK cte {$$ = new NodoControl("Break", new NodoHoja($2.sval));}
+                | retorno {$$=$1;}
 
 ;
-sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_break {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia WHEN");}
+sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C {
+                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
+                        System.out.println("Sentencia WHEN con llaves");}
+                | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_break {
+                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
+                        System.out.println("Sentencia WHEN sin llaves");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
                 | WHEN PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba {");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
@@ -411,17 +438,20 @@ sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_brea
                 | IF error {yyerror("Se esperaba ( ");}
 ;
 retorno : RETURN PARENT_A expresion PARENT_C {$$ = new NodoControl("Retorno", (ArbolSintactico)$3);
-                                                NodoHoja retorno = new NodoHoja("Retorno");
-                                                retorno.setLinea(AnalizadorLexico.getLineaAct());
-                                                retorno.setTipo(((ArbolSintactico)$3).getTipo());
-                                                retornos.add(retorno);
+                                                String tipoRet = ((ArbolSintactico)$3).getTipo();
+                                                if(!ambitoActual.equals("Global")){
+                                                        String tipoFun = getTipoActual();
+                                                        if(!tipoRet.equals(tipoFun)){
+                                                                yyerror("El retorno debe ser del mismo tipo que el retorno de la funcion.");
+                                                        }
+                                                }else{
+                                                        yyerror("El retorno puede estar solo dentro de una funcion.");
                                                 }
+                                        }
 
 ;
-parametro : tipo ID{    $$ = new ParserVal($2.sval+":"+ambitoActual);
-                        TablaSimbolos.addNuevoSimbolo($2.sval + ":"+ ambitoActual);
-                        TablaSimbolos.addAtributo($2.sval + ":"+ ambitoActual,"Tipo",((ArbolSintactico)$1).getTipo());
-                        TablaSimbolos.addAtributo($2.sval + ":"+ ambitoActual,"Uso","Parametro Funcion");
+parametro : tipo ID{    $$ = new NodoHoja($2.sval);
+                        ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$1).getTipo());
 }
         |  ID ID {yyerror("No esta permitido el tipo declarado");}
 ;
@@ -911,9 +941,9 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
 %%
 private NodoControl raiz;
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
-private List<ArbolSintactico> retornos = new ArrayList<ArbolSintactico>();
 private static HashMap<Integer,ArrayList<String>> erroresSintacticos = new HashMap<Integer,ArrayList<String>>();
 public String ambitoActual = "Global";
+private List<String> tipoActual = new ArrayList<String>();
 
 
 void yyerror(String mensaje){
@@ -965,7 +995,20 @@ public Map<String,ArbolSintactico> getFuncion(){
 void actualizarAmbito(String lex, String amb){
         TablaSimbolos.addAtributo(lex,"Ambito",amb);
 }
-
+public String getTipoActual(){
+        if(!this.tipoActual.isEmpty()){
+                return (this.tipoActual.get(tipoActual.size()-1));
+        }
+        return null;
+}
+public void cambiarTipoActual(String f){
+        tipoActual.add(f);
+}
+public void removeTipoActual(){
+        if(!this.tipoActual.isEmpty()){
+                this.tipoActual.remove(tipoActual.size()-1);
+        }
+}
 public String buscarAmbito(String ambitoActual,String lexema){
         String ambito = ambitoActual;
         while(!TablaSimbolos.existeSimbolo(lexema+":"+ambito)){

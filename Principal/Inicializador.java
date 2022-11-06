@@ -68,7 +68,6 @@ public class Inicializador{
         //Mostramos la tabla de simbolos
         System.out.println("\nTabla de simbolos:");
         TablaSimbolos.imprimirTabla();
-
         if (erroresTotales.keySet().isEmpty()){
             NodoControl raiz = parser.getRaiz();
             System.out.println("\nArbol Sintactico \n \n");
