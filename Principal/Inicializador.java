@@ -8,8 +8,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import AnalizadorLexico.AnalizadorLexico;
 import GeneracionCodigoIntermedio.*;
@@ -60,7 +58,7 @@ public class Inicializador{
         System.out.println("\n\nErrores de Compilacion: ");
         ArrayList<Integer> keys = new ArrayList<>(erroresSintacticos.keySet());
         Collections.sort(keys);
-        
+
         for(int i : keys){
             System.out.println("Linea"+i+":");
             for(String e : erroresTotales.get(i)){
