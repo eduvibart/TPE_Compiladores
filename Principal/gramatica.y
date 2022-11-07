@@ -23,9 +23,10 @@ program : nombre_program LLAVE_A bloque_sentencias LLAVE_C {
                                                                 raiz = new NodoControl("PROGRAMA",(ArbolSintactico)$3);  
                                                                 TablaSimbolos.removeAtributo($1.sval);
                                                         }
-
-                                                           
-        | error {yyerror("Hay un error sintactico en la entrada que arrastra errores");}
+                         
+        | nombre_program LLAVE_A bloque_sentencias error {yyerror("Se esperaba }");}
+        | nombre_program error bloque_sentencias LLAVE_C{yyerror("Se esperaba {");}
+        | error LLAVE_A bloque_sentencias LLAVE_C {yyerror("Se esperaba el nombre del programa");}
 ;
 nombre_program : ID 
 ;
@@ -85,7 +86,7 @@ sentencia_decl_datos : tipo list_var {  System.out.println("Declaracion de datos
                                         }
                                         $$ = $2;
                                 }
-                        | ID list_var {yyerror("No esta permitido el tipo declarado");}
+        | tipo error {yyerror("se esperaba lista de identificadores entre comas");}
 ;
 list_var : list_var COMA ID {
                             $$=$1;
@@ -161,7 +162,14 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                 }
                 
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS error  {yyerror("El tipo declarado no esta permitido");}
+                | FUN ID PARENT_A parametro PARENT_C DOSPUNTOS error  {yyerror("El tipo declarado no esta permitido");}
+                | FUN ID PARENT_A PARENT_C DOSPUNTOS error  {yyerror("El tipo declarado no esta permitido");}
+
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C error {yyerror("Se esperaba :");}
+                | FUN ID PARENT_A parametro PARENT_C error {yyerror("Se esperaba :");}
+                | FUN ID PARENT_A PARENT_C error {yyerror("Se esperaba :");}
+
+
                 | FUN ID PARENT_A parametro COMA parametro error {yyerror("Se esperaba )");}
                 | FUN ID PARENT_A parametro error {yyerror("Se esperaba )");}
                 | FUN ID error {yyerror("Se esperaba (");}
@@ -221,10 +229,25 @@ sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA 
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE error {yyerror("Se esperaba { ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
+
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE LLAVE_A cuerpo_fun LLAVE_C error {yyerror("Se esperaba end_if");}
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE LLAVE_A cuerpo_fun error {yyerror("Se esperaba } ");}
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE error {yyerror("Se esperaba { ");}
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA error {yyerror("Se esperaba end_if");}
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun error {yyerror("Se esperaba ; luego de la sentencia");}
+
                 | IF PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba { ");}
                 | IF PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
                 | IF PARENT_A condicion error {yyerror("Se esperaba ) ");}
                 | IF PARENT_A  error {yyerror("Se esperaba una condicion ");}
+                | IF error {yyerror("Se esperaba (");}
+
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE sentencias_fun PUNTOCOMA error {yyerror("Se esperaba end_if");}
+                | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE sentencias_fun error {yyerror("Se esperaba ; luego de la sentencia");}
+
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE sentencias_fun PUNTOCOMA error {yyerror("Se esperaba end_if");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE sentencias_fun error {yyerror("Se esperaba ; luego de la sentencia");}
+
 ; 
 sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {
                         $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
@@ -237,7 +260,7 @@ sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLA
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
                 | WHEN PARENT_A condicion error {yyerror("Se esperaba )");}
                 | WHEN PARENT_A error {yyerror("Se esperaba condicion");}
-                | WHEN error condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {yyerror("Se esperaba (");}
+                | WHEN error {yyerror("Se esperaba (");}
 ; 
 sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
                         {
@@ -349,13 +372,7 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                                         yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
                                 }
                         }
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {yyerror("Se esperaba {");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {yyerror("Se esperaba {");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {yyerror("Se esperaba )");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
-                | ID DOSPUNTOS error {yyerror("Se esperaba (");}
+               
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");
                                                                                              $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$11,new NodoHoja($7.sval + $8.sval)));
                                                                                              }
@@ -368,12 +385,52 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");
                                                                                     $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$10,new NodoHoja($7.sval + $8.sval)));
                                                                                   }
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {yyerror("Se esperaba {");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {yyerror("Se esperaba {");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {yyerror("Se esperaba )");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA error {yyerror("Se esperaba una constante");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA error {yyerror("Se esperaba una constante");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA error {yyerror("Se esperaba operador + o -");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion error {yyerror("Se esperaba ; despues de la condicion");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA error {yyerror("Se esperaba condicion");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion error {yyerror("Se esperaba ; despues de la asignacion");}
+
+                | ID DOSPUNTOS FOR PARENT_A error {yyerror("Se esperaba asignacion");}
+
+                | ID DOSPUNTOS FOR error {yyerror("Se esperaba (");}
+
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba }");}
+
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {yyerror("Se esperaba {");}
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {yyerror("Se esperaba {");}
+
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {yyerror("Se esperaba )");}
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
+
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA error {yyerror("Se esperaba una constante");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA error {yyerror("Se esperaba una constante");}
+
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA error {yyerror("Se esperaba operador + o -");}
+
+                | FOR PARENT_A asignacion PUNTOCOMA condicion error {yyerror("Se esperaba ; despues de la condicion");}
+
+                | FOR PARENT_A asignacion PUNTOCOMA error {yyerror("Se esperaba condicion");}
+
+                | FOR PARENT_A asignacion error {yyerror("Se esperaba ; despues de la asignacion");}
+
+                | FOR PARENT_A error {yyerror("Se esperaba asignacion");}
+
                 | FOR error {yyerror("Se esperaba (");}
 ;
 cuerpo_fun_break : {$$=new NodoHoja("Fin");}
@@ -440,6 +497,19 @@ sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_brea
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE error {yyerror("Se esperaba { ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba } ");}
+
+                | IF PARENT_A condicion PARENT_C THEN  sentencias_fun_break PUNTOCOMA ELSE LLAVE_A cuerpo_fun_break LLAVE_C error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN  sentencias_fun_break PUNTOCOMA ELSE LLAVE_A cuerpo_fun_break error {yyerror("Se esperaba } ");}
+                | IF PARENT_A condicion PARENT_C THEN  sentencias_fun_break PUNTOCOMA ELSE error {yyerror("Se esperaba { ");}
+                | IF PARENT_A condicion PARENT_C THEN  sentencias_fun_break PUNTOCOMA error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN  sentencias_fun_break error {yyerror("Se esperaba ; luego de la sentencia");}
+
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE sentencias_fun_break PUNTOCOMA error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE sentencias_fun_break error {yyerror("Se esperaba ; luego de la sentencia");}
+
+                | IF PARENT_A condicion PARENT_C THEN  sentencias_fun_break PUNTOCOMA ELSE sentencias_fun_break PUNTOCOMA error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN  sentencias_fun_break PUNTOCOMA ELSE sentencias_fun_break error {yyerror("Se esperaba ; luego de la sentencia");}
+
                 | IF PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba { ");}
                 | IF PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
                 | IF PARENT_A condicion error {yyerror("Se esperaba ) ");}
@@ -457,12 +527,16 @@ retorno : RETURN PARENT_A expresion PARENT_C {$$ = new NodoControl("Retorno", (A
                                                         yyerror("El retorno puede estar solo dentro de una funcion.");
                                                 }
                                         }
+                        | RETURN PARENT_A expresion error {yyerror("Se esperaba )");}
+                        | RETURN PARENT_A error {yyerror("Se esperaba expresion");}
+                        | RETURN error {yyerror("Se esperaba expresion entre ( )");}
 
 ;
 parametro : tipo ID{    $$ = new NodoHoja($2.sval);
                         ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$1).getTipo());
 }
         |  ID ID {yyerror("No esta permitido el tipo declarado");}
+        | tipo error {yyerror("Se esperaba identificador");}
 ;
 
 lista_const : CONST lista_asignacion {System.out.println("Declaracion de Constante/s");}
@@ -481,6 +555,8 @@ asignacion_const : ID ASIG cte {
                                         TablaSimbolos.addAtributo($1.sval+":"+ambito,"Uso","Variable");
                                 }
                         }
+        | ID ASIG error {yyerror("Se esperaba una constante");}
+        | ID error {yyerror("Se esperaba una asignacion =:");}
 ;
 sentencia_ejecutable : asignacion {$$ = $1;}
         | sentencia_if   {$$ = $1; }
@@ -532,6 +608,10 @@ expresion: expresion SUMA termino {
         | llamado_func {$$=$1;}
         | sentencia_for ELSE cte
         | sentencia_while ELSE cte 
+        | expresion SUMA error {yyerror("Se esperaba un termino");}
+        | expresion RESTA error {yyerror("Se esperaba un termino");}
+        | sentencia_for ELSE error {yyerror("Se esperaba un constante");}
+        | sentencia_while ELSE error {yyerror("Se esperaba un constante");}
         
 ;
 termino: termino MULT factor  { 
@@ -555,6 +635,8 @@ termino: termino MULT factor  {
                 {
                   $$ = $1;
                  }  
+        | termino MULT error {yyerror("Se esperaba un factor");}
+        | termino DIV error {yyerror("Se esperaba un factor");}
 ;
 factor: ID {
                 $$ = new NodoHoja($1.sval);
@@ -576,7 +658,7 @@ factor: ID {
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}
         | FLOAT {}
-        | RESTA ENTERO {chequearRangoI32Neg($2.sval);}
+        | RESTA ENTERO 
         | RESTA FLOAT 
 
 ;
@@ -599,9 +681,22 @@ sentencia_if : IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOM
                                         System.out.println("Sentencia IF con corchetes y sin else");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } ");}
-                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE error {yyerror("Se esperaba { ");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE error{yyerror("Se esperaba { ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } ");}
+
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE LLAVE_A bloque_ejecutable LLAVE_C error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } ");}
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE error{yyerror("Se esperaba { ");}
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable error {yyerror("Se esperaba ; luego de la sentencia");}
+
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE sentencia_ejecutable PUNTOCOMA error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE sentencia_ejecutable error {yyerror("Se esperaba ; luego de la sentencia");}
+
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE sentencia_ejecutable PUNTOCOMA error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE sentencia_ejecutable error {yyerror("Se esperaba ; luego de la sentencia");}
+
                 | IF PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba { ");}
                 | IF PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
                 | IF PARENT_A condicion error {yyerror("Se esperaba ) ");}
@@ -618,7 +713,7 @@ condicion : expresion comparacion expresion
                         }
                 }
         | expresion comparacion error {yyerror("Se esperaba otra expresion para comparar.");}
-        | expresion error expresion {yyerror("Se esperaba un tipo de comparacion.");}
+        | expresion error {yyerror("Se esperaba un tipo de comparacion.");}
 ;
 comparacion: IGUAL {$$= $1;}
         | MAYOR {$$= $1;}
@@ -646,12 +741,11 @@ sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable
                         $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
                         System.out.println("Sentencia WHEN sin llaves");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable error {yyerror("Se esperaba } en el when");}
-                | WHEN PARENT_A condicion PARENT_C THEN error bloque_ejecutable LLAVE_C {yyerror("Se esperaba { en el when");}
-                | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_ejecutable LLAVE_C {yyerror("Se esperaba then en el when");}
-                | WHEN PARENT_A error PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {yyerror("Se esperaba condicion en el when");}
-                | WHEN error condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {yyerror("Se esperaba ( en el when");}
-                | WHEN PARENT_A condicion THEN LLAVE_A bloque_ejecutable LLAVE_C{yyerror("Se esperaba ) en el when");}
+                | WHEN PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba { en el when");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then en el when");}
+                | WHEN PARENT_A condicion error {yyerror("Se esperaba ) en el when");}
+                | WHEN PARENT_A error {yyerror("Se esperaba condicion en el when");}
+                | WHEN error {yyerror("Se esperaba ( en el when");}
 ;
 sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
                         {
@@ -715,16 +809,17 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
 ;
 tag : {$$ = new NodoHoja("Fin");}
         | DOSPUNTOS ID {$$ = new NodoControl("Tag", new NodoHoja($2.sval) );}
+        | DOSPUNTOS error{yyerror("Se esperaba un identificador");}
+
 ;
 sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHEN");}
                 | WHEN PARENT_A condicion PARENT_C THEN ejecutables_break_continue {System.out.println("Sentencia WHEN");}
                 | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue error {yyerror("Se esperaba } en el when");}
-                | WHEN PARENT_A condicion PARENT_C THEN error bloque_break_continue LLAVE_C {yyerror("Se esperaba { en el when");}
-                | WHEN PARENT_A condicion PARENT_C error LLAVE_A bloque_break_continue LLAVE_C {yyerror("Se esperaba then en el when");}
-                | WHEN PARENT_A error PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C {yyerror("Se esperaba condicion en el when");}
-                | WHEN error condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C {yyerror("Se esperaba ( en el when");}
-                | WHEN PARENT_A condicion THEN LLAVE_A bloque_break_continue LLAVE_C{yyerror("Se esperaba ) en el when");}
+                | WHEN PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba { en el when");}
                 | WHEN PARENT_A condicion PARENT_C error {yyerror("Se esperaba then en el when");}
+                | WHEN PARENT_A condicion error {yyerror("Se esperaba ) en el when");}
+                | WHEN PARENT_A error {yyerror("Se esperaba condicion en el when");}
+                | WHEN error {yyerror("Se esperaba ( en el when");}
 ;
 sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF
                         {
@@ -761,6 +856,19 @@ sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_conti
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE error {yyerror("Se esperaba { ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C error {yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue error {yyerror("Se esperaba } ");}
+
+                | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE LLAVE_A bloque_break_continue LLAVE_C error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE LLAVE_A bloque_break_continue error {yyerror("Se esperaba } ");}
+                | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE error {yyerror("Se esperaba { ");}
+                | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue error {yyerror("Se esperaba ; luego de la sentencia");}
+
+                | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE ejecutables_break_continue PUNTOCOMA error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE ejecutables_break_continue error {yyerror("Se esperaba ; luego de la sentencia");}
+
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE  ejecutables_break_continue PUNTOCOMA error {yyerror("Se esperaba end_if ");}
+                | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE  ejecutables_break_continue error {yyerror("Se esperaba ; luego de la sentencia");}
+
                 | IF PARENT_A condicion PARENT_C THEN error {yyerror("Se esperaba { ");}
                 | IF PARENT_A condicion PARENT_C error {yyerror("Se esperaba then ");}
                 | IF PARENT_A condicion error {yyerror("Se esperaba ) ");}
@@ -824,13 +932,8 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                                         yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
                                 }
                         }
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {yyerror("Se esperaba {");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {yyerror("Se esperaba {");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {yyerror("Se esperaba )");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
-                | ID DOSPUNTOS error {yyerror("Se esperaba (");}
+  
+                
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
                                                                                              $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$11,new NodoHoja($7.sval + $8.sval)));
                                                                                              }
@@ -843,12 +946,41 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
                                                                                     $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$10,new NodoHoja($7.sval + $8.sval)));
                                                                                   }
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {yyerror("Se esperaba {");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {yyerror("Se esperaba {");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {yyerror("Se esperaba )");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA error {yyerror("Se esperaba constante");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA error {yyerror("Se esperaba constante");}
+
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA error {yyerror("Se esperaba operador + o -");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion error {yyerror("Se esperaba ; luego de la condicion");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA error {yyerror("Se esperaba condicion");}
+                | ID DOSPUNTOS FOR PARENT_A asignacion error {yyerror("Se esperaba ; luego de la asignacion");}
+                | ID DOSPUNTOS FOR PARENT_A error {yyerror("Se esperaba asignacion");}
+                | ID DOSPUNTOS FOR error {yyerror("Se esperaba (");}
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue error {yyerror("Se esperaba }");}
+
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {yyerror("Se esperaba {");}
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {yyerror("Se esperaba {");}
+
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {yyerror("Se esperaba )");}
                 | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {yyerror("Se esperaba )");}
+
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA error {yyerror("Se esperaba constante");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA error {yyerror("Se esperaba constante");}
+
+                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA error {yyerror("Se esperaba operador + o -");}
+                | FOR PARENT_A asignacion PUNTOCOMA condicion error {yyerror("Se esperaba ; luego de la condicion");}
+                | FOR PARENT_A asignacion PUNTOCOMA error {yyerror("Se esperaba condicion");}
+                | FOR PARENT_A asignacion error {yyerror("Se esperaba ; luego de la asignacion");}
+                | FOR PARENT_A error {yyerror("Se esperaba asignacion");}
                 | FOR error {yyerror("Se esperaba (");}
 ;
 
@@ -945,6 +1077,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
         | ID PARENT_A param_real COMA param_real error {yyerror("Se esperaba )");}
         | ID PARENT_A param_real error {yyerror("Se esperaba )");}
         | ID PARENT_A error {yyerror("Se esperaba )");}
+        | ID PARENT_A param_real COMA error {yyerror("Se esperaba otro parametro");}
 ;
 
 %%
