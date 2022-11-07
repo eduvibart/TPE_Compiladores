@@ -37,9 +37,9 @@ program {
                         };           
                     };
             << SENTENCIA DE CONTROL COMO EXPRESION 
-            a =:    for (i =: 0 ;i < end ; +1){
-                        if (i = number) then {
-                            break 1;
-                        } end_if;
-                    }else 3;
+            <<a =:    for (i =: 0 ;i < end ; +1){
+            <<            if (i = number) then {
+            <<                break 1;
+            <<            } end_if;
+            <<        }else 3;
         }

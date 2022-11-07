@@ -392,10 +392,11 @@ sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS P
                         yyerror("Se esperaba (");}
                 
 ;
+
 sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$13,new NodoHoja($9.sval + $10.sval))));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -409,7 +410,7 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$13,new NodoHoja($9.sval + $10.sval))));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -423,7 +424,7 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$12,new NodoHoja($9.sval + $10.sval))));
+                                 $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -437,7 +438,7 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$12,new NodoHoja($9.sval + $10.sval))));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -450,16 +451,16 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                         }
                
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");
-                                                                                             $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$11,new NodoHoja($7.sval + $8.sval)));
+                                                                                             $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$11 ), new NodoHoja($7.sval + $8.sval) )) );
                                                                                              }
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");
-                                                                                             $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$11,new NodoHoja($7.sval + $8.sval)));
+                                                                                             $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$11 ), new NodoHoja($7.sval + $8.sval) )) );
                                                                                              }
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");
-                                                                                    $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$10,new NodoHoja($7.sval + $8.sval)));
+                                                                                     $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$10 ), new NodoHoja($7.sval + $8.sval) )) );
                                                                                   }
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");
-                                                                                    $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$10,new NodoHoja($7.sval + $8.sval)));
+                                                                                     $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$10 ), new NodoHoja($7.sval + $8.sval) )) );
                                                                                   }
                 | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
@@ -575,32 +576,32 @@ sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_
 ;
 sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA ELSE sentencias_fun_break PUNTOCOMA END_IF 
                         {
-                        $$ = new NodoComun("IF", (ArbolSintactico) $3, new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)$9)));
+                        $$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)$9)));
                         System.out.println("Sentencia IF sin corchetes y con else sin corchetes");
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE sentencias_fun_break PUNTOCOMA END_IF 
                         {
-                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $10))); 
+                        $$= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $10))); 
                         System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");
                         }
                 | IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF 
                         {
-                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $6), new NodoControl("Else",(ArbolSintactico) $10))); 
+                        $$= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $6), new NodoControl("Else",(ArbolSintactico) $10))); 
                         System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");
                         }
                 | IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA END_IF 
                         {
-                        $$ = new NodoComun("IF", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
+                        $$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
                         System.out.println("Sentencia IF sin corchetes y sin else");
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C END_IF 
                         {
-                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $11))); 
+                        $$= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $11))); 
                         System.out.println("Sentencia IF con corchetes y else");
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C END_IF 
                         {
-                        $$ = new NodoComun("IF", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)$7));
+                        $$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)$7));
                         System.out.println("Sentencia IF con corchetes y sin else");
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C ELSE LLAVE_A cuerpo_fun_break LLAVE_C error {$$=new NodoHoja("Error sintactico");
@@ -683,7 +684,7 @@ asignacion_const : ID ASIG cte {
                                 if(ambito.equals(ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+":"+ambito);
                                         TablaSimbolos.addAtributo($1.sval+":"+ambito,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.addAtributo($1.sval+":"+ambito,"Tipo",((ArbolSintactico) $1).getTipo());
+                                        TablaSimbolos.addAtributo($1.sval+":"+ambito,"Tipo",TablaSimbolos.getAtributo($3.sval,"Tipo"));
                                         TablaSimbolos.addAtributo($1.sval+":"+ambito,"Linea",AnalizadorLexico.getLineaAct());
                                         TablaSimbolos.addAtributo($1.sval+":"+ambito,"Uso","Variable");
                                 }
@@ -741,8 +742,12 @@ expresion: expresion SUMA termino {
                                  }
         | termino {$$ = $1;} 
         | llamado_func {$$=$1;}
-        | sentencia_for ELSE cte
-        | sentencia_while ELSE cte 
+        | sentencia_for ELSE cte {$$ = new NodoComun("For como expresion",(ArbolSintactico)$1,new NodoHoja($3.sval));
+                                   ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($3.sval,"Tipo"));     
+                                        }
+        | sentencia_while ELSE cte {    $$ = new NodoComun("While como expresion",(ArbolSintactico)$1,new NodoHoja($3.sval));
+                                        ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($3.sval,"Tipo")); 
+                                        }
         | expresion SUMA error {$$=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un termino");}
         | expresion RESTA error {$$=new NodoHoja("Error sintactico");
@@ -804,21 +809,21 @@ cte : ENTERO {  chequearRangoI32($1.sval);}
 
 ;
 sentencia_if : IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF{
-                                                                                                                                $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $6), new NodoControl("Else",(ArbolSintactico) $10))); 
+                                                                                                                                $$= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $6), new NodoControl("Else",(ArbolSintactico) $10))); 
                                                                                                                                 System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");
                                                                                                                                 }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE sentencia_ejecutable PUNTOCOMA END_IF{
-                                                                                                                                $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $10))); 
+                                                                                                                                $$= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $10))); 
                                                                                                                                 System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");}
-                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE sentencia_ejecutable PUNTOCOMA END_IF {$$ = new NodoComun("IF", (ArbolSintactico) $3, new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)$9)));
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE sentencia_ejecutable PUNTOCOMA END_IF {$$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)$9)));
                                                                                         System.out.println("Sentencia IF sin corchetes y con else sin corchetes");}
-                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA END_IF {$$ = new NodoComun("IF", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
+                | IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA END_IF {$$ = new NodoComun("IF",new NodoControl("Condicion", (ArbolSintactico) $3), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
                                                                                         System.out.println("Sentencia IF sin corchetes y sin else");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF {
-                                                                                                                                $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $11))); 
+                                                                                                                                $$= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $11))); 
                                                                                                                                 System.out.println("Sentencia IF con corchetes y else");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C END_IF {
-                                        $$ = new NodoComun("IF", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)$7));
+                                        $$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)$7));
                                         System.out.println("Sentencia IF con corchetes y sin else");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C ELSE LLAVE_A bloque_ejecutable LLAVE_C error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
@@ -1012,32 +1017,32 @@ sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_bre
 ;
 sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF
                         {
-                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $6), new NodoControl("Else",(ArbolSintactico) $10))); 
+                        $$= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $6), new NodoControl("Else",(ArbolSintactico) $10))); 
                         System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE ejecutables_break_continue PUNTOCOMA END_IF
                         {
-                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $10))); 
+                        $$= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $10))); 
                         System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");
                         }
                 | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE ejecutables_break_continue PUNTOCOMA END_IF
                         {
-                        $$ = new NodoComun("IF", (ArbolSintactico) $3, new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)$9)));
+                        $$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)$9)));
                         System.out.println("Sentencia IF sin corchetes y con else sin corchetes");
                         }
                 | IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA END_IF
                         {
-                        $$ = new NodoComun("IF", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
+                        $$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
                         System.out.println("Sentencia IF sin corchetes y sin else");
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF
                         {
-                        $$= new NodoComun("IF", (ArbolSintactico) $3,(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $11))); 
+                        $$= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $7), new NodoControl("Else",(ArbolSintactico) $11))); 
                         System.out.println("Sentencia IF con corchetes y else");
                         } 
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C END_IF 
                         {
-                        $$ = new NodoComun("IF", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)$7));
+                        $$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)$7));
                         System.out.println("Sentencia IF con corchetes y sin else");
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C ELSE LLAVE_A bloque_break_continue LLAVE_C error {$$=new NodoHoja("Error sintactico");
@@ -1087,7 +1092,7 @@ sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_conti
 sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$13,new NodoHoja($9.sval + $10.sval))));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -1101,7 +1106,7 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$13,new NodoHoja($9.sval + $10.sval))));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -1115,7 +1120,7 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$12,new NodoHoja($9.sval + $10.sval))));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -1129,7 +1134,7 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$5,(ArbolSintactico)$7),new NodoComun("Cuerpo FOR",(ArbolSintactico)$12,new NodoHoja($9.sval + $10.sval))));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -1143,16 +1148,16 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
   
                 
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
-                                                                                             $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$11,new NodoHoja($7.sval + $8.sval)));
+                                                                                             $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$11 ), new NodoHoja($7.sval + $8.sval) )) );
                                                                                              }
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
-                                                                                             $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$11,new NodoHoja($7.sval + $8.sval)));
+                                                                                             $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$11 ), new NodoHoja($7.sval + $8.sval) )) );
                                                                                              }
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
-                                                                                    $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$10,new NodoHoja($7.sval + $8.sval)));
+                                                                                    $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$10 ), new NodoHoja($7.sval + $8.sval) )) );
                                                                                   }
                 | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
-                                                                                    $$ = new NodoComun("FOR",new NodoComun("Encabezado FOR",(ArbolSintactico)$3,(ArbolSintactico)$5),new NodoComun("Cuerpo FOR",(ArbolSintactico)$10,new NodoHoja($7.sval + $8.sval)));
+                                                                                    $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$10 ), new NodoHoja($7.sval + $8.sval) )) );
                                                                                   }
                 | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}

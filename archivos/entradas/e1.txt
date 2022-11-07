@@ -1,9 +1,11 @@
 program {
         i32 a;
         i32 b;
-        fun hola() : i32{
-                eti : while (a>b) : (b=: b + 1){
-
-                };
+        for(a=:0;a<b;+1){
+                a =:b;
+        };
+        fun cumple(i32 a,i32 b): i32 {
+            f32 z;
+            return (z);
         };
 }   
