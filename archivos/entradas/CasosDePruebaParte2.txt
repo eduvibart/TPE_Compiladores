@@ -1,23 +1,83 @@
 program {
-	<<Variables no declaradas
+	
+    <<VARIABLES NO DECLARADAS
+
+    << la variable a aun no esta declarada 
     if (a = 3) then {
 
     } end_if;
     
     i32 b;
     
+    << a aun no esta declarada pero b si
     a=:b;
 	b=:a;
     
+    << declaracion de la variable a
     i32 a;
 
+    << falta declarar la variable c
     while (a>b):(c=:a+1){
 
     };
 
+    << falta declarar la variable c
     while (a>b):(a=:a+1){
-        c=:a+1;
-        a:=c;
+        c=:b;
     };
 
+    i32 c;
+
+    << todo declarado
+    while (a>b):(a=:c+1){
+        c=:a+1;
+        a=:c;
+    };
+
+
+    <<VARIABLES REDECLARADAS
+
+    f32 d;  << declaracion de la variable d
+     
+    f32 d; << intento de redeclaracion de d en el mimso ambito con el mismo tipo 
+
+    i32 d; << intento de redeclaracion de d en el mismo ambito con distinto tipo
+
+    fun funRedeclaracionVariable(): f32{
+        f32 d; << redeclaracion con el mismo tipo en otro ambito
+    };
+
+    fun funRedeclaracionVariable1(): f32{
+        i32 d; << redeclaracion con otro tipo en otro ambito
+    };
+
+
+    <<FUNCIONES REDECLARADAS
+
+    <<declaracion de la funcion funRedeclaracion
+    fun funRedeclaracion(): i32{
+
+    };
+
+    <<intento de redeclaracion de la funcion funRedeclaracion en el mismo ambito con el mismo tipo
+    fun funRedeclaracion(): i32 {
+
+    };
+
+    <<intento de redeclaracion de la funcion funRedeclaracion en el mismo ambito con distinto tipo
+    fun funRedeclaracion(): f32 {
+
+    };
+
+    <<redeclaracion de la funcion funRedeclaracion con el mismo tipo en un ambito distinto
+    fun funRedeclaracion1(): i32 {
+        fun funRedeclaracion1():i32{
+        };
+    };
+
+    <<redeclaracion de la funcion funRedeclaracion con distinto tipo en un ambito distinto
+    fun funRedeclaracion2(): i32 {
+        fun funRedeclaracion1():f32{
+        };
+    };
 }
