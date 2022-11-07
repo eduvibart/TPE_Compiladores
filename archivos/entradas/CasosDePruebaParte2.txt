@@ -1,0 +1,23 @@
+program {
+	<<Variables no declaradas
+    if (a = 3) then {
+
+    } end_if;
+    
+    i32 b;
+    
+    a=:b;
+	b=:a;
+    
+    i32 a;
+
+    while (a>b):(c=:a+1){
+
+    };
+
+    while (a>b):(a=:a+1){
+        c=:a+1;
+        a:=c;
+    };
+
+}
