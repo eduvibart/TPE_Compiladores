@@ -250,7 +250,7 @@ sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA 
                         
                 | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");
                         $$ = new NodoComun("IF FUN", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
-                }
+                        }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF {System.out.println("Sentencia IF");
                         $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $7),new NodoControl("else fun", (ArbolSintactico)$11)));}
 
@@ -1092,7 +1092,7 @@ sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_conti
 sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,(ArbolSintactico)null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -1100,6 +1100,7 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                                         TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
                                         TablaSimbolos.removeAtributo($1.sval);
                                 }else{
+                                        $$ = new NodoHoja("Error semantico");
                                         yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
                                 }
                         }
