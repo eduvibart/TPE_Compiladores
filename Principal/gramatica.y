@@ -721,7 +721,11 @@ asignacion : ID ASIG expresion  {
                                                 yyerror("No se puede realizar una asignacion con tipos diferentes.");
                                         }
                                         
-                                }                  
+                                }
+                | ID error {$$=new NodoHoja("Error sintactico");
+                                yyerror("Se esperaba =:");}
+                | ID ASIG error {$$=new NodoHoja("Error sintactico");
+                                yyerror("Se esperaba expresion");}                  
 ;
 expresion: expresion SUMA termino {     
                                         $$ = (ArbolSintactico) new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
