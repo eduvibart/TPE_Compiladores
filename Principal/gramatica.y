@@ -1318,7 +1318,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                 yyerror("Se esperaba )");}
         | ID PARENT_A param_real COMA error {$$=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba otro parametro");}
-;
+; 
 
 %%
 private NodoControl raiz;
