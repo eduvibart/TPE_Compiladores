@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
 
 import AnalizadorLexico.AnalizadorLexico;
 import GeneracionCodigoIntermedio.*;
@@ -56,7 +56,10 @@ public class Inicializador{
 
         //Mostrar Errores totales:
         System.out.println("\n\nErrores de Compilacion: ");
-        for(Integer i : erroresTotales.keySet()){
+        ArrayList<Integer> keys = new ArrayList<>(erroresSintacticos.keySet());
+        Collections.sort(keys);
+
+        for(int i : keys){
             System.out.println("Linea"+i+":");
             for(String e : erroresTotales.get(i)){
                 System.out.println("    "+e);
