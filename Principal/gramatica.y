@@ -172,6 +172,10 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
 
                 | FUN ID PARENT_A parametro COMA parametro error {yyerror("Se esperaba )");}
                 | FUN ID PARENT_A parametro error {yyerror("Se esperaba )");}
+                | FUN ID PARENT_A error {yyerror("Se esperaba )");}
+
+                | FUN ID PARENT_A parametro COMA error {yyerror("Se esperaba otro parametro");}
+
                 | FUN ID error {yyerror("Se esperaba (");}
                 | FUN error {yyerror("Se esperaba un nombre de funcion");}
 
