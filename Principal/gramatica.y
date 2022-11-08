@@ -1000,7 +1000,16 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                 | BREAK cte {$$ = new NodoControl("Break", new NodoHoja($2.sval));}
 ;
 tag : {$$ = new NodoHoja("Fin");}
-        | DOSPUNTOS ID {$$ = new NodoControl("Tag", new NodoHoja($2.sval) );}
+        | DOSPUNTOS ID {ambito = buscarAmbito(ambitoActual,$2.sval);
+                        $$ = new NodoControl("Tag", new NodoHoja($2.sval) );
+                        if(!ambito.equals("")){
+                                if(!TablaSimbolos.getAtributo($2.sval +":"+ ambito,"Uso").equals("Etiqueta")){
+                                        yyerror($2.sval + " no es una etiqueta.);
+                                }
+                        }else{
+                                yyerror("La etiqueta " + $2.sval + " no esta declarada.");
+                        }
+                        }
         | DOSPUNTOS error{$$=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un identificador");}
 
