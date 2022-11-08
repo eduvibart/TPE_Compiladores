@@ -1241,6 +1241,8 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                         $$=new NodoComun("llamado funcion",(ArbolSintactico)$3,(ArbolSintactico)$5);
                                                         
                                                         String ambito = buscarAmbito(ambitoActual,$1.sval);
+                                                        System.out.println("Linea: " + AnalizadorLexico.getLineaAct());
+                                                        System.out.println("Ambito: " + ambito);
                                                         if (!ambito.equals("") ){
                                                                 if( !TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Funcion") ){
                                                                         yyerror("La funcion "+$1.sval+" no fue declarada");
@@ -1298,7 +1300,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
         | ID PARENT_A PARENT_C {$$=new NodoHoja("llamado funcion sin parametros");
                 String ambito = buscarAmbito(ambitoActual,$1.sval);
                 if (!ambito.equals("") ){
-                        if (TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Funcion")){
+                        if (!TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Funcion")){
                                 yyerror("La funcion "+$1.sval+" no fue declarada");
                                 
                         }else{

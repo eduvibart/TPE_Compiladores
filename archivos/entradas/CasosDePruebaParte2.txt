@@ -190,9 +190,9 @@ program {
     };
 
     << intento de utilizar misma etiqueta en mismo ambito
-    <<etiquetaPrueba: for (a =: 0 ; a < b ; +1 ){
+    etiquetaPrueba: for (a =: 0 ; a < b ; +1 ){
 
-    <<};
+    };
 
     
 

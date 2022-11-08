@@ -396,7 +396,7 @@ sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS P
 sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$5,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$7),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -410,7 +410,7 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$5,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$7),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -424,7 +424,7 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break
                         {
                                 System.out.println("Sentencia FOR");
-                                 $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
+                                 $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$5,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$7),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -438,7 +438,7 @@ sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNT
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$5,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$7),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -745,7 +745,6 @@ expresion: expresion SUMA termino {
                                         }
                                  }
         | termino {$$ = $1;} 
-        | llamado_func {$$=$1;}
         | sentencia_for ELSE cte {$$ = new NodoComun("For como expresion",(ArbolSintactico)$1,new NodoHoja($3.sval));
                                    ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($3.sval,"Tipo"));     
                                         }
@@ -805,6 +804,8 @@ factor: ID {
                 $$ = new NodoHoja($1.sval);
                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));
               }  
+        
+        | llamado_func {$$=$1;}
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}
         | FLOAT {}
@@ -1096,7 +1097,13 @@ sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_conti
 sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,(ArbolSintactico)null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
+                                $$ = new NodoComun("For con Etiqueta",
+                                                        new NodoControl("Etiqueta",new NodoHoja($1.sval)),
+                                                        new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$5,(ArbolSintactico)null),
+                                                        new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$7),
+                                                        new NodoComun("Cuerpo", 
+                                                        new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), 
+                                                        new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -1111,7 +1118,7 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$5,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$7),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -1125,7 +1132,7 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$5,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$7),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -1139,7 +1146,7 @@ sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOM
                 |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue
                         {
                                 System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
+                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$5,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$7),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
                         
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
@@ -1244,7 +1251,6 @@ param_real : cte{
 ;
 llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                         $$=new NodoComun("llamado funcion",(ArbolSintactico)$3,(ArbolSintactico)$5);
-                                                        
                                                         String ambito = buscarAmbito(ambitoActual,$1.sval);
                                                         if (!ambito.equals("") ){
                                                                 if( !TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Funcion") ){
@@ -1303,14 +1309,14 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
         | ID PARENT_A PARENT_C {$$=new NodoHoja("llamado funcion sin parametros");
                 String ambito = buscarAmbito(ambitoActual,$1.sval);
                 if (!ambito.equals("") ){
-                        if (TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Funcion")){
+                        if (!TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Funcion")){
                                 yyerror("La funcion "+$1.sval+" no fue declarada");
                                 
                         }else{
                                 String par1 = (String) TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Parametro1");
                                 String par2 = (String) TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Parametro2");
-                                if(par2 != null){
-                                        if(par1 == null){
+                                if(par2 == null){
+                                        if(par1 != null){
                                                 yyerror("La funcion esta declarada con un parametro.");
                                         }
                                 }else{

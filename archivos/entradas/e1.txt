@@ -1,10 +1,7 @@
 program {
         i32 a;
         i32 b;
-        for(a=:0;a<b;+1){
-                a =:b;
-        };
-        fun cumple(i32 a,i32 b): i32 {
+        fun cumple(i32 a,i32 b): f32 {
             f32 z;
             return (z);
         };
