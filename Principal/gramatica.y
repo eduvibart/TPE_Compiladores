@@ -856,11 +856,12 @@ termino: termino MULT factor  {
                 yyerror("Se esperaba un factor");}
 ;
 factor: ID {
-                $$ = new NodoHoja($1.sval);
                 String ambito = buscarAmbito(ambitoActual,$1.sval);
                 if((!ambito.equals(""))){
                         if(((String)TablaSimbolos.getAtributo($1.sval+":"+ambito, "Uso")).equals("Variable")){
+                                $$ = new NodoHoja($1.sval+":"+ambito);
                                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Tipo"));
+                                ((ArbolSintactico)$$).setUso("Variable");
                         }
                         else{
                                 yyerror($1.sval+" no es una variable");
@@ -871,6 +872,7 @@ factor: ID {
         | cte {
                 $$ = new NodoHoja($1.sval);
                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));
+                ((ArbolSintactico)$$).setUso("Constante");
               }  
         
         | llamado_func {$$=$1;}
