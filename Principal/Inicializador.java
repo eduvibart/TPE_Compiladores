@@ -82,6 +82,11 @@ public class Inicializador{
                 System.out.println("Key = " + entry.getKey() + ", Value = " ); 
                 entry.getValue().recorrerArbol("");    	
             }
+            
+            System.out.println("\nAssembler: \n" );
+            GeneradorAssembler generador = new GeneradorAssembler(parser);
+            System.out.println(generador.getAssembler());
         }
+
     }
 }

@@ -3,17 +3,18 @@ package Principal;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 public class TablaSimbolos {
     
-    private static Map<String,Map<String,Object>> simbolos = new HashMap<>(); //Lexema, y atributos del mismo.
+    private static HashMap<String,HashMap<String,Object>> simbolos = new HashMap<>(); //Lexema, y atributos del mismo.
 
     public static final String VALOR="Valor";
     public static final String ID="Id";
 
     public static void addNuevoSimbolo(String lexema) {
-        Map<String,Object> aux=new HashMap<>();
+        HashMap<String,Object> aux=new HashMap<>();
         simbolos.put(lexema,aux);
     }
 
@@ -42,6 +43,14 @@ public class TablaSimbolos {
     		}
     		System.out.println("|");
     	}
+    }
+
+    public static Set<String> getKeySet(){
+        return simbolos.keySet();
+    }
+
+    public static HashMap<String,Object> getAtributos(String key){
+        return simbolos.get(key);
     }
 
 }

@@ -12,5 +12,23 @@ public class NodoHoja extends ArbolSintactico {
         System.out.print("Lexema Nodo Hoja: " + super.getLex()+ "\n");
         
     }
+
+    @Override
+    public String getAssembler() {
+        return "";
+    }
+
+    @Override
+    public String getLex(){
+        if(getUso().equals("Variable")){
+            return "_"+ super.getLex();
+        }
+        else return super.getLex();
+    } 
+
+    @Override
+    public NodoHoja getHojaPropia() {
+        return this;
+    }
     
 }

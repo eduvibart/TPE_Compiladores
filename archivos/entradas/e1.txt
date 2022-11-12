@@ -1,8 +1,11 @@
 program {
         i32 a;
         i32 b;
-        fun cumple(i32 a,i32 b): f32 {
-            f32 z;
-            return (z);
-        };
+        if(a>b)then
+                b=:a;
+        else 
+                a=:b;
+        end_if;
+        i32 d;
+        d=:a;
 }   
