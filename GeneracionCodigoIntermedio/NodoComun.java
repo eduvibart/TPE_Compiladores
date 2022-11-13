@@ -6,6 +6,7 @@ public class NodoComun extends ArbolSintactico{
     public static int numeroVariable=0;
     private String variable;
     private String label;
+    private String salidaDer;
 
 
     public NodoComun(String lex,ArbolSintactico izq,ArbolSintactico der) {
@@ -152,7 +153,8 @@ public class NodoComun extends ArbolSintactico{
                     salida += "FST " + variable + "\n";
                 }
                 break;
-            //Comparador igual
+
+            //Comparadores
             case "=":
                 salida += getDer().getAssembler() + getIzq().getAssembler();
                 variable = getVariableAuxiliar();
@@ -172,6 +174,26 @@ public class NodoComun extends ArbolSintactico{
                     salida += "JNE " + label + "\n";
                 }
                 break;
+                
+            case "=!":
+                salida += getDer().getAssembler() + getIzq().getAssembler();
+                variable = getVariableAuxiliar();
+                label = pilaLabels.pop();
+
+                this.hojaPropia = new NodoHoja(variable);
+                this.hojaPropia.setTipo(this.getIzq().getTipo());
+                this.hojaPropia.setUso("variableAuxiliar");
+
+                if (getIzq().getHojaPropia().getTipo().equals("Entero")) {
+                    salida += "MOV EAX, " + getIzq().getHojaPropia().getLex() + "\n";
+                    salida += "CMP EAX, " + getDer().getHojaPropia().getLex() + "\n";
+                    salida += "JE " + label + "\n"; //Si la comparacion es igual salto a la etiqueta
+                } else {
+                    salida += "FLD " + getIzq().getHojaPropia().getLex() + "\n";
+                    salida += "FCOM " + getDer().getHojaPropia().getLex() + "\n";
+                    salida += "JE " + label + "\n";
+                }
+                break;
 
             case ">":
                 salida += getDer().getAssembler() + getIzq().getAssembler();
@@ -184,14 +206,74 @@ public class NodoComun extends ArbolSintactico{
 
                 if (getIzq().getHojaPropia().getTipo().equals("Entero")) {
                     salida += "MOV EAX, " + getIzq().getHojaPropia().getLex() + "\n";
-                    salida += "CMP EAX, " + getDer().getHojaPropia().getLex() + "\n"; //Compara el lexema del derecho con el eax
+                    salida += "CMP EAX, " + getDer().getHojaPropia().getLex() + "\n"; //Compara AEX cpm regder
                     salida += "JLE " + label + "\n"; //JLE es por menor igual (contrario a >)
                 } else {
                     salida += "FLD " + getIzq().getHojaPropia().getLex() + "\n";
                     salida += "FCOM " + getDer().getHojaPropia().getLex() + "\n";
                     salida += "JLE " + label + "\n";
                 }
-                break;   
+                break; 
+            
+            case ">=":
+                salida += getDer().getAssembler() + getIzq().getAssembler();
+                variable = getVariableAuxiliar();
+                label = pilaLabels.pop();
+
+                this.hojaPropia = new NodoHoja(variable);
+                this.hojaPropia.setTipo(this.getIzq().getTipo());
+                this.hojaPropia.setUso("variableAuxiliar");
+
+                if (getIzq().getHojaPropia().getTipo().equals("Entero")) {
+                    salida += "MOV EAX, " + getIzq().getHojaPropia().getLex() + "\n";
+                    salida += "CMP EAX, " + getDer().getHojaPropia().getLex() + "\n"; 
+                    salida += "JL " + label + "\n"; //JL es por menor (contrario de >=)
+                } else {
+                    salida += "FLD " + getIzq().getHojaPropia().getLex() + "\n";
+                    salida += "FCOM " + getDer().getHojaPropia().getLex() + "\n";
+                    salida += "JL " + label + "\n";
+                }
+                break; 
+            
+            case "<":
+                salida += getDer().getAssembler() + getIzq().getAssembler();
+                variable = getVariableAuxiliar();
+                label = pilaLabels.pop();
+
+                this.hojaPropia = new NodoHoja(variable);
+                this.hojaPropia.setTipo(this.getIzq().getTipo());
+                this.hojaPropia.setUso("variableAuxiliar");
+
+                if (getIzq().getHojaPropia().getTipo().equals("Entero")) {
+                    salida += "MOV EAX, " + getIzq().getHojaPropia().getLex() + "\n";
+                    salida += "CMP EAX, " + getDer().getHojaPropia().getLex() + "\n"; 
+                    salida += "JGE " + label + "\n"; //JGE es por MAYOR O IGUAL (contrario de <)
+                } else {
+                    salida += "FLD " + getIzq().getHojaPropia().getLex() + "\n";
+                    salida += "FCOM " + getDer().getHojaPropia().getLex() + "\n";
+                    salida += "JGE " + label + "\n";
+                }
+                break; 
+            
+            case "<=":
+                salida += getDer().getAssembler() + getIzq().getAssembler();
+                variable = getVariableAuxiliar();
+                label = pilaLabels.pop();
+
+                this.hojaPropia = new NodoHoja(variable);
+                this.hojaPropia.setTipo(this.getIzq().getTipo());
+                this.hojaPropia.setUso("variableAuxiliar");
+
+                if (getIzq().getHojaPropia().getTipo().equals("Entero")) {
+                    salida += "MOV EAX, " + getIzq().getHojaPropia().getLex() + "\n";
+                    salida += "CMP EAX, " + getDer().getHojaPropia().getLex() + "\n"; 
+                    salida += "JG " + label + "\n"; //JG es por MAYOR (contrario de <=)
+                } else {
+                    salida += "FLD " + getIzq().getHojaPropia().getLex() + "\n";
+                    salida += "FCOM " + getDer().getHojaPropia().getLex() + "\n";
+                    salida += "JG " + label + "\n";
+                }
+                break; 
 
             //Sentencia
             case "Sentencia":
@@ -199,26 +281,62 @@ public class NodoComun extends ArbolSintactico{
                 break;
 
             case "IF":
-                String salidaDer =  getDer().getAssembler();
+                salidaDer =  getDer().getAssembler();
                 if(!(getDer().getLex().equals("Cuerpo_IF"))){
                     label = getLabel();   //Caso en el que no hay else
                     pilaLabels.push(label);
-                    salida+=getIzq().getAssembler() + salidaDer + label+":\n";
+                    salida+=getIzq().getAssembler() + salidaDer + label+":\n";  //Como no hya else, genero una etiqueta al final del assembler, entonces si la condicion da falsa saltas ahi.
                     break;
                 }
                 
-                salida+= getIzq().getAssembler() + salidaDer;
+                salida+= getIzq().getAssembler() + salidaDer; //cuerpo if se encargara de hacer las etiquetas
                 
                 break;
+
             case "Cuerpo_IF": //si hay cuerpo if quiere decir que hay un else -> loq ue se hace es agregar un label previo al cuerpo del else, para poder saltar en caos de condicion negativa
                 String labelFin = getLabel();
                 pilaLabels.push(labelFin);
                 String labelElse = getLabel();
                 pilaLabels.push(labelElse); 
 
-                salida+= getIzq().getAssembler()+ "JMP "+ labelFin+"\n" +labelElse+":\n"+ getDer().getAssembler()+ labelFin+":\n";
+                salida+= getIzq().getAssembler();
+                salida+= "JMP " + labelFin + "\n"; //salto incondicional al final si es que entro al then
+                salida += labelElse + ":\n"; //salto al else si la condicion da falsa
+                salida+= getDer().getAssembler()+ labelFin+":\n";
                 
                 break;
+            
+            case "Bloque Ejecutable":
+                salida+= getDer().getAssembler() + getIzq().getAssembler();
+                break;
+
+            case "While":
+                label = getLabel();
+                pilaLabels.push(label);
+                
+                salidaDer =  getDer().getAssembler();
+                
+                salida += label + ":\n";
+                salida += getIzq().getAssembler() + salidaDer;
+                
+                break;
+
+            case "Cuerpo - Asignacion":
+                
+                salida += getIzq().getAssembler() + getDer().getAssembler();
+                salida += "JM " + pilaLabels.pop() + "\n"; 
+                
+                label = getLabel();
+                pilaLabels.push(label);
+                salida += label +":\n";
+                
+                break;
+
+            case "Bloque Break con Continue":
+                salida+=getDer().getAssembler() + getIzq().getAssembler();
+
+                break;
+                
 
         }
         return salida;

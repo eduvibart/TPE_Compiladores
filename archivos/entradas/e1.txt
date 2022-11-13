@@ -1,11 +1,12 @@
 program {
         i32 a;
         i32 b;
-        if(a>b)then
-                b=:a;
-        else 
+        i32 i;
+        if(a=b)then{
                 a=:b;
-        end_if;
+        }else{
+                b=:a;
+        }end_if;
         i32 d;
         d=:a;
 }   

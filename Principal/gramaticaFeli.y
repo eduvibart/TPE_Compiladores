@@ -970,6 +970,7 @@ comparacion: IGUAL {$$= $1;}
         | MENOR {$$= $1;}
         | MENORIGUAL {$$= $1;}
         | MAYORIGUAL {$$= $1;}
+        | DIST {$$=$1;}
 ;
 bloque_ejecutable : {$$=new NodoHoja("Fin");}
                 | bloque_ejecutable sentencia_ejecutable PUNTOCOMA {
@@ -1164,72 +1165,84 @@ sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_conti
 ;
 
 sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
-                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), new NodoHoja($12.sval + $13.sval) ))) );
-                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
-                        yyerror("La variable '" + $4.sval + "' no fue declarada");
-                }
-                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
-                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
-                }
-                if (!$8.sval.equals($4.sval)){
-                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
-                }
-                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
-                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
-                }
-        }
+                                
+                                String ambito = buscarAmbito(ambitoActual,$4.sval);
+                                System.out.println(ambito);
+                                NodoHoja variableFor = new NodoHoja($4.sval+":"+ambito);
+                                
+                                
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval, variableFor, new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), new NodoHoja($12.sval + $13.sval) ))) );
+
+                                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$8.sval.equals($4.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
+                        }
                 | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
-                {
-                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), new NodoHoja($12.sval + $13.sval) ))) );
-                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
-                        yyerror("La variable '" + $4.sval + "' no fue declarada");
-                }
-                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
-                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
-                }
-                if (!$8.sval.equals($4.sval)){
-                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
-                }
-                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
-                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
-                }        
-        }
+                        {
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), new NodoHoja($12.sval + $13.sval) ))) );
+                                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$8.sval.equals($4.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }        
+                        }
                 | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue
-                {
-                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($12.sval + $13.sval) ))) );
-                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
-                        yyerror("La variable '" + $4.sval + "' no fue declarada");
-                }
-                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
-                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
-                }
-                if (!$8.sval.equals($4.sval)){
-                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
-                }
-                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
-                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
-                }
-        }
+                        {
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($12.sval + $13.sval) ))) );
+                                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$8.sval.equals($4.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
+                        }
                 | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue
-                {
-                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($12.sval + $13.sval) ))) );
-                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
-                        yyerror("La variable '" + $4.sval + "' no fue declarada");
-                }
-                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
-                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
-                }
-                if (!$8.sval.equals($4.sval)){
-                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
-                }
-                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
-                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
-                }
-        }
+                        {
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($12.sval + $13.sval) ))) );
+                                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$8.sval.equals($4.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
+                        }
   
                 
                 | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($11.sval + $12.sval) )) );
+                                
+                                
+                                String ambito = buscarAmbito(ambitoActual,$3.sval);
+                                
+
+                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval+":"+ambito),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval+":"+ambito),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoComun($11.sval,new NodoHoja($3.sval+":"+ambito),new NodoHoja($12.sval)) )) );
                                 if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
                                         yyerror("La variable '" + $3.sval + "' no fue declarada");
                                 }
@@ -1258,7 +1271,7 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion ex
                                 if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
                                         yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
                                 }
-                }
+                        }
                 | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
                                 $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$14), new NodoHoja($11.sval + $12.sval) )) );
                                 if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
@@ -1273,7 +1286,7 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion ex
                                 if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
                                         yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
                                 }
-                }
+                        }
                 | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
                                 $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$14), new NodoHoja($11.sval + $12.sval) )) );
                                 if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
@@ -1288,7 +1301,7 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion ex
                                 if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
                                         yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
                                 }
-                }
+                        }
                 | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
                 | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error{ $$=new NodoHoja("Error sintactico");

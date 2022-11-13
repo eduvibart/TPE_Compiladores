@@ -1,8 +1,6 @@
 package GeneracionCodigoIntermedio;
 
 public class NodoControl extends ArbolSintactico{
-    private String salida;
-    private String label;
     
     public NodoControl(String lex,ArbolSintactico nodo) {
         super(lex);
@@ -19,23 +17,8 @@ public class NodoControl extends ArbolSintactico{
 
     @Override
     public String getAssembler() {
-        salida = "";
-        /*switch(super.getLex()){
-            case "Then":
-                salida = getIzq().getAssembler();
-
-            case "Else":
-                //poner etiqueta else
-                salida = getIzq().getAssembler();
-            case "Condicion":
-                label = super.getLabel();
-
-            default:
-                salida = getIzq().getAssembler();
-                break;
-        }*/
-        salida = getIzq().getAssembler();
-        return salida;
+        
+        return getIzq().getAssembler();
     }
     
     @Override
