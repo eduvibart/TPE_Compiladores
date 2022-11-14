@@ -1013,10 +1013,11 @@ termino: termino MULT factor  {
 factor: ID {
                 String ambito = buscarAmbito(ambitoActual,$1.sval);
                 if((!ambito.equals(""))){
-                        if(((String)TablaSimbolos.getAtributo($1.sval+":"+ambito, "Uso")).equals("Variable")){
+                        if(((String)TablaSimbolos.getAtributo($1.sval+":"+ambito, "Uso")).equals("Variable")
+                        || ((String)TablaSimbolos.getAtributo($1.sval+":"+ambito, "Uso")).equals("Constante")){
                                 $$ = new NodoHoja($1.sval+":"+ambito);
                                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Tipo"));
-                                ((ArbolSintactico)$$).setUso("Variable");
+                                ((ArbolSintactico)$$).setUso((String)TablaSimbolos.getAtributo($1.sval+":"+ambito, "Uso"));
                         }
                         else{
                                 yyerror($1.sval+" no es una variable");
@@ -1025,7 +1026,6 @@ factor: ID {
                         $$ = new NodoHoja("Error");
                 }
            }                                                          
-;
         | cte {
                 $$ = new NodoHoja($1.sval);
                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));
