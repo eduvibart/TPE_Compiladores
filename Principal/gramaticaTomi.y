@@ -105,31 +105,31 @@ list_var : list_var COMA ID {
 ;
 encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo {       
 
-                        if(!TablaSimbolos.existeSimbolo($2.sval+ ":" + ambitoActual)){
-                                $$ = new ParserVal($2.sval);
-                                TablaSimbolos.addNuevoSimbolo($2.sval+ ":" + ambitoActual);
-                                TablaSimbolos.addAtributo($2.sval+ ":" + ambitoActual,"Uso","Funcion");
-                                TablaSimbolos.addAtributo($2.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($2.sval,"Id"));
-                                TablaSimbolos.removeAtributo($2.sval);
-                                TablaSimbolos.addAtributo($2.sval+":"+ambitoActual,"Tipo",((ArbolSintactico)$9).getTipo());
-                                TablaSimbolos.addAtributo($2.sval +":"+ambitoActual,"Parametro1",((ArbolSintactico)$4).getLex() + ":"+ ambitoActual +":"+ $2.sval);
-                                TablaSimbolos.addAtributo($2.sval +":"+ambitoActual,"Parametro2",((ArbolSintactico)$6).getLex()+ ":"+ ambitoActual +":"+ $2.sval);
-                                ambitoActual += ":"+$2.sval;
-                                cambiarTipoActual(((ArbolSintactico)$9).getTipo());
-                                //Agrego los parametros en la tabla de simbolos
-                                TablaSimbolos.addNuevoSimbolo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual);
-                                TablaSimbolos.addAtributo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual,"Tipo",((ArbolSintactico)$4).getTipo());
-                                TablaSimbolos.addAtributo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual,"Uso","Variable");
-                                TablaSimbolos.addNuevoSimbolo(((ArbolSintactico)$6).getLex() + ":"+ ambitoActual);
-                                TablaSimbolos.addAtributo(((ArbolSintactico)$6).getLex() + ":"+ ambitoActual,"Tipo",((ArbolSintactico)$6).getTipo());
-                                TablaSimbolos.addAtributo(((ArbolSintactico)$6).getLex() + ":"+ ambitoActual,"Uso","Variable");
+                                if(!TablaSimbolos.existeSimbolo($2.sval+ ":" + ambitoActual)){
+                                        $$ = new ParserVal($2.sval);
+                                        TablaSimbolos.addNuevoSimbolo($2.sval+ ":" + ambitoActual);
+                                        TablaSimbolos.addAtributo($2.sval+ ":" + ambitoActual,"Uso","Funcion");
+                                        TablaSimbolos.addAtributo($2.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($2.sval,"Id"));
+                                        TablaSimbolos.removeAtributo($2.sval);
+                                        TablaSimbolos.addAtributo($2.sval+":"+ambitoActual,"Tipo",((ArbolSintactico)$9).getTipo());
+                                        TablaSimbolos.addAtributo($2.sval +":"+ambitoActual,"Parametro1",((ArbolSintactico)$4).getLex() + ":"+ ambitoActual +":"+ $2.sval);
+                                        TablaSimbolos.addAtributo($2.sval +":"+ambitoActual,"Parametro2",((ArbolSintactico)$6).getLex()+ ":"+ ambitoActual +":"+ $2.sval);
+                                        ambitoActual += ":"+$2.sval;
+                                        cambiarTipoActual(((ArbolSintactico)$9).getTipo());
+                                        //Agrego los parametros en la tabla de simbolos
+                                        TablaSimbolos.addNuevoSimbolo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual);
+                                        TablaSimbolos.addAtributo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual,"Tipo",((ArbolSintactico)$4).getTipo());
+                                        TablaSimbolos.addAtributo(((ArbolSintactico)$4).getLex() + ":"+ ambitoActual,"Uso","Variable");
+                                        TablaSimbolos.addNuevoSimbolo(((ArbolSintactico)$6).getLex() + ":"+ ambitoActual);
+                                        TablaSimbolos.addAtributo(((ArbolSintactico)$6).getLex() + ":"+ ambitoActual,"Tipo",((ArbolSintactico)$6).getTipo());
+                                        TablaSimbolos.addAtributo(((ArbolSintactico)$6).getLex() + ":"+ ambitoActual,"Uso","Variable");
 
-                        }else{
-                                yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
-                                ambitoActual += ":"+$2.sval;
-                        }
+                                }else{
+                                        yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
+                                        ambitoActual += ":"+$2.sval;
+                                }
                         
-}
+                        }
                 | FUN ID PARENT_A parametro  PARENT_C DOSPUNTOS tipo {
                         if(!TablaSimbolos.existeSimbolo($2.sval+ ":" + ambitoActual)){
                                 $$ = new ParserVal($2.sval);
@@ -250,7 +250,7 @@ sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA 
                         
                 | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");
                         $$ = new NodoComun("IF FUN", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
-                }
+                        }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF {System.out.println("Sentencia IF");
                         $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $7),new NodoControl("else fun", (ArbolSintactico)$11)));}
 
@@ -319,11 +319,8 @@ sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLA
                 | WHEN error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 ; 
-sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
-                        {
-                                $$ = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja($1.sval)) , new NodoComun("While", (ArbolSintactico) $5, new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $12 , (ArbolSintactico) $9)) );
-                                System.out.println("Sentencia WHILE con etiqueta y con llaves");
-                        
+etiqueta : ID DOSPUNTOS {
+                                $$ = new ParserVal($1.sval);
                                 if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
                                         TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
                                         TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
@@ -333,19 +330,19 @@ sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS P
                                         yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
                                 }
                         }
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break 
+;
+sentencia_while_fun : etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
+                        {
+                                $$ = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja($1.sval)) , new NodoComun("While", (ArbolSintactico) $4, new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $11 , (ArbolSintactico) $8)) );
+                                System.out.println("Sentencia WHILE con etiqueta y con llaves");
+                        
+                                
+                        }
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break 
                         {
                                 System.out.println("Sentencia WHILE con etiqueta y sin llaves");
-                                $$ = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja($1.sval)) , new NodoComun("While", (ArbolSintactico) $5, new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $11 , (ArbolSintactico) $9)) );
+                                $$ = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja($1.sval)) , new NodoComun("While", (ArbolSintactico) $4, new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $8)) );
                         
-                                if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.removeAtributo($1.sval);
-                                }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
-                                }
                         }
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
                         $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $7) );
@@ -354,23 +351,23 @@ sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS P
                     $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $9 , (ArbolSintactico) $7) );
                         System.out.println("Sentencia WHILE sin llaves");
                 } 
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {$$=new NodoHoja("Error sintactico");
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {$$=new NodoHoja("Error sintactico");
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A error {$$=new NodoHoja("Error sintactico");
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una asignacion");}
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS error {$$=new NodoHoja("Error sintactico");
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C error {$$=new NodoHoja("Error sintactico");
+                | etiqueta WHILE PARENT_A condicion PARENT_C error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba :");}
-                | ID DOSPUNTOS WHILE PARENT_A condicion error {$$=new NodoHoja("Error sintactico");
+                | etiqueta WHILE PARENT_A condicion error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
-                | ID DOSPUNTOS WHILE PARENT_A error {$$=new NodoHoja("Error sintactico");
+                | etiqueta WHILE PARENT_A error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una condicion");}
-                | ID DOSPUNTOS WHILE error {$$=new NodoHoja("Error sintactico");
+                | etiqueta WHILE error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
@@ -393,147 +390,218 @@ sentencia_while_fun : ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS P
                 
 ;
 
-sentencia_for_fun :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
-                        {
-                                System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
-                        
-                                if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.removeAtributo($1.sval);
-                                }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
-                                }
+sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
+                { $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), new NodoHoja($12.sval + $13.sval) ))) );
+                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                }
+                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                }
+                if (!$8.sval.equals($4.sval)){
+                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                }
+                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                }
+                                
+        }
+                |etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
+                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), new NodoHoja($12.sval + $13.sval) ))) );
+                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                }
+                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                }
+                if (!$8.sval.equals($4.sval)){
+                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                }
+                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                }   
                         }
-                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
-                        {
-                                System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
-                        
-                                if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.removeAtributo($1.sval);
-                                }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
-                                }
+                |etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break{
+                        $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($12.sval + $13.sval) ))) );
+                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                }
+                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                }
+                if (!$8.sval.equals($4.sval)){
+                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                }
+                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                }        
                         }
-                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break
                         {
-                                System.out.println("Sentencia FOR");
-                                 $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
-                        
-                                if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.removeAtributo($1.sval);
-                                }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
-                                }
-                        }
-                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break
-                        {
-                                System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
-                        
-                                if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.removeAtributo($1.sval);
-                                }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
-                                }
+                        $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($12.sval + $13.sval) ))) );
+                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                }
+                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                }
+                if (!$8.sval.equals($4.sval)){
+                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                }
+                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                }        
                         }
                
-                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");
-                                                                                             $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$11 ), new NodoHoja($7.sval + $8.sval) )) );
+                | FOR PARENT_A  ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
+			$$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($11.sval + $12.sval) )) );
+                                if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
+                                        yyerror("La variable '" + $3.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($3.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $3.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$7.sval.equals($3.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
+                        }
+                | FOR PARENT_A  ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
+			$$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($11.sval + $12.sval) )) );
+                                if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
+                                        yyerror("La variable '" + $3.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($3.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $3.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$7.sval.equals($3.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
                                                                                              }
-                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {System.out.println("Sentencia FOR");
-                                                                                             $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$11 ), new NodoHoja($7.sval + $8.sval) )) );
-                                                                                             }
-                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");
-                                                                                     $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$10 ), new NodoHoja($7.sval + $8.sval) )) );
+                | FOR PARENT_A  ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break {
+					$$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$14), new NodoHoja($11.sval + $12.sval) )) );
+                                if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
+                                        yyerror("La variable '" + $3.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($3.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $3.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$7.sval.equals($3.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
                                                                                   }
-                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break {System.out.println("Sentencia FOR");
-                                                                                     $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$10 ), new NodoHoja($7.sval + $8.sval) )) );
+                | FOR PARENT_A  ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break {
+					$$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$14), new NodoHoja($11.sval + $12.sval) )) );
+                                if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
+                                        yyerror("La variable '" + $3.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($3.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $3.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$7.sval.equals($3.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
                                                                                   }
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
+
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una constante");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una constante");}
 
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador + o -");}
 
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ; despues de la condicion");}
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba ; despues de la ID comparacion expresion");}
+		| etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba expresion");}
+		| etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba operador de comparacion");}
+		| etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba identificador");}
 
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba condicion");}
+                | etiqueta FOR PARENT_A ID ASIG ENTERO error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba ; despues de la ID ASIG ENTERO");}
+		|  etiqueta FOR PARENT_A ID ASIG error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba numero entero");}
+		|  etiqueta FOR PARENT_A ID error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba =:");}
+		|  etiqueta FOR PARENT_A error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba identificador");}
 
-                | ID DOSPUNTOS FOR PARENT_A asignacion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ; despues de la asignacion");}
-
-                | ID DOSPUNTOS FOR PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba asignacion");}
-
-                | ID DOSPUNTOS FOR error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {$$=new NodoHoja("Error sintactico");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {$$=new NodoHoja("Error sintactico");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA error {$$=new NodoHoja("Error sintactico");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una constante");}
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA error {$$=new NodoHoja("Error sintactico");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una constante");}
 
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador + o -");}
 
-                | FOR PARENT_A asignacion PUNTOCOMA condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ; despues de la condicion");}
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba ; despues de la ID comparacion expresion");}
 
-                | FOR PARENT_A asignacion PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba condicion");}
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion error {$$=new NodoHoja("Error sintactico");
+                yyerror("Se esperaba expresion");}
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID error {$$=new NodoHoja("Error sintactico");
+                yyerror("Se esperaba operador de comparacion");}
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
+                yyerror("Se esperaba identificador");}
 
-                | FOR PARENT_A asignacion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ; despues de la asignacion");}
+
+                | FOR PARENT_A ID ASIG ENTERO error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba ; despues de la ID ASIG ENTERO");}
+                | FOR PARENT_A ID ASIG error {$$=new NodoHoja("Error sintactico");
+                yyerror("Se esperaba numero entero");}
+                | FOR PARENT_A ID error {$$=new NodoHoja("Error sintactico");
+                yyerror("Se esperaba =:");}
+
 
                 | FOR PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba asignacion");}
+                        yyerror("Se esperaba ID ASIG ENTERO");}
 
                 | FOR error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
@@ -704,8 +772,12 @@ sentencia_ejecutable : asignacion {$$ = $1;}
 ;
 asignacion : ID ASIG expresion  {
                                         System.out.println("Asignacion");
-                                        $$ = (ArbolSintactico) new NodoComun($2.sval,new NodoHoja($1.sval), (ArbolSintactico) $3);
                                         String ambito = buscarAmbito(ambitoActual,$1.sval);
+                                        NodoHoja hoja = new NodoHoja($1.sval+":"+ambito);
+                                        hoja.setUso((String)TablaSimbolos.getAtributo($1.sval+":"+ambito, "Uso"));
+                                        hoja.setTipo((String)TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Tipo"));
+                                        $$ = (ArbolSintactico) new NodoComun($2.sval, hoja , (ArbolSintactico) $3);
+
                                         String tipoS1 = "";
                                         if(!ambito.equals("")){
                                                 if(((String)TablaSimbolos.getAtributo($1.sval+":"+ambito, "Uso")).equals("Variable")){
@@ -721,7 +793,11 @@ asignacion : ID ASIG expresion  {
                                                 yyerror("No se puede realizar una asignacion con tipos diferentes.");
                                         }
                                         
-                                }                  
+                                }
+                | ID error {$$=new NodoHoja("Error sintactico");
+                                yyerror("Se esperaba =:");}
+                | ID ASIG error {$$=new NodoHoja("Error sintactico");
+                                yyerror("Se esperaba expresion");}                  
 ;
 expresion: expresion SUMA termino {     
                                         $$ = (ArbolSintactico) new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
@@ -733,7 +809,9 @@ expresion: expresion SUMA termino {
                                         }
                                         
                                  }
-        | expresion RESTA termino {$$ = (ArbolSintactico) new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+        | expresion RESTA termino {
+                                        $$ = (ArbolSintactico) new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                                        
                                         if(!(((ArbolSintactico)$1).getTipo().equals(((ArbolSintactico)$3).getTipo()))){
                                                 yyerror("No se puede realizar una resta con diferentes tipos.");
                                         }else{
@@ -741,7 +819,6 @@ expresion: expresion SUMA termino {
                                         }
                                  }
         | termino {$$ = $1;} 
-        | llamado_func {$$=$1;}
         | sentencia_for ELSE cte {$$ = new NodoComun("For como expresion",(ArbolSintactico)$1,new NodoHoja($3.sval));
                                    ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($3.sval,"Tipo"));     
                                         }
@@ -785,11 +862,12 @@ termino: termino MULT factor  {
                 yyerror("Se esperaba un factor");}
 ;
 factor: ID {
-                $$ = new NodoHoja($1.sval);
                 String ambito = buscarAmbito(ambitoActual,$1.sval);
                 if((!ambito.equals(""))){
                         if(((String)TablaSimbolos.getAtributo($1.sval+":"+ambito, "Uso")).equals("Variable")){
+                                $$ = new NodoHoja($1.sval+":"+ambito);
                                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Tipo"));
+                                ((ArbolSintactico)$$).setUso("Variable");
                         }
                         else{
                                 yyerror($1.sval+" no es una variable");
@@ -800,7 +878,10 @@ factor: ID {
         | cte {
                 $$ = new NodoHoja($1.sval);
                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));
+                ((ArbolSintactico)$$).setUso("Constante");
               }  
+        
+        | llamado_func {$$=$1;}
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}
         | FLOAT {}
@@ -873,6 +954,8 @@ sentencia_if : IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOM
 condicion : expresion comparacion expresion 
                 {
                         $$= new NodoComun($2.sval,(ArbolSintactico)$1,(ArbolSintactico)$3);
+                        ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$1).getTipo());
+                        ((ArbolSintactico)$$).setUso("Condicion");
                         if (!((((ArbolSintactico)$1).getTipo()).equals(((ArbolSintactico)$3).getTipo()))){
                                yyerror("error en la comparacion entre expresiones de distintos tipos");
                         }
@@ -887,6 +970,7 @@ comparacion: IGUAL {$$= $1;}
         | MENOR {$$= $1;}
         | MENORIGUAL {$$= $1;}
         | MAYORIGUAL {$$= $1;}
+        | DIST {$$=$1;}
 ;
 bloque_ejecutable : {$$=new NodoHoja("Fin");}
                 | bloque_ejecutable sentencia_ejecutable PUNTOCOMA {
@@ -924,33 +1008,15 @@ sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable
                 | WHEN error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ( en el when");}
 ;
-sentencia_while :  ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
+sentencia_while :  etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
                         {
-                                $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $5, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $12 , (ArbolSintactico) $9)) );
+                                $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $4, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $11 , (ArbolSintactico) $8)) );
                         
-                                if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.removeAtributo($1.sval);
-                                }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
-                                }
-                        
-                                System.out.println("Sentencia WHILE con etiqueta y con llaves");
                         }
-                | ID DOSPUNTOS WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {
-                        $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $5, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $11 , (ArbolSintactico) $9)) );
-                        if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                TablaSimbolos.removeAtributo($1.sval);
-                        }else{
-                                yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
-                        }
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {
+                        $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $4, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $8)) );
                         
-                        System.out.println("Sentencia WHILE con etiqueta y sin llaves");}
+                        }
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
                         $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $7) );
                         System.out.println("Sentencia WHILE con llaves");} 
@@ -995,7 +1061,16 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                 | BREAK cte {$$ = new NodoControl("Break", new NodoHoja($2.sval));}
 ;
 tag : {$$ = new NodoHoja("Fin");}
-        | DOSPUNTOS ID {$$ = new NodoControl("Tag", new NodoHoja($2.sval) );}
+        | DOSPUNTOS ID {String ambito = buscarAmbito(ambitoActual,$2.sval);
+                        $$ = new NodoControl("Tag", new NodoHoja($2.sval) );
+                        if(!ambito.equals("")){
+                                if(!TablaSimbolos.getAtributo($2.sval +":"+ ambito,"Uso").equals("Etiqueta")){
+                                        yyerror($2.sval + " no es una etiqueta.");
+                                }
+                        }else{
+                                yyerror("La etiqueta " + $2.sval + " no esta declarada.");
+                        }
+                        }
         | DOSPUNTOS error{$$=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un identificador");}
 
@@ -1089,140 +1164,208 @@ sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_conti
                         yyerror("Se esperaba ( ");}
 ;
 
-sentencia_for :ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
-                        {
-                                System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
-                        
-                                if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.removeAtributo($1.sval);
-                                }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
+sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), new NodoHoja($12.sval + $13.sval) ))) );
+                                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$8.sval.equals($4.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
                                 }
                         }
-                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
                         {
-                                System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$13 ), new NodoHoja($9.sval + $10.sval) )) ));
-                        
-                                if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.removeAtributo($1.sval);
-                                }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), new NodoHoja($12.sval + $13.sval) ))) );
+                                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$8.sval.equals($4.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }        
+                        }
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue
+                        {
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($12.sval + $13.sval) ))) );
+                                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                                        yyerror("La variable '" + $4.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$8.sval.equals($4.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
                                 }
                         }
-                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue
                         {
-                                System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)),new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
-                        
-                                if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.removeAtributo($1.sval);
-                                }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($12.sval + $13.sval) ))) );
+                                if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
+                                        yyerror("La variable '" + $4.sval + "' no fue declarada");
                                 }
-                        }
-                |ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue
-                        {
-                                System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("For con Etiqueta",new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$12 ), new NodoHoja($9.sval + $10.sval) )) ));
-                        
-                                if(!TablaSimbolos.existeSimbolo($1.sval+ ":" + ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+ ":" + ambitoActual);
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Uso","Etiqueta");
-                                        TablaSimbolos.addAtributo($1.sval+ ":" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.removeAtributo($1.sval);
-                                }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
+                                else if (!TablaSimbolos.getAtributo($4.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $4.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$8.sval.equals($4.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($13.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
                                 }
                         }
   
                 
-                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
-                                                                                             $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$11 ), new NodoHoja($7.sval + $8.sval) )) );
-                                                                                             }
-                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
-                                                                                             $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$11 ), new NodoHoja($7.sval + $8.sval) )) );
-                                                                                             }
-                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
-                                                                                    $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$10 ), new NodoHoja($7.sval + $8.sval) )) );
-                                                                                  }
-                | FOR PARENT_A  asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
-                                                                                    $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",(ArbolSintactico)$3,null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",(ArbolSintactico)$5),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$10 ), new NodoHoja($7.sval + $8.sval) )) );
-                                                                                  }
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue error {$$=new NodoHoja("Error sintactico");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
+                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($11.sval + $12.sval) )) );
+                                if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
+                                        yyerror("La variable '" + $3.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($3.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $3.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$7.sval.equals($3.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
+                }
+                                                                                             
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
+                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($11.sval + $12.sval) )) );
+                                if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
+                                        yyerror("La variable '" + $3.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($3.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $3.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$7.sval.equals($3.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
+                        }
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
+                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$14), new NodoHoja($11.sval + $12.sval) )) );
+                                if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
+                                        yyerror("La variable '" + $3.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($3.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $3.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$7.sval.equals($3.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
+                        }
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
+                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$14), new NodoHoja($11.sval + $12.sval) )) );
+                                if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
+                                        yyerror("La variable '" + $3.sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo($3.sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + $3.sval + "' debe ser de tipo entero");
+                                }
+                                if (!$7.sval.equals($3.sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo($12.sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
+                                }
+                        }
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba {");}
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba )");}
+
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
-
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
-
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba )");}
-
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba constante");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba constante");}
 
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador + o -");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ; luego de la condicion");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba condicion");}
-                | ID DOSPUNTOS FOR PARENT_A asignacion error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba ; luego de la comparacion");}
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba expresion para comparar");}
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba operador de comparacion");}
+                | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba nombre de variable");}
+                | etiqueta FOR PARENT_A ID ASIG ENTERO error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la asignacion");}
-                | ID DOSPUNTOS FOR PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba asignacion");}
-                | ID DOSPUNTOS FOR error {$$=new NodoHoja("Error sintactico");
+                | etiqueta FOR PARENT_A ID ASIG error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba numero entero para asignar");}
+                | etiqueta FOR PARENT_A ID error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba =:");}
+                | etiqueta FOR PARENT_A error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba nombre de variable");}
+                | etiqueta FOR error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue error {$$=new NodoHoja("Error sintactico");
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba }");}
-
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
-
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA cte error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba )");}
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA cte error {$$=new NodoHoja("Error sintactico");
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA SUMA error {$$=new NodoHoja("Error sintactico");
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba }");}
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba {");}
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba )");}
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba constante");}
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA RESTA error {$$=new NodoHoja("Error sintactico");
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba constante");}
 
-                | FOR PARENT_A asignacion PUNTOCOMA condicion PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador + o -");}
-                | FOR PARENT_A asignacion PUNTOCOMA condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ; luego de la condicion");}
-                | FOR PARENT_A asignacion PUNTOCOMA error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba condicion");}
-                | FOR PARENT_A asignacion error {$$=new NodoHoja("Error sintactico");
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba ; luego de la comparacion");}
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba expresion para comparar");}
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba operador de comparacion");}
+                |   FOR PARENT_A ID ASIG ENTERO PUNTOCOMA error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba nombre de variable");}
+                |   FOR PARENT_A ID ASIG ENTERO error{ $$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la asignacion");}
-                | FOR PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba asignacion");}
-                | FOR error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba (");}
+                |   FOR PARENT_A ID ASIG error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba numero entero para asignar");}
+                |   FOR PARENT_A ID error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba =:");}
+                |   FOR PARENT_A error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba nombre de variable");}
+                |   FOR error{ $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba (");}                
 ;
 
 param_real : cte{
@@ -1239,10 +1382,7 @@ param_real : cte{
 ;
 llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                         $$=new NodoComun("llamado funcion",(ArbolSintactico)$3,(ArbolSintactico)$5);
-                                                        
                                                         String ambito = buscarAmbito(ambitoActual,$1.sval);
-                                                        System.out.println("Linea: " + AnalizadorLexico.getLineaAct());
-                                                        System.out.println("Ambito: " + ambito);
                                                         if (!ambito.equals("") ){
                                                                 if( !TablaSimbolos.getAtributo($1.sval+":"+ambito,"Uso").equals("Funcion") ){
                                                                         yyerror("La funcion "+$1.sval+" no fue declarada");
@@ -1254,12 +1394,12 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                                                         String tipoS3 = (String) ((ArbolSintactico) $3 ).getTipo();
                                                                                         if( !(tipoS3.equals((String)TablaSimbolos.getAtributo(par1,"Tipo") ) )){
                                                                                                 String nombreS3 = ((ArbolSintactico) $3).getLex();
-                                                                                                yyerror("El tipo del parametro"+ nombreS3+" no coincide con el tipo declarado en la funcion.");
+                                                                                                yyerror("El tipo del parametro "+ nombreS3+" no coincide con el tipo declarado en la funcion.");
                                                                                         }
                                                                                         String tipoS5 = (String) ((ArbolSintactico) $5).getTipo();
                                                                                         if( !(tipoS5.equals((String)TablaSimbolos.getAtributo(par2,"Tipo") ))){
                                                                                                 String nombreS5 = ((ArbolSintactico) $5).getLex();
-                                                                                                yyerror("El tipo del parametro"+ nombreS5+" no coincide con el tipo declarado en la funcion.");
+                                                                                                yyerror("El tipo del parametro "+ nombreS5+" no coincide con el tipo declarado en la funcion.");
                                                                                         }
                                                                                 }else{
                                                                                         yyerror("La declaracion de la funcion no cuenta con dos parametros.");
@@ -1285,7 +1425,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                         String tipoS3 = (String) ((ArbolSintactico) $3 ).getTipo();
                                         if( !(tipoS3.equals((String)TablaSimbolos.getAtributo(par1,"Tipo") )) ){
                                                 String nombreS3 = ((ArbolSintactico) $3).getLex();
-                                                yyerror("El tipo del parametro"+ nombreS3+" no coincide con el tipo declarado en la funcion.");
+                                                yyerror("El tipo del parametro "+ nombreS3+" no coincide con el tipo declarado en la funcion.");
                                         }
                                 }else{
                                         yyerror("La funcion esta declarada sin parametros.");
@@ -1306,8 +1446,8 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                         }else{
                                 String par1 = (String) TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Parametro1");
                                 String par2 = (String) TablaSimbolos.getAtributo($1.sval +":"+ ambito,"Parametro2");
-                                if(par2 != null){
-                                        if(par1 == null){
+                                if(par2 == null){
+                                        if(par1 != null){
                                                 yyerror("La funcion esta declarada con un parametro.");
                                         }
                                 }else{
