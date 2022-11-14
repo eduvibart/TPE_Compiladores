@@ -2,10 +2,10 @@ program {
         i32 a;
         i32 b;
         i32 c;
-        e1: while (a<b):(a=:a+1){
-                c=:a; 
-                continue;
-                c=:b;
+        while(a<b):(a=:a+1){
+                b=:a;
+               
+                b=:a;
         };
         i32 d;
         d=:a;

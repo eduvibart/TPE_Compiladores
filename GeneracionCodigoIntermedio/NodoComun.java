@@ -3,7 +3,6 @@ package GeneracionCodigoIntermedio;
 public class NodoComun extends ArbolSintactico{
 
     private NodoHoja hojaPropia=null;
-    public static int numeroVariable=0;
     private String variable;
     private String label;
     private String labelFin;
@@ -30,11 +29,6 @@ public class NodoComun extends ArbolSintactico{
             super.getDer().recorrerArbol(s+"    ");
         }
         
-    }
-
-    public static String getVariableAuxiliar(){
-        numeroVariable++;
-        return "@aux"+numeroVariable;
     }
 
 
@@ -317,8 +311,21 @@ public class NodoComun extends ArbolSintactico{
                 
                 salidaDer =  getDer().getAssembler();
                 
+                String saltoBreak="";
+                if (!(pilaLabelsBreak.isEmpty())){
+                    saltoBreak = pilaLabelsBreak.pop();
+                }
+                
                 salida += label + ":\n";
                 salida += getIzq().getAssembler() + salidaDer;
+
+                if(!(saltoBreak.equals(""))){
+                    salida+= saltoBreak + ":\n";
+                    this.hojaPropia= new NodoHoja(pilaLabelsBreak.pop());
+                    this.hojaPropia.setTipo(pilaLabelsBreak.pop());
+                    this.hojaPropia.setUso("variableAuxiliar");
+                }
+
                 
                 break;
             
@@ -326,6 +333,24 @@ public class NodoComun extends ArbolSintactico{
                 label = getIzq().getIzq().getLex(); //siempre que hay etiqueta se genera un nodo de control y debajo un nodo hoja con el nombre de la etiqueta a saltar
                 salida+= label+":\n" + getDer().getAssembler();
 
+                break;
+
+            case "While como expresion":
+                if(getIzq().getHojaPropia() == null){
+
+                    this.hojaPropia = new NodoHoja(getDer().getHojaPropia().getLex());
+                    this.hojaPropia.setTipo(this.getDer().getTipo());
+                    this.hojaPropia.setUso("variableAuxiliar");
+                }
+                else{
+                    this.hojaPropia = new NodoHoja(getIzq().getHojaPropia().getLex());
+                    this.hojaPropia.setTipo(this.getIzq().getTipo());
+                    this.hojaPropia.setUso("variableAuxiliar");
+
+                }
+                salida+= getIzq().getAssembler() + getDer().getAssembler();
+                
+                
                 break;
 
             case "Cuerpo - Asignacion":
@@ -342,10 +367,13 @@ public class NodoComun extends ArbolSintactico{
                     }
                     salida+= saltoAsignacion+":\n";
                 } 
+
                 salida += getDer().getAssembler();
+                
                 if(!(tag.equals(""))){
                     salida+= "JM " +tag+"\n";
                 }
+                
                 salida += "JM " + pilaLabels.pop() + "\n"; 
                 
                 label = getLabel();
