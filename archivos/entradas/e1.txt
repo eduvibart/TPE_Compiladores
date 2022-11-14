@@ -2,8 +2,9 @@ program {
         i32 a;
         i32 b;
         i32 i;
-        for(i=:0; i<a; +1){
+        when(i<a)then{
                 b=:a;
+                a=:i;
         };
         i32 d;
         d=:a;

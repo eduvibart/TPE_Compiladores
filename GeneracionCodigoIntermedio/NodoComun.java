@@ -6,6 +6,7 @@ public class NodoComun extends ArbolSintactico{
     public static int numeroVariable=0;
     private String variable;
     private String label;
+    private String labelFin;
     private String salidaDer;
 
 
@@ -294,7 +295,7 @@ public class NodoComun extends ArbolSintactico{
                 break;
 
             case "Cuerpo_IF": //si hay cuerpo if quiere decir que hay un else -> loq ue se hace es agregar un label previo al cuerpo del else, para poder saltar en caos de condicion negativa
-                String labelFin = getLabel();
+                labelFin = getLabel();
                 pilaLabels.push(labelFin);
                 String labelElse = getLabel();
                 pilaLabels.push(labelElse); 
@@ -341,14 +342,14 @@ public class NodoComun extends ArbolSintactico{
                 salida+= getIzq().getAssembler()+ getDer().getAssembler();
                 break;
             case "Condicion-Cuerpo":
-                String labelSalir = getLabel();
-                pilaLabels.push(labelSalir);
+                labelFin = getLabel();
+                pilaLabels.push(labelFin);
                 label = getLabel();
                 pilaLabels.push(label);
 
                 salidaDer = getDer().getAssembler();
                 salida+= label + ":\n" + getIzq().getAssembler() + salidaDer;
-                salida+= labelSalir + ":\n";
+                salida+= labelFin + ":\n";
                 break;
             
             case "Cuerpo":
@@ -360,7 +361,15 @@ public class NodoComun extends ArbolSintactico{
             case "Asignacion FOR":
                 salida+= getIzq().getAssembler();
                 break;
+            
+            case "When":
+                label = getLabel();
+                pilaLabels.push(label);
+                labelFin = getLabel();
+                pilaLabels.push(labelFin);
                 
+                salida+= label + ":\n" + getIzq().getAssembler() + getDer().getAssembler()+ "JM "+ pilaLabels.pop() + "\n" + labelFin +":\n";
+                break;
 
         }
         return salida;
