@@ -10,10 +10,11 @@ public abstract class ArbolSintactico extends ParserVal{
     private String tipo;
     private Integer linea;
     private String uso;
-
+    public static int numeroVariable =0;
     protected static int numeroLabel=0;
     protected static Stack<String> pilaLabels = new Stack<String>();
     protected static Stack<String> pilaLabelsTags = new Stack<String>();
+    protected static Stack<String> pilaLabelsBreak = new Stack<String>();
 
     public ArbolSintactico(String lex){
         izq = null;
@@ -24,7 +25,12 @@ public abstract class ArbolSintactico extends ParserVal{
         linea = null;
     }
 
-    public void setUso(String u){this.uso = u;}
+    public void setUso(String u){this.uso = u;
+        if(u.equals("variableAuxiliar")){
+            TablaSimbolos.addNuevoSimbolo(this.lex);
+            TablaSimbolos.addAtributo(this.lex,"Tipo",this.tipo);
+            TablaSimbolos.addAtributo(this.lex,"Uso",u);
+        }}
     public String getUso(){return this.uso;}
     public String getTipo(){return this.tipo;}
     public void setTipo(String tipo){this.tipo = tipo;}
@@ -44,4 +50,6 @@ public abstract class ArbolSintactico extends ParserVal{
         numeroLabel++;
         return "label_"+numeroLabel;
     }
+    public static String getVariableAuxiliar(){numeroVariable++;
+                                            return "@aux" + numeroVariable;}
 }

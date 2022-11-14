@@ -968,11 +968,19 @@ expresion: expresion SUMA termino {
                                         }
                                  }
         | termino {$$ = $1;} 
-        | sentencia_for_asig ELSE cte {$$ = new NodoComun("For como expresion",(ArbolSintactico)$1,new NodoHoja($3.sval));
-                                   ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($3.sval,"Tipo"));     
+        | sentencia_for_asig ELSE cte {
+                                        NodoHoja cte = new NodoHoja($3.sval);
+                                        cte.setTipo((String)TablaSimbolos.getAtributo($3.sval,"Tipo"));
+                                        $$ = new NodoComun("For como expresion",(ArbolSintactico)$1,cte);
+                                        ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($3.sval,"Tipo"));     
+                                       
                                         }
-        | sentencia_while_asig ELSE cte {    $$ = new NodoComun("While como expresion",(ArbolSintactico)$1,new NodoHoja($3.sval));
+        | sentencia_while_asig ELSE cte {
+                                        NodoHoja cte = new NodoHoja($3.sval);
+                                        cte.setTipo((String)TablaSimbolos.getAtributo($3.sval,"Tipo"));
+                                        $$ = new NodoComun("While como expresion",(ArbolSintactico)$1,cte);
                                         ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($3.sval,"Tipo")); 
+                                        
                                         }
         | expresion SUMA error {$$=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un termino");}
@@ -1028,14 +1036,18 @@ factor: ID {
            }                                                          
         | cte {
                 $$ = new NodoHoja($1.sval);
+                System.out.println("$1.sval:"+ $1.sval);
                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));
+                if(TablaSimbolos.getAtributo($1.sval,"Tipo").equals("Float")){
+                        ((ArbolSintactico)$$).setLex(this.calcularFloat($1.sval));
+                }
                 ((ArbolSintactico)$$).setUso("Constante");
               }  
         
         | llamado_func {$$=$1;}
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}
-        | FLOAT {}
+        | FLOAT {  }
         | RESTA ENTERO 
         | RESTA FLOAT 
 
@@ -1335,7 +1347,9 @@ sent_eje_asig:  asignacion {$$ = $1;}
                 | sentencia_when_asig {$$ = $1;}
                 | sentencia_while_asig {$$ = $1;}
                 | sentencia_for_asig {$$ = $1;}
-                | BREAK cte {$$ = new NodoControl("Break", new NodoHoja($2.sval));}
+                | BREAK cte {NodoHoja cte = new NodoHoja($2.sval);
+                        cte.setTipo((String)TablaSimbolos.getAtributo($2.sval,"Tipo"));
+                        $$ = new NodoControl("Break", cte);}
 ;
 sentencia_if : IF PARENT_A condicion PARENT_C THEN sentencia_ejecutable PUNTOCOMA ELSE LLAVE_A bloque_ejecutable LLAVE_C END_IF{
                                                                                                                                 $$= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) $6), new NodoControl("Else",(ArbolSintactico) $10))); 
@@ -2082,7 +2096,7 @@ private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintacti
 private static HashMap<Integer,ArrayList<String>> erroresSintacticos = new HashMap<Integer,ArrayList<String>>();
 public String ambitoActual = "Global";
 private List<String> tipoActual = new ArrayList<String>();
-
+private boolean hayReturn = false;
 
 void yyerror(String mensaje){
         if (erroresSintacticos.get(AnalizadorLexico.getLineaAct())== null){
@@ -2165,4 +2179,28 @@ public String buscarAmbito(String ambitoActual,String lexema){
                 }
         }
         return ambito;
+}
+public String calcularFloat(String f){
+        int i =0;
+	char caracter=' ';
+	String digito=""; //parte numerica
+	String exponente=""; //parte exponencial	
+	while (caracter != 'F') {
+                if(i<f.length()){
+                      caracter = f.charAt(i);
+		        digito+= caracter;
+		        i++; 
+                }else{
+                        return f;
+                }
+	}
+        Double d = Double.parseDouble(digito);
+	for (int j=i ; j < (f.length()); j++) {
+		caracter = f.charAt(j);
+		exponente += caracter;
+	}
+	Double e = Double.parseDouble(exponente);
+	Double numero = Math.pow(d, e);
+        return numero.toString();	
+
 }

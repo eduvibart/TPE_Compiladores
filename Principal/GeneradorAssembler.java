@@ -32,13 +32,18 @@ public class GeneradorAssembler {
 
     private void generarData(){
         data = "\n.data\n";
-        /*for (String k : TablaSimbolos.getKeySet()){
+        for (String k : TablaSimbolos.getKeySet()){
             HashMap<String, Object> atributos = TablaSimbolos.getAtributos(k);
             String uso = (String) atributos.get("Uso");
-            if(uso.equals("Variable")){
-
+            
+            if(uso != null){
+                if( ( !uso.equals("Funcion") ) && ( (uso.equals("Variable") ) || ( uso.equals("variableAuxiliar")  ) ) ) {
+                    String prefix = "";
+                    if(uso.equals("Variable")) prefix = "_";
+                    data += prefix + k + " dd " + " ? " + "\n";
+                }
             }
-        }*/
+        }
     }
 
     private void generarCode() {
