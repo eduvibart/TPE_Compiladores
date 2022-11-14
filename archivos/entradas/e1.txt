@@ -1,3 +1,14 @@
 program {
+<<<<<<< HEAD
         const p =: 3;
+=======
+        i32 a;
+        i32 b;
+        i32 i;
+        for(i=:0;i<b;+1){
+                a=:b;
+        };
+        i32 d;
+        d=:a;
+>>>>>>> 5a3466863aa46cbacbfea53007ba01a19475abad
 }   

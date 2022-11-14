@@ -278,7 +278,7 @@ public class NodoComun extends ArbolSintactico{
 
             //Sentencia
             case "Sentencia":
-                salida+= getDer().getAssembler() + getIzq().getAssembler();
+                salida+= getIzq().getAssembler() + getDer().getAssembler();
                 break;
 
             case "IF":
