@@ -2,7 +2,7 @@ program {
         i32 a;
         i32 b;
         i32 i;
-        for(i=:0; i<10; +1){
+        for(i=:0; i<a; +1){
                 b=:a;
         };
         i32 d;

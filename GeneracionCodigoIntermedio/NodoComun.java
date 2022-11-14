@@ -341,18 +341,25 @@ public class NodoComun extends ArbolSintactico{
                 salida+= getIzq().getAssembler()+ getDer().getAssembler();
                 break;
             case "Condicion-Cuerpo":
-                String labelSalirWhile = getLabel();
-                pilaLabels.push(labelSalirWhile);
+                String labelSalir = getLabel();
+                pilaLabels.push(labelSalir);
                 label = getLabel();
                 pilaLabels.push(label);
 
                 salidaDer = getDer().getAssembler();
                 salida+= label + ":\n" + getIzq().getAssembler() + salidaDer;
+                salida+= labelSalir + ":\n";
                 break;
             
             case "Cuerpo":
                 salida+= getIzq().getAssembler()+getDer().getAssembler();
                 salida += "JM "+ pilaLabels.pop()+"\n";
+
+                break;
+
+            case "Asignacion FOR":
+                salida+= getIzq().getAssembler();
+                break;
                 
 
         }
