@@ -1167,11 +1167,31 @@ sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_conti
 sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
                                 
                                 String ambito = buscarAmbito(ambitoActual,$4.sval);
-                                System.out.println(ambito);
-                                NodoHoja variableFor = new NodoHoja($4.sval+":"+ambito);
                                 
+                                NodoHoja operando1 = new NodoHoja($4.sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
                                 
-                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval, variableFor, new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), new NodoHoja($12.sval + $13.sval) ))) );
+                                NodoHoja operando2 = new NodoHoja($13.sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo($13.sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                
+                                NodoComun iteracion = new NodoComun($12.sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+
+                                NodoHoja iterador = new NodoHoja($4.sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+
+                                NodoHoja id1 = new NodoHoja($4.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja($8.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($8.sval +":"+ ambito,"Tipo"));
+
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval, id1, new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,id2, (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16),asignacion ))) );
 
                                 if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
                                         yyerror("La variable '" + $4.sval + "' no fue declarada");
@@ -1188,7 +1208,31 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion ex
                         }
                 | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
                         {
-                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), new NodoHoja($12.sval + $13.sval) ))) );
+                                String ambito = buscarAmbito(ambitoActual,$4.sval);
+
+                                NodoHoja operando1 = new NodoHoja($4.sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+                                
+                                NodoHoja operando2 = new NodoHoja($13.sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo($13.sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                
+                                NodoComun iteracion = new NodoComun($12.sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+
+                                NodoHoja iterador = new NodoHoja($4.sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+                                NodoHoja id1 = new NodoHoja($4.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja($8.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($8.sval +":"+ ambito,"Tipo"));
+
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,id1, new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,id2, (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$16), asignacion ))) );
                                 if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
                                         yyerror("La variable '" + $4.sval + "' no fue declarada");
                                 }
@@ -1204,7 +1248,32 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion ex
                         }
                 | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue
                         {
-                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($12.sval + $13.sval) ))) );
+                                String ambito = buscarAmbito(ambitoActual,$4.sval);
+
+                                NodoHoja operando1 = new NodoHoja($4.sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+                                
+                                NodoHoja operando2 = new NodoHoja($13.sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo($13.sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                
+                                NodoComun iteracion = new NodoComun($12.sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+
+                                NodoHoja iterador = new NodoHoja($4.sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+
+                                NodoHoja id1 = new NodoHoja($4.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja($8.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($8.sval +":"+ ambito,"Tipo"));
+
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,id1, new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,id2, (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), asignacion ))) );
                                 if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
                                         yyerror("La variable '" + $4.sval + "' no fue declarada");
                                 }
@@ -1220,7 +1289,32 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion ex
                         }
                 | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue
                         {
-                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,new NodoHoja($4.sval), new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,new NodoHoja($8.sval), (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($12.sval + $13.sval) ))) );
+                                String ambito = buscarAmbito(ambitoActual,$4.sval);
+
+                                NodoHoja operando1 = new NodoHoja($4.sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+                                
+                                NodoHoja operando2 = new NodoHoja($13.sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo($13.sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                
+                                NodoComun iteracion = new NodoComun($12.sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+
+                                NodoHoja iterador = new NodoHoja($4.sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+
+                                NodoHoja id1 = new NodoHoja($4.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($4.sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja($8.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($8.sval +":"+ ambito,"Tipo"));
+
+                                $$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval,id1, new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,id2, (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15),asignacion ))) );
                                 if (!TablaSimbolos.existeSimbolo($4.sval+ ":" + buscarAmbito(ambitoActual, $4.sval))){
                                         yyerror("La variable '" + $4.sval + "' no fue declarada");
                                 }
@@ -1236,13 +1330,36 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion ex
                         }
   
                 
-                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
                                 
                                 
                                 String ambito = buscarAmbito(ambitoActual,$3.sval);
+
+                                NodoHoja operando1 = new NodoHoja($3.sval+":"+ambito);
+                                System.out.println((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+                                operando1.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+                                
+                                NodoHoja operando2 = new NodoHoja($12.sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo($12.sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                
+                                NodoComun iteracion = new NodoComun($11.sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+
+                                NodoHoja iterador = new NodoHoja($3.sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+                                NodoHoja id1 = new NodoHoja($3.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja($7.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($7.sval +":"+ ambito,"Tipo"));
                                 
 
-                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval+":"+ambito),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval+":"+ambito),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoComun($11.sval,new NodoHoja($3.sval+":"+ambito),new NodoHoja($12.sval)) )) );
+                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,id1,new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,id2,(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), asignacion )) );
                                 if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
                                         yyerror("La variable '" + $3.sval + "' no fue declarada");
                                 }
@@ -1257,8 +1374,34 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion ex
                                 }
                 }
                                                                                              
-                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), new NodoHoja($11.sval + $12.sval) )) );
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
+                                
+                                String ambito = buscarAmbito(ambitoActual,$3.sval);
+
+                                NodoHoja operando1 = new NodoHoja($3.sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+                                
+                                NodoHoja operando2 = new NodoHoja($12.sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo($12.sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                
+                                NodoComun iteracion = new NodoComun($11.sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+
+                                NodoHoja iterador = new NodoHoja($3.sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+
+                                NodoHoja id1 = new NodoHoja($3.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja($7.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($7.sval +":"+ ambito,"Tipo"));
+
+                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,id1,new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,id2,(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$15), asignacion )) );
                                 if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
                                         yyerror("La variable '" + $3.sval + "' no fue declarada");
                                 }
@@ -1272,8 +1415,34 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion ex
                                         yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
                                 }
                         }
-                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$14), new NodoHoja($11.sval + $12.sval) )) );
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C ejecutables_break_continue {
+
+                                String ambito = buscarAmbito(ambitoActual,$3.sval);
+
+                                NodoHoja operando1 = new NodoHoja($3.sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+                                
+                                NodoHoja operando2 = new NodoHoja($12.sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo($12.sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                
+                                NodoComun iteracion = new NodoComun($11.sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+
+                                NodoHoja iterador = new NodoHoja($3.sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+
+                                NodoHoja id1 = new NodoHoja($3.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja($7.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($7.sval +":"+ ambito,"Tipo"));
+
+                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,id1,new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,id2,(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$14), asignacion)) );
                                 if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
                                         yyerror("La variable '" + $3.sval + "' no fue declarada");
                                 }
@@ -1287,8 +1456,34 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion ex
                                         yyerror("La constante '" + $12.sval + "' debe ser de tipo entero");
                                 }
                         }
-                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue {System.out.println("Sentencia FOR");
-                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,new NodoHoja($3.sval),new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,new NodoHoja($7.sval),(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$14), new NodoHoja($11.sval + $12.sval) )) );
+                | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C ejecutables_break_continue {
+
+                                String ambito = buscarAmbito(ambitoActual,$3.sval);
+
+                                NodoHoja operando1 = new NodoHoja($3.sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+                                
+                                NodoHoja operando2 = new NodoHoja($12.sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo($12.sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                
+                                NodoComun iteracion = new NodoComun($11.sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+
+                                NodoHoja iterador = new NodoHoja($3.sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+
+                                NodoHoja id1 = new NodoHoja($3.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($3.sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja($7.sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo($7.sval +":"+ ambito,"Tipo"));
+
+                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,id1,new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,id2,(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)$14), asignacion)) );
                                 if (!TablaSimbolos.existeSimbolo($3.sval+ ":" + buscarAmbito(ambitoActual, $3.sval))){
                                         yyerror("La variable '" + $3.sval + "' no fue declarada");
                                 }
