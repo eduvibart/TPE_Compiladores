@@ -308,7 +308,7 @@ public class NodoComun extends ArbolSintactico{
                 break;
             
             case "Bloque Ejecutable":
-                salida+= getDer().getAssembler() + getIzq().getAssembler();
+                salida+= getIzq().getAssembler() + getDer().getAssembler();
                 break;
 
             case "While":
@@ -321,10 +321,31 @@ public class NodoComun extends ArbolSintactico{
                 salida += getIzq().getAssembler() + salidaDer;
                 
                 break;
+            
+            case "While con Etiqueta":
+                label = getIzq().getIzq().getLex(); //siempre que hay etiqueta se genera un nodo de control y debajo un nodo hoja con el nombre de la etiqueta a saltar
+                salida+= label+":\n" + getDer().getAssembler();
+
+                break;
 
             case "Cuerpo - Asignacion":
-                
-                salida += getIzq().getAssembler() + getDer().getAssembler();
+                salida += getIzq().getAssembler();
+
+                String saltoAsignacion="";
+                String tag="";
+                if(!(pilaLabelsTags.isEmpty())){
+                    saltoAsignacion = pilaLabelsTags.pop();
+                    if(!(pilaLabelsTags.isEmpty())){
+                        String aux = pilaLabelsTags.pop();
+                        tag = saltoAsignacion;
+                        saltoAsignacion=aux;
+                    }
+                    salida+= saltoAsignacion+":\n";
+                } 
+                salida += getDer().getAssembler();
+                if(!(tag.equals(""))){
+                    salida+= "JM " +tag+"\n";
+                }
                 salida += "JM " + pilaLabels.pop() + "\n"; 
                 
                 label = getLabel();
@@ -334,7 +355,7 @@ public class NodoComun extends ArbolSintactico{
                 break;
 
             case "Bloque Break con Continue":
-                salida+=getDer().getAssembler() + getIzq().getAssembler();
+                salida+=getIzq().getAssembler() + getDer().getAssembler();
 
                 break;
 

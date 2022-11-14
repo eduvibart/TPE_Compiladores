@@ -1125,7 +1125,7 @@ comparacion: IGUAL {$$= $1;}
 ;
 bloque_ejecutable : {$$=new NodoHoja("Fin");}
                 | bloque_ejecutable sentencia_ejecutable PUNTOCOMA {
-                                                                $$=new NodoComun("Bloque Ejecutable", (ArbolSintactico) $2, (ArbolSintactico) $1);
+                                                                $$=new NodoComun("Bloque Ejecutable", (ArbolSintactico) $1, (ArbolSintactico) $2);
                                                                 }
                 | bloque_ejecutable sentencia_ejecutable {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ;");}
