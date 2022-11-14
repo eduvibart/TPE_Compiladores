@@ -129,14 +129,14 @@
  111                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break
  112                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C
  113                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C
- 114                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break
- 115                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break
- 116                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error
- 117                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error
- 118                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error
- 119                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error
- 120                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error
- 121                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error
+ 114                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break
+ 115                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break
+ 116                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error
+ 117                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error
+ 118                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error
+ 119                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error
+ 120                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error
+ 121                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error
  122                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error
  123                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error
  124                    | etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error
@@ -149,12 +149,12 @@
  131                    | etiqueta FOR PARENT_A ID error
  132                    | etiqueta FOR PARENT_A error
  133                    | etiqueta FOR error
- 134                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error
- 135                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error
- 136                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error
- 137                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error
- 138                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error
- 139                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error
+ 134                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error
+ 135                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error
+ 136                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error
+ 137                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error
+ 138                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error
+ 139                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error
  140                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error
  141                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error
  142                    | FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error
@@ -2290,14 +2290,14 @@ state 148
 state 149
 	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
 	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (136)
-	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (137)
-	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (138)
-	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (139)
+	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (135)
+	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (136)
+	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (138)
+	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (139)
 	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (140)
 	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (141)
 	sentencia_for_fun : FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (142)
@@ -2413,12 +2413,12 @@ state 163
 	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (120)
-	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (121)
+	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (118)
+	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (121)
 	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (122)
 	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (123)
 	sentencia_for_fun : etiqueta . FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (124)
@@ -3032,14 +3032,14 @@ state 207
 state 208
 	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
 	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (138)
-	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (139)
+	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (136)
+	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (139)
 	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (140)
 	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (141)
 	sentencia_for_fun : FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (142)
@@ -3092,12 +3092,12 @@ state 212
 	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (120)
-	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (121)
+	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (118)
+	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (121)
 	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (122)
 	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (123)
 	sentencia_for_fun : etiqueta FOR . PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (124)
@@ -3436,14 +3436,14 @@ state 242
 state 243
 	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
 	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (138)
-	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (139)
+	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (136)
+	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (139)
 	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (140)
 	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (141)
 	sentencia_for_fun : FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (142)
@@ -3509,12 +3509,12 @@ state 247
 	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (120)
-	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (121)
 	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (122)
 	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (123)
 	sentencia_for_fun : etiqueta FOR PARENT_A . ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (124)
@@ -3843,14 +3843,14 @@ state 272
 state 273
 	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
 	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (138)
-	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (139)
+	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (136)
+	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (139)
 	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (140)
 	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (141)
 	sentencia_for_fun : FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (142)
@@ -3899,12 +3899,12 @@ state 277
 	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (120)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (121)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (122)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (123)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID . ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (124)
@@ -4281,14 +4281,14 @@ state 301
 state 302
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (138)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (139)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (136)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (139)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (140)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (141)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (142)
@@ -4335,12 +4335,12 @@ state 306
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (120)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (121)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (122)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (123)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG . ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (124)
@@ -4774,14 +4774,14 @@ state 343
 state 344
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte error  (138)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte error  (139)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte error  (136)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte error  (139)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA error  (140)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA error  (141)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA error  (142)
@@ -4826,12 +4826,12 @@ state 348
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (120)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error  (121)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error  (122)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error  (123)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO . PUNTOCOMA ID comparacion expresion PUNTOCOMA error  (124)
@@ -5280,14 +5280,14 @@ state 374
 state 375
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte error  (138)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte error  (139)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte error  (136)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte error  (139)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA error  (140)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA error  (141)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA error  (142)
@@ -5339,12 +5339,12 @@ state 379
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte error  (120)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA cte error  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA cte error  (121)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA SUMA error  (122)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA RESTA error  (123)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA . ID comparacion expresion PUNTOCOMA error  (124)
@@ -5746,14 +5746,14 @@ state 412
 state 413
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte error  (138)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte error  (139)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte error  (136)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte error  (139)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA error  (140)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA error  (141)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA error  (142)
@@ -5808,12 +5808,12 @@ state 417
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte error  (120)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA cte error  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA cte error  (121)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA SUMA error  (122)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA RESTA error  (123)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID . comparacion expresion PUNTOCOMA error  (124)
@@ -6250,14 +6250,14 @@ state 457
 state 458
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte error  (138)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte error  (139)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte error  (136)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte error  (139)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA error  (140)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA error  (141)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA error  (142)
@@ -6321,12 +6321,12 @@ state 462
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte error  (120)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA cte error  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA cte error  (121)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA SUMA error  (122)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA RESTA error  (123)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion . expresion PUNTOCOMA error  (124)
@@ -6814,14 +6814,14 @@ state 491
 state 492
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte error  (138)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte error  (139)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte error  (136)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte error  (139)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA error  (140)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA error  (141)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . error  (142)
@@ -6865,12 +6865,12 @@ state 497
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte error  (120)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA cte error  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA cte error  (121)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA SUMA error  (122)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA RESTA error  (123)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion . PUNTOCOMA error  (124)
@@ -7200,10 +7200,10 @@ state 529
 
 state 530
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte error  (139)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . error  (140)
 
 	error  shift 557
@@ -7217,10 +7217,10 @@ state 530
 
 state 531
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte error  (139)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte error  (136)
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . error  (141)
 
 	error  shift 559
@@ -7273,12 +7273,12 @@ state 534
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C sentencias_fun_break  (110)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte error  (120)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA cte error  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA cte error  (121)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . SUMA error  (122)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . RESTA error  (123)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA . error  (124)
@@ -7614,10 +7614,10 @@ state 557
 
 state 558
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (112)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C error  (136)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C error  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . error  (139)
 
 	error  shift 591
 	PARENT_C  shift 592
@@ -7632,10 +7632,10 @@ state 559
 
 state 560
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C error  (137)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . error  (139)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . error  (136)
 
 	error  shift 593
 	PARENT_C  shift 594
@@ -7663,9 +7663,9 @@ state 563
 state 564
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (108)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C sentencias_fun_break  (110)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . cte error  (121)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA . error  (122)
 
 	error  shift 595
@@ -7680,9 +7680,9 @@ state 564
 state 565
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . cte error  (118)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA . error  (123)
 
 	error  shift 597
@@ -7954,16 +7954,16 @@ state 590
 
 
 state 591
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error .  (138)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error .  (139)
 
-	.  reduce 138
+	.  reduce 139
 
 
 state 592
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . LLAVE_A cuerpo_fun_break LLAVE_C  (112)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . sentencias_fun_break  (114)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . LLAVE_A cuerpo_fun_break error  (134)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . error  (136)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . sentencias_fun_break  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . LLAVE_A cuerpo_fun_break error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . error  (138)
 
 	error  shift 613
 	IF  shift 444
@@ -7990,16 +7990,16 @@ state 592
 
 
 state 593
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error .  (139)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error .  (136)
 
-	.  reduce 139
+	.  reduce 136
 
 
 state 594
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . LLAVE_A cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . sentencias_fun_break  (115)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . LLAVE_A cuerpo_fun_break error  (135)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . error  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . sentencias_fun_break  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . LLAVE_A cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . error  (135)
 
 	error  shift 616
 	IF  shift 444
@@ -8034,9 +8034,9 @@ state 595
 state 596
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (108)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C sentencias_fun_break  (110)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C error  (118)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . PARENT_C error  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte . error  (121)
 
 	error  shift 619
 	PARENT_C  shift 620
@@ -8052,9 +8052,9 @@ state 597
 state 598
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C error  (119)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . error  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . PARENT_C error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte . error  (118)
 
 	error  shift 621
 	PARENT_C  shift 622
@@ -8251,14 +8251,14 @@ state 612
 
 
 state 613
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error .  (136)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error .  (138)
 
-	.  reduce 136
+	.  reduce 138
 
 
 state 614
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A . cuerpo_fun_break LLAVE_C  (112)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A . cuerpo_fun_break error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A . cuerpo_fun_break error  (137)
 	cuerpo_fun_break : .  (152)
 
 	.  reduce 152
@@ -8267,20 +8267,20 @@ state 614
 
 
 state 615
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break .  (114)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break .  (115)
 
-	.  reduce 114
+	.  reduce 115
 
 
 state 616
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error .  (137)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error .  (135)
 
-	.  reduce 137
+	.  reduce 135
 
 
 state 617
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A . cuerpo_fun_break LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A . cuerpo_fun_break error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A . cuerpo_fun_break error  (134)
 	cuerpo_fun_break : .  (152)
 
 	.  reduce 152
@@ -8289,22 +8289,22 @@ state 617
 
 
 state 618
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break .  (115)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break .  (114)
 
-	.  reduce 115
+	.  reduce 114
 
 
 state 619
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error .  (120)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error .  (121)
 
-	.  reduce 120
+	.  reduce 121
 
 
 state 620
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . LLAVE_A cuerpo_fun_break LLAVE_C  (108)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . sentencias_fun_break  (110)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . LLAVE_A cuerpo_fun_break error  (116)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . error  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . LLAVE_A cuerpo_fun_break error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C . error  (120)
 
 	error  shift 639
 	IF  shift 444
@@ -8331,16 +8331,16 @@ state 620
 
 
 state 621
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error .  (121)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error .  (118)
 
-	.  reduce 121
+	.  reduce 118
 
 
 state 622
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . LLAVE_A cuerpo_fun_break LLAVE_C  (109)
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . sentencias_fun_break  (111)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . LLAVE_A cuerpo_fun_break error  (117)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . error  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . LLAVE_A cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C . error  (117)
 
 	error  shift 642
 	IF  shift 444
@@ -8554,7 +8554,7 @@ state 636
 
 state 637
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break . LLAVE_C  (112)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break . error  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break . error  (137)
 	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (153)
 	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break error  (154)
 
@@ -8584,7 +8584,7 @@ state 637
 
 state 638
 	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break . LLAVE_C  (113)
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break . error  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break . error  (134)
 	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (153)
 	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break error  (154)
 
@@ -8613,14 +8613,14 @@ state 638
 
 
 state 639
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error .  (118)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error .  (120)
 
-	.  reduce 118
+	.  reduce 120
 
 
 state 640
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A . cuerpo_fun_break LLAVE_C  (108)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A . cuerpo_fun_break error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A . cuerpo_fun_break error  (119)
 	cuerpo_fun_break : .  (152)
 
 	.  reduce 152
@@ -8635,14 +8635,14 @@ state 641
 
 
 state 642
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error .  (119)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error .  (117)
 
-	.  reduce 119
+	.  reduce 117
 
 
 state 643
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A . cuerpo_fun_break LLAVE_C  (109)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A . cuerpo_fun_break error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A . cuerpo_fun_break error  (116)
 	cuerpo_fun_break : .  (152)
 
 	.  reduce 152
@@ -8808,9 +8808,9 @@ state 658
 
 
 state 659
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error .  (134)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error .  (137)
 
-	.  reduce 134
+	.  reduce 137
 
 
 state 660
@@ -8820,9 +8820,9 @@ state 660
 
 
 state 661
-	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error .  (135)
+	sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error .  (134)
 
-	.  reduce 135
+	.  reduce 134
 
 
 state 662
@@ -8833,7 +8833,7 @@ state 662
 
 state 663
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break . LLAVE_C  (108)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break . error  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break . error  (119)
 	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (153)
 	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break error  (154)
 
@@ -8863,7 +8863,7 @@ state 663
 
 state 664
 	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break . LLAVE_C  (109)
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break . error  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break . error  (116)
 	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break PUNTOCOMA  (153)
 	cuerpo_fun_break : cuerpo_fun_break . sentencias_fun_break error  (154)
 
@@ -9003,9 +9003,9 @@ state 676
 
 
 state 677
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error .  (116)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error .  (119)
 
-	.  reduce 116
+	.  reduce 119
 
 
 state 678
@@ -9015,9 +9015,9 @@ state 678
 
 
 state 679
-	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error .  (117)
+	sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error .  (116)
 
-	.  reduce 117
+	.  reduce 116
 
 
 state 680

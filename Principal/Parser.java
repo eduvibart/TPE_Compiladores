@@ -16,7 +16,7 @@
 
 
 
-//#line 2 "gramaticaTomi.y"
+//#line 2 ".\gramatica.y"
 package Principal;
 import java.io.IOException;
 import AnalizadorLexico.AnalizadorLexico;
@@ -262,9 +262,9 @@ final static short yylen[] = {                            2,
     5,    4,    3,    2,    2,   12,   10,   11,    9,   12,
    10,    9,    8,    7,    6,    5,    4,    3,   11,    9,
     8,    7,    6,    5,    4,    3,    2,   17,   17,   15,
-   15,   16,   16,   14,   14,   17,   17,   15,   15,   14,
+   15,   16,   16,   14,   14,   17,   15,   14,   17,   15,
    14,   13,   13,   12,   11,   10,    9,    8,    7,    6,
-    5,    4,    3,   16,   16,   14,   14,   13,   13,   12,
+    5,    4,    3,   16,   14,   13,   16,   14,   13,   12,
    12,   11,   10,    9,    8,    7,    6,    5,    4,    3,
     2,    0,    3,    3,    1,    1,    1,    1,    1,    1,
     2,    1,    2,    1,    8,    6,    8,    6,    5,    4,
@@ -353,15 +353,15 @@ final static short yydefred[] = {                         0,
    90,   86,  124,    0,    0,  363,  303,  353,  360,  303,
   354,  336,    0,  340,    0,  329,  320,  318,  380,  355,
   377,  356,   58,   56,   53,   54,  194,    0,  169,    0,
-  138,    0,  139,    0,  122,    0,  123,    0,    0,    0,
+  139,    0,  136,    0,  122,    0,  123,    0,    0,    0,
   335,    0,  331,  339,  303,    0,  193,  152,    0,  168,
-  152,  166,  136,  152,  114,  137,  152,  115,  120,    0,
-  121,    0,  362,  351,  359,  352,  334,  303,    0,    0,
-  343,    0,    0,  188,    0,    0,    0,    0,  118,  152,
-  110,  119,  152,  111,    0,  345,    0,  338,    0,  342,
-  328,  183,    0,  187,    0,  176,  167,  165,  134,  112,
-  135,  113,    0,    0,  333,    0,  344,  327,  337,  326,
-  182,    0,  178,  186,  152,    0,  116,  108,  117,  109,
+  152,  166,  138,  152,  115,  135,  152,  114,  121,    0,
+  118,    0,  362,  351,  359,  352,  334,  303,    0,    0,
+  343,    0,    0,  188,    0,    0,    0,    0,  120,  152,
+  110,  117,  152,  111,    0,  345,    0,  338,    0,  342,
+  328,  183,    0,  187,    0,  176,  167,  165,  137,  112,
+  134,  113,    0,    0,  333,    0,  344,  327,  337,  326,
+  182,    0,  178,  186,  152,    0,  119,  108,  116,  109,
   332,  330,  181,  152,    0,    0,  192,    0,    0,  190,
     0,  185,    0,  191,  173,  180,    0,  189,  174,  184,
   175,  179,  177,
@@ -1107,14 +1107,14 @@ final static String yyrule[] = {
 "sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break",
 "sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C",
 "sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C",
-"sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break",
 "sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C sentencias_fun_break",
-"sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error",
+"sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C sentencias_fun_break",
 "sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error",
-"sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error",
 "sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error",
-"sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error",
 "sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error",
+"sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error",
+"sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error",
+"sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error",
 "sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error",
 "sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error",
 "sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error",
@@ -1127,12 +1127,12 @@ final static String yyrule[] = {
 "sentencia_for_fun : etiqueta FOR PARENT_A ID error",
 "sentencia_for_fun : etiqueta FOR PARENT_A error",
 "sentencia_for_fun : etiqueta FOR error",
-"sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error",
 "sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C LLAVE_A cuerpo_fun_break error",
-"sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error",
 "sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte PARENT_C error",
-"sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error",
 "sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA cte error",
+"sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C LLAVE_A cuerpo_fun_break error",
+"sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte PARENT_C error",
+"sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA cte error",
 "sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA error",
 "sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA error",
 "sentencia_for_fun : FOR PARENT_A ID ASIG ENTERO PUNTOCOMA ID comparacion expresion PUNTOCOMA error",
@@ -1399,7 +1399,7 @@ final static String yyrule[] = {
 "llamado_func : ID PARENT_A param_real COMA error",
 };
 
-//#line 1700 "gramaticaTomi.y"
+//#line 1782 ".\gramatica.y"
 private NodoControl raiz;
 private Map<String,ArbolSintactico> funciones = new HashMap<String,ArbolSintactico>();
 private static HashMap<Integer,ArrayList<String>> erroresSintacticos = new HashMap<Integer,ArrayList<String>>();
@@ -1473,9 +1473,7 @@ public void removeTipoActual(){
 public String buscarAmbito(String ambitoActual,String lexema){
         String ambito = ambitoActual;
         while(!TablaSimbolos.existeSimbolo(lexema+":"+ambito)){
-                System.out.println("Entro While");
                 if(ambito.equals("Global")){
-                        System.out.println("Entro IF");
                         yyerror("La variable " + lexema + " no se encuentra declarada en el ambito " + ambitoActual);
                         ambito = "";
                         break;
@@ -1489,10 +1487,9 @@ public String buscarAmbito(String ambitoActual,String lexema){
                         }
                 }
         }
-        System.out.println("Ambito:"+ ambito);
         return ambito;
 }
-//#line 1424 "Parser.java"
+//#line 1421 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -1647,75 +1644,75 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
-//#line 22 "gramaticaTomi.y"
+//#line 22 ".\gramatica.y"
 {
                                                                 raiz = new NodoControl("PROGRAMA",(ArbolSintactico)val_peek(1));  
                                                                 TablaSimbolos.removeAtributo(val_peek(3).sval);
                                                         }
 break;
 case 2:
-//#line 27 "gramaticaTomi.y"
+//#line 27 ".\gramatica.y"
 {
                 yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba }");}
 break;
 case 3:
-//#line 30 "gramaticaTomi.y"
+//#line 30 ".\gramatica.y"
 {
                 yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba {");}
 break;
 case 4:
-//#line 33 "gramaticaTomi.y"
+//#line 33 ".\gramatica.y"
 {
                 yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba el nombre del programa");}
 break;
 case 6:
-//#line 39 "gramaticaTomi.y"
+//#line 39 ".\gramatica.y"
 {yyval=new NodoHoja("Fin");}
 break;
 case 7:
-//#line 40 "gramaticaTomi.y"
+//#line 40 ".\gramatica.y"
 {
                                                         yyval=new NodoComun("Sentencia", (ArbolSintactico) val_peek(2), (ArbolSintactico) val_peek(1));
                                                         }
 break;
 case 8:
-//#line 43 "gramaticaTomi.y"
+//#line 43 ".\gramatica.y"
 {
                                 yyval=new NodoHoja("Error sintactico");
                                 yyerror("Se esperaba ;");
                         }
 break;
 case 9:
-//#line 48 "gramaticaTomi.y"
+//#line 48 ".\gramatica.y"
 {yyval=new NodoHoja("Sentencia Declarativa");}
 break;
 case 10:
-//#line 49 "gramaticaTomi.y"
+//#line 49 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 12:
-//#line 52 "gramaticaTomi.y"
+//#line 52 ".\gramatica.y"
 {funciones.put((String)((ArbolSintactico)val_peek(0)).getLex(),(ArbolSintactico)val_peek(0));}
 break;
 case 14:
-//#line 55 "gramaticaTomi.y"
+//#line 55 ".\gramatica.y"
 {
             yyval = new NodoHoja("Entero");
             ((NodoHoja)yyval).setTipo("Entero");
            }
 break;
 case 15:
-//#line 59 "gramaticaTomi.y"
+//#line 59 ".\gramatica.y"
 {
             yyval = new NodoHoja("Float");
             ((NodoHoja)yyval).setTipo("Float");
            }
 break;
 case 16:
-//#line 64 "gramaticaTomi.y"
+//#line 64 ".\gramatica.y"
 {  System.out.println("Declaracion de datos");
                                         for (String s : ((NodoTipos)val_peek(0)).getList()){
                                                 String ambito = ambitoActual;
@@ -1749,25 +1746,25 @@ case 16:
                                 }
 break;
 case 17:
-//#line 95 "gramaticaTomi.y"
+//#line 95 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("se esperaba lista de identificadores entre comas");}
 break;
 case 18:
-//#line 98 "gramaticaTomi.y"
+//#line 98 ".\gramatica.y"
 {
                             yyval=val_peek(2);
                             ((NodoTipos)yyval).add((String)val_peek(0).sval);
                             }
 break;
 case 19:
-//#line 102 "gramaticaTomi.y"
+//#line 102 ".\gramatica.y"
 {
                yyval=new NodoTipos((String)val_peek(0).sval);
               }
 break;
 case 20:
-//#line 106 "gramaticaTomi.y"
+//#line 106 ".\gramatica.y"
 {       
 
                                 if(!TablaSimbolos.existeSimbolo(val_peek(7).sval+ ":" + ambitoActual)){
@@ -1797,7 +1794,7 @@ case 20:
                         }
 break;
 case 21:
-//#line 133 "gramaticaTomi.y"
+//#line 133 ".\gramatica.y"
 {
                         if(!TablaSimbolos.existeSimbolo(val_peek(5).sval+ ":" + ambitoActual)){
                                 yyval = new ParserVal(val_peek(5).sval);
@@ -1821,7 +1818,7 @@ case 21:
                 }
 break;
 case 22:
-//#line 154 "gramaticaTomi.y"
+//#line 154 ".\gramatica.y"
 {
                         if(!TablaSimbolos.existeSimbolo(val_peek(4).sval+ ":" + ambitoActual)){
                                 yyval = new ParserVal(val_peek(4).sval);
@@ -1840,78 +1837,78 @@ case 22:
                 }
 break;
 case 23:
-//#line 171 "gramaticaTomi.y"
+//#line 171 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("El tipo declarado no esta permitido");}
 break;
 case 24:
-//#line 174 "gramaticaTomi.y"
+//#line 174 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("El tipo declarado no esta permitido");}
 break;
 case 25:
-//#line 177 "gramaticaTomi.y"
+//#line 177 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("El tipo declarado no esta permitido");}
 break;
 case 26:
-//#line 180 "gramaticaTomi.y"
+//#line 180 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("Se esperaba :");}
 break;
 case 27:
-//#line 183 "gramaticaTomi.y"
+//#line 183 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("Se esperaba :");}
 break;
 case 28:
-//#line 186 "gramaticaTomi.y"
+//#line 186 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("Se esperaba :");}
 break;
 case 29:
-//#line 189 "gramaticaTomi.y"
+//#line 189 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("Se esperaba )");}
 break;
 case 30:
-//#line 192 "gramaticaTomi.y"
+//#line 192 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("Se esperaba )");}
 break;
 case 31:
-//#line 195 "gramaticaTomi.y"
+//#line 195 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("Se esperaba )");}
 break;
 case 32:
-//#line 198 "gramaticaTomi.y"
+//#line 198 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("Se esperaba otro parametro");}
 break;
 case 33:
-//#line 201 "gramaticaTomi.y"
+//#line 201 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         ambitoActual += ":"+"Error";
                         yyerror("Se esperaba (");}
 break;
 case 34:
-//#line 204 "gramaticaTomi.y"
+//#line 204 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba un nombre de funcion");}
 break;
 case 35:
-//#line 209 "gramaticaTomi.y"
+//#line 209 ".\gramatica.y"
 {
                                 System.out.println("Declaracion de Funcion");
                                 yyval = new NodoControl("Funcion:"+val_peek(3).sval,(ArbolSintactico)val_peek(1));
@@ -1926,243 +1923,243 @@ case 35:
                         }
 break;
 case 36:
-//#line 221 "gramaticaTomi.y"
+//#line 221 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 37:
-//#line 223 "gramaticaTomi.y"
+//#line 223 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 break;
 case 38:
-//#line 226 "gramaticaTomi.y"
+//#line 226 ".\gramatica.y"
 {yyval=new NodoHoja("Fin");}
 break;
 case 39:
-//#line 227 "gramaticaTomi.y"
+//#line 227 ".\gramatica.y"
 {yyval=new NodoComun("Sentencia_Funcion", (ArbolSintactico) val_peek(2), (ArbolSintactico) val_peek(1));}
 break;
 case 40:
-//#line 228 "gramaticaTomi.y"
+//#line 228 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ;");}
 break;
 case 41:
-//#line 231 "gramaticaTomi.y"
+//#line 231 ".\gramatica.y"
 {yyval=new NodoHoja("Sentencia Declarativa Datos");}
 break;
 case 42:
-//#line 232 "gramaticaTomi.y"
+//#line 232 ".\gramatica.y"
 {yyval=new NodoHoja("Sentencia Declarativa Funcion");}
 break;
 case 43:
-//#line 233 "gramaticaTomi.y"
+//#line 233 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 44:
-//#line 234 "gramaticaTomi.y"
+//#line 234 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 45:
-//#line 235 "gramaticaTomi.y"
+//#line 235 ".\gramatica.y"
 {yyval=val_peek(0);}
 break;
 case 46:
-//#line 236 "gramaticaTomi.y"
+//#line 236 ".\gramatica.y"
 {yyval=val_peek(0);}
 break;
 case 47:
-//#line 237 "gramaticaTomi.y"
+//#line 237 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 48:
-//#line 238 "gramaticaTomi.y"
+//#line 238 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 49:
-//#line 239 "gramaticaTomi.y"
+//#line 239 ".\gramatica.y"
 {yyval=val_peek(0);}
 break;
 case 50:
-//#line 240 "gramaticaTomi.y"
+//#line 240 ".\gramatica.y"
 {yyval=val_peek(0);}
 break;
 case 51:
-//#line 241 "gramaticaTomi.y"
+//#line 241 ".\gramatica.y"
 {yyval=val_peek(0);}
 break;
 case 52:
-//#line 243 "gramaticaTomi.y"
+//#line 243 ".\gramatica.y"
 {System.out.println("Sentencia IF");
                                 yyval= new NodoComun("IF_FUN",(ArbolSintactico)val_peek(8),(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) val_peek(5)),new NodoControl("else fun", (ArbolSintactico)val_peek(2))));
                         }
 break;
 case 53:
-//#line 246 "gramaticaTomi.y"
+//#line 246 ".\gramatica.y"
 {System.out.println("Sentencia IF");
                         yyval= new NodoComun("IF_FUN",(ArbolSintactico)val_peek(10),(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) val_peek(6)),new NodoControl("else fun", (ArbolSintactico)val_peek(2))));}
 break;
 case 54:
-//#line 248 "gramaticaTomi.y"
+//#line 248 ".\gramatica.y"
 {System.out.println("Sentencia IF");
                         yyval= new NodoComun("IF_FUN",(ArbolSintactico)val_peek(10),(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) val_peek(7)),new NodoControl("else fun", (ArbolSintactico)val_peek(3))));}
 break;
 case 55:
-//#line 251 "gramaticaTomi.y"
+//#line 251 ".\gramatica.y"
 {System.out.println("Sentencia IF");
                         yyval = new NodoComun("IF FUN", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(2)) );
                         }
 break;
 case 56:
-//#line 254 "gramaticaTomi.y"
+//#line 254 ".\gramatica.y"
 {System.out.println("Sentencia IF");
                         yyval= new NodoComun("IF_FUN",(ArbolSintactico)val_peek(10),(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) val_peek(6)),new NodoControl("else fun", (ArbolSintactico)val_peek(2))));}
 break;
 case 57:
-//#line 257 "gramaticaTomi.y"
+//#line 257 ".\gramatica.y"
 {System.out.println("Sentencia IF");
                         yyval = new NodoComun("IF FUN", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(2)) );}
 break;
 case 58:
-//#line 259 "gramaticaTomi.y"
+//#line 259 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 59:
-//#line 261 "gramaticaTomi.y"
+//#line 261 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 60:
-//#line 263 "gramaticaTomi.y"
+//#line 263 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 61:
-//#line 265 "gramaticaTomi.y"
+//#line 265 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 62:
-//#line 267 "gramaticaTomi.y"
+//#line 267 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 63:
-//#line 269 "gramaticaTomi.y"
+//#line 269 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if");}
 break;
 case 64:
-//#line 271 "gramaticaTomi.y"
+//#line 271 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 65:
-//#line 273 "gramaticaTomi.y"
+//#line 273 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 66:
-//#line 275 "gramaticaTomi.y"
+//#line 275 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if");}
 break;
 case 67:
-//#line 277 "gramaticaTomi.y"
+//#line 277 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 68:
-//#line 280 "gramaticaTomi.y"
+//#line 280 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 69:
-//#line 282 "gramaticaTomi.y"
+//#line 282 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba then ");}
 break;
 case 70:
-//#line 284 "gramaticaTomi.y"
+//#line 284 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ) ");}
 break;
 case 71:
-//#line 286 "gramaticaTomi.y"
+//#line 286 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una condicion ");}
 break;
 case 72:
-//#line 288 "gramaticaTomi.y"
+//#line 288 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 73:
-//#line 291 "gramaticaTomi.y"
+//#line 291 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if");}
 break;
 case 74:
-//#line 293 "gramaticaTomi.y"
+//#line 293 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 75:
-//#line 296 "gramaticaTomi.y"
+//#line 296 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if");}
 break;
 case 76:
-//#line 298 "gramaticaTomi.y"
+//#line 298 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 77:
-//#line 303 "gramaticaTomi.y"
+//#line 303 ".\gramatica.y"
 {
                         yyval = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) val_peek(5), (ArbolSintactico) val_peek(1));
                         System.out.println("Sentencia WHEN con llaves");}
 break;
 case 78:
-//#line 306 "gramaticaTomi.y"
+//#line 306 ".\gramatica.y"
 {
                         yyval = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) val_peek(3), (ArbolSintactico) val_peek(0));
                         System.out.println("Sentencia WHEN sin llaves");}
 break;
 case 79:
-//#line 309 "gramaticaTomi.y"
+//#line 309 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 80:
-//#line 311 "gramaticaTomi.y"
+//#line 311 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 break;
 case 81:
-//#line 313 "gramaticaTomi.y"
+//#line 313 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba then ");}
 break;
 case 82:
-//#line 315 "gramaticaTomi.y"
+//#line 315 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 83:
-//#line 317 "gramaticaTomi.y"
+//#line 317 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba condicion");}
 break;
 case 84:
-//#line 319 "gramaticaTomi.y"
+//#line 319 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 85:
-//#line 322 "gramaticaTomi.y"
+//#line 322 ".\gramatica.y"
 {
                                 yyval = new ParserVal(val_peek(1).sval);
                                 if(!TablaSimbolos.existeSimbolo(val_peek(1).sval+ ":" + ambitoActual)){
@@ -2176,7 +2173,7 @@ case 85:
                         }
 break;
 case 86:
-//#line 335 "gramaticaTomi.y"
+//#line 335 ".\gramatica.y"
 {
                                 yyval = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja(val_peek(11).sval)) , new NodoComun("While", (ArbolSintactico) val_peek(8), new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(1) , (ArbolSintactico) val_peek(4))) );
                                 System.out.println("Sentencia WHILE con etiqueta y con llaves");
@@ -2185,7 +2182,7 @@ case 86:
                         }
 break;
 case 87:
-//#line 342 "gramaticaTomi.y"
+//#line 342 ".\gramatica.y"
 {
                                 System.out.println("Sentencia WHILE con etiqueta y sin llaves");
                                 yyval = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja(val_peek(9).sval)) , new NodoComun("While", (ArbolSintactico) val_peek(6), new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(0) , (ArbolSintactico) val_peek(2))) );
@@ -2193,184 +2190,323 @@ case 87:
                         }
 break;
 case 88:
-//#line 347 "gramaticaTomi.y"
+//#line 347 ".\gramatica.y"
 {
                         yyval = new NodoComun("While", (ArbolSintactico) val_peek(8), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(1) , (ArbolSintactico) val_peek(4)) );
                         System.out.println("Sentencia WHILE con llaves");}
 break;
 case 89:
-//#line 350 "gramaticaTomi.y"
+//#line 350 ".\gramatica.y"
 {
                     yyval = new NodoComun("While", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(0) , (ArbolSintactico) val_peek(2)) );
                         System.out.println("Sentencia WHILE sin llaves");
                 }
 break;
 case 90:
-//#line 354 "gramaticaTomi.y"
+//#line 354 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 91:
-//#line 356 "gramaticaTomi.y"
+//#line 356 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 break;
 case 92:
-//#line 358 "gramaticaTomi.y"
+//#line 358 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 93:
-//#line 360 "gramaticaTomi.y"
+//#line 360 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una asignacion");}
 break;
 case 94:
-//#line 362 "gramaticaTomi.y"
+//#line 362 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 95:
-//#line 364 "gramaticaTomi.y"
+//#line 364 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba :");}
 break;
 case 96:
-//#line 366 "gramaticaTomi.y"
+//#line 366 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 97:
-//#line 368 "gramaticaTomi.y"
+//#line 368 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una condicion");}
 break;
 case 98:
-//#line 370 "gramaticaTomi.y"
+//#line 370 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 99:
-//#line 372 "gramaticaTomi.y"
+//#line 372 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 100:
-//#line 374 "gramaticaTomi.y"
+//#line 374 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 break;
 case 101:
-//#line 376 "gramaticaTomi.y"
+//#line 376 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 102:
-//#line 378 "gramaticaTomi.y"
+//#line 378 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una asignacion");}
 break;
 case 103:
-//#line 380 "gramaticaTomi.y"
+//#line 380 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 104:
-//#line 382 "gramaticaTomi.y"
+//#line 382 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba :");}
 break;
 case 105:
-//#line 384 "gramaticaTomi.y"
+//#line 384 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 106:
-//#line 386 "gramaticaTomi.y"
+//#line 386 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una condicion");}
 break;
 case 107:
-//#line 388 "gramaticaTomi.y"
+//#line 388 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 108:
-//#line 394 "gramaticaTomi.y"
-{ yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(16).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(12).sval,new NodoHoja(val_peek(13).sval), new NodoHoja(val_peek(11).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(8).sval,new NodoHoja(val_peek(9).sval), (ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)), new NodoHoja(val_peek(5).sval + val_peek(4).sval) ))) );
-                if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
-                        yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
-                }
-                else if (!TablaSimbolos.getAtributo(val_peek(13).sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
-                        yyerror("La variable '" + val_peek(13).sval + "' debe ser de tipo entero");
-                }
-                if (!val_peek(9).sval.equals(val_peek(13).sval)){
-                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
-                }
-                if (!TablaSimbolos.getAtributo(val_peek(4).sval,"Tipo").equals("Entero")){
-                        yyerror("La constante '" + val_peek(5).sval + "' debe ser de tipo entero");
-                }
-                                
-        }
+//#line 393 ".\gramatica.y"
+{
+                                String ambito = buscarAmbito(ambitoActual,val_peek(13).sval);
+                                NodoHoja operando1 = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja operando2 = new NodoHoja(val_peek(4).sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(4).sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                NodoComun iteracion = new NodoComun(val_peek(5).sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja iterador = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+                                asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                asignacion.setUso("Entero");
+                                NodoHoja id1 = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja(val_peek(9).sval+":"+ambito);
+                                id2.setUso("Variable");
+                                id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(9).sval +":"+ ambito,"Tipo"));
+                                yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(16).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(12).sval, id1, new NodoHoja(val_peek(11).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(8).sval,id2, (ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)),asignacion ))) );
+                                if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
+                                        yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo(val_peek(13).sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + val_peek(13).sval + "' debe ser de tipo entero");
+                                }
+                                if (!val_peek(9).sval.equals(val_peek(13).sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo(val_peek(4).sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + val_peek(5).sval + "' debe ser de tipo entero");
+                                }
+                        }
 break;
 case 109:
-//#line 409 "gramaticaTomi.y"
+//#line 429 ".\gramatica.y"
 {
-                yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(16).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(12).sval,new NodoHoja(val_peek(13).sval), new NodoHoja(val_peek(11).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(8).sval,new NodoHoja(val_peek(9).sval), (ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)), new NodoHoja(val_peek(5).sval + val_peek(4).sval) ))) );
-                if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
-                        yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
-                }
-                else if (!TablaSimbolos.getAtributo(val_peek(13).sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
-                        yyerror("La variable '" + val_peek(13).sval + "' debe ser de tipo entero");
-                }
-                if (!val_peek(9).sval.equals(val_peek(13).sval)){
-                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
-                }
-                if (!TablaSimbolos.getAtributo(val_peek(4).sval,"Tipo").equals("Entero")){
-                        yyerror("La constante '" + val_peek(5).sval + "' debe ser de tipo entero");
-                }   
+                                String ambito = buscarAmbito(ambitoActual,val_peek(13).sval);
+                                NodoHoja operando1 = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja operando2 = new NodoHoja(val_peek(4).sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(4).sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");                               
+                                NodoComun iteracion = new NodoComun(val_peek(5).sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja iterador = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+                                asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                asignacion.setUso("Entero");
+                                NodoHoja id1 = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja(val_peek(9).sval+":"+ambito);
+                                id2.setUso("Variable");
+                                id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(9).sval +":"+ ambito,"Tipo"));
+                                yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(16).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(12).sval,id1, new NodoHoja(val_peek(11).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(8).sval,id2, (ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)), asignacion ))) );
+                                if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
+                                        yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo(val_peek(13).sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + val_peek(13).sval + "' debe ser de tipo entero");
+                                }
+                                if (!val_peek(9).sval.equals(val_peek(13).sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo(val_peek(4).sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + val_peek(5).sval + "' debe ser de tipo entero");
+                                }        
                         }
 break;
 case 110:
-//#line 424 "gramaticaTomi.y"
+//#line 465 ".\gramatica.y"
 {
-                        yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(14).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(10).sval,new NodoHoja(val_peek(11).sval), new NodoHoja(val_peek(9).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(6).sval,new NodoHoja(val_peek(7).sval), (ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)), new NodoHoja(val_peek(3).sval + val_peek(2).sval) ))) );
-                if (!TablaSimbolos.existeSimbolo(val_peek(11).sval+ ":" + buscarAmbito(ambitoActual, val_peek(11).sval))){
-                        yyerror("La variable '" + val_peek(11).sval + "' no fue declarada");
-                }
-                else if (!TablaSimbolos.getAtributo(val_peek(11).sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
-                        yyerror("La variable '" + val_peek(11).sval + "' debe ser de tipo entero");
-                }
-                if (!val_peek(7).sval.equals(val_peek(11).sval)){
-                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
-                }
-                if (!TablaSimbolos.getAtributo(val_peek(2).sval,"Tipo").equals("Entero")){
-                        yyerror("La constante '" + val_peek(3).sval + "' debe ser de tipo entero");
-                }        
+                                String ambito = buscarAmbito(ambitoActual,val_peek(11).sval);
+                                NodoHoja operando1 = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja operando2 = new NodoHoja(val_peek(2).sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(2).sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                NodoComun iteracion = new NodoComun(val_peek(3).sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja iterador = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+                                asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                asignacion.setUso("Entero");
+                                NodoHoja id1 = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja(val_peek(7).sval+":"+ambito);
+                                id2.setUso("Variable");
+                                id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(7).sval +":"+ ambito,"Tipo"));
+                                yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(14).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(10).sval,id1, new NodoHoja(val_peek(9).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(6).sval,id2, (ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)), asignacion ))) );
+                                if (!TablaSimbolos.existeSimbolo(val_peek(11).sval+ ":" + buscarAmbito(ambitoActual, val_peek(11).sval))){
+                                        yyerror("La variable '" + val_peek(11).sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo(val_peek(11).sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + val_peek(11).sval + "' debe ser de tipo entero");
+                                }
+                                if (!val_peek(7).sval.equals(val_peek(11).sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo(val_peek(2).sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + val_peek(3).sval + "' debe ser de tipo entero");
+                                }
                         }
 break;
 case 111:
-//#line 440 "gramaticaTomi.y"
+//#line 501 ".\gramatica.y"
 {
-                        yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(14).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(10).sval,new NodoHoja(val_peek(11).sval), new NodoHoja(val_peek(9).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(6).sval,new NodoHoja(val_peek(7).sval), (ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)), new NodoHoja(val_peek(3).sval + val_peek(2).sval) ))) );
-                if (!TablaSimbolos.existeSimbolo(val_peek(11).sval+ ":" + buscarAmbito(ambitoActual, val_peek(11).sval))){
-                        yyerror("La variable '" + val_peek(11).sval + "' no fue declarada");
-                }
-                else if (!TablaSimbolos.getAtributo(val_peek(11).sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
-                        yyerror("La variable '" + val_peek(11).sval + "' debe ser de tipo entero");
-                }
-                if (!val_peek(7).sval.equals(val_peek(11).sval)){
-                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
-                }
-                if (!TablaSimbolos.getAtributo(val_peek(2).sval,"Tipo").equals("Entero")){
-                        yyerror("La constante '" + val_peek(3).sval + "' debe ser de tipo entero");
-                }        
+                                String ambito = buscarAmbito(ambitoActual,val_peek(11).sval);
+                                NodoHoja operando1 = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja operando2 = new NodoHoja(val_peek(2).sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(2).sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable"); 
+                                NodoComun iteracion = new NodoComun(val_peek(3).sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja iterador = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+                                asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                asignacion.setUso("Entero");
+                                NodoHoja id1 = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja(val_peek(7).sval+":"+ambito);
+                                id2.setUso("Variable");
+                                id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(7).sval +":"+ ambito,"Tipo"));
+                                yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(14).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(10).sval,id1, new NodoHoja(val_peek(9).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(6).sval,id2, (ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)),asignacion ))) );
+                                if (!TablaSimbolos.existeSimbolo(val_peek(11).sval+ ":" + buscarAmbito(ambitoActual, val_peek(11).sval))){
+                                        yyerror("La variable '" + val_peek(11).sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo(val_peek(11).sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + val_peek(11).sval + "' debe ser de tipo entero");
+                                }
+                                if (!val_peek(7).sval.equals(val_peek(11).sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo(val_peek(2).sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + val_peek(3).sval + "' debe ser de tipo entero");
+                                }
                         }
 break;
 case 112:
-//#line 456 "gramaticaTomi.y"
+//#line 538 ".\gramatica.y"
 {
-			yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(12).sval,new NodoHoja(val_peek(13).sval),new NodoHoja(val_peek(11).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(8).sval,new NodoHoja(val_peek(9).sval),(ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)), new NodoHoja(val_peek(5).sval + val_peek(4).sval) )) );
+                                String ambito = buscarAmbito(ambitoActual,val_peek(13).sval);
+                                NodoHoja operando1 = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                System.out.println((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja operando2 = new NodoHoja(val_peek(4).sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(4).sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                NodoComun iteracion = new NodoComun(val_peek(5).sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja iterador = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+                                asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                asignacion.setUso("Entero");
+                                NodoHoja id1 = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja(val_peek(9).sval+":"+ambito);
+                                id2.setUso("Variable");
+                                id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(9).sval +":"+ ambito,"Tipo"));
+                                yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(12).sval,id1,new NodoHoja(val_peek(11).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(8).sval,id2,(ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)), asignacion )) );
+                                if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
+                                        yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
+                                }
+                                else if (!TablaSimbolos.getAtributo(val_peek(13).sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
+                                        yyerror("La variable '" + val_peek(13).sval + "' debe ser de tipo entero");
+                                }
+                                if (!val_peek(9).sval.equals(val_peek(13).sval)){
+                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
+                                }
+                                if (!TablaSimbolos.getAtributo(val_peek(4).sval,"Tipo").equals("Entero")){
+                                        yyerror("La constante '" + val_peek(4).sval + "' debe ser de tipo entero");
+                                }
+                }
+break;
+case 113:
+//#line 575 ".\gramatica.y"
+{
+                                String ambito = buscarAmbito(ambitoActual,val_peek(13).sval);
+                                NodoHoja operando1 = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja operando2 = new NodoHoja(val_peek(4).sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(4).sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                NodoComun iteracion = new NodoComun(val_peek(5).sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja iterador = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+                                asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                asignacion.setUso("Entero");
+                                NodoHoja id1 = new NodoHoja(val_peek(13).sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja(val_peek(9).sval+":"+ambito);
+                                id2.setUso("Variable");
+                                id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(9).sval +":"+ ambito,"Tipo"));
+                                yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(12).sval,id1,new NodoHoja(val_peek(11).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(8).sval,id2,(ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)), asignacion )) );
                                 if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
                                         yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
                                 }
@@ -2385,28 +2521,30 @@ case 112:
                                 }
                         }
 break;
-case 113:
-//#line 471 "gramaticaTomi.y"
-{
-			yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(12).sval,new NodoHoja(val_peek(13).sval),new NodoHoja(val_peek(11).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(8).sval,new NodoHoja(val_peek(9).sval),(ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)), new NodoHoja(val_peek(5).sval + val_peek(4).sval) )) );
-                                if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
-                                        yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
-                                }
-                                else if (!TablaSimbolos.getAtributo(val_peek(13).sval+ ":" + ambitoActual,"Tipo").equals("Entero")){
-                                        yyerror("La variable '" + val_peek(13).sval + "' debe ser de tipo entero");
-                                }
-                                if (!val_peek(9).sval.equals(val_peek(13).sval)){
-                                        yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
-                                }
-                                if (!TablaSimbolos.getAtributo(val_peek(4).sval,"Tipo").equals("Entero")){
-                                        yyerror("La constante '" + val_peek(4).sval + "' debe ser de tipo entero");
-                                }
-                                                                                             }
-break;
 case 114:
-//#line 486 "gramaticaTomi.y"
+//#line 610 ".\gramatica.y"
 {
-					yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(10).sval,new NodoHoja(val_peek(11).sval),new NodoHoja(val_peek(9).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(6).sval,new NodoHoja(val_peek(7).sval),(ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)), new NodoHoja(val_peek(3).sval + val_peek(2).sval) )) );
+                                String ambito = buscarAmbito(ambitoActual,val_peek(11).sval);
+                                NodoHoja operando1 = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja operando2 = new NodoHoja(val_peek(2).sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(2).sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                NodoComun iteracion = new NodoComun(val_peek(3).sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja iterador = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+                                asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                asignacion.setUso("Entero");
+                                NodoHoja id1 = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja(val_peek(7).sval+":"+ambito);
+                                id2.setUso("Variable");
+                                id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(7).sval +":"+ ambito,"Tipo"));
+                                yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(10).sval,id1,new NodoHoja(val_peek(9).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(6).sval,id2,(ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)), asignacion)) );
                                 if (!TablaSimbolos.existeSimbolo(val_peek(11).sval+ ":" + buscarAmbito(ambitoActual, val_peek(11).sval))){
                                         yyerror("La variable '" + val_peek(11).sval + "' no fue declarada");
                                 }
@@ -2419,12 +2557,32 @@ case 114:
                                 if (!TablaSimbolos.getAtributo(val_peek(2).sval,"Tipo").equals("Entero")){
                                         yyerror("La constante '" + val_peek(2).sval + "' debe ser de tipo entero");
                                 }
-                                                                                  }
+                        }
 break;
 case 115:
-//#line 501 "gramaticaTomi.y"
+//#line 645 ".\gramatica.y"
 {
-					yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(10).sval,new NodoHoja(val_peek(11).sval),new NodoHoja(val_peek(9).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(6).sval,new NodoHoja(val_peek(7).sval),(ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)), new NodoHoja(val_peek(3).sval + val_peek(2).sval) )) );
+                                String ambito = buscarAmbito(ambitoActual,val_peek(11).sval);
+                                NodoHoja operando1 = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja operando2 = new NodoHoja(val_peek(2).sval);
+                                operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(2).sval +":"+ ambito,"Tipo"));
+                                operando1.setUso("Variable");
+                                operando2.setUso("Variable");
+                                NodoComun iteracion = new NodoComun(val_peek(3).sval,operando1,operando2);
+                                iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja iterador = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
+                                asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                asignacion.setUso("Entero");
+                                NodoHoja id1 = new NodoHoja(val_peek(11).sval+":"+ambito);
+                                id1.setUso("Variable");
+                                id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
+                                NodoHoja id2 = new NodoHoja(val_peek(7).sval+":"+ambito);
+                                id2.setUso("Variable");
+                                id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(7).sval +":"+ ambito,"Tipo"));
+                                yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(10).sval,id1,new NodoHoja(val_peek(9).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(6).sval,id2,(ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)), asignacion)) );
                                 if (!TablaSimbolos.existeSimbolo(val_peek(11).sval+ ":" + buscarAmbito(ambitoActual, val_peek(11).sval))){
                                         yyerror("La variable '" + val_peek(11).sval + "' no fue declarada");
                                 }
@@ -2437,422 +2595,422 @@ case 115:
                                 if (!TablaSimbolos.getAtributo(val_peek(2).sval,"Tipo").equals("Entero")){
                                         yyerror("La constante '" + val_peek(2).sval + "' debe ser de tipo entero");
                                 }
-                                                                                  }
+                        }
 break;
 case 116:
-//#line 517 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 680 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 117:
-//#line 519 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba }");}
+//#line 682 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba {");}
 break;
 case 118:
-//#line 522 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
-break;
-case 119:
-//#line 524 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
-break;
-case 120:
-//#line 527 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 684 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
+case 119:
+//#line 687 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba }");}
+break;
+case 120:
+//#line 689 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba {");}
+break;
 case 121:
-//#line 529 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 691 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 122:
-//#line 532 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba una constante");}
+//#line 693 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba constante");}
 break;
 case 123:
-//#line 534 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba una constante");}
+//#line 695 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba constante");}
 break;
 case 124:
-//#line 537 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 698 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador + o -");}
 break;
 case 125:
-//#line 540 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ; despues de la ID comparacion expresion");}
+//#line 700 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba ; luego de la comparacion");}
 break;
 case 126:
-//#line 542 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba expresion");}
+//#line 702 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba expresion para comparar");}
 break;
 case 127:
-//#line 544 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 704 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador de comparacion");}
 break;
 case 128:
-//#line 546 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba identificador");}
+//#line 706 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba nombre de variable");}
 break;
 case 129:
-//#line 549 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ; despues de la ID ASIG ENTERO");}
+//#line 708 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba ; luego de la asignacion");}
 break;
 case 130:
-//#line 551 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba numero entero");}
+//#line 710 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba numero entero para asignar");}
 break;
 case 131:
-//#line 553 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 712 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba =:");}
 break;
 case 132:
-//#line 555 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba identificador");}
+//#line 714 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba nombre de variable");}
 break;
 case 133:
-//#line 558 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 716 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 134:
-//#line 561 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 718 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 135:
-//#line 563 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba }");}
+//#line 720 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba {");}
 break;
 case 136:
-//#line 566 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
-break;
-case 137:
-//#line 568 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
-break;
-case 138:
-//#line 571 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 722 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
+case 137:
+//#line 725 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba }");}
+break;
+case 138:
+//#line 727 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba {");}
+break;
 case 139:
-//#line 573 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 729 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 140:
-//#line 576 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba una constante");}
+//#line 731 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba constante");}
 break;
 case 141:
-//#line 578 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba una constante");}
+//#line 733 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba constante");}
 break;
 case 142:
-//#line 581 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 736 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador + o -");}
 break;
 case 143:
-//#line 584 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ; despues de la ID comparacion expresion");}
+//#line 738 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba ; luego de la comparacion");}
 break;
 case 144:
-//#line 587 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                yyerror("Se esperaba expresion");}
+//#line 740 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba expresion para comparar");}
 break;
 case 145:
-//#line 589 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                yyerror("Se esperaba operador de comparacion");}
+//#line 742 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba operador de comparacion");}
 break;
 case 146:
-//#line 591 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                yyerror("Se esperaba identificador");}
+//#line 744 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba nombre de variable");}
 break;
 case 147:
-//#line 595 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ; despues de la ID ASIG ENTERO");}
+//#line 746 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba ; luego de la asignacion");}
 break;
 case 148:
-//#line 597 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                yyerror("Se esperaba numero entero");}
+//#line 748 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba numero entero para asignar");}
 break;
 case 149:
-//#line 599 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                yyerror("Se esperaba =:");}
+//#line 750 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba =:");}
 break;
 case 150:
-//#line 603 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ID ASIG ENTERO");}
+//#line 752 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba nombre de variable");}
 break;
 case 151:
-//#line 606 "gramaticaTomi.y"
-{yyval=new NodoHoja("Error sintactico");
+//#line 754 ".\gramatica.y"
+{ yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 152:
-//#line 609 "gramaticaTomi.y"
+//#line 757 ".\gramatica.y"
 {yyval=new NodoHoja("Fin");}
 break;
 case 153:
-//#line 610 "gramaticaTomi.y"
+//#line 758 ".\gramatica.y"
 {yyval=new NodoComun("Sentencia_Funcion_Break", (ArbolSintactico) val_peek(2), (ArbolSintactico) val_peek(1));}
 break;
 case 154:
-//#line 611 "gramaticaTomi.y"
+//#line 759 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ;");}
 break;
 case 155:
-//#line 614 "gramaticaTomi.y"
+//#line 762 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 156:
-//#line 615 "gramaticaTomi.y"
+//#line 763 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 157:
-//#line 616 "gramaticaTomi.y"
+//#line 764 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 158:
-//#line 617 "gramaticaTomi.y"
+//#line 765 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 159:
-//#line 618 "gramaticaTomi.y"
+//#line 766 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 160:
-//#line 619 "gramaticaTomi.y"
+//#line 767 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 161:
-//#line 620 "gramaticaTomi.y"
+//#line 768 ".\gramatica.y"
 {yyval = new NodoControl("Continue",(ArbolSintactico)val_peek(0));}
 break;
 case 162:
-//#line 621 "gramaticaTomi.y"
+//#line 769 ".\gramatica.y"
 {yyval = new NodoHoja("Break");}
 break;
 case 163:
-//#line 622 "gramaticaTomi.y"
+//#line 770 ".\gramatica.y"
 {yyval = new NodoControl("Break", new NodoHoja(val_peek(0).sval));}
 break;
 case 164:
-//#line 623 "gramaticaTomi.y"
+//#line 771 ".\gramatica.y"
 {yyval=val_peek(0);}
 break;
 case 165:
-//#line 626 "gramaticaTomi.y"
+//#line 774 ".\gramatica.y"
 {
                         yyval = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) val_peek(5), (ArbolSintactico) val_peek(1));
                         System.out.println("Sentencia WHEN con llaves");}
 break;
 case 166:
-//#line 629 "gramaticaTomi.y"
+//#line 777 ".\gramatica.y"
 {
                         yyval = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) val_peek(3), (ArbolSintactico) val_peek(0));
                         System.out.println("Sentencia WHEN sin llaves");}
 break;
 case 167:
-//#line 632 "gramaticaTomi.y"
+//#line 780 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 168:
-//#line 634 "gramaticaTomi.y"
+//#line 782 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 break;
 case 169:
-//#line 636 "gramaticaTomi.y"
+//#line 784 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba then ");}
 break;
 case 170:
-//#line 638 "gramaticaTomi.y"
+//#line 786 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 171:
-//#line 640 "gramaticaTomi.y"
+//#line 788 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba condicion");}
 break;
 case 172:
-//#line 642 "gramaticaTomi.y"
+//#line 790 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 173:
-//#line 646 "gramaticaTomi.y"
+//#line 794 ".\gramatica.y"
 {
                         yyval = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(8)), new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(5)), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)val_peek(2))));
                         System.out.println("Sentencia IF sin corchetes y con else sin corchetes");
                         }
 break;
 case 174:
-//#line 651 "gramaticaTomi.y"
+//#line 799 ".\gramatica.y"
 {
                         yyval= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(9)),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(5)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");
                         }
 break;
 case 175:
-//#line 656 "gramaticaTomi.y"
+//#line 804 ".\gramatica.y"
 {
                         yyval= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(9)),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");
                         }
 break;
 case 176:
-//#line 661 "gramaticaTomi.y"
+//#line 809 ".\gramatica.y"
 {
                         yyval = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(5)), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(2)) );
                         System.out.println("Sentencia IF sin corchetes y sin else");
                         }
 break;
 case 177:
-//#line 666 "gramaticaTomi.y"
+//#line 814 ".\gramatica.y"
 {
                         yyval= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(10)),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF con corchetes y else");
                         }
 break;
 case 178:
-//#line 671 "gramaticaTomi.y"
+//#line 819 ".\gramatica.y"
 {
                         yyval = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(6)), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)val_peek(2)));
                         System.out.println("Sentencia IF con corchetes y sin else");
                         }
 break;
 case 179:
-//#line 675 "gramaticaTomi.y"
+//#line 823 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 180:
-//#line 677 "gramaticaTomi.y"
+//#line 825 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 181:
-//#line 679 "gramaticaTomi.y"
+//#line 827 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 182:
-//#line 681 "gramaticaTomi.y"
+//#line 829 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 183:
-//#line 683 "gramaticaTomi.y"
+//#line 831 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 184:
-//#line 686 "gramaticaTomi.y"
+//#line 834 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 185:
-//#line 688 "gramaticaTomi.y"
+//#line 836 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 186:
-//#line 690 "gramaticaTomi.y"
+//#line 838 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 187:
-//#line 692 "gramaticaTomi.y"
+//#line 840 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 188:
-//#line 694 "gramaticaTomi.y"
+//#line 842 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 189:
-//#line 697 "gramaticaTomi.y"
+//#line 845 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 190:
-//#line 699 "gramaticaTomi.y"
+//#line 847 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 191:
-//#line 702 "gramaticaTomi.y"
+//#line 850 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 192:
-//#line 704 "gramaticaTomi.y"
+//#line 852 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 193:
-//#line 707 "gramaticaTomi.y"
+//#line 855 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 194:
-//#line 709 "gramaticaTomi.y"
+//#line 857 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba then ");}
 break;
 case 195:
-//#line 711 "gramaticaTomi.y"
+//#line 859 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ) ");}
 break;
 case 196:
-//#line 713 "gramaticaTomi.y"
+//#line 861 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una condicion ");}
 break;
 case 197:
-//#line 715 "gramaticaTomi.y"
+//#line 863 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ( ");}
 break;
 case 198:
-//#line 718 "gramaticaTomi.y"
+//#line 866 ".\gramatica.y"
 {yyval = new NodoControl("Retorno", (ArbolSintactico)val_peek(1));
                                                 String tipoRet = ((ArbolSintactico)val_peek(1)).getTipo();
                                                 if(!ambitoActual.equals("Global")){
@@ -2866,37 +3024,37 @@ case 198:
                                         }
 break;
 case 199:
-//#line 729 "gramaticaTomi.y"
+//#line 877 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                                 yyerror("Se esperaba )");}
 break;
 case 200:
-//#line 731 "gramaticaTomi.y"
+//#line 879 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                                 yyerror("Se esperaba expresion");}
 break;
 case 201:
-//#line 733 "gramaticaTomi.y"
+//#line 881 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                                 yyerror("Se esperaba expresion entre ( )");}
 break;
 case 202:
-//#line 737 "gramaticaTomi.y"
+//#line 885 ".\gramatica.y"
 {    yyval = new NodoHoja(val_peek(0).sval);
                         ((ArbolSintactico)yyval).setTipo(((ArbolSintactico)val_peek(1)).getTipo());
 }
 break;
 case 203:
-//#line 740 "gramaticaTomi.y"
+//#line 888 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba identificador");}
 break;
 case 204:
-//#line 744 "gramaticaTomi.y"
+//#line 892 ".\gramatica.y"
 {System.out.println("Declaracion de Constante/s");}
 break;
 case 207:
-//#line 750 "gramaticaTomi.y"
+//#line 898 ".\gramatica.y"
 { 
                                 String ambito = buscarAmbito(ambitoActual,val_peek(2).sval);
                                 if(ambito.equals(ambitoActual)){
@@ -2909,45 +3067,45 @@ case 207:
                         }
 break;
 case 208:
-//#line 760 "gramaticaTomi.y"
+//#line 908 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba una constante");}
 break;
 case 209:
-//#line 762 "gramaticaTomi.y"
+//#line 910 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba una asignacion =:");}
 break;
 case 210:
-//#line 765 "gramaticaTomi.y"
+//#line 913 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 211:
-//#line 766 "gramaticaTomi.y"
+//#line 914 ".\gramatica.y"
 {yyval = val_peek(0); }
 break;
 case 212:
-//#line 767 "gramaticaTomi.y"
+//#line 915 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 213:
-//#line 768 "gramaticaTomi.y"
+//#line 916 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 214:
-//#line 769 "gramaticaTomi.y"
+//#line 917 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 215:
-//#line 770 "gramaticaTomi.y"
+//#line 918 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 216:
-//#line 771 "gramaticaTomi.y"
+//#line 919 ".\gramatica.y"
 {yyval=val_peek(0);}
 break;
 case 217:
-//#line 773 "gramaticaTomi.y"
+//#line 921 ".\gramatica.y"
 {
                                         System.out.println("Asignacion");
                                         String ambito = buscarAmbito(ambitoActual,val_peek(2).sval);
@@ -2974,17 +3132,17 @@ case 217:
                                 }
 break;
 case 218:
-//#line 797 "gramaticaTomi.y"
+//#line 945 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                                 yyerror("Se esperaba =:");}
 break;
 case 219:
-//#line 799 "gramaticaTomi.y"
+//#line 947 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                                 yyerror("Se esperaba expresion");}
 break;
 case 220:
-//#line 802 "gramaticaTomi.y"
+//#line 950 ".\gramatica.y"
 {     
                                         yyval = (ArbolSintactico) new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
 
@@ -2997,7 +3155,7 @@ case 220:
                                  }
 break;
 case 221:
-//#line 812 "gramaticaTomi.y"
+//#line 960 ".\gramatica.y"
 {
                                         yyval = (ArbolSintactico) new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
                                         
@@ -3009,43 +3167,43 @@ case 221:
                                  }
 break;
 case 222:
-//#line 821 "gramaticaTomi.y"
+//#line 969 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 223:
-//#line 822 "gramaticaTomi.y"
+//#line 970 ".\gramatica.y"
 {yyval = new NodoComun("For como expresion",(ArbolSintactico)val_peek(2),new NodoHoja(val_peek(0).sval));
                                    ((ArbolSintactico)yyval).setTipo((String)TablaSimbolos.getAtributo(val_peek(0).sval,"Tipo"));     
                                         }
 break;
 case 224:
-//#line 825 "gramaticaTomi.y"
+//#line 973 ".\gramatica.y"
 {    yyval = new NodoComun("While como expresion",(ArbolSintactico)val_peek(2),new NodoHoja(val_peek(0).sval));
                                         ((ArbolSintactico)yyval).setTipo((String)TablaSimbolos.getAtributo(val_peek(0).sval,"Tipo")); 
                                         }
 break;
 case 225:
-//#line 828 "gramaticaTomi.y"
+//#line 976 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un termino");}
 break;
 case 226:
-//#line 830 "gramaticaTomi.y"
+//#line 978 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un termino");}
 break;
 case 227:
-//#line 832 "gramaticaTomi.y"
+//#line 980 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un constante");}
 break;
 case 228:
-//#line 834 "gramaticaTomi.y"
+//#line 982 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un constante");}
 break;
 case 229:
-//#line 838 "gramaticaTomi.y"
+//#line 986 ".\gramatica.y"
 { 
                                         yyval = (ArbolSintactico) new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
                                         if(!(((ArbolSintactico)val_peek(2)).getTipo().equals(((ArbolSintactico)val_peek(0)).getTipo()))){
@@ -3056,7 +3214,7 @@ case 229:
                                 }
 break;
 case 230:
-//#line 847 "gramaticaTomi.y"
+//#line 995 ".\gramatica.y"
 {
                                         yyval = new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
                                         if(!(((ArbolSintactico)val_peek(2)).getTipo().equals(((ArbolSintactico)val_peek(0)).getTipo()))){
@@ -3067,23 +3225,23 @@ case 230:
                                 }
 break;
 case 231:
-//#line 856 "gramaticaTomi.y"
+//#line 1004 ".\gramatica.y"
 {
                   yyval = val_peek(0);
                  }
 break;
 case 232:
-//#line 859 "gramaticaTomi.y"
+//#line 1007 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un factor");}
 break;
 case 233:
-//#line 861 "gramaticaTomi.y"
+//#line 1009 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un factor");}
 break;
 case 234:
-//#line 864 "gramaticaTomi.y"
+//#line 1012 ".\gramatica.y"
 {
                 String ambito = buscarAmbito(ambitoActual,val_peek(0).sval);
                 if((!ambito.equals(""))){
@@ -3101,7 +3259,7 @@ case 234:
            }
 break;
 case 235:
-//#line 880 "gramaticaTomi.y"
+//#line 1028 ".\gramatica.y"
 {
                 yyval = new NodoHoja(val_peek(0).sval);
                 ((ArbolSintactico)yyval).setTipo((String)TablaSimbolos.getAtributo(val_peek(0).sval,"Tipo"));
@@ -3109,149 +3267,149 @@ case 235:
               }
 break;
 case 236:
-//#line 886 "gramaticaTomi.y"
+//#line 1034 ".\gramatica.y"
 {yyval=val_peek(0);}
 break;
 case 237:
-//#line 888 "gramaticaTomi.y"
+//#line 1036 ".\gramatica.y"
 {  chequearRangoI32(val_peek(0).sval);}
 break;
 case 238:
-//#line 889 "gramaticaTomi.y"
+//#line 1037 ".\gramatica.y"
 {}
 break;
 case 241:
-//#line 894 "gramaticaTomi.y"
+//#line 1042 ".\gramatica.y"
 {
                                                                                                                                 yyval= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(9)),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                                                                                                                                 System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");
                                                                                                                                 }
 break;
 case 242:
-//#line 898 "gramaticaTomi.y"
+//#line 1046 ".\gramatica.y"
 {
                                                                                                                                 yyval= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(9)),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(5)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                                                                                                                                 System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");}
 break;
 case 243:
-//#line 901 "gramaticaTomi.y"
+//#line 1049 ".\gramatica.y"
 {yyval = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(8)), new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(5)), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)val_peek(2))));
                                                                                         System.out.println("Sentencia IF sin corchetes y con else sin corchetes");}
 break;
 case 244:
-//#line 903 "gramaticaTomi.y"
+//#line 1051 ".\gramatica.y"
 {yyval = new NodoComun("IF",new NodoControl("Condicion", (ArbolSintactico) val_peek(5)), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(2)) );
                                                                                         System.out.println("Sentencia IF sin corchetes y sin else");}
 break;
 case 245:
-//#line 905 "gramaticaTomi.y"
+//#line 1053 ".\gramatica.y"
 {
                                                                                                                                 yyval= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(10)),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                                                                                                                                 System.out.println("Sentencia IF con corchetes y else");}
 break;
 case 246:
-//#line 908 "gramaticaTomi.y"
+//#line 1056 ".\gramatica.y"
 {
                                         yyval = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(6)), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)val_peek(2)));
                                         System.out.println("Sentencia IF con corchetes y sin else");}
 break;
 case 247:
-//#line 911 "gramaticaTomi.y"
+//#line 1059 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 248:
-//#line 913 "gramaticaTomi.y"
+//#line 1061 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 249:
-//#line 915 "gramaticaTomi.y"
+//#line 1063 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 250:
-//#line 917 "gramaticaTomi.y"
+//#line 1065 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 251:
-//#line 919 "gramaticaTomi.y"
+//#line 1067 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 252:
-//#line 922 "gramaticaTomi.y"
+//#line 1070 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 253:
-//#line 924 "gramaticaTomi.y"
+//#line 1072 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 254:
-//#line 926 "gramaticaTomi.y"
+//#line 1074 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 255:
-//#line 928 "gramaticaTomi.y"
+//#line 1076 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 256:
-//#line 930 "gramaticaTomi.y"
+//#line 1078 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 257:
-//#line 933 "gramaticaTomi.y"
+//#line 1081 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 258:
-//#line 935 "gramaticaTomi.y"
+//#line 1083 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 259:
-//#line 938 "gramaticaTomi.y"
+//#line 1086 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 260:
-//#line 940 "gramaticaTomi.y"
+//#line 1088 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 261:
-//#line 943 "gramaticaTomi.y"
+//#line 1091 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 262:
-//#line 945 "gramaticaTomi.y"
+//#line 1093 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba then ");}
 break;
 case 263:
-//#line 947 "gramaticaTomi.y"
+//#line 1095 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ) ");}
 break;
 case 264:
-//#line 949 "gramaticaTomi.y"
+//#line 1097 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una condicion ");}
 break;
 case 265:
-//#line 951 "gramaticaTomi.y"
+//#line 1099 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ( ");}
 break;
 case 266:
-//#line 957 "gramaticaTomi.y"
+//#line 1105 ".\gramatica.y"
 {
                         yyval= new NodoComun(val_peek(1).sval,(ArbolSintactico)val_peek(2),(ArbolSintactico)val_peek(0));
                         ((ArbolSintactico)yyval).setTipo(((ArbolSintactico)val_peek(2)).getTipo());
@@ -3262,245 +3420,245 @@ case 266:
                 }
 break;
 case 267:
-//#line 965 "gramaticaTomi.y"
+//#line 1113 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba otra expresion para comparar.");}
 break;
 case 268:
-//#line 967 "gramaticaTomi.y"
+//#line 1115 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un tipo de comparacion.");}
 break;
 case 269:
-//#line 970 "gramaticaTomi.y"
+//#line 1118 ".\gramatica.y"
 {yyval= val_peek(0);}
 break;
 case 270:
-//#line 971 "gramaticaTomi.y"
+//#line 1119 ".\gramatica.y"
 {yyval= val_peek(0);}
 break;
 case 271:
-//#line 972 "gramaticaTomi.y"
+//#line 1120 ".\gramatica.y"
 {yyval= val_peek(0);}
 break;
 case 272:
-//#line 973 "gramaticaTomi.y"
+//#line 1121 ".\gramatica.y"
 {yyval= val_peek(0);}
 break;
 case 273:
-//#line 974 "gramaticaTomi.y"
+//#line 1122 ".\gramatica.y"
 {yyval= val_peek(0);}
 break;
 case 274:
-//#line 975 "gramaticaTomi.y"
+//#line 1123 ".\gramatica.y"
 {yyval=val_peek(0);}
 break;
 case 275:
-//#line 977 "gramaticaTomi.y"
+//#line 1125 ".\gramatica.y"
 {yyval=new NodoHoja("Fin");}
 break;
 case 276:
-//#line 978 "gramaticaTomi.y"
+//#line 1126 ".\gramatica.y"
 {
                                                                 yyval=new NodoComun("Bloque Ejecutable", (ArbolSintactico) val_peek(1), (ArbolSintactico) val_peek(2));
                                                                 }
 break;
 case 277:
-//#line 981 "gramaticaTomi.y"
+//#line 1129 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ;");}
 break;
 case 278:
-//#line 984 "gramaticaTomi.y"
+//#line 1132 ".\gramatica.y"
 {
                         yyval = new NodoControl(val_peek(3).sval, (ArbolSintactico) new NodoHoja(val_peek(1).sval));
                         System.out.println("Sentencia OUT");}
 break;
 case 279:
-//#line 987 "gramaticaTomi.y"
+//#line 1135 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 280:
-//#line 989 "gramaticaTomi.y"
+//#line 1137 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una CADENA");}
 break;
 case 281:
-//#line 991 "gramaticaTomi.y"
+//#line 1139 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 282:
-//#line 994 "gramaticaTomi.y"
+//#line 1142 ".\gramatica.y"
 {
                         yyval = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) val_peek(5), (ArbolSintactico) val_peek(1));
                         System.out.println("Sentencia WHEN con llaves");}
 break;
 case 283:
-//#line 997 "gramaticaTomi.y"
+//#line 1145 ".\gramatica.y"
 {
                         yyval = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) val_peek(3), (ArbolSintactico) val_peek(0));
                         System.out.println("Sentencia WHEN sin llaves");}
 break;
 case 284:
-//#line 1000 "gramaticaTomi.y"
+//#line 1148 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } en el when");}
 break;
 case 285:
-//#line 1002 "gramaticaTomi.y"
+//#line 1150 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { en el when");}
 break;
 case 286:
-//#line 1004 "gramaticaTomi.y"
+//#line 1152 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba then en el when");}
 break;
 case 287:
-//#line 1006 "gramaticaTomi.y"
+//#line 1154 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ) en el when");}
 break;
 case 288:
-//#line 1008 "gramaticaTomi.y"
+//#line 1156 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba condicion en el when");}
 break;
 case 289:
-//#line 1010 "gramaticaTomi.y"
+//#line 1158 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ( en el when");}
 break;
 case 290:
-//#line 1014 "gramaticaTomi.y"
+//#line 1162 ".\gramatica.y"
 {
                                 yyval = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja(val_peek(11).sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) val_peek(8), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(1) , (ArbolSintactico) val_peek(4))) );
                         
                         }
 break;
 case 291:
-//#line 1018 "gramaticaTomi.y"
+//#line 1166 ".\gramatica.y"
 {
                         yyval = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja(val_peek(9).sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(0) , (ArbolSintactico) val_peek(2))) );
                         
                         }
 break;
 case 292:
-//#line 1022 "gramaticaTomi.y"
+//#line 1170 ".\gramatica.y"
 {
                         yyval = new NodoComun("While", (ArbolSintactico) val_peek(8), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(1) , (ArbolSintactico) val_peek(4)) );
                         System.out.println("Sentencia WHILE con llaves");}
 break;
 case 293:
-//#line 1025 "gramaticaTomi.y"
+//#line 1173 ".\gramatica.y"
 {
                         yyval = new NodoComun("While", (ArbolSintactico) val_peek(6), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) val_peek(0) , (ArbolSintactico) val_peek(2)) );
                         System.out.println("Sentencia WHILE sin llaves");}
 break;
 case 294:
-//#line 1028 "gramaticaTomi.y"
+//#line 1176 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 295:
-//#line 1030 "gramaticaTomi.y"
+//#line 1178 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 break;
 case 296:
-//#line 1032 "gramaticaTomi.y"
+//#line 1180 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 297:
-//#line 1034 "gramaticaTomi.y"
+//#line 1182 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una asignacion");}
 break;
 case 298:
-//#line 1036 "gramaticaTomi.y"
+//#line 1184 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 299:
-//#line 1038 "gramaticaTomi.y"
+//#line 1186 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba :");}
 break;
 case 300:
-//#line 1040 "gramaticaTomi.y"
+//#line 1188 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 301:
-//#line 1042 "gramaticaTomi.y"
+//#line 1190 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una condicion");}
 break;
 case 302:
-//#line 1044 "gramaticaTomi.y"
+//#line 1192 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 303:
-//#line 1047 "gramaticaTomi.y"
+//#line 1195 ".\gramatica.y"
 {yyval=new NodoHoja("Fin");}
 break;
 case 304:
-//#line 1048 "gramaticaTomi.y"
+//#line 1196 ".\gramatica.y"
 {
                 yyval = new NodoComun("Bloque Break con Continue",(ArbolSintactico) val_peek(2), (ArbolSintactico) val_peek(1));
                 }
 break;
 case 305:
-//#line 1051 "gramaticaTomi.y"
+//#line 1199 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba ;");}
 break;
 case 306:
-//#line 1055 "gramaticaTomi.y"
+//#line 1203 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 307:
-//#line 1056 "gramaticaTomi.y"
+//#line 1204 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 308:
-//#line 1057 "gramaticaTomi.y"
+//#line 1205 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 309:
-//#line 1058 "gramaticaTomi.y"
+//#line 1206 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 310:
-//#line 1059 "gramaticaTomi.y"
+//#line 1207 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 311:
-//#line 1060 "gramaticaTomi.y"
+//#line 1208 ".\gramatica.y"
 {yyval = val_peek(0);}
 break;
 case 312:
-//#line 1061 "gramaticaTomi.y"
+//#line 1209 ".\gramatica.y"
 {yyval = new NodoControl("Continue",(ArbolSintactico)val_peek(0));}
 break;
 case 313:
-//#line 1062 "gramaticaTomi.y"
+//#line 1210 ".\gramatica.y"
 {yyval = new NodoHoja("Break");}
 break;
 case 314:
-//#line 1063 "gramaticaTomi.y"
+//#line 1211 ".\gramatica.y"
 {yyval = new NodoControl("Break", new NodoHoja(val_peek(0).sval));}
 break;
 case 315:
-//#line 1065 "gramaticaTomi.y"
+//#line 1213 ".\gramatica.y"
 {yyval = new NodoHoja("Fin");}
 break;
 case 316:
-//#line 1066 "gramaticaTomi.y"
+//#line 1214 ".\gramatica.y"
 {String ambito = buscarAmbito(ambitoActual,val_peek(0).sval);
                         yyval = new NodoControl("Tag", new NodoHoja(val_peek(0).sval) );
                         if(!ambito.equals("")){
@@ -3513,218 +3671,209 @@ case 316:
                         }
 break;
 case 317:
-//#line 1076 "gramaticaTomi.y"
+//#line 1224 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un identificador");}
 break;
 case 318:
-//#line 1080 "gramaticaTomi.y"
+//#line 1228 ".\gramatica.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 319:
-//#line 1081 "gramaticaTomi.y"
+//#line 1229 ".\gramatica.y"
 {System.out.println("Sentencia WHEN");}
 break;
 case 320:
-//#line 1082 "gramaticaTomi.y"
+//#line 1230 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } en el when");}
 break;
 case 321:
-//#line 1084 "gramaticaTomi.y"
+//#line 1232 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { en el when");}
 break;
 case 322:
-//#line 1086 "gramaticaTomi.y"
+//#line 1234 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba then en el when");}
 break;
 case 323:
-//#line 1088 "gramaticaTomi.y"
+//#line 1236 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ) en el when");}
 break;
 case 324:
-//#line 1090 "gramaticaTomi.y"
+//#line 1238 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba condicion en el when");}
 break;
 case 325:
-//#line 1092 "gramaticaTomi.y"
+//#line 1240 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ( en el when");}
 break;
 case 326:
-//#line 1096 "gramaticaTomi.y"
+//#line 1244 ".\gramatica.y"
 {
                         yyval= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(9)),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF -> then sin corchetes y else con corchetes");
                         }
 break;
 case 327:
-//#line 1101 "gramaticaTomi.y"
+//#line 1249 ".\gramatica.y"
 {
                         yyval= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(9)),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(5)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF -> then con corchetes y else sin corchetes");
                         }
 break;
 case 328:
-//#line 1106 "gramaticaTomi.y"
+//#line 1254 ".\gramatica.y"
 {
                         yyval = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(8)), new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(5)), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)val_peek(2))));
                         System.out.println("Sentencia IF sin corchetes y con else sin corchetes");
                         }
 break;
 case 329:
-//#line 1111 "gramaticaTomi.y"
+//#line 1259 ".\gramatica.y"
 {
                         yyval = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(5)), (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)val_peek(2)) );
                         System.out.println("Sentencia IF sin corchetes y sin else");
                         }
 break;
 case 330:
-//#line 1116 "gramaticaTomi.y"
+//#line 1264 ".\gramatica.y"
 {
                         yyval= new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(10)),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then", (ArbolSintactico) val_peek(6)), new NodoControl("Else",(ArbolSintactico) val_peek(2)))); 
                         System.out.println("Sentencia IF con corchetes y else");
                         }
 break;
 case 331:
-//#line 1121 "gramaticaTomi.y"
+//#line 1269 ".\gramatica.y"
 {
                         yyval = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) val_peek(6)), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)val_peek(2)));
                         System.out.println("Sentencia IF con corchetes y sin else");
                         }
 break;
 case 332:
-//#line 1125 "gramaticaTomi.y"
+//#line 1273 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 333:
-//#line 1127 "gramaticaTomi.y"
+//#line 1275 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 334:
-//#line 1129 "gramaticaTomi.y"
+//#line 1277 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 335:
-//#line 1131 "gramaticaTomi.y"
+//#line 1279 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 336:
-//#line 1133 "gramaticaTomi.y"
+//#line 1281 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 337:
-//#line 1136 "gramaticaTomi.y"
+//#line 1284 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 338:
-//#line 1138 "gramaticaTomi.y"
+//#line 1286 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba } ");}
 break;
 case 339:
-//#line 1140 "gramaticaTomi.y"
+//#line 1288 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 340:
-//#line 1142 "gramaticaTomi.y"
+//#line 1290 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 341:
-//#line 1144 "gramaticaTomi.y"
+//#line 1292 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 342:
-//#line 1147 "gramaticaTomi.y"
+//#line 1295 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 343:
-//#line 1149 "gramaticaTomi.y"
+//#line 1297 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 344:
-//#line 1152 "gramaticaTomi.y"
+//#line 1300 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
 break;
 case 345:
-//#line 1154 "gramaticaTomi.y"
+//#line 1302 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la sentencia");}
 break;
 case 346:
-//#line 1157 "gramaticaTomi.y"
+//#line 1305 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba { ");}
 break;
 case 347:
-//#line 1159 "gramaticaTomi.y"
+//#line 1307 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba then ");}
 break;
 case 348:
-//#line 1161 "gramaticaTomi.y"
+//#line 1309 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ) ");}
 break;
 case 349:
-//#line 1163 "gramaticaTomi.y"
+//#line 1311 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba una condicion ");}
 break;
 case 350:
-//#line 1165 "gramaticaTomi.y"
+//#line 1313 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ( ");}
 break;
 case 351:
-//#line 1169 "gramaticaTomi.y"
+//#line 1317 ".\gramatica.y"
 {
-                                
                                 String ambito = buscarAmbito(ambitoActual,val_peek(13).sval);
-                                
                                 NodoHoja operando1 = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-                                
                                 NodoHoja operando2 = new NodoHoja(val_peek(4).sval);
                                 operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(4).sval +":"+ ambito,"Tipo"));
                                 operando1.setUso("Variable");
                                 operando2.setUso("Variable");
-                                
                                 NodoComun iteracion = new NodoComun(val_peek(5).sval,operando1,operando2);
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-
                                 NodoHoja iterador = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
-
                                 NodoHoja id1 = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 id1.setUso("Variable");
                                 id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
                                 NodoHoja id2 = new NodoHoja(val_peek(9).sval+":"+ambito);
                                 id2.setUso("Variable");
                                 id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(9).sval +":"+ ambito,"Tipo"));
-
                                 yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(16).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(12).sval, id1, new NodoHoja(val_peek(11).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(8).sval,id2, (ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)),asignacion ))) );
-
                                 if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
                                         yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
                                 }
@@ -3740,35 +3889,28 @@ case 351:
                         }
 break;
 case 352:
-//#line 1214 "gramaticaTomi.y"
+//#line 1353 ".\gramatica.y"
 {
                                 String ambito = buscarAmbito(ambitoActual,val_peek(13).sval);
-
                                 NodoHoja operando1 = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-                                
                                 NodoHoja operando2 = new NodoHoja(val_peek(4).sval);
                                 operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(4).sval +":"+ ambito,"Tipo"));
                                 operando1.setUso("Variable");
-                                operando2.setUso("Variable");
-                                
+                                operando2.setUso("Variable");                               
                                 NodoComun iteracion = new NodoComun(val_peek(5).sval,operando1,operando2);
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-
                                 NodoHoja iterador = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
-
                                 NodoHoja id1 = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 id1.setUso("Variable");
                                 id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
                                 NodoHoja id2 = new NodoHoja(val_peek(9).sval+":"+ambito);
                                 id2.setUso("Variable");
                                 id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(9).sval +":"+ ambito,"Tipo"));
-
                                 yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(16).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(12).sval,id1, new NodoHoja(val_peek(11).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(8).sval,id2, (ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)), asignacion ))) );
                                 if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
                                         yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
@@ -3785,35 +3927,28 @@ case 352:
                         }
 break;
 case 353:
-//#line 1257 "gramaticaTomi.y"
+//#line 1389 ".\gramatica.y"
 {
                                 String ambito = buscarAmbito(ambitoActual,val_peek(11).sval);
-
                                 NodoHoja operando1 = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-                                
                                 NodoHoja operando2 = new NodoHoja(val_peek(2).sval);
                                 operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(2).sval +":"+ ambito,"Tipo"));
                                 operando1.setUso("Variable");
                                 operando2.setUso("Variable");
-                                
                                 NodoComun iteracion = new NodoComun(val_peek(3).sval,operando1,operando2);
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-
                                 NodoHoja iterador = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
-
                                 NodoHoja id1 = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 id1.setUso("Variable");
                                 id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
                                 NodoHoja id2 = new NodoHoja(val_peek(7).sval+":"+ambito);
                                 id2.setUso("Variable");
                                 id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(7).sval +":"+ ambito,"Tipo"));
-
                                 yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(14).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(10).sval,id1, new NodoHoja(val_peek(9).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(6).sval,id2, (ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)), asignacion ))) );
                                 if (!TablaSimbolos.existeSimbolo(val_peek(11).sval+ ":" + buscarAmbito(ambitoActual, val_peek(11).sval))){
                                         yyerror("La variable '" + val_peek(11).sval + "' no fue declarada");
@@ -3830,35 +3965,28 @@ case 353:
                         }
 break;
 case 354:
-//#line 1300 "gramaticaTomi.y"
+//#line 1425 ".\gramatica.y"
 {
                                 String ambito = buscarAmbito(ambitoActual,val_peek(11).sval);
-
                                 NodoHoja operando1 = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-                                
                                 NodoHoja operando2 = new NodoHoja(val_peek(2).sval);
                                 operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(2).sval +":"+ ambito,"Tipo"));
                                 operando1.setUso("Variable");
-                                operando2.setUso("Variable");
-                                
+                                operando2.setUso("Variable"); 
                                 NodoComun iteracion = new NodoComun(val_peek(3).sval,operando1,operando2);
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-
                                 NodoHoja iterador = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
-
                                 NodoHoja id1 = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 id1.setUso("Variable");
                                 id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
                                 NodoHoja id2 = new NodoHoja(val_peek(7).sval+":"+ambito);
                                 id2.setUso("Variable");
                                 id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(7).sval +":"+ ambito,"Tipo"));
-
                                 yyval = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja(val_peek(14).sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun(val_peek(10).sval,id1, new NodoHoja(val_peek(9).sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun(val_peek(6).sval,id2, (ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)),asignacion ))) );
                                 if (!TablaSimbolos.existeSimbolo(val_peek(11).sval+ ":" + buscarAmbito(ambitoActual, val_peek(11).sval))){
                                         yyerror("La variable '" + val_peek(11).sval + "' no fue declarada");
@@ -3875,40 +4003,29 @@ case 354:
                         }
 break;
 case 355:
-//#line 1344 "gramaticaTomi.y"
+//#line 1462 ".\gramatica.y"
 {
-                                
-                                
                                 String ambito = buscarAmbito(ambitoActual,val_peek(13).sval);
-
                                 NodoHoja operando1 = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 System.out.println((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
                                 operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-                                
                                 NodoHoja operando2 = new NodoHoja(val_peek(4).sval);
                                 operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(4).sval +":"+ ambito,"Tipo"));
                                 operando1.setUso("Variable");
                                 operando2.setUso("Variable");
-                                
                                 NodoComun iteracion = new NodoComun(val_peek(5).sval,operando1,operando2);
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-
                                 NodoHoja iterador = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
-                                
                                 NodoHoja id1 = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 id1.setUso("Variable");
                                 id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
                                 NodoHoja id2 = new NodoHoja(val_peek(9).sval+":"+ambito);
                                 id2.setUso("Variable");
                                 id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(9).sval +":"+ ambito,"Tipo"));
-                                
-                                
-
                                 yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(12).sval,id1,new NodoHoja(val_peek(11).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(8).sval,id2,(ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)), asignacion )) );
                                 if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
                                         yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
@@ -3925,36 +4042,28 @@ case 355:
                 }
 break;
 case 356:
-//#line 1392 "gramaticaTomi.y"
+//#line 1499 ".\gramatica.y"
 {
-                                
                                 String ambito = buscarAmbito(ambitoActual,val_peek(13).sval);
-
                                 NodoHoja operando1 = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-                                
                                 NodoHoja operando2 = new NodoHoja(val_peek(4).sval);
                                 operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(4).sval +":"+ ambito,"Tipo"));
                                 operando1.setUso("Variable");
                                 operando2.setUso("Variable");
-                                
                                 NodoComun iteracion = new NodoComun(val_peek(5).sval,operando1,operando2);
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-
                                 NodoHoja iterador = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
-
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
-
                                 NodoHoja id1 = new NodoHoja(val_peek(13).sval+":"+ambito);
                                 id1.setUso("Variable");
                                 id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(13).sval +":"+ ambito,"Tipo"));
                                 NodoHoja id2 = new NodoHoja(val_peek(9).sval+":"+ambito);
                                 id2.setUso("Variable");
                                 id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(9).sval +":"+ ambito,"Tipo"));
-
                                 yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(12).sval,id1,new NodoHoja(val_peek(11).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(8).sval,id2,(ArbolSintactico)val_peek(7))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(1)), asignacion )) );
                                 if (!TablaSimbolos.existeSimbolo(val_peek(13).sval+ ":" + buscarAmbito(ambitoActual, val_peek(13).sval))){
                                         yyerror("La variable '" + val_peek(13).sval + "' no fue declarada");
@@ -3971,36 +4080,28 @@ case 356:
                         }
 break;
 case 357:
-//#line 1435 "gramaticaTomi.y"
+//#line 1534 ".\gramatica.y"
 {
-
                                 String ambito = buscarAmbito(ambitoActual,val_peek(11).sval);
-
                                 NodoHoja operando1 = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-                                
                                 NodoHoja operando2 = new NodoHoja(val_peek(2).sval);
                                 operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(2).sval +":"+ ambito,"Tipo"));
                                 operando1.setUso("Variable");
                                 operando2.setUso("Variable");
-                                
                                 NodoComun iteracion = new NodoComun(val_peek(3).sval,operando1,operando2);
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-
                                 NodoHoja iterador = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
-
                                 NodoHoja id1 = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 id1.setUso("Variable");
                                 id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
                                 NodoHoja id2 = new NodoHoja(val_peek(7).sval+":"+ambito);
                                 id2.setUso("Variable");
                                 id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(7).sval +":"+ ambito,"Tipo"));
-
                                 yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(10).sval,id1,new NodoHoja(val_peek(9).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(6).sval,id2,(ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)), asignacion)) );
                                 if (!TablaSimbolos.existeSimbolo(val_peek(11).sval+ ":" + buscarAmbito(ambitoActual, val_peek(11).sval))){
                                         yyerror("La variable '" + val_peek(11).sval + "' no fue declarada");
@@ -4017,37 +4118,28 @@ case 357:
                         }
 break;
 case 358:
-//#line 1478 "gramaticaTomi.y"
+//#line 1569 ".\gramatica.y"
 {
-
                                 String ambito = buscarAmbito(ambitoActual,val_peek(11).sval);
-
                                 NodoHoja operando1 = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 operando1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-                                
                                 NodoHoja operando2 = new NodoHoja(val_peek(2).sval);
                                 operando2.setTipo((String)TablaSimbolos.getAtributo(val_peek(2).sval +":"+ ambito,"Tipo"));
                                 operando1.setUso("Variable");
                                 operando2.setUso("Variable");
-                                
                                 NodoComun iteracion = new NodoComun(val_peek(3).sval,operando1,operando2);
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-
                                 NodoHoja iterador = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
-
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
-
-
                                 NodoHoja id1 = new NodoHoja(val_peek(11).sval+":"+ambito);
                                 id1.setUso("Variable");
                                 id1.setTipo((String)TablaSimbolos.getAtributo(val_peek(11).sval +":"+ ambito,"Tipo"));
                                 NodoHoja id2 = new NodoHoja(val_peek(7).sval+":"+ambito);
                                 id2.setUso("Variable");
                                 id2.setTipo((String)TablaSimbolos.getAtributo(val_peek(7).sval +":"+ ambito,"Tipo"));
-
                                 yyval = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun(val_peek(10).sval,id1,new NodoHoja(val_peek(9).sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun(val_peek(6).sval,id2,(ArbolSintactico)val_peek(5))),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", (ArbolSintactico)val_peek(0)), asignacion)) );
                                 if (!TablaSimbolos.existeSimbolo(val_peek(11).sval+ ":" + buscarAmbito(ambitoActual, val_peek(11).sval))){
                                         yyerror("La variable '" + val_peek(11).sval + "' no fue declarada");
@@ -4064,194 +4156,194 @@ case 358:
                         }
 break;
 case 359:
-//#line 1522 "gramaticaTomi.y"
+//#line 1604 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 360:
-//#line 1524 "gramaticaTomi.y"
+//#line 1606 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 break;
 case 361:
-//#line 1526 "gramaticaTomi.y"
+//#line 1608 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 362:
-//#line 1529 "gramaticaTomi.y"
+//#line 1611 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 363:
-//#line 1531 "gramaticaTomi.y"
+//#line 1613 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 break;
 case 364:
-//#line 1533 "gramaticaTomi.y"
+//#line 1615 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 365:
-//#line 1535 "gramaticaTomi.y"
+//#line 1617 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba constante");}
 break;
 case 366:
-//#line 1537 "gramaticaTomi.y"
+//#line 1619 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba constante");}
 break;
 case 367:
-//#line 1540 "gramaticaTomi.y"
+//#line 1622 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador + o -");}
 break;
 case 368:
-//#line 1542 "gramaticaTomi.y"
+//#line 1624 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la comparacion");}
 break;
 case 369:
-//#line 1544 "gramaticaTomi.y"
+//#line 1626 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba expresion para comparar");}
 break;
 case 370:
-//#line 1546 "gramaticaTomi.y"
+//#line 1628 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador de comparacion");}
 break;
 case 371:
-//#line 1548 "gramaticaTomi.y"
+//#line 1630 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba nombre de variable");}
 break;
 case 372:
-//#line 1550 "gramaticaTomi.y"
+//#line 1632 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la asignacion");}
 break;
 case 373:
-//#line 1552 "gramaticaTomi.y"
+//#line 1634 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba numero entero para asignar");}
 break;
 case 374:
-//#line 1554 "gramaticaTomi.y"
+//#line 1636 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba =:");}
 break;
 case 375:
-//#line 1556 "gramaticaTomi.y"
+//#line 1638 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba nombre de variable");}
 break;
 case 376:
-//#line 1558 "gramaticaTomi.y"
+//#line 1640 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 377:
-//#line 1560 "gramaticaTomi.y"
+//#line 1642 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 378:
-//#line 1562 "gramaticaTomi.y"
+//#line 1644 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 break;
 case 379:
-//#line 1564 "gramaticaTomi.y"
+//#line 1646 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 380:
-//#line 1567 "gramaticaTomi.y"
+//#line 1649 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
 break;
 case 381:
-//#line 1569 "gramaticaTomi.y"
+//#line 1651 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
 break;
 case 382:
-//#line 1571 "gramaticaTomi.y"
+//#line 1653 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
 break;
 case 383:
-//#line 1573 "gramaticaTomi.y"
+//#line 1655 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba constante");}
 break;
 case 384:
-//#line 1575 "gramaticaTomi.y"
+//#line 1657 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba constante");}
 break;
 case 385:
-//#line 1578 "gramaticaTomi.y"
+//#line 1660 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador + o -");}
 break;
 case 386:
-//#line 1580 "gramaticaTomi.y"
+//#line 1662 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la comparacion");}
 break;
 case 387:
-//#line 1582 "gramaticaTomi.y"
+//#line 1664 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba expresion para comparar");}
 break;
 case 388:
-//#line 1584 "gramaticaTomi.y"
+//#line 1666 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba operador de comparacion");}
 break;
 case 389:
-//#line 1586 "gramaticaTomi.y"
+//#line 1668 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba nombre de variable");}
 break;
 case 390:
-//#line 1588 "gramaticaTomi.y"
+//#line 1670 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ; luego de la asignacion");}
 break;
 case 391:
-//#line 1590 "gramaticaTomi.y"
+//#line 1672 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba numero entero para asignar");}
 break;
 case 392:
-//#line 1592 "gramaticaTomi.y"
+//#line 1674 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba =:");}
 break;
 case 393:
-//#line 1594 "gramaticaTomi.y"
+//#line 1676 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba nombre de variable");}
 break;
 case 394:
-//#line 1596 "gramaticaTomi.y"
+//#line 1678 ".\gramatica.y"
 { yyval=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 break;
 case 395:
-//#line 1600 "gramaticaTomi.y"
+//#line 1682 ".\gramatica.y"
 {
                         yyval = new NodoHoja(val_peek(0).sval);
                         ((ArbolSintactico)yyval).setTipo((String)TablaSimbolos.getAtributo(val_peek(0).sval,"Tipo"));
                 }
 break;
 case 396:
-//#line 1605 "gramaticaTomi.y"
+//#line 1687 ".\gramatica.y"
 {yyval=new NodoHoja(val_peek(0).sval);
                         String ambito = buscarAmbito(ambitoActual,val_peek(0).sval);
                         if(!ambito.equals("")){
@@ -4260,7 +4352,7 @@ case 396:
                      }
 break;
 case 397:
-//#line 1612 "gramaticaTomi.y"
+//#line 1694 ".\gramatica.y"
 {
                                                         yyval=new NodoComun("llamado funcion",(ArbolSintactico)val_peek(3),(ArbolSintactico)val_peek(1));
                                                         String ambito = buscarAmbito(ambitoActual,val_peek(5).sval);
@@ -4294,7 +4386,7 @@ case 397:
                                                 }
 break;
 case 398:
-//#line 1643 "gramaticaTomi.y"
+//#line 1725 ".\gramatica.y"
 {System.out.println("Llamado fun 1 parametro");
                 yyval=new NodoComun("llamado funcion",(ArbolSintactico)val_peek(1),new NodoHoja("Un solo parametro"));
             String ambito = buscarAmbito(ambitoActual,val_peek(3).sval);
@@ -4323,7 +4415,7 @@ case 398:
         }
 break;
 case 399:
-//#line 1669 "gramaticaTomi.y"
+//#line 1751 ".\gramatica.y"
 {yyval=new NodoHoja("llamado funcion sin parametros");
                 String ambito = buscarAmbito(ambitoActual,val_peek(2).sval);
                 if (!ambito.equals("") ){
@@ -4346,26 +4438,26 @@ case 399:
         }
 break;
 case 400:
-//#line 1689 "gramaticaTomi.y"
+//#line 1771 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba )");}
 break;
 case 401:
-//#line 1691 "gramaticaTomi.y"
+//#line 1773 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba )");}
 break;
 case 402:
-//#line 1693 "gramaticaTomi.y"
+//#line 1775 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba )");}
 break;
 case 403:
-//#line 1695 "gramaticaTomi.y"
+//#line 1777 ".\gramatica.y"
 {yyval=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba otro parametro");}
 break;
-//#line 4292 "Parser.java"
+//#line 4384 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
