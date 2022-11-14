@@ -896,13 +896,14 @@ lista_asignacion : lista_asignacion COMA asignacion_const
         | asignacion_const
 ;
 asignacion_const : ID ASIG cte { 
-                                String ambito = buscarAmbito(ambitoActual,$1.sval);
-                                if(ambito.equals(ambitoActual)){
-                                        TablaSimbolos.addNuevoSimbolo($1.sval+":"+ambito);
-                                        TablaSimbolos.addAtributo($1.sval+":"+ambito,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
-                                        TablaSimbolos.addAtributo($1.sval+":"+ambito,"Tipo",TablaSimbolos.getAtributo($3.sval,"Tipo"));
-                                        TablaSimbolos.addAtributo($1.sval+":"+ambito,"Linea",AnalizadorLexico.getLineaAct());
-                                        TablaSimbolos.addAtributo($1.sval+":"+ambito,"Uso","Variable");
+                                if(TablaSimbolos.existeSimbolo($1.sval+":"+ambitoActual)){
+                                        yyerror("La variable " + $1.sval + " se encuentra declarada en el ambito " + ambitoActual);
+                                }else{
+                                        TablaSimbolos.addNuevoSimbolo($1.sval+":"+ambitoActual);
+                                        TablaSimbolos.addAtributo($1.sval+":"+ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
+                                        TablaSimbolos.addAtributo($1.sval+":"+ambitoActual,"Tipo",TablaSimbolos.getAtributo($3.sval,"Tipo"));
+                                        TablaSimbolos.addAtributo($1.sval+":"+ambitoActual,"Linea",AnalizadorLexico.getLineaAct());
+                                        TablaSimbolos.addAtributo($1.sval+":"+ambitoActual,"Uso","Constante");
                                 }
                         }
         | ID ASIG error {$$=new NodoHoja("Error sintactico");

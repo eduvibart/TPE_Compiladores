@@ -1,11 +1,3 @@
 program {
-        i32 a;
-        i32 b;
-        i32 i;
-        when(i<a)then{
-                b=:a;
-                a=:i;
-        };
-        i32 d;
-        d=:a;
+        const p =: 3;
 }   
