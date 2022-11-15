@@ -48,8 +48,10 @@ public class GeneradorAssembler {
 
     private void generarCode() {
         code = "\n.code\n";
+        code+= "main:\n";
         
         code+= this.codigoArbol;
+        code+= "end main";
     }
 
     public String getAssembler(){
