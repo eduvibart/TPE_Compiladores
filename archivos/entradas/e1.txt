@@ -4,8 +4,7 @@ program {
         i32 c;
         while(a<b):(a=:a+1){
                 b=:a;
-               
-                b=:a;
+                break;
         };
         i32 d;
         d=:a;

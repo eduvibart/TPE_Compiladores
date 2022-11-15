@@ -7,6 +7,7 @@ public class NodoComun extends ArbolSintactico{
     private String label;
     private String labelFin;
     private String salidaDer;
+    private String saltoBreak;
 
 
     public NodoComun(String lex,ArbolSintactico izq,ArbolSintactico der) {
@@ -304,6 +305,10 @@ public class NodoComun extends ArbolSintactico{
             case "Bloque Ejecutable":
                 salida+= getIzq().getAssembler() + getDer().getAssembler();
                 break;
+                
+            case "Bloque Ejecutable Asignacion":
+                salida+= getIzq().getAssembler() + getDer().getAssembler();
+                break;
 
             case "While":
                 label = getLabel();
@@ -311,7 +316,7 @@ public class NodoComun extends ArbolSintactico{
                 
                 salidaDer =  getDer().getAssembler();
                 
-                String saltoBreak="";
+                saltoBreak="";
                 if (!(pilaLabelsBreak.isEmpty())){
                     saltoBreak = pilaLabelsBreak.pop();
                 }
@@ -321,21 +326,38 @@ public class NodoComun extends ArbolSintactico{
 
                 if(!(saltoBreak.equals(""))){
                     salida+= saltoBreak + ":\n";
+                }
+
+                
+                break;
+                
+            case "While con Etiqueta":
+                label = getIzq().getIzq().getLex(); //siempre que hay etiqueta se genera un nodo de control y debajo un nodo hoja con el nombre de la etiqueta a saltar
+                salida+= label+":\n" + getDer().getAssembler();
+                break;
+            
+            case "While Asignacion":
+                label = getLabel();
+                pilaLabels.push(label);
+                
+                salidaDer =  getDer().getAssembler();
+                
+                
+                salida += label + ":\n";
+                salida += getIzq().getAssembler() + salidaDer;
+
+                if(!(pilaLabelsBreak.isEmpty())){
+
                     this.hojaPropia= new NodoHoja(pilaLabelsBreak.pop());
                     this.hojaPropia.setTipo(pilaLabelsBreak.pop());
                     this.hojaPropia.setUso("variableAuxiliar");
                 }
 
-                
-                break;
-            
-            case "While con Etiqueta":
-                label = getIzq().getIzq().getLex(); //siempre que hay etiqueta se genera un nodo de control y debajo un nodo hoja con el nombre de la etiqueta a saltar
-                salida+= label+":\n" + getDer().getAssembler();
-
                 break;
 
             case "While como expresion":
+                salida+= getIzq().getAssembler() + getDer().getAssembler();
+                
                 if(getIzq().getHojaPropia() == null){
 
                     this.hojaPropia = new NodoHoja(getDer().getHojaPropia().getLex());
@@ -346,9 +368,10 @@ public class NodoComun extends ArbolSintactico{
                     this.hojaPropia = new NodoHoja(getIzq().getHojaPropia().getLex());
                     this.hojaPropia.setTipo(this.getIzq().getTipo());
                     this.hojaPropia.setUso("variableAuxiliar");
+                    saltoBreak = pilaLabelsBreak.pop();
+                    salida+= saltoBreak + ":\n";
 
                 }
-                salida+= getIzq().getAssembler() + getDer().getAssembler();
                 
                 
                 break;

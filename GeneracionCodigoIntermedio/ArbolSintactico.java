@@ -50,6 +50,8 @@ public abstract class ArbolSintactico extends ParserVal{
         numeroLabel++;
         return "label_"+numeroLabel;
     }
-    public static String getVariableAuxiliar(){numeroVariable++;
-                                            return "@aux" + numeroVariable;}
+    public static String getVariableAuxiliar(){
+        numeroVariable++;
+        return "@aux" + numeroVariable;
+    }
 }

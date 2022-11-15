@@ -34,12 +34,14 @@ public class NodoControl extends ArbolSintactico{
                 return salida;
             case "Break":
                 label = getLabel();
-                variable = getVariableAuxiliar();
-                pilaLabelsBreak.push(variable);
-                pilaLabelsBreak.push(getIzq().getTipo());
                 pilaLabelsBreak.push(label);
+                if(!(getIzq().getLex().equals("Fin"))){
+                    variable = getVariableAuxiliar();
+                    pilaLabelsBreak.push(getIzq().getTipo());
+                    pilaLabelsBreak.push(variable);
 
-                salida += "MOV "+ variable + ", "+ getIzq().getLex()+ "\n";
+                    salida += "MOV "+ variable + ", "+ getIzq().getLex()+ "\n";
+                }
                 salida+= "JM " + label + "\n";
                 return salida;
         

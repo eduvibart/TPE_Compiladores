@@ -1519,7 +1519,7 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_while {$$ = $1;}
                 | sentencia_for {$$ = $1;}
                 | CONTINUE tag {$$ = new NodoControl("Continue",(ArbolSintactico)$2);}
-                | BREAK {$$ = new NodoHoja("Break");}
+                | BREAK {$$ = new NodoControl("Break",(ArbolSintactico)new NodoHoja("Fin"));}
                 | BREAK cte {$$ = new NodoControl("Break", new NodoHoja($2.sval));}
 ;
 tag : {$$ = new NodoHoja("Fin");}
