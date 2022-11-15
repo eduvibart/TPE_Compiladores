@@ -22,7 +22,7 @@ public class NodoControl extends ArbolSintactico{
     public String getAssembler() {
         salida="";
         switch(getLex()){
-        
+            
             case "Continue":
                 label = getLabel();
                 pilaLabelsTags.push(label);
@@ -39,7 +39,6 @@ public class NodoControl extends ArbolSintactico{
                     variable = getVariableAuxiliar();
                     pilaLabelsBreak.push(getIzq().getTipo());
                     pilaLabelsBreak.push(variable);
-
                     salida += "MOV "+ variable + ", "+ getIzq().getLex()+ "\n";
                 }
                 salida+= "JM " + label + "\n";
