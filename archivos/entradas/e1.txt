@@ -2,10 +2,10 @@ program {
         i32 a;
         i32 b;
         i32 c;
-        c=: for (a=:0;a<b;+1){
+        for (a=:0;a<b;+1){
                 c=:a;
-                break 3;
-        }else 2;
+                break;
+        };
         i32 d;
         d=: c;
 }   
