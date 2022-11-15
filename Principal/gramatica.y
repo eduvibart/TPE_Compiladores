@@ -1046,10 +1046,8 @@ factor: ID {
         | cte {
                 $$ = new NodoHoja($1.sval);
                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));
-                if(TablaSimbolos.getAtributo($1.sval,"Tipo").equals("Float")){
-                        ((ArbolSintactico)$$).setLex(this.calcularFloat($1.sval));
-                }
                 ((ArbolSintactico)$$).setUso("Constante");
+                TablaSimbolos.addAtributo($1.sval, "Uso","Constante");
               }  
         
         | llamado_func {$$=$1;}

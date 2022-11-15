@@ -20,7 +20,10 @@ public class NodoHoja extends ArbolSintactico {
 
     @Override
     public String getLex(){
-        if(getUso().equals("Variable")){
+        if((getUso().equals("Variable"))|| (getUso().equals("Constante"))){
+            if(getUso().equals("Constante")){
+                return "_" + super.getLex().replace('.', '_');
+            }
             return "_"+ super.getLex();
         }
         else return super.getLex();

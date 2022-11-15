@@ -1,4 +1,4 @@
-.386 
+.386
 .model flat, stdcall
 option casemap :none
 include \masm32\include\windows.inc
@@ -10,21 +10,21 @@ include \masm32\include\user32.inc
 includelib \masm32\lib\user32.lib
 
 .data
-_c@Global dd  ?
 _a@Global dd  ?
+_2_3F10 dd 4142.651121364896
 _b@Global dd  ?
+_3_40282347F38 dd 1.6214290267397715E20
 @aux1 dd  ?
-_3 dd 3
 
 .code
 main:
-MOV EAX , _3
-MOV _a@Global, EAX
-MOV EAX , _3
-MOV _b@Global, EAX
-MOV EAX, _a@Global
-ADD EAX, _b@Global
-MOV @aux1, EAX
-MOV EAX , @aux1
-MOV _a@Global, EAX
+FLD _3_40282347F38
+FST _a@Global
+FLD _2_3F10
+FST _b@Global
+FLD _b@Global
+FADD _a@Global
+FST @aux1
+FLD @aux1
+FST _a@Global
 end main

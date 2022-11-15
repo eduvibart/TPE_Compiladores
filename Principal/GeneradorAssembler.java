@@ -35,8 +35,16 @@ public class GeneradorAssembler {
         for (String k : TablaSimbolos.getKeySet()){
             HashMap<String, Object> atributos = TablaSimbolos.getAtributos(k);
             String uso = (String) atributos.get("Uso");
-            
+            String tipo = (String) atributos.get("Tipo");
             if(uso != null){
+                if(uso.equals("Constante")){
+                    String aux = k.replace('.','_');
+                    String prefix = "_";
+                    if(tipo.equals("Float")){
+                        k = atributos.get("Valor").toString();
+                    }
+                    data += prefix + aux + " dd " + k + "\n";
+                }
                 if( ( !uso.equals("Funcion") ) && ( (uso.equals("Variable") ) || ( uso.equals("variableAuxiliar")  ) ) ) {
                     String prefix = "";
                     if(uso.equals("Variable")) prefix = "_";
