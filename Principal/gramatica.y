@@ -51,6 +51,7 @@ sentencia : sentencia_declarativa {$$=new NodoHoja("Sentencia Declarativa");}
 sentencia_declarativa : sentencia_decl_datos 
                         | sentencia_decl_fun {funciones.put((String)((ArbolSintactico)$1).getLex(),(ArbolSintactico)$1);}
                         | lista_const  
+                        | sentencia_when
 ;
 tipo : I32 {
             $$ = new NodoHoja("Entero");
@@ -924,7 +925,6 @@ asignacion_const : ID ASIG cte {
 sentencia_ejecutable : asignacion {$$ = $1;}
         | sentencia_if   {$$ = $1; }
         | sentencia_out {$$ = $1;}
-        | sentencia_when {$$ = $1;}
         | sentencia_for {$$ = $1;}
         | sentencia_while {$$ = $1;}
         | llamado_func{$$=$1;}
@@ -1322,32 +1322,12 @@ sentencia_if_asig:IF PARENT_A condicion PARENT_C THEN sent_eje_asig PUNTOCOMA EL
                 | IF error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ( ");}
 ;
-sentencia_when_asig : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sent_eje_asig LLAVE_C {
-                        $$ = (ArbolSintactico) new NodoComun("When Asignacion",(ArbolSintactico) $3, (ArbolSintactico) $7);
-                        System.out.println("Sentencia WHEN con llaves");}
-                | WHEN PARENT_A condicion PARENT_C THEN sent_eje_asig {
-                        $$ = (ArbolSintactico) new NodoComun("When Asignacion",(ArbolSintactico) $3, (ArbolSintactico) $6);
-                        System.out.println("Sentencia WHEN sin llaves");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_sent_eje_asig error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba } en el when");}
-                | WHEN PARENT_A condicion PARENT_C THEN error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba { en el when");}
-                | WHEN PARENT_A condicion PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba then en el when");}
-                | WHEN PARENT_A condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ) en el when");}
-                | WHEN PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba condicion en el when");}
-                | WHEN error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ( en el when");}
-;
 bloque_sent_eje_asig: {$$=new NodoHoja("Fin");}
                         | bloque_sent_eje_asig sent_eje_asig PUNTOCOMA {$$=new NodoComun("Bloque Ejecutable Asignacion", (ArbolSintactico) $1, (ArbolSintactico) $2);}
 ;
 sent_eje_asig:  asignacion {$$ = $1;}
                 | sentencia_if_asig {$$ = $1;}
                 | sentencia_out {$$ = $1;}
-                | sentencia_when_asig {$$ = $1;}
                 | sentencia_while_asig {$$ = $1;}
                 | sentencia_for_asig {$$ = $1;}
                 | BREAK cte {NodoHoja cte = new NodoHoja($2.sval);
@@ -1473,22 +1453,22 @@ sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable
                 | WHEN error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ( en el when");}
 ;
-sentencia_while :  etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
+sentencia_while :  etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_sentencias LLAVE_C 
                         {
                                 $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $4, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $11 , (ArbolSintactico) $8)) );
                         
                         }
-                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencia_ejecutable {
                         $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $4, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $8)) );
                         
                         }
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_sentencias LLAVE_C {
                         $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $7) );
                         System.out.println("Sentencia WHILE con llaves");} 
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencia_ejecutable {
                         $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $9 , (ArbolSintactico) $7) );
                         System.out.println("Sentencia WHILE sin llaves");} 
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue error {$$=new NodoHoja("Error sintactico");
+                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_sentencias error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba }");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba {");}
@@ -1518,7 +1498,6 @@ bloque_break_continue : {$$=new NodoHoja("Fin");}
 ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_if_break {$$ = $1;}
                 | sentencia_out {$$ = $1;}
-                | sentencia_when_break {$$ = $1;}
                 | sentencia_while {$$ = $1;}
                 | sentencia_for {$$ = $1;}
                 | CONTINUE tag {$$ = new NodoControl("Continue",(ArbolSintactico)$2);}
@@ -1538,21 +1517,6 @@ tag : {$$ = new NodoHoja("Fin");}
         | DOSPUNTOS error{$$=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba un identificador");}
 
-;
-sentencia_when_break :  WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue LLAVE_C {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN ejecutables_break_continue {System.out.println("Sentencia WHEN");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_break_continue error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba } en el when");}
-                | WHEN PARENT_A condicion PARENT_C THEN error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba { en el when");}
-                | WHEN PARENT_A condicion PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba then en el when");}
-                | WHEN PARENT_A condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ) en el when");}
-                | WHEN PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba condicion en el when");}
-                | WHEN error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ( en el when");}
 ;
 sentencia_if_break : IF PARENT_A condicion PARENT_C THEN ejecutables_break_continue PUNTOCOMA ELSE LLAVE_A bloque_break_continue LLAVE_C END_IF
                         {
