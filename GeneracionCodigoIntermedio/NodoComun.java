@@ -413,7 +413,10 @@ public class NodoComun extends ArbolSintactico{
                 break;
 
             case "FOR":
-                salida+= getIzq().getAssembler()+ getDer().getAssembler();
+                labelFin = getLabel();
+                pilaLabels.push(labelFin);
+                salida+= getIzq().getAssembler()+ getDer().getAssembler(); 
+                salida+= labelFin + ":\n";
 
                 saltoBreak="";
                 if (!(pilaLabelsBreak.isEmpty())){
@@ -424,8 +427,33 @@ public class NodoComun extends ArbolSintactico{
                     salida+= saltoBreak + ":\n";
                 }
                 break;
+
+            case "For en asignacion":
+                salida+= getIzq().getAssembler()+ getDer().getAssembler();
+
+
+                break;
+
             case "For como expresion":
-                salida+=getIzq().getAssembler() + getDer().getAssembler();
+                labelFin = getLabel();
+                pilaLabels.push(labelFin);
+                salida+= getIzq().getAssembler()+ getDer().getAssembler(); 
+                salida+= labelFin + ":\n";
+                salida+= "MOV @aux1, "+getDer().getHojaPropia().getLex()+"\n";
+                
+                saltoBreak="";
+                if (!(pilaLabelsBreak.isEmpty())){
+                    saltoBreak = pilaLabelsBreak.pop();
+                }
+
+                if(!(saltoBreak.equals(""))){
+                    
+                    this.hojaPropia = new NodoHoja(saltoBreak);
+                    this.hojaPropia.setTipo(pilaLabelsBreak.pop());
+                    this.hojaPropia.setUso("variableAuxiliar");
+                    salida+= pilaLabelsBreak.pop() + ":\n";
+                    break;
+                }
 
                 this.hojaPropia = new NodoHoja(getDer().getHojaPropia().getLex());
                 this.hojaPropia.setTipo(this.getDer().getTipo());
@@ -438,14 +466,11 @@ public class NodoComun extends ArbolSintactico{
                 break;
 
             case "Condicion-Cuerpo":
-                labelFin = getLabel();
-                pilaLabels.push(labelFin);
                 label = getLabel();
                 pilaLabels.push(label);
 
                 salidaDer = getDer().getAssembler();
                 salida+= label + ":\n" + getIzq().getAssembler() + salidaDer;
-                salida+= labelFin + ":\n";
                 break;
             
             case "Cuerpo":
