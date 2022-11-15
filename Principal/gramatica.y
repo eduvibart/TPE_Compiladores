@@ -1055,9 +1055,18 @@ factor: ID {
 ;
 cte : ENTERO {  chequearRangoI32($1.sval);}
         | FLOAT {  }
-        | RESTA ENTERO 
-        | RESTA FLOAT 
-
+        | RESTA ENTERO {
+                $$=new ParserVal($1.sval+$2.sval);
+                TablaSimbolos.addNuevoSimbolo((String)$1.sval+$2.sval);
+                TablaSimbolos.addAtributo($1.sval+$2.sval, "Uso", "Constante");
+                TablaSimbolos.addAtributo($1.sval+$2.sval, "Tipo", "Entero");
+        }
+        | RESTA FLOAT {
+                $$=new ParserVal($1.sval+$2.sval);
+                TablaSimbolos.addNuevoSimbolo((String)$1.sval+$2.sval);
+                TablaSimbolos.addAtributo($1.sval+$2.sval, "Uso", "Constante");
+                TablaSimbolos.addAtributo($1.sval+$2.sval, "Tipo", "Float");
+        }
 ;
 sentencia_for_asig: FOR PARENT_A ID ASIG  constante_for PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA  constante_for PARENT_C LLAVE_A bloque_sent_eje_asig LLAVE_C {
                                 String ambito = buscarAmbito(ambitoActual,$3.sval);
