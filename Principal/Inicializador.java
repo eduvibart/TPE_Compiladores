@@ -1,8 +1,11 @@
 package Principal;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,7 +17,7 @@ import GeneracionCodigoIntermedio.*;
 
 public class Inicializador{
     
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, InterruptedException{
         Scanner lector = new Scanner(System.in);
         System.out.println("Ingrese el nombre del archivo del cual se quiere leer seguido de '.' y la extención del archivo.");
         
@@ -86,7 +89,25 @@ public class Inicializador{
             System.out.println("\nAssembler: \n" );
             GeneradorAssembler generador = new GeneradorAssembler(parser);
             System.out.println(generador.getAssembler());
+            File f = new File("D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.asm");
+            f.createNewFile();
+            PrintWriter pw;
+		    try {
+			    pw = new PrintWriter("D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.asm");
+			    pw.print(generador.getAssembler());
+			    pw.close();
+		    } catch (FileNotFoundException e) {
+			    // TODO Auto-generated catch block
+			    e.printStackTrace();
+		    }
+            Process p = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\ml /c /Zd /coff D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.asm",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\salida"));
+            if(p.waitFor()==0){
+                Process p1 = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\link /c /SUBSYSTEM:CONSOLE D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.obj",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\salida"));
+                if(p1.waitFor()==0){
+                    Runtime.getRuntime().exec("cmd.exe /c D:\\Documents\\4to\\TPE_Compiladores\\Extensiones\\OLLYDBG.EXE D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.exe",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\"));
+                }
+            }
+            
         }
-
     }
 }
