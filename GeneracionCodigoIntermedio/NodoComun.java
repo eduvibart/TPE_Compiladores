@@ -42,7 +42,8 @@ public class NodoComun extends ArbolSintactico{
             case "=:":
                 salida += getDer().getAssembler() + getIzq().getAssembler();
                 if(getIzq().getTipo().equals("Entero")){
-                    salida+= "MOV " + getIzq().getHojaPropia().getLex() + ", " + getDer().getHojaPropia().getLex() + "\n";
+                    salida+= "MOV EAX , " + getDer().getHojaPropia().getLex() + "\n"; 
+                    salida+= "MOV " + getIzq().getHojaPropia().getLex() + ", " + "EAX" + "\n";
                 }else {
                     salida += "FLD " + getDer().getHojaPropia().getLex() + "\n";
                     salida += "FST " + getIzq().getHojaPropia().getLex() + "\n";
@@ -394,10 +395,10 @@ public class NodoComun extends ArbolSintactico{
                 salida += getDer().getAssembler();
                 
                 if(!(tag.equals(""))){
-                    salida+= "JM " +tag+"\n";
+                    salida+= "JMP " +tag+"\n";
                 }
                 
-                salida += "JM " + pilaLabels.pop() + "\n"; 
+                salida += "JMP " + pilaLabels.pop() + "\n"; 
                 
                 label = getLabel();
                 pilaLabels.push(label);
@@ -441,7 +442,7 @@ public class NodoComun extends ArbolSintactico{
             
             case "Cuerpo":
                 salida+= getIzq().getAssembler()+getDer().getAssembler();
-                salida += "JM "+ pilaLabels.pop()+"\n";
+                salida += "JMP "+ pilaLabels.pop()+"\n";
 
                 break;
 
@@ -455,7 +456,7 @@ public class NodoComun extends ArbolSintactico{
                 labelFin = getLabel();
                 pilaLabels.push(labelFin);
                 
-                salida+= label + ":\n" + getIzq().getAssembler() + getDer().getAssembler()+ "JM "+ pilaLabels.pop() + "\n" + labelFin +":\n";
+                salida+= label + ":\n" + getIzq().getAssembler() + getDer().getAssembler()+ "JMP "+ pilaLabels.pop() + "\n" + labelFin +":\n";
                 break;
 
         }
