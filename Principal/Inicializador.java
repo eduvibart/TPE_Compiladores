@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -89,24 +91,26 @@ public class Inicializador{
             System.out.println("\nAssembler: \n" );
             GeneradorAssembler generador = new GeneradorAssembler(parser);
             System.out.println(generador.getAssembler());
-            File f = new File("D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.asm");
+            File f = new File("salida.asm");
             f.createNewFile();
             PrintWriter pw;
 		    try {
-			    pw = new PrintWriter("D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.asm");
+			    pw = new PrintWriter("salida.asm");
 			    pw.print(generador.getAssembler());
 			    pw.close();
 		    } catch (FileNotFoundException e) {
-			    // TODO Auto-generated catch block
+			     //TODO Auto-generated catch block
 			    e.printStackTrace();
 		    }
-            Process p = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\ml /c /Zd /coff D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.asm",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\salida"));
+            /* Esto es para crear el .obj y luego el .exe 
+            Process p = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\ml /c /Zd /coff D:\\Documents\\4to\\TPE_Compiladores\\salida.asm",null,new File("D:\\Documents\\4to\\TPE_Compiladores"));
             if(p.waitFor()==0){
-                Process p1 = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\link /c /SUBSYSTEM:CONSOLE D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.obj",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\salida"));
+                Process p1 = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\link /c /SUBSYSTEM:CONSOLE D:\\Documents\\4to\\TPE_Compiladores\\salida.obj",null,new File("D:\\Documents\\4to\\TPE_Compiladores"));
                 if(p1.waitFor()==0){
-                    //Runtime.getRuntime().exec("cmd.exe /c D:\\Documents\\4to\\TPE_Compiladores\\Extensiones\\OLLYDBG.EXE D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.exe",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\"));
+                    Runtime.getRuntime().exec("cmd.exe /c D:\\Documents\\4to\\TPE_Compiladores\\Extensiones\\OLLYDBG.EXE D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.exe",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\"));
                 }
             }
+            */
             
         }
     }
