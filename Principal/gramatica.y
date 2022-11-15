@@ -1520,7 +1520,6 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_for {$$ = $1;}
                 | CONTINUE tag {$$ = new NodoControl("Continue",(ArbolSintactico)$2);}
                 | BREAK {$$ = new NodoControl("Break",(ArbolSintactico)new NodoHoja("Fin"));}
-                | BREAK cte {$$ = new NodoControl("Break", new NodoHoja($2.sval));}
 ;
 tag : {$$ = new NodoHoja("Fin");}
         | DOSPUNTOS ID {String ambito = buscarAmbito(ambitoActual,$2.sval);
