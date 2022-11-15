@@ -63,7 +63,7 @@ public class NodoComun extends ArbolSintactico{
                 if(getIzq().getHojaPropia().getTipo().equals("Entero")){ //si el tipo de la hoja propia del hijo izquierdo es entero (o sea la operacion entre hijo izq y der es entera)
                     salida += "MOV EAX, " + getIzq().getHojaPropia().getLex() + "\n"; //entonces aca el get lexema de la hoja va a ser la variable que tiene datos anteriores por lado izq
                     salida += "ADD EAX, " + getDer().getHojaPropia().getLex() + "\n";
-                    
+
                     salida += "MOV " + variable + ", EAX" + "\n";
                 }
                 else
@@ -306,10 +306,6 @@ public class NodoComun extends ArbolSintactico{
             case "Bloque Ejecutable":
                 salida+= getIzq().getAssembler() + getDer().getAssembler();
                 break;
-                
-            case "Bloque Ejecutable Asignacion":
-                salida+= getIzq().getAssembler() + getDer().getAssembler();
-                break;
 
             case "While":
                 label = getLabel();
@@ -410,6 +406,11 @@ public class NodoComun extends ArbolSintactico{
                 salida+=getIzq().getAssembler() + getDer().getAssembler();
 
                 break;
+            
+            case "Bloque Ejecutable Asignacion":
+                salida+=getIzq().getAssembler() + getDer().getAssembler();
+
+                break;
 
             case "FOR":
                 salida+= getIzq().getAssembler()+ getDer().getAssembler();
@@ -423,7 +424,14 @@ public class NodoComun extends ArbolSintactico{
                     salida+= saltoBreak + ":\n";
                 }
                 break;
+            case "For como expresion":
+                salida+=getIzq().getAssembler() + getDer().getAssembler();
 
+                this.hojaPropia = new NodoHoja(getDer().getHojaPropia().getLex());
+                this.hojaPropia.setTipo(this.getDer().getTipo());
+                this.hojaPropia.setUso("variableAuxiliar");
+
+                break;
             case "For con Etiqueta":
                 label = getIzq().getIzq().getLex(); //siempre que hay etiqueta se genera un nodo de control y debajo un nodo hoja con el nombre de la etiqueta a saltar
                 salida+= label+":\n" + getDer().getAssembler();

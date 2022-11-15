@@ -913,6 +913,7 @@ asignacion_const : ID ASIG cte {
                                         TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Tipo",TablaSimbolos.getAtributo($3.sval,"Tipo"));
                                         TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Linea",AnalizadorLexico.getLineaAct());
                                         TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Uso","Constante");
+                                        TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Valor", $3);
                                 }
                         }
         | ID ASIG error {$$=new NodoHoja("Error sintactico");
