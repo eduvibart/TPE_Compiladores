@@ -104,7 +104,7 @@ public class Inicializador{
             if(p.waitFor()==0){
                 Process p1 = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\link /c /SUBSYSTEM:CONSOLE D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.obj",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\salida"));
                 if(p1.waitFor()==0){
-                    Runtime.getRuntime().exec("cmd.exe /c D:\\Documents\\4to\\TPE_Compiladores\\Extensiones\\OLLYDBG.EXE D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.exe",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\"));
+                    //Runtime.getRuntime().exec("cmd.exe /c D:\\Documents\\4to\\TPE_Compiladores\\Extensiones\\OLLYDBG.EXE D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.exe",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\"));
                 }
             }
             

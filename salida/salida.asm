@@ -10,11 +10,15 @@ include \masm32\include\user32.inc
 includelib \masm32\lib\user32.lib 
 
 .data
+_c@Global dd  ? 
 _a@Global dd  ? 
-_2_4F8 dd 1100.7531417599996
+_d@Global dd  ? 
+_b@Global dd  ? 
 
 .code
 main:
-FLD _2_4F8
-FST _a@Global
+MOV EAX , _a@Global
+MOV _c@Global, EAX
+MOV EAX , _c@Global
+MOV _d@Global, EAX
 end main
