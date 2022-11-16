@@ -41,7 +41,7 @@ public class NodoControl extends ArbolSintactico{
                     pilaLabelsBreak.push(variable);
                     salida += "MOV "+ variable + ", "+ getIzq().getLex()+ "\n";
                 }
-                salida+= "JM " + label + "\n";
+                salida+= "JMP " + label + "\n";
                 return salida;
         
         }
