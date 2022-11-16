@@ -81,9 +81,8 @@ public class Inicializador{
             lector.close();
 
             System.out.println("FUNCIONES");
-            for (Map.Entry<String,ArbolSintactico> entry : parser.getFuncion().entrySet()) {
-                System.out.println("Key = " + entry.getKey() + ", Value = " ); 
-                entry.getValue().recorrerArbol("");    	
+            for (ArbolSintactico a : parser.getFuncion()) {
+                a.recorrerArbol("");    	
             }
             
             System.out.println("\nAssembler: \n" );
@@ -99,13 +98,13 @@ public class Inicializador{
 		    } catch (FileNotFoundException e) {
 			     //TODO Auto-generated catch block
 			    e.printStackTrace();
-		    }
-            /* Esto es para crear el .obj y luego el .exe 
-            Process p = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\ml /c /Zd /coff D:\\Documents\\4to\\TPE_Compiladores\\salida.asm",null,new File("D:\\Documents\\4to\\TPE_Compiladores"));
+		    }/*
+            // Esto es para crear el .obj y luego el .exe 
+            Process p = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\ml /c /Zd /coff D:\\Facultad\\Catedras\\4 - Cuarto Año\\Segundo Cuatrimestre\\Diseño de Compiladores\\TPE_Compiladores\\salida.asm",null,new File("D:\\Facultad\\Catedras\\4 - Cuarto Año\\Segundo Cuatrimestre\\Diseño de Compiladores\\TPE_Compiladores"));
             if(p.waitFor()==0){
-                Process p1 = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\link /c /SUBSYSTEM:CONSOLE D:\\Documents\\4to\\TPE_Compiladores\\salida.obj",null,new File("D:\\Documents\\4to\\TPE_Compiladores"));
+                Process p1 = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\link /c /SUBSYSTEM:CONSOLE D:\\Facultad\\Catedras\\4 - Cuarto Año\\Segundo Cuatrimestre\\Diseño de Compiladores\\TPE_Compiladores\\salida.obj",null,new File("D:\\Facultad\\Catedras\\4 - Cuarto Año\\Segundo Cuatrimestre\\Diseño de Compiladores\\TPE_Compiladores"));
                 if(p1.waitFor()==0){
-                    Runtime.getRuntime().exec("cmd.exe /c D:\\Documents\\4to\\TPE_Compiladores\\Extensiones\\OLLYDBG.EXE D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.exe",null,new File("D:\\Documents\\4to\\TPE_Compiladores\\"));
+                    Runtime.getRuntime().exec("cmd.exe /c D:\\Facultad\\Catedras\\4 - Cuarto Año\\Segundo Cuatrimestre\\Diseño de Compiladores\\TPE_Compiladores\\Extensiones\\OLLYDBG.EXE D:\\Documents\\4to\\TPE_Compiladores\\salida\\salida.exe",null,new File("D:\\Facultad\\Catedras\\4 - Cuarto Año\\Segundo Cuatrimestre\\Diseño de Compiladores\\TPE_Compiladores\\"));
                 }
             }
             */

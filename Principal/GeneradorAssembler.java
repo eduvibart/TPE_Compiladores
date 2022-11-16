@@ -1,11 +1,13 @@
 package Principal;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import GeneracionCodigoIntermedio.ArbolSintactico;
+import GeneracionCodigoIntermedio.NodoControl;
 
 public class GeneradorAssembler {
-    private String data, code, codigoArbol,bibliotecas;
+    private String data, code, codigoArbol, bibliotecas, codigoFunciones;
     private ArbolSintactico arbol;
     private Parser parser;
     
@@ -13,6 +15,7 @@ public class GeneradorAssembler {
     public GeneradorAssembler(Parser parser){
         this.data="";
         this.code="";
+        this.codigoFunciones="";
         this.bibliotecas = ".386 \n.model flat, stdcall \noption casemap :none  \n" +
         "include \\masm32\\include\\windows.inc \ninclude \\masm32\\include\\kernel32.inc \ninclude \\masm32\\include\\masm32.inc  \n" +
         "includelib \\masm32\\lib\\kernel32.lib \nincludelib \\masm32\\lib\\masm32.lib\n" +
@@ -23,8 +26,11 @@ public class GeneradorAssembler {
         this.arbol=parser.getRaiz();
 
         codigoArbol =this.arbol.getAssembler();
+        
+        for (ArbolSintactico a : parser.getFuncion()) {
+            codigoFunciones += a.getAssembler()+"\n";  	
+        }
 
-        generarData();
         generarCode();
         
     }
@@ -51,11 +57,14 @@ public class GeneradorAssembler {
                     data += prefix + k + " dd " + " ? " + "\n";
                 }
             }
+            data+= NodoControl.data;
         }
     }
 
     private void generarCode() {
         code = "\n.code\n";
+        
+        code+= codigoFunciones;
         code+= "main:\n";
         
         code+= this.codigoArbol;

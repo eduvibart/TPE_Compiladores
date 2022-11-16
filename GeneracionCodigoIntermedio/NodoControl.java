@@ -1,5 +1,6 @@
 package GeneracionCodigoIntermedio;
 
+
 public class NodoControl extends ArbolSintactico{
     private String salida;
     private String label;
@@ -42,6 +43,28 @@ public class NodoControl extends ArbolSintactico{
                     salida += "MOV "+ variable + ", "+ getIzq().getLex()+ "\n";
                 }
                 salida+= "JMP " + label + "\n";
+                return salida;
+            
+            case "out":
+                String variableOut = getVariableOut();
+                data += variableOut + " db \"" + getIzq().getHojaPropia().getLex() + "\", 0\n	";
+                salida += "invoke MessageBox, NULL, addr " + variableOut + ", addr " + variableOut + ", MB_OK\n";
+                
+                return salida;
+            
+            case "Funcion":
+                salida+= getIzq().getLex() + ":\n";
+                salida+= getIzq().getAssembler();
+                //AGREGAR ERROR DE NO RETORNO
+                return salida;
+            
+            case "Llamado Funcion":
+                salida+= getIzq().getIzq().getAssembler()+ getIzq().getDer().getAssembler();
+                variable =getVariableAuxiliar();
+                pilaVariabelsAuxiliares.push(variable);
+                salida+= "JMP "+getIzq().getLex()+"\n";
+
+
                 return salida;
         
         }

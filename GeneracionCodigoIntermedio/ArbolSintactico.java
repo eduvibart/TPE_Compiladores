@@ -12,9 +12,12 @@ public abstract class ArbolSintactico extends ParserVal{
     private String uso;
     public static int numeroVariable =0;
     protected static int numeroLabel=0;
+    protected static int numeroOut=0;
+    public static String data="";
     protected static Stack<String> pilaLabels = new Stack<String>();
     protected static Stack<String> pilaLabelsTags = new Stack<String>();
     protected static Stack<String> pilaLabelsBreak = new Stack<String>();
+    protected static Stack<String> pilaVariabelsAuxiliares = new Stack<String>();
 
     public ArbolSintactico(String lex){
         izq = null;
@@ -53,5 +56,9 @@ public abstract class ArbolSintactico extends ParserVal{
     public static String getVariableAuxiliar(){
         numeroVariable++;
         return "@aux" + numeroVariable;
+    }
+    public static String getVariableOut(){
+        numeroOut++;
+        return "@out" + numeroOut;
     }
 }

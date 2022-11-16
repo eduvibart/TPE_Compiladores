@@ -2,10 +2,15 @@ program {
         i32 a;
         i32 b;
         i32 c;
-        for (a=:0;a<b;+1){
-                c=:a;
-                break;
+        fun mergeSort(i32 a, i32 b):i32{
+                a=:b;
+                return (3);
         };
+        fun holajkds(i32 a, i32 b):i32{
+                a=:b;
+                return (3);
+        };
+        mergeSort(a,b);
         i32 d;
         d=: c;
 }   

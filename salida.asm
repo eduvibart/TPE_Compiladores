@@ -9,16 +9,21 @@ includelib \masm32\lib\masm32.lib
 include \masm32\include\user32.inc 
 includelib \masm32\lib\user32.lib 
 
-.data
-_c@Global dd  ? 
-_a@Global dd  ? 
-_d@Global dd  ? 
-_b@Global dd  ? 
-
 .code
+mergeSort@Global:
+MOV EAX , _b@Global@mergeSort
+MOV _a@Global@mergeSort, EAX
+
+holajkds@Global:
+MOV EAX , _b@Global@holajkds
+MOV _a@Global@holajkds, EAX
+
 main:
-MOV EAX , _a@Global
-MOV _c@Global, EAX
+FLD a@Global
+FST a@Global@mergeSort
+FLD b@Global
+FST b@Global@mergeSort
+JMP mergeSort@Global
 MOV EAX , _c@Global
 MOV _d@Global, EAX
 end main
