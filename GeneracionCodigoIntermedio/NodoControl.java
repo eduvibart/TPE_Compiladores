@@ -36,15 +36,22 @@ public class NodoControl extends ArbolSintactico{
                 }
                 return salida;
             case "Break":
-                label = getLabel();
-                pilaLabelsBreak.push(label);
+                label = pilaLabelsBreak.peek();
+                
                 if(!(getIzq().getLex().equals("Fin"))){
-                    variable = getVariableAuxiliar();
-                    pilaLabelsBreak.push(getIzq().getTipo());
-                    pilaLabelsBreak.push(variable);
-                    salida += "MOV "+ variable + ", "+ getIzq().getLex()+ "\n";
+                    variable = pilaVariablesAuxiliares.peek();
+                    if(getIzq().getTipo().equals("Entero")){
+                        salida+= "MOV EAX , " + getIzq().getLex()+ "\n"; 
+                        salida+= "MOV " + variable + ", " + "EAX" + "\n";
+                    }
+                    else
+                    {
+                        salida += "FLD " + getIzq().getLex() + "\n";
+                        salida += "FST " + variable + "\n";
+                    }
                 }
                 salida+= "JMP " + label + "\n";
+                
                 return salida;
             
             case "out":

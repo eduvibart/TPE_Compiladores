@@ -343,34 +343,33 @@ public class NodoComun extends ArbolSintactico{
                 salida += label + ":\n";
                 salida += getIzq().getAssembler() + salidaDer;
 
-                if(!(pilaLabelsBreak.isEmpty())){
-
-                    this.hojaPropia= new NodoHoja(pilaLabelsBreak.pop());
-                    this.hojaPropia.setTipo(pilaLabelsBreak.pop());
-                    this.hojaPropia.setUso("variableAuxiliar");
-                }
-
                 break;
 
             case "While como expresion":
+                variable = getVariableAuxiliar(); //variable en donde va a volver el valor del break
+                pilaVariablesAuxiliares.push(variable);
+
+                label = getLabel(); //label a donde saltar si existe un break
+                pilaLabelsBreak.push(label);
+                
                 salida+= getIzq().getAssembler() + getDer().getAssembler();
-                
-                if(getIzq().getHojaPropia() == null){
 
-                    this.hojaPropia = new NodoHoja(getDer().getHojaPropia().getLex());
-                    this.hojaPropia.setTipo(this.getDer().getTipo());
-                    this.hojaPropia.setUso("variableAuxiliar");
-                }
-                else{
-                    this.hojaPropia = new NodoHoja(getIzq().getHojaPropia().getLex());
-                    this.hojaPropia.setTipo(this.getIzq().getTipo());
-                    this.hojaPropia.setUso("variableAuxiliar");
-                    saltoBreak = pilaLabelsBreak.pop();
-                    salida+= saltoBreak + ":\n";
 
+                if(getDer().getHojaPropia().getTipo().equals("Entero")){
+                    salida+= "MOV EAX , " + getDer().getHojaPropia().getLex() + "\n"; 
+                    salida+= "MOV " + variable + ", " + "EAX" + "\n";
+                }else{
+                    salida += "FLD " + getDer().getHojaPropia().getLex() + "\n";
+                    salida += "FST " + variable + "\n";
                 }
-                
-                
+
+                this.hojaPropia = new NodoHoja(variable);
+                this.hojaPropia.setTipo(getDer().getHojaPropia().getTipo()); //como siempre hay else, se toma el tipo de la variable derecha
+                this.hojaPropia.setUso("variableAuxiliar"); 
+
+                salida+= pilaLabelsBreak.pop()+":\n";
+
+                pilaVariablesAuxiliares.pop();
                 break;
 
             case "Cuerpo - Asignacion":
