@@ -2,9 +2,19 @@ program {
         i32 a;
         i32 b;
         i32 c;
+        fun prueba():i32{
+                return(0);
+                };
+        fun mergeSort(i32 a, i32 b):i32{
+                a=:b;
+                prueba();
+                return (b);
+        };
+        fun prueba1():i32{
+                return(0);
+                mergeSort(a,b);
+                };
         a =: 1;
         b =: 2;
-        c =: while(a<b):( a =: a +1){
-                break 8;
-        }else 3;
+        c =: mergeSort(a,b);
 }   

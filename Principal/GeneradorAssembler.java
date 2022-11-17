@@ -16,6 +16,7 @@ public class GeneradorAssembler {
         this.data= "\n.data\n"+"errorMensFun db \"El camino tomado por la funcion no tiene retorno.\", 0 \n"
                     + "errorMensDivisionPorCero db \"No se puede dividir por cero.\", 0 \n"
                     + "errorMensProductoEnteros db \"Se produjo un overflow en el producto de enteros.\", 0 \n"
+                    + "errorMensRecursionMutua db \"Se produjo un llamado recursivo mutuo.\", 0 \n"
                     + "error db \"Error de ejecucion!!!\", 0 \n";
         this.code="";
         this.codigoFunciones="errorFun: \n"
@@ -26,6 +27,9 @@ public class GeneradorAssembler {
                             + "invoke ExitProcess, 1 \n"
                             + "errorProductoEnteros: \n"
                             + "invoke MessageBox, NULL, addr errorMensProductoEnteros, addr error, MB_OK \n"
+                            + "invoke ExitProcess, 1 \n"
+                            + "errorRecursionMutua: \n"
+                            + "invoke MessageBox, NULL, addr errorMensRecursionMutua, addr error, MB_OK \n"
                             + "invoke ExitProcess, 1 \n";
         this.bibliotecas = ".386 \n.model flat, stdcall \noption casemap :none  \n" +
         "include \\masm32\\include\\windows.inc \ninclude \\masm32\\include\\kernel32.inc \ninclude \\masm32\\include\\masm32.inc  \n" +

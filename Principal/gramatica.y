@@ -264,22 +264,25 @@ sentencias_fun :  sentencia_decl_datos {$$=new NodoHoja("Sentencia Declarativa D
                 | sentencia_while_fun {$$=$1;}
                 | retorno {$$=$1;}
 ;
+
 sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");
-                                $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $6),new NodoControl("else fun", (ArbolSintactico)$9)));
+                                $$= new NodoComun("IF",new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then",(ArbolSintactico) $6),new NodoControl("Else", (ArbolSintactico)$9)));
                         }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C PUNTOCOMA ELSE sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");
-                        $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $7),new NodoControl("else fun", (ArbolSintactico)$11)));}
+                        $$= new NodoComun("IF",new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then",(ArbolSintactico) $7),new NodoControl("Else", (ArbolSintactico)$11)));
+                }
                 | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA ELSE LLAVE_A cuerpo_fun LLAVE_C PUNTOCOMA END_IF {System.out.println("Sentencia IF");
-                        $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $6),new NodoControl("else fun", (ArbolSintactico)$10)));}
-                        
+                        $$= new NodoComun("IF",new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then",(ArbolSintactico) $6),new NodoControl("Else", (ArbolSintactico)$10)));
+                }       
                 | IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA END_IF {System.out.println("Sentencia IF");
-                        $$ = new NodoComun("IF FUN", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6) );
-                        }
+                        $$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)$6));
+                }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C END_IF {System.out.println("Sentencia IF");
-                        $$= new NodoComun("IF_FUN",(ArbolSintactico)$3,(ArbolSintactico) new NodoComun("Cuerpo if fun",new NodoControl("Then fun",(ArbolSintactico) $7),new NodoControl("else fun", (ArbolSintactico)$11)));}
-
+                        $$= new NodoComun("IF",new NodoControl("Condicion",(ArbolSintactico) $3),(ArbolSintactico) new NodoComun("Cuerpo_IF",new NodoControl("Then",(ArbolSintactico) $7),new NodoControl("Else", (ArbolSintactico)$11)));
+                }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C END_IF {System.out.println("Sentencia IF");
-                        $$ = new NodoComun("IF FUN", (ArbolSintactico) $3, (ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$7) );}
+                        $$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), (ArbolSintactico) new NodoControl("Then", (ArbolSintactico)$7));
+                }
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun LLAVE_C error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba end_if ");}
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE LLAVE_A cuerpo_fun error {$$=new NodoHoja("Error sintactico");
@@ -2054,6 +2057,9 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                                         $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,(ArbolSintactico)parametro1,(ArbolSintactico)parametro2));
                                                                         ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
                                                                 }
+                                                        }else{
+                                                                yyerror("La funcion " + $1.sval + " no esta declarada en el ambito " + ambitoActual);
+                                                                $$ = new NodoHoja("Error");
                                                         }
 
                                                 }
@@ -2088,7 +2094,11 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                         $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,(ArbolSintactico)parametro1,new NodoHoja("Un solo parametro")));
                         ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
                 }
+            }else{
+                         yyerror("La funcion " + $1.sval + " no esta declarada en el ambito " + ambitoActual);
+                        $$ = new NodoHoja("Error");
             }
+
         }
         | ID PARENT_A PARENT_C {
                 String ambito = buscarAmbito(ambitoActual,$1.sval);
@@ -2109,7 +2119,11 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                 $$=new NodoControl("Llamado Funcion", new NodoComun($1.sval+"@"+ambito,new NodoHoja("Fin"),new NodoHoja("Fin")));
                                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
                         }
-                }       
+                }else{
+                                yyerror("La funcion " + $1.sval + " no esta declarada en el ambito " + ambitoActual);
+                                $$ = new NodoHoja("Error");
+                }
+    
         }
         | ID PARENT_A param_real COMA param_real error {$$=new NodoHoja("Error sintactico");
                 yyerror("Se esperaba )");}
