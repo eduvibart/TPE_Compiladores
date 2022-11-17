@@ -110,8 +110,8 @@ public class NodoComun extends ArbolSintactico{
     
                 if (getIzq().getHojaPropia().getTipo().equals("Entero")) {
                     salida += "MOV EAX, " + getIzq().getHojaPropia().getLex() + "\n";
-                    salida += "MUL EAX, " + getDer().getHojaPropia().getLex() + "\n";
-
+                    salida += "IMUL EAX, " + getDer().getHojaPropia().getLex() + "\n";
+                    salida += "JO errorProductoEnteros\n";
                     salida += "MOV " + variable + ", EAX" + "\n";
 
                 } else {

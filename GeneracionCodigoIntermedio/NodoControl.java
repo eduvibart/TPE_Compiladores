@@ -1,5 +1,6 @@
 package GeneracionCodigoIntermedio;
 
+import Principal.TablaSimbolos;
 
 public class NodoControl extends ArbolSintactico{
     private String salida;
@@ -62,7 +63,7 @@ public class NodoControl extends ArbolSintactico{
                 salida+= getIzq().getAssembler();
                 
                 pilaVariablesAuxiliares.pop();
-                //AGREGAR ERROR DE NO RETORNO
+                salida += "JMP errorFun";
                 return salida;
             
             case "Llamado Funcion":
@@ -73,7 +74,7 @@ public class NodoControl extends ArbolSintactico{
                 this.hojaPropia.setTipo(getIzq().getTipo());
                 this.hojaPropia.setUso("variableAuxiliar");
                 salida+= "call "+getIzq().getLex()+"\n";
-                if(getIzq().getTipo().equals("Entero")){
+                if(TablaSimbolos.getAtributo(variable,"Tipo").equals("Entero")){
                     salida+= "MOV EAX, "+ variable + "\n";
                     salida+= "MOV " + varAux + ", EAX"+"\n";
                 }else{

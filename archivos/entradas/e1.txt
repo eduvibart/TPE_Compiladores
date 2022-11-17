@@ -2,16 +2,9 @@ program {
         i32 a;
         i32 b;
         i32 c;
-        fun mergeSort(i32 a, i32 b):i32{
-                a=:b;
-                fun holajkds(i32 a, i32 b):i32{
-                        a=:b;
-                        return (3);
-                };
-                return (holajkds(a,b));
-        };
-        
-        mergeSort(a,b);
-        i32 d;
-        d=: c;
+        a =: 1;
+        b =: 2;
+        c =: while(a<b):( a =: a +1){
+                break 8;
+        }else 3;
 }   
