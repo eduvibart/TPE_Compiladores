@@ -4,12 +4,13 @@ program {
         i32 c;
         fun mergeSort(i32 a, i32 b):i32{
                 a=:b;
-                return (3);
+                fun holajkds(i32 a, i32 b):i32{
+                        a=:b;
+                        return (3);
+                };
+                return (holajkds(a,b));
         };
-        fun holajkds(i32 a, i32 b):i32{
-                a=:b;
-                return (3);
-        };
+        
         mergeSort(a,b);
         i32 d;
         d=: c;

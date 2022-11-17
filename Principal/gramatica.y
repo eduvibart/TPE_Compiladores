@@ -123,7 +123,8 @@ list_var : list_var COMA ID {
 encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo {       
 
                                 if(!TablaSimbolos.existeSimbolo($2.sval+ "@" + ambitoActual)){
-                                        $$ = new ParserVal($2.sval);
+                                        $$ = new NodoHoja($2.sval);
+                                        ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$9).getTipo());
                                         TablaSimbolos.addNuevoSimbolo($2.sval+ "@" + ambitoActual);
                                         TablaSimbolos.addAtributo($2.sval+ "@" + ambitoActual,"Uso","Funcion");
                                         TablaSimbolos.addAtributo($2.sval+ "@" + ambitoActual,"Id",TablaSimbolos.getAtributo($2.sval,"Id"));
@@ -149,7 +150,8 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                         }
                 | FUN ID PARENT_A parametro  PARENT_C DOSPUNTOS tipo {
                         if(!TablaSimbolos.existeSimbolo($2.sval+ "@" + ambitoActual)){
-                                $$ = new ParserVal($2.sval);
+                                $$ = new NodoHoja($2.sval);
+                                        ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$7).getTipo());
                                 TablaSimbolos.addNuevoSimbolo($2.sval+ "@" + ambitoActual);
                                 TablaSimbolos.addAtributo($2.sval+ "@" + ambitoActual,"Uso","Funcion");
                                 TablaSimbolos.addAtributo($2.sval+ "@" + ambitoActual,"Id",TablaSimbolos.getAtributo($2.sval,"Id"));
@@ -170,7 +172,8 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                 }
                 | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo {
                         if(!TablaSimbolos.existeSimbolo($2.sval+ "@" + ambitoActual)){
-                                $$ = new ParserVal($2.sval);
+                                $$ = new NodoHoja($2.sval);
+                                        ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$6).getTipo());
                                 TablaSimbolos.addNuevoSimbolo($2.sval+ "@" + ambitoActual);
                                 TablaSimbolos.addAtributo($2.sval+ "@" + ambitoActual,"Uso","Funcion");
                                 TablaSimbolos.addAtributo($2.sval+ "@" + ambitoActual,"Id",TablaSimbolos.getAtributo($2.sval,"Id"));
@@ -233,7 +236,9 @@ sentencia_decl_fun : encabezado_fun LLAVE_A cuerpo_fun LLAVE_C  {
                                                 break;
                                         }
                                 }
-                                $$ = new NodoControl("Funcion",new NodoControl($1.sval+"@"+ambitoActual,(ArbolSintactico)$3));
+                                NodoControl n = new NodoControl(((ArbolSintactico)$1).getLex()+"@"+ambitoActual,(ArbolSintactico)$3);
+                                n.setTipo(((ArbolSintactico)$1).getTipo());
+                                $$ = new NodoControl("Funcion",n);
                                 removeTipoActual();
                                 funciones.add((ArbolSintactico)$$);
                         }
@@ -1992,12 +1997,14 @@ sentencia_for : etiqueta FOR PARENT_A ID ASIG constante_for PUNTOCOMA ID compara
 param_real : cte{
                         $$ = new NodoHoja($1.sval);
                         ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval,"Tipo"));
+                        ((ArbolSintactico)$$).setUso("Variable");
                 }
 
                 | ID {
                         String ambito = buscarAmbito(ambitoActual,$1.sval);
                         if(!ambito.equals("")){
                                 $$=new NodoHoja($1.sval+"@"+ambito);
+                                ((ArbolSintactico)$$).setUso("Variable");
                                 ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
                         }else{
                                 $$=new NodoHoja("Error");
@@ -2023,14 +2030,20 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                                                                 String nombreS3 = ((ArbolSintactico) $3).getLex();
                                                                                                 yyerror("El tipo del parametro "+ nombreS3+" no coincide con el tipo declarado en la funcion.");
                                                                                         }else{
-                                                                                                parametro1 = new NodoComun("=:", new NodoHoja(par1), (ArbolSintactico)$3);
+                                                                                                NodoHoja n =new NodoHoja(par1);
+                                                                                                n.setTipo(tipoS3);
+                                                                                                n.setUso("Variable");
+                                                                                                parametro1 = new NodoComun("=:",n , (ArbolSintactico)$3);
                                                                                         }
                                                                                         String tipoS5 = (String) ((ArbolSintactico) $5).getTipo();
                                                                                         if( !(tipoS5.equals((String)TablaSimbolos.getAtributo(par2,"Tipo") ))){
                                                                                                 String nombreS5 = ((ArbolSintactico) $5).getLex();
                                                                                                 yyerror("El tipo del parametro "+ nombreS5+" no coincide con el tipo declarado en la funcion.");
                                                                                         }else{
-                                                                                                parametro2 = new NodoComun("=:", new NodoHoja(par2), (ArbolSintactico)$5);
+                                                                                                NodoHoja n =new NodoHoja(par2);
+                                                                                                n.setTipo(tipoS5);
+                                                                                                n.setUso("Variable");
+                                                                                                parametro2 = new NodoComun("=:",n, (ArbolSintactico)$5);
                                                                                         }
                                                                                 }else{
                                                                                         yyerror("La declaracion de la funcion no cuenta con dos parametros.");
@@ -2061,7 +2074,10 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                 String nombreS3 = ((ArbolSintactico) $3).getLex();
                                                 yyerror("El tipo del parametro "+ nombreS3+" no coincide con el tipo declarado en la funcion.");
                                         }else{
-                                                parametro1 = new NodoComun("=:", new NodoHoja(par1), (ArbolSintactico)$3);
+                                                NodoHoja n =new NodoHoja(par1);
+                                                n.setTipo(tipoS3);
+                                                n.setUso("Variable");
+                                                parametro1 = new NodoComun("=:",n , (ArbolSintactico)$3);
                                         }
                                 }else{
                                         yyerror("La funcion esta declarada sin parametros.");

@@ -32,6 +32,7 @@ public class GeneradorAssembler {
         }
 
         generarCode();
+        generarData();
         
     }
 

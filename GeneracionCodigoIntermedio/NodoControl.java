@@ -5,6 +5,7 @@ public class NodoControl extends ArbolSintactico{
     private String salida;
     private String label;
     private String variable;
+    private NodoHoja hojaPropia;
     
     public NodoControl(String lex,ArbolSintactico nodo) {
         super(lex);
@@ -53,27 +54,51 @@ public class NodoControl extends ArbolSintactico{
                 return salida;
             
             case "Funcion":
+                NodoHoja n = (new NodoHoja("@aux@"+getIzq().getLex() ));
+                n.setTipo(getIzq().getTipo());
+                n.setUso("variableAuxiliar");
+                pilaVariablesAuxiliares.push("@aux@"+getIzq().getLex());
                 salida+= getIzq().getLex() + ":\n";
                 salida+= getIzq().getAssembler();
+                
+                pilaVariablesAuxiliares.pop();
                 //AGREGAR ERROR DE NO RETORNO
                 return salida;
             
             case "Llamado Funcion":
                 salida+= getIzq().getIzq().getAssembler()+ getIzq().getDer().getAssembler();
-                variable =getVariableAuxiliar();
-                pilaVariabelsAuxiliares.push(variable);
-                salida+= "JMP "+getIzq().getLex()+"\n";
-
-
+                variable = "@aux@"+getIzq().getLex();
+                String varAux = getVariableAuxiliar();
+                this.hojaPropia= new NodoHoja(varAux);
+                this.hojaPropia.setTipo(getIzq().getTipo());
+                this.hojaPropia.setUso("variableAuxiliar");
+                salida+= "call "+getIzq().getLex()+"\n";
+                if(getIzq().getTipo().equals("Entero")){
+                    salida+= "MOV EAX, "+ variable + "\n";
+                    salida+= "MOV " + varAux + ", EAX"+"\n";
+                }else{
+                    salida += "FLD " + variable + "\n";
+                    salida += "FST " + varAux + "\n";
+                }
                 return salida;
-        
+            case "Retorno":
+                salida+=getIzq().getAssembler();
+                if(getIzq().getTipo().equals("Entero")){
+                    salida+= "MOV EAX, "+ getIzq().getHojaPropia().getLex() + "\n";
+                    salida+= "MOV " + pilaVariablesAuxiliares.peek() + ", EAX"+"\n";
+                }else{
+                    salida += "FLD " + getIzq().getHojaPropia().getLex() + "\n";
+                    salida += "FST " + pilaVariablesAuxiliares.peek() + "\n";
+                }
+                salida+="ret \n";
+                return salida;
         }
         return getIzq().getAssembler();
     }
     
     @Override
     public NodoHoja getHojaPropia() {
-        return getIzq().getHojaPropia();
+        return this.hojaPropia;
     }
     
 }
