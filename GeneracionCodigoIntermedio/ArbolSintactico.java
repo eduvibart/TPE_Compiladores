@@ -48,6 +48,7 @@ public abstract class ArbolSintactico extends ParserVal{
     public abstract void recorrerArbol(String identado);
     public abstract String getAssembler();
     public abstract NodoHoja getHojaPropia();
+    public String getLexemaWhen(){return this.lex;} 
 
     public static String getLabel(){
         numeroLabel++;

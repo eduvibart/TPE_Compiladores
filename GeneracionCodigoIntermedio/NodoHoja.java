@@ -28,6 +28,12 @@ public class NodoHoja extends ArbolSintactico {
         }
         else return super.getLex();
     } 
+    //usado para averiguar el lexema en el when
+    @Override
+    public String getLexemaWhen(){
+        return super.getLex();
+    } 
+
 
     @Override
     public NodoHoja getHojaPropia() {

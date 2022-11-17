@@ -16,5 +16,7 @@ program {
                 };
         a =: 1;
         b =: 2;
-        c =: mergeSort(a,b);
+        c =: while(a<b):( a =: a +1){
+                break 8;
+        }else 3;
 }   

@@ -44,13 +44,15 @@ bloque_sentencias :{$$=new NodoHoja("Fin");}
                                 yyerror("Se esperaba ;");
                         }
 ;
-sentencia : sentencia_declarativa {$$=new NodoHoja("Sentencia Declarativa");}
+sentencia : sentencia_declarativa {$$=$1;}
         | sentencia_ejecutable {$$ = $1;}
 ;
-sentencia_declarativa : sentencia_decl_datos 
-                        | sentencia_decl_fun 
-                        | lista_const  
-                        | sentencia_when
+sentencia_declarativa : sentencia_decl_datos {$$= new NodoHoja("Sentencia Declarativa");}
+                        | sentencia_decl_fun {
+                                $$= new NodoHoja("Sentencia Declarativa");
+                                }
+                        | lista_const {$$= new NodoHoja("Sentencia Declarativa");} 
+                        | sentencia_when {$$=$1;}
 ;
 tipo : I32 {
             $$ = new NodoHoja("Entero");
@@ -144,6 +146,7 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
 
                                 }else{
                                         yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
+                                        $$= new NodoHoja("Ya existe un identificador con el nombre de la funcion");
                                         ambitoActual += "@"+$2.sval;
                                 }
                         
@@ -167,6 +170,7 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
 
                         }else{
                                 yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
+                                $$= new NodoHoja("Ya existe un identificador con el nombre de la funcion");
                                 ambitoActual += "@"+$2.sval;
                         }
                 }
@@ -185,6 +189,8 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                         }else{
                                 yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
                                 ambitoActual += "@"+$2.sval;
+                                $$= new NodoHoja("Ya existe un identificador con el nombre de la funcion");
+
                         }
                 }
                 
@@ -327,24 +333,147 @@ sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA 
 
 
 ; 
-sentencia_when_fun: WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {
-                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
-                        System.out.println("Sentencia WHEN con llaves");}
-                | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun {
-                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
-                        System.out.println("Sentencia WHEN sin llaves");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba }");}
-                | WHEN PARENT_A condicion PARENT_C THEN error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
-                | WHEN PARENT_A condicion PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba then ");}
-                | WHEN PARENT_A condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba )");}
+sentencia_when_fun: WHEN PARENT_A factor comparacion factor PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C {
+                String atributoIzq=((ArbolSintactico)$3).getLexemaWhen();
+                String atributoDer=((ArbolSintactico)$5).getLexemaWhen();
+                if (!TablaSimbolos.getAtributo(atributoIzq, "Uso" ).equals("Constante")){
+                        yyerror(atributoIzq+" no es una constante");
+                        $$ = new NodoHoja("Error en el when");
+
+                }else if (!TablaSimbolos.getAtributo(atributoDer, "Uso" ).equals("Constante")){
+                        yyerror(atributoDer+" no es una constante");
+                        $$ = new NodoHoja("Error en el when");
+                }
+                else if (!TablaSimbolos.getAtributo(atributoIzq, "Tipo" ).equals(TablaSimbolos.getAtributo(atributoDer, "Tipo" ))){
+                        yyerror("Los valores de la condicion del when son de tipos diferentes");
+                        $$ = new NodoHoja("Error en el when");
+                }else{
+                        String s1 =TablaSimbolos.getAtributo(atributoIzq, "Valor")+"";
+                        String s2 =TablaSimbolos.getAtributo(atributoDer, "Valor")+"";
+                        double valorIzq = Double.parseDouble(s1);
+                        double valorDer = Double.parseDouble(s2);
+                        switch ($4.sval){
+                                case "=":
+                                        if (valorIzq==valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "<":
+                                        if (valorIzq < valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case ">":
+                                        if (valorIzq > valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "=!":
+                                        if (valorIzq != valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "<=":
+                                        if (valorIzq <= valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case ">=":
+                                        if (valorIzq >= valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                        } 
+                }
+        }
+        
+| WHEN PARENT_A factor comparacion factor PARENT_C THEN sentencias_fun {
+                String atributoIzq=((ArbolSintactico)$3).getLexemaWhen();
+                String atributoDer=((ArbolSintactico)$5).getLexemaWhen();
+                if (!TablaSimbolos.getAtributo(atributoIzq, "Uso" ).equals("Constante")){
+                        yyerror(atributoIzq+" no es una constante");
+                        $$ = new NodoHoja("Error en el when");
+
+                }else if (!TablaSimbolos.getAtributo(atributoDer, "Uso" ).equals("Constante")){
+                        yyerror(atributoDer+" no es una constante");
+                        $$ = new NodoHoja("Error en el when");
+                }
+                else if (!TablaSimbolos.getAtributo(atributoIzq, "Tipo" ).equals(TablaSimbolos.getAtributo(atributoDer, "Tipo" ))){
+                        yyerror("Los valores de la condicion del when son de tipos diferentes");
+                        $$ = new NodoHoja("Error en el when");
+                }else{
+                        String s1 =TablaSimbolos.getAtributo(atributoIzq, "Valor")+"";
+                        String s2 =TablaSimbolos.getAtributo(atributoDer, "Valor")+"";
+                        double valorIzq = Double.parseDouble(s1);
+                        double valorDer = Double.parseDouble(s2);
+                        switch ($4.sval){
+                                case "=":
+                                        if (valorIzq==valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "<":
+                                        if (valorIzq < valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case ">":
+                                        if (valorIzq > valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "=!":
+                                        if (valorIzq != valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "<=":
+                                        if (valorIzq <= valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case ">=":
+                                        if (valorIzq >= valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                        } 
+                }
+        }
+        
+                
+                | WHEN PARENT_A factor comparacion factor PARENT_C THEN LLAVE_A cuerpo_fun error{
+                        $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba }");
+                }
+                | WHEN PARENT_A factor comparacion factor PARENT_C THEN  error{
+                        $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba {");
+                }
+                | WHEN PARENT_A factor comparacion factor PARENT_C error{
+                        $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba then");
+                }
+                | WHEN PARENT_A factor comparacion factor  error{
+                        $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba )");
+                }
                 | WHEN PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba condicion");}
+                        yyerror("Se esperaba condicion en el when");}
                 | WHEN error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba (");}
+                        yyerror("Se esperaba ( en el when");}
 ; 
 etiqueta : ID DOSPUNTOS {
                                 $$ = new ParserVal($1.sval);
@@ -782,7 +911,6 @@ cuerpo_fun_break : {$$=new NodoHoja("Fin");}
 sentencias_fun_break :   asignacion  {$$ = $1;}
                 | sentencia_if_break_fun  {$$ = $1;}
                 | sentencia_out  {$$ = $1;}
-                | sentencia_when_break_fun  {$$ = $1;}
                 | sentencia_while_fun  {$$ = $1;}
                 | sentencia_for_fun  {$$ = $1;}
                 | CONTINUE tag {        boolean b = false;
@@ -804,25 +932,7 @@ sentencias_fun_break :   asignacion  {$$ = $1;}
                 | retorno {$$=$1;}
 
 ;
-sentencia_when_break_fun : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break LLAVE_C {
-                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
-                        System.out.println("Sentencia WHEN con llaves");}
-                | WHEN PARENT_A condicion PARENT_C THEN sentencias_fun_break {
-                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
-                        System.out.println("Sentencia WHEN sin llaves");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba }");}
-                | WHEN PARENT_A condicion PARENT_C THEN error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
-                | WHEN PARENT_A condicion PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba then ");}
-                | WHEN PARENT_A condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba )");}
-                | WHEN PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba condicion");}
-                | WHEN error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba (");}
-;
+
 sentencia_if_break_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun_break PUNTOCOMA ELSE sentencias_fun_break PUNTOCOMA END_IF 
                         {
                         $$ = new NodoComun("IF", new NodoControl("Condicion",(ArbolSintactico) $3), new NodoComun("Cuerpo_IF",(ArbolSintactico) new NodoControl("Then",(ArbolSintactico)$6), (ArbolSintactico) new NodoControl("Else", (ArbolSintactico)$9)));
@@ -937,7 +1047,11 @@ asignacion_const : ID ASIG cte {
                                         TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Tipo",TablaSimbolos.getAtributo($3.sval,"Tipo"));
                                         TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Linea",AnalizadorLexico.getLineaAct());
                                         TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Uso","Constante");
-                                        TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Valor", $3);
+                                        if (TablaSimbolos.getAtributo($3.sval,"Tipo").equals("Entero")){
+                                                TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Valor", Long.valueOf($3.sval));
+                                        }else{
+                                                TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Valor", Double.parseDouble($3.sval));
+                                        }
                                 }
                         }
         | ID ASIG error {$$=new NodoHoja("Error sintactico");
@@ -1077,19 +1191,31 @@ factor: ID {
         
         | llamado_func {$$=$1;}
 ;
-cte : ENTERO {  chequearRangoI32($1.sval);}
-        | FLOAT {  }
+cte : ENTERO {  
+                chequearRangoI32($1.sval);
+                TablaSimbolos.addNuevoSimbolo((String)$1.sval);
+                TablaSimbolos.addAtributo($1.sval, "Uso", "Constante");
+                TablaSimbolos.addAtributo($1.sval, "Tipo", "Entero");
+                TablaSimbolos.addAtributo($1.sval, "Valor", (String)$1.sval);
+                }
+        | FLOAT {  
+                TablaSimbolos.addNuevoSimbolo((String)$1.sval);
+                TablaSimbolos.addAtributo($1.sval, "Uso", "Constante");
+                TablaSimbolos.addAtributo($1.sval, "Tipo", "Float");
+                TablaSimbolos.addAtributo($1.sval, "Valor", (String)$1.sval);}
         | RESTA ENTERO {
                 $$=new ParserVal($1.sval+$2.sval);
                 TablaSimbolos.addNuevoSimbolo((String)$1.sval+$2.sval);
                 TablaSimbolos.addAtributo($1.sval+$2.sval, "Uso", "Constante");
                 TablaSimbolos.addAtributo($1.sval+$2.sval, "Tipo", "Entero");
+                TablaSimbolos.addAtributo($1.sval, "Valor", (String)$1.sval+$2.sval);
         }
         | RESTA FLOAT {
                 $$=new ParserVal($1.sval+$2.sval);
                 TablaSimbolos.addNuevoSimbolo((String)$1.sval+$2.sval);
                 TablaSimbolos.addAtributo($1.sval+$2.sval, "Uso", "Constante");
                 TablaSimbolos.addAtributo($1.sval+$2.sval, "Tipo", "Float");
+                TablaSimbolos.addAtributo($1.sval, "Valor", (String)$1.sval+$2.sval);
         }
 ;
 sentencia_for_asig: FOR PARENT_A ID ASIG  constante_for PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA  constante_for PARENT_C LLAVE_A bloque_sent_eje_asig LLAVE_C {
@@ -1467,20 +1593,142 @@ sentencia_out : OUT PARENT_A CADENA PARENT_C {
                 | OUT error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 ;
-sentencia_when : WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable LLAVE_C {
-                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $7);
-                        System.out.println("Sentencia WHEN con llaves");}
-                | WHEN PARENT_A condicion PARENT_C THEN sentencia_ejecutable {
-                        $$ = (ArbolSintactico) new NodoComun("When",(ArbolSintactico) $3, (ArbolSintactico) $6);
-                        System.out.println("Sentencia WHEN sin llaves");}
-                | WHEN PARENT_A condicion PARENT_C THEN LLAVE_A bloque_ejecutable error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba } en el when");}
-                | WHEN PARENT_A condicion PARENT_C THEN error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba { en el when");}
-                | WHEN PARENT_A condicion PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba then en el when");}
-                | WHEN PARENT_A condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba ) en el when");}
+sentencia_when : WHEN PARENT_A factor comparacion factor PARENT_C THEN LLAVE_A bloque_sentencias LLAVE_C {
+                String atributoIzq=((ArbolSintactico)$3).getLexemaWhen();
+                String atributoDer=((ArbolSintactico)$5).getLexemaWhen();
+                if (!TablaSimbolos.getAtributo(atributoIzq, "Uso" ).equals("Constante")){
+                        yyerror(atributoIzq+" no es una constante");
+                        $$ = new NodoHoja("Error en el when");
+
+                }else if (!TablaSimbolos.getAtributo(atributoDer, "Uso" ).equals("Constante")){
+                        yyerror(atributoDer+" no es una constante");
+                        $$ = new NodoHoja("Error en el when");
+                }
+                else if (!TablaSimbolos.getAtributo(atributoIzq, "Tipo" ).equals(TablaSimbolos.getAtributo(atributoDer, "Tipo" ))){
+                        yyerror("Los valores de la condicion del when son de tipos diferentes");
+                        $$ = new NodoHoja("Error en el when");
+                }else{
+                        String s1 =TablaSimbolos.getAtributo(atributoIzq, "Valor")+"";
+                        String s2 =TablaSimbolos.getAtributo(atributoDer, "Valor")+"";
+                        double valorIzq = Double.parseDouble(s1);
+                        double valorDer = Double.parseDouble(s2);
+                        switch ($4.sval){
+                                case "=":
+                                        if (valorIzq==valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "<":
+                                        if (valorIzq < valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case ">":
+                                        if (valorIzq > valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "=!":
+                                        if (valorIzq != valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "<=":
+                                        if (valorIzq <= valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case ">=":
+                                        if (valorIzq >= valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $9);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                        } 
+                }
+        }
+        
+        | WHEN PARENT_A factor comparacion factor PARENT_C THEN sentencia {
+                String atributoIzq=((ArbolSintactico)$3).getLexemaWhen();
+                String atributoDer=((ArbolSintactico)$5).getLexemaWhen();
+                if (!TablaSimbolos.getAtributo(atributoIzq, "Uso" ).equals("Constante")){
+                        yyerror(atributoIzq+" no es una constante");
+                        $$ = new NodoHoja("Error en el when");
+
+                }else if (!TablaSimbolos.getAtributo(atributoDer, "Uso" ).equals("Constante")){
+                        yyerror(atributoDer+" no es una constante");
+                        $$ = new NodoHoja("Error en el when");
+                }
+                else if (!TablaSimbolos.getAtributo(atributoIzq, "Tipo" ).equals(TablaSimbolos.getAtributo(atributoDer, "Tipo" ))){
+                        yyerror("Los valores de la condicion del when son de tipos diferentes");
+                        $$ = new NodoHoja("Error en el when");
+                }else{
+                        String s1 =TablaSimbolos.getAtributo(atributoIzq, "Valor")+"";
+                        String s2 =TablaSimbolos.getAtributo(atributoDer, "Valor")+"";
+                        double valorIzq = Double.parseDouble(s1);
+                        double valorDer = Double.parseDouble(s2);
+                        switch ($4.sval){
+                                case "=":
+                                        if (valorIzq==valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "<":
+                                        if (valorIzq < valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case ">":
+                                        if (valorIzq > valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "=!":
+                                        if (valorIzq != valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case "<=":
+                                        if (valorIzq <= valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                                case ">=":
+                                        if (valorIzq >= valorDer){
+                                                $$ = (ArbolSintactico) new NodoControl("Sentencias When", (ArbolSintactico) $8);
+                                        }else
+                                               $$ = new NodoHoja("No se cumple la condicion del when"); 
+                                        break;
+                        } 
+                }
+        }
+        
+                | WHEN PARENT_A factor comparacion factor PARENT_C THEN LLAVE_A bloque_sentencias error{
+                        $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba }");
+                }
+                | WHEN PARENT_A factor comparacion factor PARENT_C THEN  error{
+                        $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba {");
+                }
+                | WHEN PARENT_A factor comparacion factor PARENT_C error{
+                        $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba then");
+                }
+                | WHEN PARENT_A factor comparacion factor  error{
+                        $$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba )");
+                }
                 | WHEN PARENT_A error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba condicion en el when");}
                 | WHEN error {$$=new NodoHoja("Error sintactico");
@@ -2211,7 +2459,7 @@ public String buscarAmbito(String ambitoActual,String lexema){
         String ambito = ambitoActual;
         while(!TablaSimbolos.existeSimbolo(lexema+"@"+ambito)){
                 if(ambito.equals("Global")){
-                        yyerror("La variable " + lexema + " no se encuentra declarada en el ambito " + ambitoActual);
+                        //yyerror("La variable " + lexema + " no se encuentra declarada en el ambito " + ambitoActual);
                         ambito = "";
                         break;
                 }else{
@@ -2224,6 +2472,7 @@ public String buscarAmbito(String ambitoActual,String lexema){
                         }
                 }
         }
+
         return ambito;
 }
 public String calcularFloat(String f){
