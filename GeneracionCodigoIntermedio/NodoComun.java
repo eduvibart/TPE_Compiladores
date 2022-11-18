@@ -310,50 +310,51 @@ public class NodoComun extends ArbolSintactico{
             case "While":
                 label = getLabel();
                 pilaLabels.push(label);
-                
-                salidaDer =  getDer().getAssembler();
-                
-                saltoBreak="";
-                if (!(pilaLabelsBreak.isEmpty())){
-                    saltoBreak = pilaLabelsBreak.pop();
-                }
+
+                labelFin = getLabel();
+                pilaLabels.push(labelFin); //lo chupa la condicion.
+                pilaLabelsBreak.push(labelFin); //lo lee un posible break y lo popea abajo el mismo while
                 
                 salida += label + ":\n";
-                salida += getIzq().getAssembler() + salidaDer;
+                salida += getIzq().getAssembler() + getDer().getAssembler();
+                salida += "JMP "+ label + "\n";
+                salida += labelFin + ":\n"; 
 
-                if(!(saltoBreak.equals(""))){
-                    salida+= saltoBreak + ":\n";
-                }
+                pilaLabelsBreak.pop();
+                pilaLabels.pop();
 
-                
                 break;
                 
             case "While con Etiqueta":
                 label = getIzq().getIzq().getLex(); //siempre que hay etiqueta se genera un nodo de control y debajo un nodo hoja con el nombre de la etiqueta a saltar
-                salida+= label+":\n" + getDer().getAssembler();
+                salida+= label+":\n" ;
+                salida+= getDer().getAssembler();
                 break;
             
             case "While Asignacion":
                 label = getLabel();
-                pilaLabels.push(label);
-                
-                salidaDer =  getDer().getAssembler();
-                
                 
                 salida += label + ":\n";
-                salida += getIzq().getAssembler() + salidaDer;
+                salida += getIzq().getAssembler();
+                salida += getDer().getAssembler();
+                salida += "JMP "+ label + "\n";
 
                 break;
 
             case "While como expresion":
                 variable = getVariableAuxiliar(); //variable en donde va a volver el valor del break
                 pilaVariablesAuxiliares.push(variable);
-
-                label = getLabel(); //label a donde saltar si existe un break
-                pilaLabelsBreak.push(label);
                 
-                salida+= getIzq().getAssembler() + getDer().getAssembler();
+                labelFin = getLabel(); //label a donde saltar si existe un break
+                pilaLabels.push(labelFin);
+                pilaLabelsBreak.push(labelFin);
 
+                labelElse = getLabel();
+                pilaLabels.push(labelElse);
+                
+                salida+= getIzq().getAssembler();
+                salida += labelElse + ":\n";
+                salida += getDer().getAssembler();
 
                 if(getDer().getHojaPropia().getTipo().equals("Entero")){
                     salida+= "MOV EAX , " + getDer().getHojaPropia().getLex() + "\n"; 
@@ -363,43 +364,24 @@ public class NodoComun extends ArbolSintactico{
                     salida += "FST " + variable + "\n";
                 }
 
+                salida += labelFin + ":\n";
+
                 this.hojaPropia = new NodoHoja(variable);
                 this.hojaPropia.setTipo(getDer().getHojaPropia().getTipo()); //como siempre hay else, se toma el tipo de la variable derecha
                 this.hojaPropia.setUso("variableAuxiliar"); 
-
-                salida+= pilaLabelsBreak.pop()+":\n";
 
                 pilaVariablesAuxiliares.pop();
                 break;
 
             case "Cuerpo - Asignacion":
+                label = getLabel();
+                pilaLabelsContinue.push(label);
+                
                 salida += getIzq().getAssembler();
-
-                String saltoAsignacion="";
-                String tag="";
-                if(!(pilaLabelsTags.isEmpty())){
-                    saltoAsignacion = pilaLabelsTags.pop();
-                    if(!(pilaLabelsTags.isEmpty())){
-                        String aux = pilaLabelsTags.pop();
-                        tag = saltoAsignacion;
-                        saltoAsignacion=aux;
-                    }
-                    salida+= saltoAsignacion+":\n";
-                } 
-
+                salida += label + ":\n"; //etiqueta del continue
                 salida += getDer().getAssembler();
                 
-                if(!(tag.equals(""))){
-                    salida+= "JMP " +tag+"\n";
-                }
-                
-                salida += "JMP " + pilaLabels.pop() + "\n"; 
-                
-                label = getLabel();
-                pilaLabels.push(label);
-                salida += label +":\n";
-                
-                
+                pilaLabelsContinue.pop();
                 break;
 
             case "Bloque Break con Continue":
@@ -415,67 +397,78 @@ public class NodoComun extends ArbolSintactico{
             case "FOR":
                 labelFin = getLabel();
                 pilaLabels.push(labelFin);
-                salida+= getIzq().getAssembler()+ getDer().getAssembler(); 
+                pilaLabelsBreak.push(labelFin);
+
+                salida+= getIzq().getAssembler() + getDer().getAssembler(); 
+
                 salida+= labelFin + ":\n";
 
-                saltoBreak="";
-                if (!(pilaLabelsBreak.isEmpty())){
-                    saltoBreak = pilaLabelsBreak.pop();
-                }
-
-                if(!(saltoBreak.equals(""))){
-                    salida+= saltoBreak + ":\n";
-                }
-                break;
-
-            case "For en asignacion":
-                salida+= getIzq().getAssembler()+ getDer().getAssembler();
-
+                pilaLabelsBreak.pop();
 
                 break;
 
             case "For como expresion":
-                labelFin = getLabel();
-                pilaLabels.push(labelFin);
-                salida+= getIzq().getAssembler()+ getDer().getAssembler(); 
-                salida+= labelFin + ":\n";
-                salida+= "MOV @aux1, "+getDer().getHojaPropia().getLex()+"\n";
-                
-                saltoBreak="";
-                if (!(pilaLabelsBreak.isEmpty())){
-                    saltoBreak = pilaLabelsBreak.pop();
-                }
+                    variable = getVariableAuxiliar();
+                    pilaVariablesAuxiliares.push(variable);
+    
+                    labelFin = getLabel();
+                    pilaLabels.push(labelFin);
+                    pilaLabelsBreak.push(labelFin);
 
-                if(!(saltoBreak.equals(""))){
+                    labelElse = getLabel();
+                    pilaLabels.push(labelElse);
+
+                    salida+= getIzq().getAssembler();
+                    salida += labelElse + ":\n";
+                    salida+= getDer().getAssembler(); 
+    
+                    if(getDer().getHojaPropia().getTipo().equals("Entero")){
+                        salida+= "MOV EAX , " + getDer().getHojaPropia().getLex() + "\n"; 
+                        salida+= "MOV " + variable + ", " + "EAX" + "\n";
+                    }else{
+                        salida += "FLD " + getDer().getHojaPropia().getLex() + "\n";
+                        salida += "FST " + variable + "\n";
+                    }
                     
-                    this.hojaPropia = new NodoHoja(saltoBreak);
-                    this.hojaPropia.setTipo(pilaLabelsBreak.pop());
+                    salida+= labelFin + ":\n";
+                    
+                    this.hojaPropia = new NodoHoja(variable);
+                    this.hojaPropia.setTipo(this.getDer().getTipo());
                     this.hojaPropia.setUso("variableAuxiliar");
-                    salida+= pilaLabelsBreak.pop() + ":\n";
+    
                     break;
-                }
 
-                this.hojaPropia = new NodoHoja(getDer().getHojaPropia().getLex());
-                this.hojaPropia.setTipo(this.getDer().getTipo());
-                this.hojaPropia.setUso("variableAuxiliar");
+            case "For en asignacion":
+
+                salida+= getIzq().getAssembler();
+                salida+= getDer().getAssembler();
 
                 break;
+
             case "For con Etiqueta":
                 label = getIzq().getIzq().getLex(); //siempre que hay etiqueta se genera un nodo de control y debajo un nodo hoja con el nombre de la etiqueta a saltar
-                salida+= label+":\n" + getDer().getAssembler();
+                salida+= label+":\n";
+                salida+= getDer().getAssembler();
                 break;
 
             case "Condicion-Cuerpo":
                 label = getLabel();
-                pilaLabels.push(label);
 
-                salidaDer = getDer().getAssembler();
-                salida+= label + ":\n" + getIzq().getAssembler() + salidaDer;
+                salida+= label + ":\n";
+                salida+= getIzq().getAssembler() +  getDer().getAssembler();
+                salida+= "JMP "+ label + "\n";
+
                 break;
             
             case "Cuerpo":
-                salida+= getIzq().getAssembler()+getDer().getAssembler();
-                salida += "JMP "+ pilaLabels.pop()+"\n";
+                label = getLabel(); //label del continue
+                pilaLabelsContinue.push(label);
+
+                salida+= getIzq().getAssembler();
+                salida+= label + ":\n";                
+                salida+=getDer().getAssembler();
+
+                pilaLabelsContinue.pop();
 
                 break;
 
@@ -490,6 +483,22 @@ public class NodoComun extends ArbolSintactico{
                 pilaLabels.push(labelFin);
                 
                 salida+= label + ":\n" + getIzq().getAssembler() + getDer().getAssembler()+ "JMP "+ pilaLabels.pop() + "\n" + labelFin +":\n";
+                break;
+                
+            case "Continue":
+                label = pilaLabelsContinue.peek();
+
+                if(getDer().getLex().equals("Tag"))
+                {
+                    salida += "JMP "+ label +"\n";
+                    salida += getIzq().getAssembler();
+                    salida += "JPM "+ getDer().getIzq().getLex()+"\n";
+                }
+                else
+                {
+                    salida += "JMP "+ label +"\n";
+                }
+
                 break;
 
         }

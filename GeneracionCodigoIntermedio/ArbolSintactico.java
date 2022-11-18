@@ -15,7 +15,7 @@ public abstract class ArbolSintactico extends ParserVal{
     protected static int numeroOut=0;
     public static String data="";
     protected static Stack<String> pilaLabels = new Stack<String>();
-    protected static Stack<String> pilaLabelsTags = new Stack<String>();
+    protected static Stack<String> pilaLabelsContinue = new Stack<String>();
     protected static Stack<String> pilaLabelsBreak = new Stack<String>();
     protected static Stack<String> pilaVariablesAuxiliares = new Stack<String>();
 

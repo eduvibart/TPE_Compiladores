@@ -25,16 +25,6 @@ public class NodoControl extends ArbolSintactico{
     public String getAssembler() {
         salida="";
         switch(getLex()){
-            
-            case "Continue":
-                label = getLabel();
-                pilaLabelsTags.push(label);
-
-                salida+= getIzq().getAssembler()+ "JM "+ label +"\n";
-                if(getIzq().getLex().equals("Tag")){
-                    pilaLabelsTags.push(getIzq().getIzq().getLex());
-                }
-                return salida;
             case "Break":
                 label = pilaLabelsBreak.peek();
                 
