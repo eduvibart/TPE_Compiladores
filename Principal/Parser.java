@@ -2559,7 +2559,7 @@ case 90:
 {
                         if(!((ArbolSintactico)val_peek(3)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(3)).getDer().getDer().setIzq((ArbolSintactico)val_peek(1));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(3)).getDer().getDer().getDer());
                                 }
@@ -2575,7 +2575,7 @@ case 91:
 {
                         if(!((ArbolSintactico)val_peek(1)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(1)).getDer().getDer().setIzq((ArbolSintactico)val_peek(0));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(1)).getDer().getDer().getDer());
                                 }
@@ -2591,7 +2591,7 @@ case 92:
 {
                         if(!((ArbolSintactico)val_peek(3)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(3)).getDer().setIzq((ArbolSintactico)val_peek(1));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(3)).getDer().getDer().getDer());
                                 }
@@ -2606,7 +2606,7 @@ case 93:
 {
                         if(!((ArbolSintactico)val_peek(1)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(1)).getDer().setIzq((ArbolSintactico)val_peek(0));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(1)).getDer().getDer().getDer());
                                 }
@@ -4448,7 +4448,7 @@ case 332:
 { 
                         yyval = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja(val_peek(8).sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", null, (ArbolSintactico) val_peek(1))) );
                         
-                        List l = new ArrayList<ArbolSintactico>();
+                        List<ArbolSintactico> l = new ArrayList<ArbolSintactico>();
                         stackContinue.push(l);
                         }
 break;
@@ -4491,7 +4491,7 @@ case 340:
 //#line 1854 "gramatica.y"
 {
                         yyval = new NodoComun("While", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", null, (ArbolSintactico) val_peek(1)) ); 
-                        List l = new ArrayList<ArbolSintactico>();
+                        List<ArbolSintactico> l = new ArrayList<ArbolSintactico>();
                         stackContinue.push(l);      
                         }
 break;
@@ -4535,7 +4535,7 @@ case 348:
 {
                         if(!((ArbolSintactico)val_peek(3)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(3)).getDer().getDer().setIzq((ArbolSintactico)val_peek(1));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(3)).getDer().getDer().getDer());
                                 }
@@ -4551,7 +4551,7 @@ case 349:
 {
                         if(!((ArbolSintactico)val_peek(1)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(1)).getDer().getDer().setIzq((ArbolSintactico)val_peek(0));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(1)).getDer().getDer().getDer());
                                 }
@@ -4567,7 +4567,7 @@ case 350:
 {
                         if(!((ArbolSintactico)val_peek(3)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(3)).getDer().setIzq((ArbolSintactico)val_peek(1));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(3)).getDer().getDer().getDer());
                                 }
@@ -4582,7 +4582,7 @@ case 351:
 {
                         if(!((ArbolSintactico)val_peek(1)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(1)).getDer().setIzq((ArbolSintactico)val_peek(0));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(1)).getDer().getDer().getDer());
                                 }
@@ -4858,7 +4858,7 @@ case 392:
                                 if (!val_peek(6).sval.equals(val_peek(10).sval)){
                                         yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
                                 }
-                                List l = new ArrayList<ArbolSintactico>();
+                                List<ArbolSintactico> l= new ArrayList<ArbolSintactico>();
                                 stackContinue.add(l);
                         }
 break;
@@ -5005,7 +5005,7 @@ case 408:
                                 if (!val_peek(6).sval.equals(val_peek(10).sval)){
                                         yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
                                 }
-                                List l = new ArrayList<ArbolSintactico>();
+                                List<ArbolSintactico> l = new ArrayList<ArbolSintactico>();
                                 stackContinue.add(l);
                 }
 break;
@@ -5043,7 +5043,7 @@ case 409:
                                 if (!val_peek(6).sval.equals(val_peek(10).sval)){
                                         yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
                                 }
-                                List l = new ArrayList<ArbolSintactico>();
+                                List<ArbolSintactico> l = new ArrayList<ArbolSintactico>();
                                 stackContinue.add(l);
                 }
 break;
@@ -5122,7 +5122,7 @@ case 424:
 {
                         if(!((ArbolSintactico)val_peek(3)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(3)).getDer().getDer().getDer().getIzq().setIzq((ArbolSintactico)val_peek(1));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l= stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(3)).getDer().getDer().getDer().getDer());
                                 }
@@ -5138,7 +5138,7 @@ case 425:
 {
                         if(!((ArbolSintactico)val_peek(1)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(1)).getDer().getDer().getDer().getIzq().setIzq((ArbolSintactico)val_peek(0));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l= stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(1)).getDer().getDer().getDer().getDer());
                                 }
@@ -5153,7 +5153,7 @@ case 426:
 {
                         if(!((ArbolSintactico)val_peek(3)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(3)).getDer().getDer().getIzq().setIzq((ArbolSintactico)val_peek(2));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l= stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(3)).getDer().getDer().getDer());
                                 }
@@ -5168,7 +5168,7 @@ case 427:
 {
                         if(!((ArbolSintactico)val_peek(1)).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)val_peek(1)).getDer().getDer().getIzq().setIzq((ArbolSintactico)val_peek(0));
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)val_peek(1)).getDer().getDer().getDer());
                                 }

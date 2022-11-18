@@ -50,7 +50,6 @@ label_2:
 MOV EAX, _a@Global
 CMP EAX, _3
 JGE label_1
-JMP label_3
 MOV EAX, _a@Global
 ADD EAX, _1
 MOV @aux2, EAX

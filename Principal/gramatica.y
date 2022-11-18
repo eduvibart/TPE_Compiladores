@@ -588,7 +588,7 @@ etiqueta : ID DOSPUNTOS {
 sentencia_while_fun : encabezado_while_etiqueta LLAVE_A cuerpo_fun_break LLAVE_C {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$3);
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
                                 }
@@ -601,7 +601,7 @@ sentencia_while_fun : encabezado_while_etiqueta LLAVE_A cuerpo_fun_break LLAVE_C
                 | encabezado_while_etiqueta sentencias_fun_break {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$2);
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
                                 }
@@ -614,7 +614,7 @@ sentencia_while_fun : encabezado_while_etiqueta LLAVE_A cuerpo_fun_break LLAVE_C
                 | encabezado_while LLAVE_A cuerpo_fun_break LLAVE_C {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$3);
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
                                 }
@@ -626,7 +626,7 @@ sentencia_while_fun : encabezado_while_etiqueta LLAVE_A cuerpo_fun_break LLAVE_C
                 | encabezado_while sentencias_fun_break {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$2);
-                                List l = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
                                 }
@@ -2120,7 +2120,7 @@ encabezado_for_etiqueta: etiqueta FOR PARENT_A ID ASIG constante_for PUNTOCOMA I
                                 if (!$7.sval.equals($3.sval)){
                                         yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
                                 }
-                                List l = new ArrayList<ArbolSintactico>();
+                                List<ArbolSintactico> l = new ArrayList<ArbolSintactico>();
                                 stackContinue.add(l);
                         }
                 | etiqueta FOR PARENT_A ID ASIG constante_for PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA  constante_for error{ $$=new NodoHoja("Error sintactico");
@@ -2257,7 +2257,7 @@ encabezado_for : FOR PARENT_A ID ASIG constante_for PUNTOCOMA ID comparacion exp
 sentencia_for : encabezado_for_etiqueta LLAVE_A bloque_break_continue LLAVE_C {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().getDer().getDer().getIzq().setIzq((ArbolSintactico)$3);
-                                List<ArbolSintactico> = stackContinue.pop();
+                                List<ArbolSintactico> l= stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer().getDer());
                                 }
@@ -2270,7 +2270,7 @@ sentencia_for : encabezado_for_etiqueta LLAVE_A bloque_break_continue LLAVE_C {
                 | encabezado_for_etiqueta ejecutables_break_continue {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().getDer().getDer().getIzq().setIzq((ArbolSintactico)$2);
-                                List<ArbolSintactico> = stackContinue.pop();
+                                List<ArbolSintactico> l= stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer().getDer());
                                 }
@@ -2282,7 +2282,7 @@ sentencia_for : encabezado_for_etiqueta LLAVE_A bloque_break_continue LLAVE_C {
                 | encabezado_for LLAVE_A bloque_break_continue LLAVE_C {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().getDer().getIzq().setIzq((ArbolSintactico)$2);
-                                List<ArbolSintactico> = stackContinue.pop();
+                                List<ArbolSintactico> l= stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
                                 }
@@ -2294,7 +2294,7 @@ sentencia_for : encabezado_for_etiqueta LLAVE_A bloque_break_continue LLAVE_C {
                 | encabezado_for ejecutables_break_continue {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().getDer().getIzq().setIzq((ArbolSintactico)$2);
-                                List<ArbolSintactico> = stackContinue.pop();
+                                List<ArbolSintactico> l = stackContinue.pop();
                                 for(int i=0;i<l.size();i++){
                                         ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
                                 }
