@@ -490,7 +490,6 @@ public class NodoComun extends ArbolSintactico{
 
                 if(getDer().getLex().equals("Tag"))
                 {
-                    salida += "JMP "+ label +"\n";
                     salida += getIzq().getAssembler();
                     salida += "JPM "+ getDer().getIzq().getLex()+"\n";
                 }
