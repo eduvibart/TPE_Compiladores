@@ -1,0 +1,51 @@
+program{
+    i32 a;
+    f32 b,c,d;
+    i32 l,t;
+    a=:8; 
+    b=:8.0;
+    b=:-8.0;
+    c=:-8.0;
+    d=:-9.6F1;
+    d=: 9.6F1;
+    t=:-2;
+    l=:6;
+
+    if (c<b) then{
+        if (c<d) then{
+            out(`cadena`);
+            c=:ca(a,t);
+        }end_if;
+    }else{
+
+    }end_if;
+
+    if (t>l) then{
+
+    }end_if;
+
+    if (b=c) then
+        a=:t;
+    else
+        b=:c;
+    end_if;
+
+    fun ca(i32 a,i32 b): f32 {
+        if (a<b) then{
+
+        }else{
+
+        }end_if;
+
+        if (a<b) then{
+
+        }end_if;
+
+        if (a<b) then
+            a=:b;
+        else
+            b=:a;
+        end_if;       
+    };
+    
+}

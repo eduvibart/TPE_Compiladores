@@ -1,0 +1,29 @@
+program{
+    i32 i;
+    for ( i =: 3 ; i < 10 ; +1){
+                 
+    };
+    for ( i =: 3 ; i < 10 ; +1)
+        i=:10;
+    etiqueta: for ( i =: 3 ; i < 10 ; +1){
+                 
+    };
+    etiq: for ( i =: 3 ; i < 10 ; +1)
+        i=:10;           
+    fun g(i32 i): f32 {
+        for ( i =: 3 ; i < 10 ; +1){
+               out(`test`);  
+        };
+        for ( i =: 3 ; i < 10 ; +1)
+            i=:10;
+        etiqueta: for ( i =: 3 ; i < 10 ; +1){
+            continue: etiqueta;
+            break;
+            break 2;
+        };
+        etiq: for ( i =: 3 ; i < 10 ; +1)
+            i=:10; 
+        return (2.0);
+
+    };
+}

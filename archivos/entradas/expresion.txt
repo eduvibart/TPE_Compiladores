@@ -1,0 +1,28 @@
+program {
+    i32 b,i,o,p,c,y;
+    const o=:5, p=:9;
+    fun a(i32 a,i32 b): i32 {
+            return (o*a/10);   
+    };
+
+    fun f(i32 a,i32 b): i32 {
+            <<b=:a(1,2);
+            return (5*a/10);   
+    };
+
+    b =:    for (i =: 0 ;i < p ; +1){
+                if (i = 10) then {
+                    break 1;
+                } end_if;
+            }else 3;
+    c =: while ( i < 10 ) : (i =: i + 1 ) {
+        if (i = 10) then {
+                    break 1;
+                } end_if;
+            }else 3;
+    y =: f(1,2) + while ( i < 10 ) : (i =: i + 1 ) {
+                    if (i = 10) then {
+                                break 1;
+                            } end_if;
+                        }else 3; << esto trae errores
+}

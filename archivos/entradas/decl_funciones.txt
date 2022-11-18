@@ -1,0 +1,49 @@
+program{
+    fun a(i32 a,i32 b): f32 {
+                
+    };
+    fun b(i32 a): f32 {
+                
+    };
+    fun c(): f32 {
+                
+    };
+    fun d(f32 a,i32 b): f32 {
+                
+    };
+    fun e(f32 a): f32 {
+                
+    };
+    fun f(f32 a,f32 b): f32 {
+                
+    };
+    fun g(i32 a,f32 b): f32 {
+                
+    };
+    fun h(i32 a,i32 b): i32 {
+                
+    };
+    fun i(i32 a): i32 {
+                
+    };
+    fun j(): i32 {
+                
+    };
+    fun k(f32 a,i32 b): i32 {
+                
+    };
+    fun l(f32 a): i32 {
+                
+    };
+    f32 aa;
+    fun m(f32 a,f32 b): i32 {
+        fun n(i32 a,f32 b): i32 {
+             i32 o;
+             o =: l(aa);   
+        };      
+    };
+    fun n(i32 a,f32 b): i32 {
+                
+    };
+    
+}
