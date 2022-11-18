@@ -2406,7 +2406,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                                 }
                                                         }else{
                                                                 $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,null,null));
-                                                                LlamadoFun lf = new LlamadoFun($1.sval , ambitoActual,(ArbolSintactico)$3,(ArbolSintactico)$5,(ArbolSintactico)$$);
+                                                                LlamadoFun lf = new LlamadoFun($1.sval , ambitoActual,(ArbolSintactico)$3,(ArbolSintactico)$5,(ArbolSintactico)$$,AnalizadorLexico.getLineaAct());
                                                                 listLlamadoFun.add(lf);
                                                         }
                                                 }
@@ -2443,7 +2443,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                 }
             }else{
                         $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,null,new NodoHoja("Un solo parametro")));
-                        LlamadoFun lf = new LlamadoFun($1.sval ,ambitoActual,(ArbolSintactico)$3,null,(ArbolSintactico)$$);
+                        LlamadoFun lf = new LlamadoFun($1.sval ,ambitoActual,(ArbolSintactico)$3,null,(ArbolSintactico)$$,AnalizadorLexico.getLineaAct());
                         listLlamadoFun.add(lf);
             }
 
@@ -2469,7 +2469,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                         }
                 }else{
                         $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,new NodoHoja("Fin"),new NodoHoja("Fin")));
-                        LlamadoFun lf = new LlamadoFun($1.sval , ambitoActual,null,null,(ArbolSintactico)$$);
+                        LlamadoFun lf = new LlamadoFun($1.sval , ambitoActual,null,null,(ArbolSintactico)$$,AnalizadorLexico.getLineaAct());
                         listLlamadoFun.add(lf);
                 }
     
