@@ -4896,7 +4896,7 @@ case 393:
                                 if (!val_peek(7).sval.equals(val_peek(11).sval)){
                                         yyerror("La variable de la condicion del for debe ser la misma que la variable de la asignacion del for");
                                 }
-                                List l = new ArrayList<ArbolSintactico>();
+                                List<ArbolSintactico> l = new ArrayList<ArbolSintactico>();
                                 stackContinue.add(l);
                         }
 break;
