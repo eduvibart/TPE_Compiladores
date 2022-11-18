@@ -244,61 +244,100 @@ sentencia_decl_fun : encabezado_fun LLAVE_A cuerpo_fun LLAVE_C  {
                                 }
                                 NodoControl n = new NodoControl(((ArbolSintactico)$1).getLex()+"@"+ambitoActual,(ArbolSintactico)$3);
                                 n.setTipo(((ArbolSintactico)$1).getTipo());
+                                System.out.println("Nombre fun: " + ((ArbolSintactico)$1).getLex());
+                                System.out.println("Tipo fun: " + ((ArbolSintactico)$1).getTipo());
                                 $$ = new NodoControl("Funcion",n);
                                 removeTipoActual();
                                 funciones.add((ArbolSintactico)$$);
+                                NodoHoja varAux = (new NodoHoja("@aux@"+((ArbolSintactico)$1).getLex()+"@"+ambitoActual));
+                                varAux.setTipo(n.getTipo());
+                                varAux.setUso("variableAuxiliar");
                                 List<LlamadoFun> aux = new ArrayList<LlamadoFun>();
                                 for(LlamadoFun lf : listLlamadoFun){
                                         aux.add(lf);
                                 }
                                 for(LlamadoFun lf : aux){
+                                        System.out.println("lf.getNombre():"+ lf.getNombre() );
+                                        System.out.println("((ArbolSintactico)$1).getLex():" + ((ArbolSintactico)$1).getLex());
                                         if( ((ArbolSintactico)$1).getLex().equals(lf.getNombre()) ){
-                                                String ambitoDecl = buscarAmbito(lf.getAmbito(),ambitoActual);
+                                                System.out.println("AmbitoActual:" + ambitoActual);
+                                                String ambitoDecl = buscarAmbito(ambitoActual,lf.getNombre());
+
                                                 if(!ambitoDecl.equals("")){
-                                                        String tipoFun = ((ArbolSintactico)$1).getTipo(); 
-                                                        String par1 = (String) TablaSimbolos.getAtributo(lf.getNombre() +"@"+ lf.getAmbito(),"Parametro1");
-                                                        String par2 = (String) TablaSimbolos.getAtributo(lf.getNombre() +"@"+ lf.getAmbito(),"Parametro2");
-                                                        if(par2!=null){
-                                                                if(lf.getPar2()!=null){
-                                                                        if(lf.getPar1()!=null){
-                                                                                if( !(lf.getPar1().equals((String)TablaSimbolos.getAtributo(par1,"Tipo") )) ){
-                                                                                        yyerror("El tipo del parametro 1 no coincide con el tipo declarado en la funcion.");
-                                                                                        break;
-                                                                                }
-                                                                                if( !(lf.getPar2().equals((String)TablaSimbolos.getAtributo(par2,"Tipo") )) ){
-                                                                                        yyerror("El tipo del parametro 2 no coincide con el tipo declarado en la funcion.");
-                                                                                        break;
-                                                                                }
-                                                                        }
-                                                                }else{
-                                                                        yyerror("La funcion"+  lf.getNombre() + "esta declarada con dos parametros." );
-                                                                        break;
-                                                                }
-                                                        }else{
-                                                                if(par1!=null){
-                                                                        if(lf.getPar2()==null){
+                                                        if(!TablaSimbolos.getAtributo(lf.getNombre() +"@"+ ambitoDecl,"Uso").equals("Funcion")){
+                                                                yyerror("La funcion "+lf.getNombre()+" no fue declarada como tal.");
+                                                        }
+                                                        else{
+                                                                String tipoFun = ((ArbolSintactico)$1).getTipo(); 
+                                                                String par1 = (String) TablaSimbolos.getAtributo(lf.getNombre() +"@"+ ambitoDecl,"Parametro1");
+                                                                String par2 = (String) TablaSimbolos.getAtributo(lf.getNombre() +"@"+ ambitoDecl,"Parametro2");
+                                                                if(par2!=null){
+                                                                        if(lf.getPar2()!=null){
                                                                                 if(lf.getPar1()!=null){
-                                                                                        if( !(lf.getPar1().equals((String)TablaSimbolos.getAtributo(par1,"Tipo") )) ){
+                                                                                        if( !(lf.getPar1().getTipo().equals((String)TablaSimbolos.getAtributo(par1,"Tipo") )) ){
                                                                                                 yyerror("El tipo del parametro 1 no coincide con el tipo declarado en la funcion.");
                                                                                                 break;
-                                                                                        } 
+                                                                                        }
+                                                                                        if( !(lf.getPar2().getTipo().equals((String)TablaSimbolos.getAtributo(par2,"Tipo") )) ){
+                                                                                                yyerror("El tipo del parametro 2 no coincide con el tipo declarado en la funcion.");
+                                                                                                break;
+                                                                                        }
+                                                                                }
+                                                                        }else{
+                                                                                yyerror("La funcion "+  lf.getNombre() + " esta declarada con dos parametros." );
+                                                                                break;
+                                                                        }
+                                                                }else{
+                                                                        if(par1!=null){
+                                                                                if(lf.getPar2()==null){
+                                                                                        if(lf.getPar1()!=null){
+                                                                                                if( !(lf.getPar1().getTipo().equals((String)TablaSimbolos.getAtributo(par1,"Tipo") )) ){
+                                                                                                        yyerror("El tipo del parametro 1 no coincide con el tipo declarado en la funcion.");
+                                                                                                        break;
+                                                                                                } 
+                                                                                        }else{
+                                                                                                yyerror("La funcion "+  lf.getNombre() + " esta declarada con un parametro." );
+                                                                                                break;
+                                                                                        }
                                                                                 }else{
-                                                                                        yyerror("La funcion"+  lf.getNombre() + "esta declarada con un parametro." );
+                                                                                        yyerror("La funcion "+  lf.getNombre() + " esta declarada con un parametro." );
                                                                                         break;
                                                                                 }
                                                                         }else{
-                                                                                yyerror("La funcion"+  lf.getNombre() + "esta declarada con un parametro." );
-                                                                                break;
-                                                                        }
-                                                                }else{
-                                                                        if((lf.getPar2()==null)||(lf.getPar1()==null)){
-                                                                                yyerror("La funcion"+  lf.getNombre() + "esta declarada sin parametros." );
-                                                                                break;
+                                                                                if((lf.getPar2()!=null)||(lf.getPar1()!=null)){
+                                                                                        yyerror("La funcion "+  lf.getNombre() + " esta declarada sin parametros." );
+                                                                                        break;
+                                                                                }
                                                                         }
                                                                 }
+                                                                if(par2!=null){
+                                                                        NodoHoja n1 =new NodoHoja(par1);
+                                                                        n1.setTipo(lf.getPar1().getTipo());
+                                                                        n1.setUso("Variable");
+                                                                        NodoComun parametro1 = new NodoComun("=:",n1 , lf.getPar1());
+                                                                        NodoHoja n2 =new NodoHoja(par2);
+                                                                        n2.setTipo(lf.getPar2().getTipo());
+                                                                        n2.setUso("Variable");
+                                                                        NodoComun parametro2 = new NodoComun("=:",n2 , lf.getPar2());
+                                                                        lf.getArbol().setIzq(parametro1);
+                                                                        lf.getArbol().setDer(parametro2);
+                                                                }else{
+                                                                        if(par1!=null){
+                                                                                NodoHoja n1 =new NodoHoja(par1);
+                                                                                n1.setTipo(lf.getPar1().getTipo());
+                                                                                n1.setUso("Variable");
+                                                                                NodoComun parametro1 = new NodoComun("=:",n1 , lf.getPar1());
+                                                                                lf.getArbol().setIzq(parametro1);
+                                                                        }
+                                                                }
+                                                                System.out.println("Nombre funcion: "+ ((ArbolSintactico)$1).getLex());
+                                                                System.out.println("lf nombre: "+ lf.getNombre());
+                                                                System.out.println("ambitoDecl: "+ ambitoDecl);
+                                                                lf.getArbol().getIzq().setLex(lf.getNombre()+"@"+ambitoDecl);
+                                                                lf.getArbol().getIzq().setTipo(((ArbolSintactico)$1).getTipo());
+                                                                listLlamadoFun.remove(lf);
                                                         }
                                                 }
-                                                listLlamadoFun.remove(lf);
                                         }
                                 }
 }
@@ -1837,19 +1876,23 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_while {$$ = $1;}
                 | sentencia_for {$$ = $1;}
                 | CONTINUE tag {boolean b = false;
-                                String tag = ((ArbolSintactico)$2).getIzq().getLex() + "@" + ambitoActual;
-                                for(String s : etiquetasAct){
-                                        if(tag.equals(s)){
-                                                b = true;
-                                                break;
+                                        if(((ArbolSintactico)$2).getIzq()!=null){
+                                                String tag = ((ArbolSintactico)$2).getIzq().getLex() + "@" + ambitoActual;
+                                                for(String s : etiquetasAct){
+                                                        if(tag.equals(s)){
+                                                                b = true;
+                                                                break;
+                                                        }
+                                                }
+                                                if(!b){
+                                                        yyerror("No se puede saltar al tag " + ((ArbolSintactico)$2).getIzq().getLex());
+                                                        $$ = new NodoHoja("Error");
+                                                }else{
+                                                        $$ = new NodoControl("Continue",(ArbolSintactico)$2);
+                                                }
+                                        }else{
+                                                $$ = new NodoControl("Continue",(ArbolSintactico)$2);
                                         }
-                                }
-                                if(!b){
-                                        yyerror("No se puede saltar al tag " + ((ArbolSintactico)$2).getIzq().getLex());
-                                        $$ = new NodoHoja("Error");
-                                }else{
-                                        $$ = new NodoControl("Continue",(ArbolSintactico)$2);
-                                }
                                 }
                 | BREAK {$$ = new NodoControl("Break",(ArbolSintactico)new NodoHoja("Fin"));}
 ;
@@ -2334,6 +2377,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                                                         if( !(tipoS3.equals((String)TablaSimbolos.getAtributo(par1,"Tipo") ) )){
                                                                                                 String nombreS3 = ((ArbolSintactico) $3).getLex();
                                                                                                 yyerror("El tipo del parametro "+ nombreS3+" no coincide con el tipo declarado en la funcion.");
+                                                                                                break;
                                                                                         }else{
                                                                                                 NodoHoja n =new NodoHoja(par1);
                                                                                                 n.setTipo(tipoS3);
@@ -2344,6 +2388,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                                                         if( !(tipoS5.equals((String)TablaSimbolos.getAtributo(par2,"Tipo") ))){
                                                                                                 String nombreS5 = ((ArbolSintactico) $5).getLex();
                                                                                                 yyerror("El tipo del parametro "+ nombreS5+" no coincide con el tipo declarado en la funcion.");
+                                                                                                break;
                                                                                         }else{
                                                                                                 NodoHoja n =new NodoHoja(par2);
                                                                                                 n.setTipo(tipoS5);
@@ -2360,20 +2405,8 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                                         ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
                                                                 }
                                                         }else{
-                                                                String par1 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro1");
-                                                                String par2 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro2");
-                                                                String tipoS3 = (String) ((ArbolSintactico) $3 ).getTipo();
-                                                                NodoHoja n =new NodoHoja(par1);
-                                                                n.setTipo(tipoS3);
-                                                                n.setUso("Variable");
-                                                                parametro1 = new NodoComun("=:",n , (ArbolSintactico)$3);
-                                                                String tipoS5 = (String) ((ArbolSintactico) $5).getTipo();
-                                                                NodoHoja n =new NodoHoja(par2);
-                                                                n.setTipo(tipoS5);
-                                                                n.setUso("Variable");
-                                                                parametro2 = new NodoComun("=:",n, (ArbolSintactico)$5);
-                                                                $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,(ArbolSintactico)parametro1,(ArbolSintactico)parametro2));
-                                                                LlamadoFun lf = new LlamadoFun($1.sval , ambitoActual,tipoS3,tipoS5);
+                                                                $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,null,null));
+                                                                LlamadoFun lf = new LlamadoFun($1.sval , ambitoActual,(ArbolSintactico)$3,(ArbolSintactico)$5,(ArbolSintactico)$$);
                                                                 listLlamadoFun.add(lf);
                                                         }
                                                 }
@@ -2409,15 +2442,8 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                         ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
                 }
             }else{
-                        
-                        String par1 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro1");
-                        String tipoS3 = (String) ((ArbolSintactico) $3 ).getTipo();
-                        NodoHoja n =new NodoHoja(par1);
-                        n.setTipo(tipoS3);
-                        n.setUso("Variable");
-                        parametro1 = new NodoComun("=:",n , (ArbolSintactico)$3);
-                        $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,(ArbolSintactico)parametro1,new NodoHoja("Un solo parametro")));
-                        LlamadoFun lf = new LlamadoFun($1.sval ,ambitoActual,tipoS3,null);
+                        $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,null,new NodoHoja("Un solo parametro")));
+                        LlamadoFun lf = new LlamadoFun($1.sval ,ambitoActual,(ArbolSintactico)$3,null,(ArbolSintactico)$$);
                         listLlamadoFun.add(lf);
             }
 
@@ -2443,7 +2469,7 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                         }
                 }else{
                         $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,new NodoHoja("Fin"),new NodoHoja("Fin")));
-                        LlamadoFun lf = new LlamadoFun($1.sval , ambitoActual,null,null);
+                        LlamadoFun lf = new LlamadoFun($1.sval , ambitoActual,null,null,(ArbolSintactico)$$);
                         listLlamadoFun.add(lf);
                 }
     
