@@ -7,6 +7,7 @@ import GeneracionCodigoIntermedio.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 %}
 
@@ -576,69 +577,64 @@ etiqueta : ID DOSPUNTOS {
                                         TablaSimbolos.addAtributo($1.sval+ "@" + ambitoActual,"Uso","Etiqueta");
                                         TablaSimbolos.addAtributo($1.sval+ "@" + ambitoActual,"Id",TablaSimbolos.getAtributo($1.sval,"Id"));
                                         TablaSimbolos.removeAtributo($1.sval);
+                                        System.out.println("Se agrego la etiqueta: "+$1.sval + "@" + ambitoActual );
                                         etiquetasAct.add($1.sval + "@" + ambitoActual);
                                 }else{
                                         yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
                                 }
                         }
 ;
-sentencia_while_fun : etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C 
-                        {
-                                $$ = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja($1.sval)) , new NodoComun("While", (ArbolSintactico) $4, new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $11 , (ArbolSintactico) $8)) );
-                                System.out.println("Sentencia WHILE con etiqueta y con llaves");
-                        
-                                
+
+sentencia_while_fun : encabezado_while_etiqueta LLAVE_A cuerpo_fun_break LLAVE_C {
+                        if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
+                                ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$3);
+                                List l = stackContinue.pop();
+                                for(int i=0;i<l.size();i++){
+                                        ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
+                                }
+                                etiquetasAct.remove(((ArbolSintactico)$1).getDer().getIzq().getLex());
+                                $$=$1;
+                        }else{
+                                $$ = $1;
                         }
-                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break 
-                        {
-                                System.out.println("Sentencia WHILE con etiqueta y sin llaves");
-                                $$ = new NodoComun("While con Etiqueta Funcion",new NodoControl("Etiqueta", new NodoHoja($1.sval)) , new NodoComun("While", (ArbolSintactico) $4, new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $8)) );
-                        
+                }
+                | encabezado_while_etiqueta sentencias_fun_break {
+                        if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
+                                ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$2);
+                                List l = stackContinue.pop();
+                                for(int i=0;i<l.size();i++){
+                                        ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
+                                }
+                                etiquetasAct.remove(((ArbolSintactico)$1).getDer().getIzq().getLex());
+                                $$=$1;
+                        }else{
+                                $$ = $1;
                         }
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
-                        $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $7) );
-                        System.out.println("Sentencia WHILE con llaves");} 
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C sentencias_fun_break {
-                    $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $9 , (ArbolSintactico) $7) );
-                        System.out.println("Sentencia WHILE sin llaves");
-                } 
-                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba }");}
-                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
-                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba )");}
-                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba una asignacion");}
-                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba (");}
-                | etiqueta WHILE PARENT_A condicion PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba :");}
-                | etiqueta WHILE PARENT_A condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba )");}
-                | etiqueta WHILE PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba una condicion");}
-                | etiqueta WHILE error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba (");}
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A cuerpo_fun_break error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba }");}
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba )");}
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba una asignacion");}
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba (");}
-                | WHILE PARENT_A condicion PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba :");}
-                | WHILE PARENT_A condicion error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba )");}
-                | WHILE PARENT_A error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba una condicion");}
-                | WHILE error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba (");}
-                
+                }
+                | encabezado_while LLAVE_A cuerpo_fun_break LLAVE_C {
+                        if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
+                                ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$3);
+                                List l = stackContinue.pop();
+                                for(int i=0;i<l.size();i++){
+                                        ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
+                                }
+                                $$ = $1;
+                        }else{
+                                $$ = $1;
+                        }
+                }
+                | encabezado_while sentencias_fun_break {
+                        if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
+                                ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$2);
+                                List l = stackContinue.pop();
+                                for(int i=0;i<l.size();i++){
+                                        ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
+                                }
+                                $$ = $1;
+                        }else{
+                                $$ = $1;
+                        }
+                }
 ;
 
 sentencia_for_fun : etiqueta FOR PARENT_A ID ASIG  constante_for PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA  constante_for PARENT_C LLAVE_A cuerpo_fun_break LLAVE_C {
@@ -1008,17 +1004,23 @@ sentencias_fun_break :   asignacion  {$$ = $1;}
                 | sentencia_while_fun  {$$ = $1;}
                 | sentencia_for_fun  {$$ = $1;}
                 | CONTINUE tag {        boolean b = false;
-                                        for(String s : etiquetasAct){
-                                                if( ((ArbolSintactico)$2) .getIzq() .getLex().equals(s)){
-                                                        b = true;
-                                                        break;
+                                        if(((ArbolSintactico)$2).getIzq()!=null){
+                                                String tag = ((ArbolSintactico)$2).getIzq().getLex() + "@" + ambitoActual;
+                                                for(String s : etiquetasAct){
+                                                        if( tag.equals(s)){
+                                                                b = true;
+                                                                break;
+                                                        }
                                                 }
-                                        }
-                                        if(!b){
-                                                yyerror("No se puede saltar al tag " + ((ArbolSintactico)$2).getIzq().getLex());
-                                                $$ = new NodoHoja("Error");
+                                                if(!b){
+                                                        yyerror("No se puede saltar al tag " + ((ArbolSintactico)$2).getIzq().getLex());
+                                                        $$ = new NodoHoja("Error");
+                                                }else{
+                                                        $$ = new NodoComun("Continue",new NodoHoja("Fin"),(ArbolSintactico)$2);
+                                                        stackContinue.peek().add((ArbolSintactico)$$);
+                                                }
                                         }else{
-                                                $$ = new NodoControl("Continue",(ArbolSintactico)$2);
+                                                $$ = new NodoComun("Continue",null,(ArbolSintactico)$2);
                                         }
                                 }
                 | BREAK {$$ = new NodoHoja("Break");}
@@ -1828,26 +1830,32 @@ sentencia_when : WHEN PARENT_A factor comparacion factor PARENT_C THEN LLAVE_A b
                 | WHEN error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba ( en el when");}
 ;
-sentencia_while :  etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C 
-                        {
-                                $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $4, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $11 , (ArbolSintactico) $8)) );
-                                etiquetasAct.remove($1.sval + "@" + ambitoActual);
+encabezado_while_etiqueta:  etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C { 
+                        $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $4, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", null, (ArbolSintactico) $8)) );
                         
+                        List l = new ArrayList<ArbolSintactico>();
+                        stackContinue.push(l);
                         }
-                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {
-                        $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $4, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $8)) );
-                        etiquetasAct.remove($1.sval + "@" + ambitoActual);
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba )");}
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba una asignacion");}
+                | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba (");}
+                | etiqueta WHILE PARENT_A condicion PARENT_C error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba :");}
+                | etiqueta WHILE PARENT_A condicion error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba )");}
+                | etiqueta WHILE PARENT_A error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba una condicion");}
+                | etiqueta WHILE error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba (");}
+;
+encabezado_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C{
+                        $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", null, (ArbolSintactico) $7) ); 
+                        List l = new ArrayList<ArbolSintactico>();
+                        stackContinue.push(l);      
                         }
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue LLAVE_C {
-                        $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $10 , (ArbolSintactico) $7) );
-                        System.out.println("Sentencia WHILE con llaves");} 
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C ejecutables_break_continue {
-                        $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", (ArbolSintactico) $9 , (ArbolSintactico) $7) );
-                        System.out.println("Sentencia WHILE sin llaves");} 
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C LLAVE_A bloque_break_continue error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba }");}
-                | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C error {$$=new NodoHoja("Error sintactico");
-                        yyerror("Se esperaba {");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba )");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A error {$$=new NodoHoja("Error sintactico");
@@ -1863,6 +1871,64 @@ sentencia_while :  etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A
                 | WHILE error {$$=new NodoHoja("Error sintactico");
                         yyerror("Se esperaba (");}
 ;
+sentencia_while : encabezado_while_etiqueta LLAVE_A bloque_break_continue LLAVE_C 
+                        {
+                        if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
+                                ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$3);
+                                List l = stackContinue.pop();
+                                for(int i=0;i<l.size();i++){
+                                        ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
+                                }
+                                etiquetasAct.remove(((ArbolSintactico)$1).getDer().getIzq().getLex());
+                                $$=$1;
+                        }else{
+                                $$ = $1;
+                        }
+                        }
+                | encabezado_while_etiqueta ejecutables_break_continue 
+                        {
+                        if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
+                                ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$2);
+                                List l = stackContinue.pop();
+                                for(int i=0;i<l.size();i++){
+                                        ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
+                                }
+                                etiquetasAct.remove(((ArbolSintactico)$1).getDer().getIzq().getLex());
+                                $$ = $1;
+                        }else{
+                                $$ = $1;
+                        }
+                        }
+                |  encabezado_while LLAVE_A bloque_break_continue LLAVE_C{
+                        if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
+                                ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$3);
+                                List l = stackContinue.pop();
+                                for(int i=0;i<l.size();i++){
+                                        ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
+                                }
+                                $$ = $1;
+                        }else{
+                                $$ = $1;
+                        }
+                        }
+                | encabezado_while ejecutables_break_continue {
+                        if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
+                                ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$2);
+                                List l = stackContinue.pop();
+                                for(int i=0;i<l.size();i++){
+                                        ((List<ArbolSintactico>)l).get(i).setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
+                                }
+                                $$ = $1;
+                        }else{
+                                $$ = $1;
+                        }
+                        }
+                |encabezado_while LLAVE_A bloque_break_continue error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba }");}
+                | encabezado_while error {$$=new NodoHoja("Error sintactico");
+                        yyerror("Se esperaba {");}
+                
+;
 bloque_break_continue : {$$=new NodoHoja("Fin");}
         | bloque_break_continue ejecutables_break_continue PUNTOCOMA {
                 $$ = new NodoComun("Bloque Break con Continue",(ArbolSintactico) $1, (ArbolSintactico) $2);
@@ -1877,7 +1943,7 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_while {$$ = $1;}
                 | sentencia_for {$$ = $1;}
                 | CONTINUE tag {boolean b = false;
-                                 if(((ArbolSintactico)$2).getIzq()!=null){
+                                        if(((ArbolSintactico)$2).getIzq()!=null){
                                                 String tag = ((ArbolSintactico)$2).getIzq().getLex() + "@" + ambitoActual;
                                                 for(String s : etiquetasAct){
                                                         if(tag.equals(s)){
@@ -1889,10 +1955,12 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                                                         yyerror("No se puede saltar al tag " + ((ArbolSintactico)$2).getIzq().getLex());
                                                         $$ = new NodoHoja("Error");
                                                 }else{
-                                                        $$ = new NodoControl("Continue",(ArbolSintactico)$2);
+                                                        $$ = new NodoComun("Continue",new NodoHoja("Fin"),(ArbolSintactico)$2);
+                                                        stackContinue.peek().add((ArbolSintactico)$$);
+
                                                 }
                                         }else{
-                                                $$ = new NodoControl("Continue",(ArbolSintactico)$2);
+                                                $$ = new NodoComun("Continue",new NodoHoja("Fin"),(ArbolSintactico)$2);
                                         }
                                 }
                 | BREAK {$$ = new NodoControl("Break",(ArbolSintactico)new NodoHoja("Fin"));}
@@ -2493,6 +2561,7 @@ private List<String> tipoActual = new ArrayList<String>();
 private List<String> etiquetasAct = new ArrayList<String>();
 private boolean hayReturn = false;
 private List<LlamadoFun> listLlamadoFun = new ArrayList<LlamadoFun>();
+private Stack<List<ArbolSintactico>> stackContinue = new Stack<List<ArbolSintactico>>();
 
 void yyerror(String mensaje){
         if (erroresSintacticos.get(AnalizadorLexico.getLineaAct())== null){
