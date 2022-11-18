@@ -1208,14 +1208,14 @@ cte : ENTERO {
                 TablaSimbolos.addNuevoSimbolo((String)$1.sval+$2.sval);
                 TablaSimbolos.addAtributo($1.sval+$2.sval, "Uso", "Constante");
                 TablaSimbolos.addAtributo($1.sval+$2.sval, "Tipo", "Entero");
-                TablaSimbolos.addAtributo($1.sval, "Valor", (String)$1.sval+$2.sval);
+                TablaSimbolos.addAtributo($1.sval+$2.sval, "Valor", (String)$1.sval+$2.sval);
         }
         | RESTA FLOAT {
                 $$=new ParserVal($1.sval+$2.sval);
                 TablaSimbolos.addNuevoSimbolo((String)$1.sval+$2.sval);
                 TablaSimbolos.addAtributo($1.sval+$2.sval, "Uso", "Constante");
                 TablaSimbolos.addAtributo($1.sval+$2.sval, "Tipo", "Float");
-                TablaSimbolos.addAtributo($1.sval, "Valor", (String)$1.sval+$2.sval);
+                TablaSimbolos.addAtributo($1.sval+$2.sval, "Valor", (String)$1.sval+$2.sval);
         }
 ;
 sentencia_for_asig: FOR PARENT_A ID ASIG  constante_for PUNTOCOMA ID comparacion expresion PUNTOCOMA SUMA  constante_for PARENT_C LLAVE_A bloque_sent_eje_asig LLAVE_C {
@@ -1783,19 +1783,23 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                 | sentencia_while {$$ = $1;}
                 | sentencia_for {$$ = $1;}
                 | CONTINUE tag {boolean b = false;
-                                String tag = ((ArbolSintactico)$2).getIzq().getLex() + "@" + ambitoActual;
-                                for(String s : etiquetasAct){
-                                        if(tag.equals(s)){
-                                                b = true;
-                                                break;
+                                 if(((ArbolSintactico)$2).getIzq()!=null){
+                                                String tag = ((ArbolSintactico)$2).getIzq().getLex() + "@" + ambitoActual;
+                                                for(String s : etiquetasAct){
+                                                        if(tag.equals(s)){
+                                                                b = true;
+                                                                break;
+                                                        }
+                                                }
+                                                if(!b){
+                                                        yyerror("No se puede saltar al tag " + ((ArbolSintactico)$2).getIzq().getLex());
+                                                        $$ = new NodoHoja("Error");
+                                                }else{
+                                                        $$ = new NodoControl("Continue",(ArbolSintactico)$2);
+                                                }
+                                        }else{
+                                                $$ = new NodoControl("Continue",(ArbolSintactico)$2);
                                         }
-                                }
-                                if(!b){
-                                        yyerror("No se puede saltar al tag " + ((ArbolSintactico)$2).getIzq().getLex());
-                                        $$ = new NodoHoja("Error");
-                                }else{
-                                        $$ = new NodoControl("Continue",(ArbolSintactico)$2);
-                                }
                                 }
                 | BREAK {$$ = new NodoControl("Break",(ArbolSintactico)new NodoHoja("Fin"));}
 ;
