@@ -399,6 +399,7 @@ public class NodoComun extends ArbolSintactico{
                 pilaLabels.push(label);
                 salida += label +":\n";
                 
+                
                 break;
 
             case "Bloque Break con Continue":
