@@ -21,7 +21,6 @@ _c@Global dd  ?
 _1 dd 1
 _2 dd 2
 _3 dd 3
-_8 dd 8
 @aux3 dd  ? 
 @aux2 dd  ? 
 @aux1 dd  ? 
@@ -44,23 +43,26 @@ MOV EAX , _1
 MOV _a@Global, EAX
 MOV EAX , _2
 MOV _b@Global, EAX
+etiqueta:
+MOV EAX , 0
+MOV _a@Global, EAX
 label_2:
 MOV EAX, _a@Global
-CMP EAX, _b@Global
-JGE label_3
-MOV EAX , 8
-MOV @aux1, EAX
-JMP label_1
+CMP EAX, _3
+JGE label_1
+JMP label_3
 MOV EAX, _a@Global
 ADD EAX, _1
 MOV @aux2, EAX
 MOV EAX , @aux2
-MOV _a@Global, EAX
-JMP label_2
+MOV a@Global, EAX
+JPM etiqueta
 label_3:
-MOV EAX , 3
-MOV @aux1, EAX
+MOV EAX, _a@Global
+ADD EAX, _1
+MOV @aux3, EAX
+MOV EAX , @aux3
+MOV a@Global, EAX
+JMP label_2
 label_1:
-MOV EAX , @aux1
-MOV _c@Global, EAX
 end main
