@@ -4,7 +4,10 @@ program {
         i32 c;
         a =: 1;
         b =: 2;
-        etiqueta: for (a =: 0; a<3; +1){
-                continue : etiqueta;
-        };
+        fun f():i32{
+                etiqueta: for (a =: 0; a<3; +1){
+                        continue : etiqueta;
+                        return (a);
+                }; 
+        };  
 }   
