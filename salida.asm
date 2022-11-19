@@ -54,14 +54,14 @@ MOV EAX, _a@Global
 ADD EAX, _1
 MOV @aux2, EAX
 MOV EAX , @aux2
-MOV a@Global, EAX
-JPM etiqueta
+MOV _a@Global, EAX
+JMP etiqueta
 label_3:
 MOV EAX, _a@Global
 ADD EAX, _1
 MOV @aux3, EAX
 MOV EAX , @aux3
-MOV a@Global, EAX
+MOV _a@Global, EAX
 JMP label_2
 label_1:
 end main

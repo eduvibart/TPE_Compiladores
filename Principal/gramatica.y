@@ -2065,6 +2065,7 @@ encabezado_for_etiqueta: etiqueta FOR PARENT_A ID ASIG constante_for PUNTOCOMA I
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo($4.sval +"@"+ ambito,"Tipo"));
                                 NodoHoja iterador = new NodoHoja($4.sval+"@"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo($4.sval +"@"+ ambito,"Tipo"));
+                                iterador.setUso("Variable");
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo($4.sval +"@"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
@@ -2100,6 +2101,7 @@ encabezado_for_etiqueta: etiqueta FOR PARENT_A ID ASIG constante_for PUNTOCOMA I
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo($3.sval +"@"+ ambito,"Tipo"));
                                 NodoHoja iterador = new NodoHoja($3.sval+"@"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo($3.sval +"@"+ ambito,"Tipo"));
+                                iterador.setUso("Variable");
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo($3.sval +"@"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
@@ -2166,6 +2168,7 @@ encabezado_for : FOR PARENT_A ID ASIG constante_for PUNTOCOMA ID comparacion exp
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo($3.sval +"@"+ ambito,"Tipo"));
                                 NodoHoja iterador = new NodoHoja($3.sval+"@"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo($3.sval +"@"+ ambito,"Tipo"));
+                                iterador.setUso("Variable");
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo($3.sval +"@"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
@@ -2201,6 +2204,7 @@ encabezado_for : FOR PARENT_A ID ASIG constante_for PUNTOCOMA ID comparacion exp
                                 iteracion.setTipo((String)TablaSimbolos.getAtributo($3.sval +"@"+ ambito,"Tipo"));
                                 NodoHoja iterador = new NodoHoja($3.sval+"@"+ambito);
                                 iterador.setTipo((String)TablaSimbolos.getAtributo($3.sval +"@"+ ambito,"Tipo"));
+                                iterador.setUso("Variable");
                                 NodoComun asignacion = new NodoComun("=:",iterador, iteracion);
                                 asignacion.setTipo((String)TablaSimbolos.getAtributo($3.sval +"@"+ ambito,"Tipo"));
                                 asignacion.setUso("Entero");
