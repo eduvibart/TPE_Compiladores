@@ -7,7 +7,6 @@ public class NodoComun extends ArbolSintactico{
     private String label;
     private String labelFin;
     private String salidaDer;
-    private String saltoBreak;
 
 
     public NodoComun(String lex,ArbolSintactico izq,ArbolSintactico der) {

@@ -100,6 +100,7 @@ public class Inicializador{
 		    }
             // Esto es para crear el .obj y luego el .exe 
             // NO TOCAR GRACIAS LOS QUIERO
+            /* 
             Process p = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\ml /c /Zd /coff D:\\Documents\\4to\\TPE_Compiladores\\salida.asm",null,new File("D:\\Documents\\4to\\TPE_Compiladores"));
             if(p.waitFor()==0){
                 Process p1 = Runtime.getRuntime().exec("cmd.exe /c D:\\masm32\\bin\\link /c /SUBSYSTEM:CONSOLE D:\\Documents\\4to\\TPE_Compiladores\\salida.obj",null,new File("D:\\Documents\\4to\\TPE_Compiladores"));
@@ -108,7 +109,7 @@ public class Inicializador{
                 }
             }
             
-            
+            */
         }
     }
 }

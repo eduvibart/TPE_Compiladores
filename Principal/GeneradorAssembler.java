@@ -1,7 +1,6 @@
 package Principal;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import GeneracionCodigoIntermedio.ArbolSintactico;
 import GeneracionCodigoIntermedio.NodoControl;
@@ -9,7 +8,6 @@ import GeneracionCodigoIntermedio.NodoControl;
 public class GeneradorAssembler {
     private String data, code, codigoArbol, bibliotecas, codigoFunciones;
     private ArbolSintactico arbol;
-    private Parser parser;
     
 
     public GeneradorAssembler(Parser parser){
@@ -17,7 +15,8 @@ public class GeneradorAssembler {
                     + "errorMensDivisionPorCero db \"No se puede dividir por cero.\", 0 \n"
                     + "errorMensProductoEnteros db \"Se produjo un overflow en el producto de enteros.\", 0 \n"
                     + "errorMensRecursionMutua db \"Se produjo un llamado recursivo mutuo.\", 0 \n"
-                    + "error db \"Error de ejecucion!!!\", 0 \n";
+                    + "error db \"Error de ejecucion!!!\", 0 \n"
+                    + "@tagAnt dd ? \n";
         this.code="";
         this.codigoFunciones="errorFun: \n"
                             + "invoke MessageBox, NULL, addr errorMensFun, addr error, MB_OK \n" 
@@ -37,7 +36,6 @@ public class GeneradorAssembler {
         "include \\masm32\\include\\user32.inc \n" +
         "includelib \\masm32\\lib\\user32.lib \n";
         this.codigoArbol="";
-        this.parser=parser;
         this.arbol=parser.getRaiz();
 
         
@@ -84,6 +82,7 @@ public class GeneradorAssembler {
         code+= "main:\n";
         
         code+= this.codigoArbol;
+        code+= "invoke ExitProcess, 0 \n";
         code+= "end main";
     }
 

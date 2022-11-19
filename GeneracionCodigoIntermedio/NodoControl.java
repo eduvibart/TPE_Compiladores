@@ -57,8 +57,7 @@ public class NodoControl extends ArbolSintactico{
                 n.setUso("variableAuxiliar");
                 pilaVariablesAuxiliares.push("@aux@"+getIzq().getLex());
                 salida+= getIzq().getLex() + ":\n";
-                salida+= getIzq().getAssembler();
-                
+                salida+= getIzq().getAssembler();       
                 pilaVariablesAuxiliares.pop();
                 salida += "JMP errorFun";
                 return salida;
@@ -70,6 +69,14 @@ public class NodoControl extends ArbolSintactico{
                 this.hojaPropia= new NodoHoja(varAux);
                 this.hojaPropia.setTipo(getIzq().getTipo());
                 this.hojaPropia.setUso("variableAuxiliar");
+                if(!pilaVariablesAuxiliares.isEmpty()){
+                    salida+="MOV EAX, @tagAnt \n"; 
+                    salida+="CMP EAX, " + getIzq().getLex() +"\n";
+                    salida+="JE errorRecursionMutua \n";
+                    String tagFun=pilaVariablesAuxiliares.peek().substring(5,pilaVariablesAuxiliares.peek().length());
+                    salida+= "MOV EAX, " + tagFun + "\n";
+                    salida+= "MOV @tagAnt, EAX \n";
+                }
                 salida+= "call "+getIzq().getLex()+"\n";
                 if(TablaSimbolos.getAtributo(variable,"Tipo").equals("Entero")){
                     salida+= "MOV EAX, "+ variable + "\n";
@@ -77,6 +84,10 @@ public class NodoControl extends ArbolSintactico{
                 }else{
                     salida += "FLD " + variable + "\n";
                     salida += "FST " + varAux + "\n";
+                }
+                if(!pilaVariablesAuxiliares.isEmpty()){
+                    salida += "XOR EAX, EAX \n";
+                    salida += "MOV @tagAnt, EAX \n";
                 }
                 return salida;
             case "Retorno":
