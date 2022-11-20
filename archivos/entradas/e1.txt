@@ -4,25 +4,9 @@ program {
         i32 c;
         a =: 1;
         b =: 2;
-        fun h():i32{
-                return(69);
-        };
-        fun g():i32{
-                h();
-                return(78);
-        };
-        fun f():i32{
-                fun f1():i32{ 
-                        f();
-                        fun f2():i32{ 
-                                f1();          
-                                return(1);
-                        };
-                        f2();          
-                        return(1);
+        et1 : for (a=:0; a<b; +1){
+                et2: while (a<b):(b=:b+1){
+                        continue : et1;
                 };
-                g();
-                return(1);
         };
-        f();  
 }   

@@ -398,7 +398,11 @@ public class NodoComun extends ArbolSintactico{
                 pilaLabels.push(labelFin);
                 pilaLabelsBreak.push(labelFin);
 
-                salida+= getIzq().getAssembler() + getDer().getAssembler(); 
+                salida+= getIzq().getAssembler();
+                if(!pilaEtiquetas.isEmpty()){
+                    salida+= pilaEtiquetas.peek()+":\n";
+                }
+                salida+= getDer().getAssembler(); 
 
                 salida+= labelFin + ":\n";
 
@@ -446,7 +450,7 @@ public class NodoComun extends ArbolSintactico{
 
             case "For con Etiqueta":
                 label = getIzq().getIzq().getLex(); //siempre que hay etiqueta se genera un nodo de control y debajo un nodo hoja con el nombre de la etiqueta a saltar
-                salida+= label+":\n";
+                pilaEtiquetas.add(label);
                 salida+= getDer().getAssembler();
                 break;
 
