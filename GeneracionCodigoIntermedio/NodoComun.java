@@ -400,7 +400,7 @@ public class NodoComun extends ArbolSintactico{
 
                 salida+= getIzq().getAssembler();
                 if(!pilaEtiquetas.isEmpty()){
-                    salida+= pilaEtiquetas.peek()+":\n";
+                    salida+= pilaEtiquetas.pop()+":\n";
                 }
                 salida+= getDer().getAssembler(); 
 

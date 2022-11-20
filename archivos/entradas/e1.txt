@@ -1,12 +1,15 @@
 program {
         i32 a;
         i32 b;
-        i32 c;
         a =: 1;
         b =: 2;
+        i32 c;
+        c=: 3;
         et1 : for (a=:0; a<b; +1){
                 et2: while (a<b):(b=:b+1){
-                        continue : et1;
+                        for(c=:0; c<b;+1){
+                                continue : et1;
+                        };
                 };
         };
 }   
