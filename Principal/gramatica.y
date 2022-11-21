@@ -100,8 +100,8 @@ list_var : list_var COMA ID {$$=$1;((NodoTipos)$$).add((String)$3.sval);}
         |  ID {$$=new NodoTipos((String)$1.sval);}
 ;
 encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS tipo {      
+                                $$ = new NodoHoja($2.sval);
                                 if(!TablaSimbolos.existeSimbolo($2.sval+ "@" + ambitoActual)){
-                                        $$ = new NodoHoja($2.sval);
                                         ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$9).getTipo());
                                         TablaSimbolos.addNuevoSimbolo($2.sval+ "@" + ambitoActual);
                                         if (!stackWhen.empty()){
@@ -133,14 +133,13 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                                         hayReturn.push(false);
                                 }else{
                                         yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
-                                        $$= new NodoHoja("Ya existe un identificador con el nombre de la funcion");
                                         ambitoActual += "@"+$2.sval;
                                 }
                         }
                 | FUN ID PARENT_A parametro  PARENT_C DOSPUNTOS tipo {
+                        $$ = new NodoHoja($2.sval);
                         if(!TablaSimbolos.existeSimbolo($2.sval+ "@" + ambitoActual)){
-                                $$ = new NodoHoja($2.sval);
-                                        ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$7).getTipo());
+                                ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$7).getTipo());
                                 TablaSimbolos.addNuevoSimbolo($2.sval+ "@" + ambitoActual);
                                 TablaSimbolos.addAtributo($2.sval+ "@" + ambitoActual,"Uso","Funcion");
                                 TablaSimbolos.addAtributo($2.sval+ "@" + ambitoActual,"Id",TablaSimbolos.getAtributo($2.sval,"Id"));
@@ -167,14 +166,13 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
 
                         }else{
                                 yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
-                                $$= new NodoHoja("Ya existe un identificador con el nombre de la funcion");
                                 ambitoActual += "@"+$2.sval;
                         }
                 }
                 | FUN ID PARENT_A PARENT_C DOSPUNTOS tipo {
+                        $$ = new NodoHoja($2.sval);
                         if(!TablaSimbolos.existeSimbolo($2.sval+ "@" + ambitoActual)){
-                                $$ = new NodoHoja($2.sval);
-                                        ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$6).getTipo());
+                                ((ArbolSintactico)$$).setTipo(((ArbolSintactico)$6).getTipo());
                                 TablaSimbolos.addNuevoSimbolo($2.sval+ "@" + ambitoActual);
                                 TablaSimbolos.addAtributo($2.sval+ "@" + ambitoActual,"Uso","Funcion");
                                 TablaSimbolos.addAtributo($2.sval+ "@" + ambitoActual,"Id",TablaSimbolos.getAtributo($2.sval,"Id"));
@@ -191,7 +189,6 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                         }else{
                                 yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
                                 ambitoActual += "@"+$2.sval;
-                                $$= new NodoHoja("Ya existe un identificador con el nombre de la funcion");
                         }
                 }
                 | FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS error  { $$=new NodoHoja("Error sintactico");  ambitoActual += "@"+"Error";yyerror("El tipo declarado no esta permitido");}
@@ -208,7 +205,7 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                 | FUN error {$$=new NodoHoja("Error sintactico");yyerror("Se esperaba un nombre de funcion");}
 ;
 sentencia_decl_fun : encabezado_fun LLAVE_A cuerpo_fun LLAVE_C  {
-                                if(hayReturn.pop() == true){
+                                if(!hayReturn.empty() && hayReturn.pop() == true){
                                         char [] a = ambitoActual.toCharArray();
                                         for (int i = a.length;i>=0;i--){
                                                 if(a[i-1] == '@'){
@@ -242,7 +239,7 @@ cuerpo_fun :    {$$=new NodoHoja("Fin");}
 ;
 sentencias_fun :  sentencia_decl_datos {$$=new NodoHoja("Sentencia Declarativa Datos");}
                 | sentencia_decl_fun {$$=new NodoHoja("Sentencia Declarativa Funcion");}
-                | lista_const  {$$ = $1;}
+                | lista_const  {$$= new NodoHoja("Sentencia Declarativa Constante");}
                 | asignacion {$$ = $1;}
                 | llamado_func {$$=$1;}
                 | sentencia_if_fun {$$=$1;}
@@ -309,13 +306,15 @@ sentencia_when_fun: encabezado_when THEN LLAVE_A cuerpo_fun LLAVE_C {
         if (!((ArbolSintactico)$1).getLex().equals("No cumple condicion when")){
                 ((ArbolSintactico)$1).setIzq((ArbolSintactico)$3);
                 $$=(ArbolSintactico)$1;
-                List<String> tope=stackWhen.pop();
                 if (!stackWhen.empty()){
-                        List<String> whenSuperior=stackWhen.pop();
-                        for(String cadena :tope){
-                                whenSuperior.add(cadena);
+                        List<String> tope=stackWhen.pop();
+                        if (!stackWhen.empty()){
+                                List<String> whenSuperior=stackWhen.pop();
+                                for(String cadena :tope){
+                                        whenSuperior.add(cadena);
+                                }
+                                stackWhen.push(whenSuperior);
                         }
-                        stackWhen.push(whenSuperior);
                 }
         }else if (((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                 $$=$1;
@@ -449,9 +448,7 @@ sentencias_fun_break :   asignacion  {$$ = $1;}
                                                         $$ = new NodoHoja("Error");
                                                 }else{
                                                         $$ = new NodoComun("Continue",new NodoHoja("Fin"),(ArbolSintactico)$2);
-                                                        System.out.println("Continue con etiqueta: " + ((ArbolSintactico)$2).getIzq().getLex());
                                                         if(mapEtiquetas.containsKey(((ArbolSintactico)$2).getIzq().getLex())){
-                                                                System.out.println("Se agrego a etiqueta " + ((ArbolSintactico)$2).getIzq().getLex() + "al  continue." );
                                                                 mapEtiquetas.get(((ArbolSintactico)$2).getIzq().getLex()).add((ArbolSintactico)$$);
                                                         }
                                                 }
@@ -496,8 +493,10 @@ retorno : RETURN PARENT_A expresion PARENT_C {$$ = new NodoControl("Retorno", (A
                                                         if(!tipoRet.equals(tipoFun)){
                                                                 yyerror("El retorno debe ser del mismo tipo que el retorno de la funcion.");
                                                         }else{
-                                                                hayReturn.pop();
-                                                                hayReturn.push(true);
+                                                                if (!hayReturn.empty()){
+                                                                        hayReturn.pop();
+                                                                        hayReturn.push(true);
+                                                                }
                                                         }
                                                 }else{
                                                         yyerror("El retorno puede estar solo dentro de una funcion.");
@@ -555,10 +554,13 @@ asignacion : ID ASIG expresion  {
                                         String ambito = buscarAmbito(ambitoActual,$1.sval);
                                         NodoHoja hoja = new NodoHoja($1.sval+"@"+ambito);
                                         $$ = (ArbolSintactico) new NodoComun($2.sval, hoja , (ArbolSintactico) $3);
-                                        String tipoS1 = "";
+                                        String tipoS1 = (String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo");
+                                        String tipoS3 = ((ArbolSintactico)$3).getTipo();
                                         if(!ambito.equals("")){
-                                                if(((String)TablaSimbolos.getAtributo($1.sval+"@"+ambito, "Uso")).equals("Variable")){
-                                                        tipoS1 = (String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo");
+                                                if(!(tipoS1.equals(tipoS3))){
+                                                        yyerror("No se puede realizar una asignacion con tipos diferentes.");
+                                                }
+                                                else if(((String)TablaSimbolos.getAtributo($1.sval+"@"+ambito, "Uso")).equals("Variable")){
                                                         ((ArbolSintactico)$$).setTipo(tipoS1);
                                                         hoja.setUso((String)TablaSimbolos.getAtributo($1.sval+"@"+ambito, "Uso"));
                                                         hoja.setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
@@ -566,12 +568,11 @@ asignacion : ID ASIG expresion  {
                                                 else {
                                                         yyerror($1.sval+" no es una variable.");
                                                 }
+                                        
+                                        }else {
+                                                yyerror($1.sval+" no esta declarada");
                                         }
-                                        String tipoS3 = ((ArbolSintactico)$3).getTipo();
-                                        if(!(tipoS1.equals(tipoS3))){
-                                                yyerror("No se puede realizar una asignacion con tipos diferentes.");
-                                        }
-                                }
+                }
                 | ID error {$$=new NodoHoja("Error sintactico");yyerror("Se esperaba =:");}
                 | ID ASIG error {$$=new NodoHoja("Error sintactico"); yyerror("Se esperaba expresion");}                  
 ;
@@ -646,6 +647,7 @@ factor: ID {
                                 yyerror($1.sval+" no es una variable");
                         }
                 }else{
+                        yyerror($1.sval+" no fue declarada");
                         $$ = new NodoHoja("Error");
                 }
            }                                                          
@@ -956,9 +958,11 @@ sentencia_when : encabezado_when THEN LLAVE_A bloque_sentencias LLAVE_C {
                         }
                         else {
                                 $$=$1;
-                                List<String> tope=stackWhen.pop();
-                                for(String cadena :tope){
-                                        TablaSimbolos.removeAtributo(cadena);
+                                if (!stackWhen.empty()){
+                                        List<String> tope=stackWhen.pop();
+                                        for(String cadena :tope){
+                                                TablaSimbolos.removeAtributo(cadena);
+                                        }
                                 }
                         }
                 }
@@ -1003,7 +1007,6 @@ sentencia_while : encabezado_while_etiqueta LLAVE_A bloque_break_continue LLAVE_
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$3);
                                 String tag = ((ArbolSintactico)$1).getIzq().getIzq().getLex();
-                                System.out.println("Tag del while: " + tag);
                                 List<ArbolSintactico> l = mapEtiquetas.get(tag);
                                 if(l!=null){
                                         for(ArbolSintactico a : l){
@@ -1065,9 +1068,7 @@ ejecutables_break_continue :  asignacion {$$ = $1;}
                                                         $$ = new NodoHoja("Error");
                                                 }else{
                                                         $$ = new NodoComun("Continue",new NodoHoja("Fin"),(ArbolSintactico)$2);
-                                                        System.out.println("Continue con etiqueta: " + ((ArbolSintactico)$2).getIzq().getLex());
                                                         if(mapEtiquetas.containsKey(((ArbolSintactico)$2).getIzq().getLex())){
-                                                                System.out.println("Se agrego a etiqueta " + ((ArbolSintactico)$2).getIzq().getLex() + " al continue." );
                                                                 mapEtiquetas.get(((ArbolSintactico)$2).getIzq().getLex()).add((ArbolSintactico)$$);
                                                         }
 
@@ -1495,14 +1496,6 @@ void chequearRangoI32(String sval){
   if(Long.valueOf(sval) > l){
     yyerror("La constante esta fuera de rango");
   }
-}
-
-void chequearRangoI32Neg(String sval){
-       String s = "2147483648";
-        long l = Long.valueOf(s);
-        if(Long.valueOf(sval) > l){
-                yyerror("La constante esta fuera de rango");
-  } 
 }
 
 int yylex() throws IOException{

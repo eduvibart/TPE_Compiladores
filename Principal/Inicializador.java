@@ -55,10 +55,9 @@ public class Inicializador{
                 erroresTotales.get(i).addAll(erroresSintacticos.get(i));
             }
         }
-
         //Mostrar Errores totales:
         System.out.println("\n\nErrores de Compilacion: ");
-        ArrayList<Integer> keys = new ArrayList<>(erroresSintacticos.keySet());
+        ArrayList<Integer> keys = new ArrayList<>(erroresTotales.keySet());
         Collections.sort(keys);
 
         for(int i : keys){

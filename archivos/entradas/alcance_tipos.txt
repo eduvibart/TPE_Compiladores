@@ -45,10 +45,12 @@ program {
 
     fun funRedeclaracionVariable(): f32{
         f32 d; << redeclaracion con el mismo tipo en otro ambito
+        return (3.0);
     };
 
     fun funRedeclaracionVariable1(): f32{
         i32 d; << redeclaracion con otro tipo en otro ambito
+        return (3.0);
     };
 
 
@@ -56,28 +58,32 @@ program {
 
     <<declaracion de la funcion funRedeclaracion
     fun funRedeclaracion(): i32{
-
+        return (3);
     };
 
     <<intento de redeclaracion de la funcion funRedeclaracion en el mismo ambito con el mismo tipo
     fun funRedeclaracion(): i32 {
-
+        return (3);
     };
 
     <<intento de redeclaracion de la funcion funRedeclaracion en el mismo ambito con distinto tipo
     fun funRedeclaracion(): f32 {
-
+        return (3.0);
     };
 
     <<redeclaracion de la funcion funRedeclaracion con el mismo tipo en un ambito distinto
     fun funRedeclaracion1(): i32 {
         fun funRedeclaracion1():i32{
+            return (3);
         };
+        return (3);
     };
 
     <<redeclaracion de la funcion funRedeclaracion con distinto tipo en un ambito distinto
     fun funRedeclaracion2(): i32 {
+        return (3);
         fun funRedeclaracion1():f32{
+            return (3.0);
         };
     };
 
@@ -101,8 +107,9 @@ program {
 
                 << alcance de la funcion padre funAlcanceVariables01
                 funAlcanceVariables01();
-
+                return (8);
             };
+            return (8);
         };
 
         fun funAlcanceVariables03():i32 {
@@ -110,8 +117,10 @@ program {
             e=:6;
 
             << alcance de la funcion hermana funAlcanceVariables01
-            funAlcanceVariables01();
+            
+            return (funAlcanceVariables01());
         };
+        return (c); 
     };
 
     fun funAlcanceVariables04():i32{
@@ -121,7 +130,7 @@ program {
 
         <<intento de alcance de la funcion funAlcanceVariables01
         funAlcanceVariables01();
-
+        return (c); 
     };
 
 
@@ -139,14 +148,16 @@ program {
 
             <<declaracion de f en ambito de funDeclarcionMismoNombre1
             i32 f;
+            return (f);
         };
 
         fun declarcionMismoNombreVar2():i32{
 
             <<declaracion de f en ambito de funDeclarcionMismoNombre2
             i32 f;
+            return (f);
         };
-
+        return (f);
     };
 
 
@@ -156,20 +167,21 @@ program {
     <<declaracion de funcion funDeclarcionMismoNombreFun
 
     fun funDeclarcionMismoNombre():i32{
-
+        return (9+c);
     };
 
     fun funDeclarcionMismoNombre1():i32{
         
         <<declaracion de funcion con el mismo nombre (funDeclarcionMismoNombre) en amito distinto 
         fun funDeclarcionMismoNombre():i32{
-
+            return (7+5);
         };
+        return (7+5);
     };
 
     <<intento de declaracion de funcion con el mismo nombre en mismo ambito general (funDeclarcionMismoNombre)
     fun funDeclarcionMismoNombre():i32{
-
+        return (5);
     };
 
 
@@ -187,6 +199,7 @@ program {
         etiquetaPrueba : while (a>b): (a=:a+1){
 
         };
+        return (2.0);
     };
 
     << intento de utilizar misma etiqueta en mismo ambito
@@ -213,9 +226,10 @@ program {
     j=: k+l;
     <<intento de expresion entre distintos tipos:
     g=: k+l;
-    g=: h+k;
-    k=: l+g;
-    k=: h+h;
+    g=: h-k;
+    k=: l/g;
+    k=: h*l;
+
 
     << comparacion:
     if (g>h) then {
@@ -245,13 +259,13 @@ program {
 
     <<EL NUMERO DE LOS PARAMETROS REALES DE UNA INVOCACION A FUNCION DEBEN COINCIDIR CON EL NUMERO DE PARAMETROS DECLARADOS PARA LA FUNCION
     fun funSinParametros():i32{
-
+        return (6);
     };
     fun funConUnParametro(i32 a):i32{
-
+        return (6);
     };
     fun funConDosParametros(i32 a, i32 b):i32{
-
+        return (6);
     };
 
     <<llamado a fun sin parametros
@@ -275,10 +289,10 @@ program {
 
     <<CHECKEO DE COMPATIBILIDAD EN LLAMADO A FUNCIONES
     fun funConParametroEntero(i32 a):i32{
-
+        return (8);
     };
     fun funConParametroFlotante(f32 b):f32{
-
+        return (8);
     };
 
     << g es una variable de tipo entero y j es de tipo flotante (declaradas previamente)
@@ -291,6 +305,15 @@ program {
     funConParametroEntero(k);
     funConParametroFlotante(g);
 
+    << funcion sin retorno
+    fun funSinRetorno(i32 a):i32{
+        
+    };
+
+    << funcion con retorno de otro tipo
+    fun funConRetornoErroneo(i32 a):i32{
+        return (2.0);
+    };
     
     <<INTENTO DE REFERENCIA A UNA ETIQUETA
 

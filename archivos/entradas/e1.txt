@@ -1,15 +1,6 @@
 program {
-        i32 a;
-        i32 b;
-        a =: 1;
-        b =: 2;
-        i32 c;
-        c=: 3;
-        et1 : for (a=:0; a<b; +1){
-                et2: while (a<b):(b=:b+1){
-                        for(c=:0; c<b;+1){
-                                continue : et1;
-                        };
-                };
-        };
+        fun c(i32 l,i32 b): f32 {
+            const a=:8;
+            return (0.6);      
+        }; 
 }   

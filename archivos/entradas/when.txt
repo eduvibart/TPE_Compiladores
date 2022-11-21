@@ -21,4 +21,22 @@ program {
         when (a<b) then
                o=:9;     
     };
+    const p=:0,w=:9;
+        fun cumple(i32 a,f32 b): i32 {
+            when(p<w) then {
+                a=:0;
+                i32 o;
+                o=:2;
+                if (a=w) then{
+                        return (4);
+                }else {
+                        when (3>99) then{
+                                fun cumple1(i32 a): i32 {
+                                        return (w);
+                                };
+                        };
+                }end_if;
+            };
+            
+        };
 }

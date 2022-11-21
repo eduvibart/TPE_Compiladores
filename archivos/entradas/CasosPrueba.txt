@@ -1,5 +1,6 @@
 program{
     i32 i,a,x;
+
     for ( i =: 3 ; i < 10 ; +1){
         i=:0;
     };
@@ -20,7 +21,8 @@ program{
         e: while ( i < 10 ) : (i =: i + 1 ) {
         };
         p: while ( i < 10 ) : (i =: i + 1 ) 
-            i=:10;       
+            i=:10;
+        return (8.0);      
     };       
     
     for ( i =: 3 ; i < 10 ; +1)
@@ -59,8 +61,10 @@ program{
         else
             x=:a;
         end_if;
+        return (9.0);
 
-        fun c(i32 a,i32 b): f32 {
+        fun c(i32 l,i32 b): f32 {
+            const a=:8, x=:62;
             if (a<x) then{
 
             }else{
@@ -68,13 +72,14 @@ program{
         
                 };
                 when (a<x) then
-                    a=:x;
+                    l=:x;
                 fun c(): f32 {
                     when (a<x) then{
                     
                     };
                     when (a<x) then
-                        a=:x;        
+                        l=:x;
+                    return (0.0);        
                 };
             }end_if;
 
@@ -83,10 +88,11 @@ program{
             }end_if;
 
             if (a<x) then
-                a=:x;
+                l=:x;
             else
                 b=:a;
-            end_if;       
+            end_if; 
+            return (0.6);      
         };
         return (2.0);
 

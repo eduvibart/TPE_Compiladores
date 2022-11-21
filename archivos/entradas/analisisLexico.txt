@@ -1,6 +1,7 @@
 program {
 	<<CASOS DE PRUEBA
-
+	f32 x,y,z,w;
+	i32 i;
 	<< Punto flotante en el limite del rango superior, funciona correctamente
 	x =: 3.40282347F38; 
 
@@ -26,10 +27,11 @@ program {
 	i =: -2147483649; 
 
 	<< Testeo numeros flotantes y sus alternativas.
-	i =: .08;
-	i =: 3.00;
-	i =: 3.00F2;
-	i =: 3.00F-2;
+	f32 e;
+	e =: .08;
+	e =: 3.00;
+	e =: 3.00F2;
+	e =: 3.00F-2;
 
 	<< Identificadores de mas y menos de 25 caracteres
 	i32 pruebadeidentificadordemasdeveinticincocaracteres;
@@ -51,14 +53,14 @@ program {
 	} END_IF;
 
 	<<cadena mal escrita, arroja error lexico
-	'hola
+	<<out(`hola);
 
 	<< cadena bien escrita
-	a =: `cadena`;
+	out(`hola`);
 
 	<< cadena multilinea
-	a =: `prueba de comentario\
-multilinea`;
+	<<out( `prueba de cadena\
+	<<multilinea`);
 	
 
 
@@ -182,7 +184,7 @@ multilinea`;
 		return (z);
 	};
 
-	<< El número máximo de parámetros de una funcion permitidos es 2, y puede no haber parámetros.
+
 	fun prueba1(): f32 {
 		return (3);
 	};

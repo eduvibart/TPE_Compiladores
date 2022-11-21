@@ -1,15 +1,23 @@
 program{
-    i32 i;
-    for ( i =: 3 ; i < 10 ; +1){
-                 
+    i32 i,q;
+    f32 v;
+    q=:55;
+    const u=:1, o=:43;
+    << for usando una expresion en la condicion, un id de constante en la asignacion y un id de constante en la suma de la iteracion
+    for ( i =: u ; i < 10+98/o*q-7 ; +u){
+        i=:77;
     };
-    for ( i =: 3 ; i < 10 ; +1)
+    << for usando una constante en la condicion, una constante en la asignacion y una constante en la suma de la iteracion
+    for ( i =: 3 ; i = 10 ; +1)
         i=:10;
-    etiqueta: for ( i =: 3 ; i < 10 ; +1){
-                 
+    << for con etiqueta
+    etiq: for ( i =: 3 ; i < 10 ; +1){
+        i=:10;   
+        if (u<i) then{
+            continue: etiq;
+        } end_if;
     };
-    etiq: for ( i =: 3 ; i < 10 ; +1)
-        i=:10;           
+    << variantes del for dentro de una funcion        
     fun g(i32 i): f32 {
         for ( i =: 3 ; i < 10 ; +1){
                out(`test`);  
@@ -26,4 +34,27 @@ program{
         return (2.0);
 
     };
+    <<POSIBLES ERRORES DEL FOR
+    << en la asignacion utilizar una variable arroja error ya que solo se pueden usar constantes y q es una variable
+    for ( i =: q ; i < 10+98/o-7 ; -8){
+        
+    };
+    << en la operacion del for utilizar una variable arroja error ya que solo se pueden usar constantes y q es una variable
+    for ( i =: 2; i < 10+98/o-7 ; -q){
+        
+    };
+    << error al utilizar una variable no declarada para iterar
+    for ( z =: 2; z < 10+98/o*q-7 ; -7){
+        
+    };
+
+    << error al usar una variable de tipo float para iterar ya que solo se pueden usar enteros
+    for ( v =: 2.0; v < 10+98/o*q-7 ; -7){
+        
+    };
+    << error al realizar la asignacion con una variable y luego chequear la condicion con otra
+    for ( i =: 2.0; q < 10+98/o*7 ; -7){
+        
+    };
+
 }
