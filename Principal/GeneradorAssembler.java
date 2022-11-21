@@ -56,7 +56,6 @@ public class GeneradorAssembler {
         for (String k : TablaSimbolos.getKeySet()){
             HashMap<String, Object> atributos = TablaSimbolos.getAtributos(k);
             String uso = (String) atributos.get("Uso");
-            String tipo = (String) atributos.get("Tipo");
             if(uso != null){
                 if(uso.equals("Constante")){
                     String aux = k.replace('.','_').replace('-','r');
