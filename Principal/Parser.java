@@ -1383,7 +1383,6 @@ void chequearRangoI32(String sval){
 int yylex() throws IOException{
         Token t = AnalizadorLexico.getToken();
         this.yylval = new ParserVal(t.getLexema());
-        System.out.println("Lexema: "+ t.getLexema()+ " |  ID: " + t.getId());
         return t.getId();
 }
 public NodoControl getRaiz(){
