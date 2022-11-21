@@ -47,7 +47,7 @@ public class NodoControl extends ArbolSintactico{
             case "out":
                 String variableOut = getVariableOut();
                 data += variableOut + " db \"" + getIzq().getHojaPropia().getLex() + "\", 0\n	";
-                salida += "invoke MessageBox, NULL, addr " + variableOut + ", addr " + variableOut + ", MB_OK\n";
+                salida += "invoke MessageBox, NULL, addr " + variableOut + ", addr outMens, MB_OK\n";
                 
                 return salida;
             

@@ -15,6 +15,7 @@ public class GeneradorAssembler {
                     + "errorMensDivisionPorCero db \"No se puede dividir por cero.\", 0 \n"
                     + "errorMensProductoEnteros db \"Se produjo un overflow en el producto de enteros.\", 0 \n"
                     + "errorMensRecursionMutua db \"Se produjo un llamado recursivo mutuo.\", 0 \n"
+                    + "outMens db \"Out\", 0 \n"
                     + "error db \"Error de ejecucion!!!\", 0 \n"
                     + "@tagAnt dd ? \n";
         this.code="";

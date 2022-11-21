@@ -14,11 +14,11 @@ errorMensFun db "El camino tomado por la funcion no tiene retorno.", 0
 errorMensDivisionPorCero db "No se puede dividir por cero.", 0 
 errorMensProductoEnteros db "Se produjo un overflow en el producto de enteros.", 0 
 errorMensRecursionMutua db "Se produjo un llamado recursivo mutuo.", 0 
+outMens db "Out", 0 
 error db "Error de ejecucion!!!", 0 
 @tagAnt dd ? 
-_r8_F4 dd -4096.0
-_a@Global dd -4096.0
-
+@out1 db "Feli                 Crack", 0
+	
 .code
 errorFun: 
 invoke MessageBox, NULL, addr errorMensFun, addr error, MB_OK 
@@ -33,5 +33,6 @@ errorRecursionMutua:
 invoke MessageBox, NULL, addr errorMensRecursionMutua, addr error, MB_OK 
 invoke ExitProcess, 1 
 main:
+invoke MessageBox, NULL, addr @out1, addr outMens, MB_OK
 invoke ExitProcess, 0 
 end main

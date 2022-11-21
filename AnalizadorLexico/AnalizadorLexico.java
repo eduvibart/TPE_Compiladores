@@ -67,20 +67,20 @@ public class AnalizadorLexico{
         int r = 0;
         entrada.mark(1);
         while(estadoAct != -1 && estadoAct != -2 && (-1 != (r=entrada.read())) ){
-            //System.out.println(r);
+            System.out.println(r);
             char c = Character.toChars(r)[0];
             String s = Character.toString(c);
             t.addCarac(s);
             int valor = getCaracter(c);
-            //System.out.println("El estado actual es: " + estadoAct);
-            //System.out.println("El lexema del token antes: -" + t.getLexema()+"-");
-            //System.out.println("El id del token antes: " + t.getId());
-            //System.out.println("El valor de la columna es: " + valor);
-            //System.out.println("Numero de lineas antes : " + lineaAct);
+            System.out.println("El estado actual es: " + estadoAct);
+            System.out.println("El lexema del token antes: -" + t.getLexema()+"-");
+            System.out.println("El id del token antes: " + t.getId());
+            System.out.println("El valor de la columna es: " + valor);
+            System.out.println("Numero de lineas antes : " + lineaAct);
             matrizAS[estadoAct][valor].ejecutar(t,entrada);
-            //System.out.println("El lexema del token despues: -" + t.getLexema()+"-");
-            //System.out.println("El id del token despues: " + t.getId());
-            //System.out.println("Numero de lineas despues : " + lineaAct);
+            System.out.println("El lexema del token despues: -" + t.getLexema()+"-");
+            System.out.println("El id del token despues: " + t.getId());
+            System.out.println("Numero de lineas despues : " + lineaAct);
 
             estadoAct = matrizEstados[estadoAct][valor]; 
             entrada.mark(1);
