@@ -1,6 +1,3 @@
 program {
-        fun c(i32 l,i32 b): f32 {
-            const a=:8;
-            return (0.6);      
-        }; 
+        const a=:-8.F4;
 }   

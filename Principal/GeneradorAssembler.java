@@ -58,11 +58,9 @@ public class GeneradorAssembler {
             String tipo = (String) atributos.get("Tipo");
             if(uso != null){
                 if(uso.equals("Constante")){
-                    String aux = k.replace('.','_');
+                    String aux = k.replace('.','_').replace('-','r');
                     String prefix = "_";
-                    if(tipo.equals("Float")){
-                        k = atributos.get("Valor").toString();
-                    }
+                    k = atributos.get("Valor").toString();
                     data += prefix + aux + " dd " + k + "\n";
                 }
                 if( ( !uso.equals("Funcion") ) && ( (uso.equals("Variable") ) || ( uso.equals("variableAuxiliar")  ) ) ) {

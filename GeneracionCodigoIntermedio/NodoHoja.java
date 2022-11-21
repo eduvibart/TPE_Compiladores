@@ -22,7 +22,7 @@ public class NodoHoja extends ArbolSintactico {
     public String getLex(){
         if((getUso().equals("Variable"))|| (getUso().equals("Constante"))){
             if(getUso().equals("Constante")){
-                return "_" + super.getLex().replace('.', '_');
+                return "_" + super.getLex().replace('.', '_').replace('-','r');
             }
             return "_"+ super.getLex();
         }

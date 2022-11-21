@@ -534,10 +534,9 @@ asignacion_const : ID ASIG cte {
                                         if (TablaSimbolos.getAtributo($3.sval,"Tipo").equals("Entero")){
                                                 TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Valor", Long.valueOf($3.sval));
                                         }else{
-                                                TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Valor", Double.parseDouble($3.sval));
+                                                TablaSimbolos.addAtributo($1.sval+"@"+ambitoActual,"Valor", Double.parseDouble((String)TablaSimbolos.getAtributo($3.sval,"Valor")));
                                         }
                                         TablaSimbolos.removeAtributo($1.sval);
-                                        TablaSimbolos.removeAtributo($3.sval);
                                 }
                         }
         | ID ASIG error {$$=new NodoHoja("Error sintactico");  yyerror("Se esperaba una constante");}
@@ -676,7 +675,7 @@ cte : ENTERO {
                 TablaSimbolos.addNuevoSimbolo((String)$1.sval);
                 TablaSimbolos.addAtributo($1.sval, "Uso", "Constante");
                 TablaSimbolos.addAtributo($1.sval, "Tipo", "Float");
-                TablaSimbolos.addAtributo($1.sval, "Valor", (String)$1.sval);
+                TablaSimbolos.addAtributo($1.sval, "Valor", calcularFloat($1.sval));
                 if (!stackWhen.empty()){
                         List<String> lista=stackWhen.pop();
                         lista.add($1.sval);
@@ -700,7 +699,7 @@ cte : ENTERO {
                 TablaSimbolos.addNuevoSimbolo((String)$1.sval+$2.sval);
                 TablaSimbolos.addAtributo($1.sval+$2.sval, "Uso", "Constante");
                 TablaSimbolos.addAtributo($1.sval+$2.sval, "Tipo", "Float");
-                TablaSimbolos.addAtributo($1.sval+$2.sval, "Valor", (String)$1.sval+$2.sval);
+                TablaSimbolos.addAtributo($1.sval+$2.sval, "Valor", $1.sval+calcularFloat($2.sval));
                 if (!stackWhen.empty()){
                         List<String> lista=stackWhen.pop();
                         lista.add($1.sval+$2.sval);
@@ -1336,13 +1335,18 @@ param_real : cte{
                         ((ArbolSintactico)$$).setUso("Variable");}
                 | ID {
                         String ambito = buscarAmbito(ambitoActual,$1.sval);
-                        if(!ambito.equals("")){
-                                $$=new NodoHoja($1.sval+"@"+ambito);
-                                ((ArbolSintactico)$$).setUso("Variable");
-                                ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
+                        if( TablaSimbolos.getAtributo($1.sval+"@"+ambito,"Uso").equals("Variable") || TablaSimbolos.getAtributo($1.sval+"@"+ambito,"Uso").equals("Constante") ){
+                                if(!ambito.equals("")){
+                                        $$=new NodoHoja($1.sval+"@"+ambito);
+                                        ((ArbolSintactico)$$).setUso("Variable");
+                                        ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
+                                }else{
+                                        $$=new NodoHoja("Error");
+                                        yyerror("El parametro "+ $1.sval +" no se encuentra declarado en el ambito "+ambitoActual);
+                                }
                         }else{
-                                $$=new NodoHoja("Error");
-                                yyerror("El parametro "+ $1.sval +" no se encuentra declarado en el ambito "+ambitoActual);
+                                yyerror("El parametro " + $1.sval + " no es una variable.");
+                                $$ = new NodoHoja("Error");
                         }
                      }
 ;
@@ -1354,40 +1358,44 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                                 if( !TablaSimbolos.getAtributo($1.sval+"@"+ambito,"Uso").equals("Funcion") ){
                                                                         yyerror("La funcion "+$1.sval+" no fue declarada");
                                                                 }else{
-                                                                        String par1 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro1");
-                                                                        String par2 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro2");
-                                                                        if(par1 != null)
-                                                                                if(par2 != null){
-                                                                                        String tipoS3 = (String) ((ArbolSintactico) $3 ).getTipo();
-                                                                                        if( !(tipoS3.equals((String)TablaSimbolos.getAtributo(par1,"Tipo") ) )){
-                                                                                                String nombreS3 = ((ArbolSintactico) $3).getLex();
-                                                                                                yyerror("El tipo del parametro "+ nombreS3+" no coincide con el tipo declarado en la funcion.");
-                                                                                                break;
+                                                                        if(!((ArbolSintactico)$3).getLex().equals("Error") && !((ArbolSintactico)$5).getLex().equals("Error") ){
+                                                                                String par1 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro1");
+                                                                                String par2 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro2");
+                                                                                if(par1 != null)
+                                                                                        if(par2 != null){
+                                                                                                String tipoS3 = (String) ((ArbolSintactico) $3 ).getTipo();
+                                                                                                if( !(tipoS3.equals((String)TablaSimbolos.getAtributo(par1,"Tipo") ) )){
+                                                                                                        String nombreS3 = ((ArbolSintactico) $3).getLex();
+                                                                                                        yyerror("El tipo del parametro "+ nombreS3+" no coincide con el tipo declarado en la funcion.");
+                                                                                                        break;
+                                                                                                }else{
+                                                                                                        NodoHoja n =new NodoHoja(par1);
+                                                                                                        n.setTipo(tipoS3);
+                                                                                                        n.setUso("Variable");
+                                                                                                        parametro1 = new NodoComun("=:",n , (ArbolSintactico)$3);
+                                                                                                }
+                                                                                                String tipoS5 = (String) ((ArbolSintactico) $5).getTipo();
+                                                                                                if( !(tipoS5.equals((String)TablaSimbolos.getAtributo(par2,"Tipo") ))){
+                                                                                                        String nombreS5 = ((ArbolSintactico) $5).getLex();
+                                                                                                        yyerror("El tipo del parametro "+ nombreS5+" no coincide con el tipo declarado en la funcion.");
+                                                                                                        break;
+                                                                                                }else{
+                                                                                                        NodoHoja n =new NodoHoja(par2);
+                                                                                                        n.setTipo(tipoS5);
+                                                                                                        n.setUso("Variable");
+                                                                                                        parametro2 = new NodoComun("=:",n, (ArbolSintactico)$5);
+                                                                                                }
                                                                                         }else{
-                                                                                                NodoHoja n =new NodoHoja(par1);
-                                                                                                n.setTipo(tipoS3);
-                                                                                                n.setUso("Variable");
-                                                                                                parametro1 = new NodoComun("=:",n , (ArbolSintactico)$3);
+                                                                                                yyerror("La declaracion de la funcion no cuenta con dos parametros.");
                                                                                         }
-                                                                                        String tipoS5 = (String) ((ArbolSintactico) $5).getTipo();
-                                                                                        if( !(tipoS5.equals((String)TablaSimbolos.getAtributo(par2,"Tipo") ))){
-                                                                                                String nombreS5 = ((ArbolSintactico) $5).getLex();
-                                                                                                yyerror("El tipo del parametro "+ nombreS5+" no coincide con el tipo declarado en la funcion.");
-                                                                                                break;
-                                                                                        }else{
-                                                                                                NodoHoja n =new NodoHoja(par2);
-                                                                                                n.setTipo(tipoS5);
-                                                                                                n.setUso("Variable");
-                                                                                                parametro2 = new NodoComun("=:",n, (ArbolSintactico)$5);
-                                                                                        }
-                                                                                }else{
+                                                                                else{
                                                                                         yyerror("La declaracion de la funcion no cuenta con dos parametros.");
                                                                                 }
-                                                                        else{
-                                                                                yyerror("La declaracion de la funcion no cuenta con dos parametros.");
+                                                                                $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,(ArbolSintactico)parametro1,(ArbolSintactico)parametro2));
+                                                                                ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
+                                                                        }else{
+                                                                                $$=new NodoHoja("Error sintactico");
                                                                         }
-                                                                        $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,(ArbolSintactico)parametro1,(ArbolSintactico)parametro2));
-                                                                        ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
                                                                 }
                                                         }else{
                                                                 yyerror("La funcion " + $1.sval + " no se encuentra declarada");
@@ -1401,28 +1409,32 @@ llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                 if (!TablaSimbolos.getAtributo($1.sval+"@"+ambito,"Uso").equals("Funcion")){
                         yyerror("La funcion "+$1.sval+" no fue declarada");
                 }else{
-                        String par1 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro1");
-                        String par2 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro2");
-                        if(par2 ==null){
-                                if(par1!=null){
-                                        String tipoS3 = (String) ((ArbolSintactico) $3 ).getTipo();
-                                        if( !(tipoS3.equals((String)TablaSimbolos.getAtributo(par1,"Tipo") )) ){
-                                                String nombreS3 = ((ArbolSintactico) $3).getLex();
-                                                yyerror("El tipo del parametro "+ nombreS3+" no coincide con el tipo declarado en la funcion.");
+                        if(!((ArbolSintactico)$3).getLex().equals("Error")){
+                                String par1 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro1");
+                                String par2 = (String) TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Parametro2");
+                                if(par2 ==null){
+                                        if(par1!=null){
+                                                String tipoS3 = (String) ((ArbolSintactico) $3 ).getTipo();
+                                                if( !(tipoS3.equals((String)TablaSimbolos.getAtributo(par1,"Tipo") )) ){
+                                                        String nombreS3 = ((ArbolSintactico) $3).getLex();
+                                                        yyerror("El tipo del parametro "+ nombreS3+" no coincide con el tipo declarado en la funcion.");
+                                                }else{
+                                                        NodoHoja n =new NodoHoja(par1);
+                                                        n.setTipo(tipoS3);
+                                                        n.setUso("Variable");
+                                                        parametro1 = new NodoComun("=:",n , (ArbolSintactico)$3);
+                                                }
                                         }else{
-                                                NodoHoja n =new NodoHoja(par1);
-                                                n.setTipo(tipoS3);
-                                                n.setUso("Variable");
-                                                parametro1 = new NodoComun("=:",n , (ArbolSintactico)$3);
+                                                yyerror("La funcion esta declarada sin parametros.");
                                         }
                                 }else{
-                                        yyerror("La funcion esta declarada sin parametros.");
+                                        yyerror("La funcion esta declarada con dos parametros.");
                                 }
+                                $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,(ArbolSintactico)parametro1,new NodoHoja("Un solo parametro")));
+                                ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
                         }else{
-                                yyerror("La funcion esta declarada con dos parametros.");
+                                $$=$3;
                         }
-                        $$=new NodoControl("Llamado Funcion" ,new NodoComun($1.sval+"@"+ambito,(ArbolSintactico)parametro1,new NodoHoja("Un solo parametro")));
-                        ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
                 }
             }else{
                         yyerror("La funcion " + $1.sval + " no se encuentra declarada");
