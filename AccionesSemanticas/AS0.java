@@ -39,9 +39,6 @@ public class AS0 extends AccionSemantica {
             case ",":
                 t.setId(COMA);
                 break;
-            case "!":
-                t.setId(EXCL);
-                break;
             case "=!":
                 t.setId(DIST);
                 break;

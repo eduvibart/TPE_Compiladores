@@ -1,0 +1,6 @@
+program{
+    
+    <<cadena mal escrita, arroja error lexico
+	out(`hola);
+    
+}

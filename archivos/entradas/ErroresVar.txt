@@ -1,0 +1,55 @@
+program {
+	
+    <<VARIABLES NO DECLARADAS
+
+    << la variable a aun no esta declarada 
+    if (a = 3) then {
+
+    } end_if;
+    
+    i32 b;
+    
+    << a aun no esta declarada pero b si
+    a=:b;
+	b=:a;
+    
+    << declaracion de la variable a
+    i32 a;
+
+    << falta declarar la variable c
+    while (a>b):(c=:a+1){
+
+    };
+
+    << falta declarar la variable c
+    while (a>b):(a=:a+1){
+        c=:b;
+    };
+
+    i32 c;
+
+    << todo declarado
+    while (a>b):(a=:c+1){
+        c=:a+1;
+        a=:c;
+    };
+
+
+    <<VARIABLES REDECLARADAS
+
+    f32 d;  << declaracion de la variable d
+     
+    f32 d; << intento de redeclaracion de d en el mimso ambito con el mismo tipo 
+
+    i32 d; << intento de redeclaracion de d en el mismo ambito con distinto tipo
+
+    fun funRedeclaracionVariable(): f32{
+        f32 d; << redeclaracion de variable con el mismo tipo en otro ambito
+        return (3.0);
+    };
+
+    fun funRedeclaracionVariable1(): f32{
+        i32 d; << redeclaracion de variable con otro tipo en otro ambito
+        return (3.0);
+    };
+}

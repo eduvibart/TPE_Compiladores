@@ -1,13 +1,16 @@
 program {
-    i32 b,i,o,p,c,y;
+
+    i32 b,i,c,y;
+
     const o=:5, p=:9;
+
     fun a(i32 a,i32 b): i32 {
-            return (o*a/10);   
+            return (o/10);   
     };
 
     fun f(i32 a,i32 b): i32 {
-            <<b=:a(1,2);
-            return (5*a/10);   
+            b=:a(1,2);
+            return (5*i/10);   
     };
 
     c =: while ( i < 10 ) : (i =: i + 1 ) {
@@ -15,9 +18,9 @@ program {
                     break 1;
                 } end_if;
             }else 3;
-    y =: f(1,2) + while ( i < 10 ) : (i =: i + 1 ) {
+    y =: while ( i < 10 ) : (i =: i + 1 ) {
                     if (i = 10) then {
                                 break 1;
                             } end_if;
-                        }else 3; << esto trae errores
+                        }else 3; 
 }

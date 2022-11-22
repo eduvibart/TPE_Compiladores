@@ -1,0 +1,17 @@
+program{
+    <<SE PERMITEN ETIQUETAS CON EL MISMO NOMBRE SIEMPRE QUE SEAN DECLARADAS EN DIFERENTES AMBITOS
+    i32 a,b;
+    etiquetaPrueba : while (a > b): (a=:a+1){
+
+    };
+
+    fun cambiaAmbito():f32{
+
+        <<misma etiqueta en distinto ambito
+        etiquetaPrueba : while (a>b): (a=:a+1){
+
+        };
+        return (2.0);
+    };
+
+}

@@ -46,17 +46,6 @@ program {
 	<<i32 prue.ba;
 	
 
-	<<cadena mal escrita, arroja error lexico
-	<<out(`hola);
-
-	<< cadena bien escrita
-	out(`hola`);
-
-	<< cadena multilinea
-	<<out( `prueba de cadena
-	<<multilinea`);
-	
-
 
 	<< SENTENCIAS DECLARATIVAS
 	
@@ -121,8 +110,6 @@ program {
 	<<funcion como expresion asignada a una variable
 	a =: cumple (a,b);
 	
-	<< sentencia out
-	<<out (`hola`);
 
 	<<sentencia when
 	const c1=:3, c2=:4;
@@ -133,7 +120,7 @@ program {
 	
 	<< sentencia while
 	while ( i < 10 ) : (i =: i + 1 ) {
-          <<out ( `test` );
+          
      	};
 
 
@@ -161,7 +148,15 @@ program {
 	if (hola123 < 3) then {
 	} end_if;
 
-	<< al tener esta sentencia varios errores juntos, ya que no se permiten palabras reservadas en mayusculas, arroja el
-	<<IF (hola123 >= 3.0) THEN {
-	<<} END_IF;
+	<< cadena de una linea
+	out(`hola`);
+
+	<< cadena multilinea
+	out( `prueba de cadena/
+	multilinea`);
+
+	<< esta sentencia tiene varios errores juntos, ya que no se permiten palabras reservadas en mayusculas,
+	<< por lo tanto los errores arrojados no seran tan precisos
+	IF (hola123 >= 3.0) THEN {
+	} END_IF;
 }
