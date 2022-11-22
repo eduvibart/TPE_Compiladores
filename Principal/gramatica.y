@@ -391,7 +391,7 @@ sentencias_fun_break :   asignacion  {$$ = $1;}
                                                         }
                                                 }
                                         }else{
-                                                $$ = new NodoComun("Continue",null,(ArbolSintactico)$2);
+                                                $$ = new NodoComun("Continue",new NodoHoja("Fin"),(ArbolSintactico)$2);
                                         }
                                 }
                 | BREAK {$$ = new NodoHoja("Break");}
@@ -891,7 +891,7 @@ sentencia_when : encabezado_when THEN LLAVE_A bloque_sentencias LLAVE_C {
                 }
 ;
 encabezado_while_etiqueta:  etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C { 
-                        $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $4, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", null, (ArbolSintactico) $8)) );
+                        $$ = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja($1.sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) $4, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", new NodoHoja("Fin"), (ArbolSintactico) $8)) );
                         mapEtiquetas.put($1.sval,new ArrayList<ArbolSintactico>());
                         }
                 | etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {$$=new NodoHoja("Error sintactico"); yyerror("Se esperaba )");}
@@ -903,7 +903,7 @@ encabezado_while_etiqueta:  etiqueta WHILE PARENT_A condicion PARENT_C DOSPUNTOS
                 | etiqueta WHILE error {$$=new NodoHoja("Error sintactico"); yyerror("Se esperaba (");}
 ;
 encabezado_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion PARENT_C{
-                        $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", null, (ArbolSintactico) $7) );      
+                        $$ = new NodoComun("While", (ArbolSintactico) $3, (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", new NodoHoja("Fin"), (ArbolSintactico) $7) );      
                         }
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignacion error {$$=new NodoHoja("Error sintactico"); yyerror("Se esperaba )");}
                 | WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A error {$$=new NodoHoja("Error sintactico");  yyerror("Se esperaba una asignacion");}
@@ -915,9 +915,9 @@ encabezado_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignaci
 ;
 sentencia_while : encabezado_while_etiqueta LLAVE_A bloque_break_continue LLAVE_C {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                                ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$3);
                                 String tag = ((ArbolSintactico)$1).getIzq().getIzq().getLex();
                                 List<ArbolSintactico> l = mapEtiquetas.get(tag);
+                                ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$3);
                                 if(l!=null){
                                         for(ArbolSintactico a : l){
                                                 a.setIzq(((ArbolSintactico)$1).getDer().getDer());
@@ -928,9 +928,9 @@ sentencia_while : encabezado_while_etiqueta LLAVE_A bloque_break_continue LLAVE_
                 }
                 | encabezado_while_etiqueta ejecutables_break_continue {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                                ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$2);
                                 String tag = ((ArbolSintactico)$1).getIzq().getIzq().getLex();
                                 List<ArbolSintactico> l = mapEtiquetas.get(tag);
+                                ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$2);
                                 if(l!=null){
                                         for(ArbolSintactico a : l){
                                                 a.setIzq(((ArbolSintactico)$1).getDer().getDer());
