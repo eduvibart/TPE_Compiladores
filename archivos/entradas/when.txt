@@ -1,8 +1,9 @@
 program {
-    const a=:5,b=:4;
+    const a=:5.0F5;
     i32 o;
     o=:0;
-    when (a<b) then{
+    << En este when no se cumple la condicion 
+    when (a<4.0F5) then{
         fun cumple(i32 a,i32 b): i32 {
             i32 z;
             return (z);
@@ -10,33 +11,39 @@ program {
         i32 i;
         i=:88;
     };
+    << se utilizan las declaraciones del when como no se cumple la condicion se arroja error de que no estan declaradas
     o=:i;
-    o=:cumple(a,b);
-    when (a>b) then
-        
+    o=:cumple(a,7);
+
+    
     fun c(): f32 {
+        i32 b;
+        << en la condicion del when solo se pueden usar constantes por los que arroja un error al usar b que es una variable
         when (a<b) then{
         
         };
-        when (a<b) then
-               o=:9;     
+        when (2<96) then
+               o=:9; 
+        return (4.0);    
     };
-    const p=:0,w=:9;
-        fun cumple(i32 a,f32 b): i32 {
-            when(p<w) then {
-                a=:0;
-                i32 o;
-                o=:2;
-                if (a=w) then{
-                        return (4);
-                }else {
-                        when (3>99) then{
-                                fun cumple1(i32 a): i32 {
-                                        return (w);
-                                };
-                        };
-                }end_if;
-            };
-            
+    const w=:9;
+    fun cumple(i32 a,f32 b): i32 {
+        << en este when se cumple la condicion
+        when(0<w) then {
+            a=:0;
+            i32 o;
+            o=:2;
+            if (a=w) then{
+                    return (4);
+            }else {
+                    when (3>99) then{
+                            fun cumple1(i32 a): i32 {
+                                    return (w);
+                            };
+                    };
+            }end_if;
         };
+        o=:55;
+        
+    };
 }

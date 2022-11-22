@@ -1,3 +1,10 @@
-program {
-        const a=:-8.F4;
+eduardo {
+   i32 end, number,i,a;
+            a =:    for (i =: 0 ;i < end ; +1){
+                        if (i = number) then {
+                            break 1;
+                        } end_if;
+                    }else 3;
+    
+    
 }   

@@ -3,34 +3,35 @@ program {
         i32 a, b,c;
         << >>DECLARACION DE FUNCION
         fun cumple(i32 a,i32 b): i32 {
-            f32 z;
+            i32 z;
             return (z);
         };
         << FUNCION CON VARIOS RETORNOS
-        fun cumple(i32 a,f32 b): f32 {
+        fun cumple1(f32 a,f32 b): f32 {
             if (a < b) then { 
                 return (a);
            }
             else {
-                return (3);
+                return (3.0);
            }
             end_if;
         };
-        const a =: 3,b =:2;
+        const aa =: 3,bb =:2;
 
         <<FUNCION CON VARIOS RETORNOS Y CONTINUE CON ETIQUETADO
-        fun cumple(i32 a,i32 b): f32 {
+        fun cumple2(i32 a,i32 b): f32 {
             if (a < b) then { 
+                i32 i,j;
                 outer:  while ( i < 10 ) : (i =: i + 1 ) {
                         while ( j < 5 ) : (j =: j + 1 ) {
                             continue :outer;
-                            return (a);    
+                            return (8.0);    
                         };           
                     };
             }
             else {
-                return (3);
+                return (3.0);
             }
             end_if;
         };
-        }
+}

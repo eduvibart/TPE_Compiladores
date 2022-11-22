@@ -14,7 +14,6 @@ program{
     if (c<b) then{
         if (c<d) then{
             out(`cadena`);
-            c=:ca(a,t);
         }end_if;
     }else{
 
@@ -45,7 +44,8 @@ program{
             a=:b;
         else
             b=:a;
-        end_if;       
+        end_if;
+        return (3.0);       
     };
     
 }

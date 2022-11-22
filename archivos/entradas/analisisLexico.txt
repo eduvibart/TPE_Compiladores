@@ -43,14 +43,8 @@ program {
 	i32 hola_prueba;
 
 	<<Intento de incluir en el nombre de un identificador un caracter que no sea letra, digito o -.
-	i32 prue.ba;
-
-	<<Palabras reservadas escritas en minúsculas y mayúsculas .
-	if (hola < 3) then {
-	} end_if;
-
-	IF (hola >= 3) THEN {
-	} END_IF;
+	<<i32 prue.ba;
+	
 
 	<<cadena mal escrita, arroja error lexico
 	<<out(`hola);
@@ -59,7 +53,7 @@ program {
 	out(`hola`);
 
 	<< cadena multilinea
-	<<out( `prueba de cadena\
+	<<out( `prueba de cadena
 	<<multilinea`);
 	
 
@@ -67,19 +61,19 @@ program {
 	<< SENTENCIAS DECLARATIVAS
 	
 	<<declaracion de variables de tipo enteras
-	i32 x;
+	i32 xa;
 	i32 a, b,c;
 
 	<<declaracion de variables de tipo flotantes
-	f32 z;
-	f32 y,w,d;
+	f32 ya,ws,de;
+	f32 jk;
 
-      << declaracion de funcion con retorno de tipo entero
-      fun cumple(i32 a,i32 b): i32 {
+	<< declaracion de funcion con retorno de tipo entero
+	fun cumple(i32 a,i32 b): i32 {
 		i32 z;
 		z=: a + b;
-            return (z);
-      };
+		return (z);
+	};
 
 	<< declaracion de funcion con retorno de tipo flotante
 	fun cumple1(f32 a, f32 b): f32 {
@@ -89,34 +83,35 @@ program {
 	};
 
       << funcion con varios retornos
-      fun cumple2 (i32 a, i32 b): i32 {
-          if (a < b) then { 
-              return (a);
-         }
-          else {
-              return (3);
-         }
-          end_if;
-      };
+	fun cumple2 (i32 a, i32 b): i32 {
+		if (a < b) then { 
+			return (a);
+		}
+		else {
+			return (3);
+		}
+		end_if;
+	};
 
 	<< declaracion de constantes
-      const a =: 3,b =:2;
+    const ab =: 3, ba =:2;
 
-      <<funcion con varios retornos y continue con etiquetado
-      fun cumple3 (i32 a,i32 b): i32 {
-          if (a < b) then { 
-              outer: while ( i < 10 ) : (i =: i + 1 ) {
-              	while ( j < 5 ) : (j =: j + 1 ) {
-                  	continue :outer;
-                        return (a);    
-                  };           
-              };
-          }
-          else {
-              return (3);
-          }
-          end_if;
-      };
+	<<funcion con varios retornos y continue con etiquetado
+	fun cumple3 (i32 a,i32 b): i32 {
+		if (a < b) then { 
+			i32 j;
+			outer: while ( i < 10 ) : (i =: i + 1 ) {
+			while ( j < 5 ) : (j =: j + 1 ) {
+				continue :outer;
+					return (a);    
+				};           
+			};
+		}
+		else {
+			return (3);
+		}
+		end_if;
+	};
 
 	<< SENTENCIAS EJECUTABLES
 	
@@ -127,20 +122,22 @@ program {
 	a =: cumple (a,b);
 	
 	<< sentencia out
-	out (`hola`);
+	<<out (`hola`);
 
-	<<senteincia when
-	when( a > b ) then 
+	<<sentencia when
+	const c1=:3, c2=:4;
+	when( c1<c2 ) then 
       { 
       	a =: 3 ;
       };
 	
 	<< sentencia while
 	while ( i < 10 ) : (i =: i + 1 ) {
-          out ( `test` );
+          <<out ( `test` );
      	};
 
 	<<sentencia for
+	const n=:0;
 	for ( i =: n ; i < 10 ; +1){
           a =: 3; 
       };
@@ -156,53 +153,36 @@ program {
       };
 
 	<< continue con etiquetado
-	outer: while ( i < 10 ) : (i =: i + 1 ) {
-      		while ( j < 5 ) : (j =: j + 1 ) {
+	i32 a1,a2;
+	outer: while ( a1 < 10 ) : (a1 =: a1 + 1 ) {
+      		while ( a2 < 5 ) : (a2 =: a2 + 1 ) {
             		continue :outer;     
             	};           
             };
 	
 	<< sentencia de control como expresion
-	a =:  for (i =: 0 ;i < end ; +1){
-           		if (i = number) then {
+	a =:  for (i =: 0 ;i < 50 ; +1){
+           		if (i = 9) then {
                   	break 1;
                   } end_if;
               }else 3;
 
 	<< ERRORES
 
-	<< las sentencias declarativas pueden aparecer en cualquier lugar del codigo fuente exceptuando los bloques de sentencias de control
+	<< las sentencias declarativas no pueden aparecer dentro de sentencias ejecutables
 	while (i < 10 ) : (i =: i + 1 ) {
-		i32 a;
-	};
-	
-	i32 b;
-
-	fun prueba(f32 a): f32 {
-		f32 z;
-		z=: a + b;
-		return (z);
-	};
-
-
-	fun prueba1(): f32 {
-		return (3);
-	};
-
-	fun prueba1(f32 a): f32 {
-		return (a);
-	};
-
-	fun prueba1(f32 a, f32 b): f32 {
-		return (a);
-	};
-	
-	fun prueba1(f32 a, f32 b, f32 c): f32 {
-		return (a);
+		<<i32 a;
 	};
 	
 	<< No se deben permitir anidamientos de expresiones con parentesis
+	<< arroja el error de que se esperaba una expresion
 	c =: (a + b ) / c;
 
-	
+	<<Palabras reservadas escritas en minúsculas y mayúsculas
+	if (hola123 < 3) then {
+	} end_if;
+
+	<< al tener esta sentencia varios errores juntos, ya que no se permiten palabras reservadas en mayusculas, arroja el
+	<<IF (hola123 >= 3.0) THEN {
+	<<} END_IF;
 }

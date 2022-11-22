@@ -1,26 +1,32 @@
 program {   
+            i32 a,b;
             a =: 3 + 1;
+            fun cumple(i32 a,i32 b): i32 {
+                i32 z;
+                return (z);
+            };
             << FUNCION COMO EXPRESION
             a =: cumple(a,b);
             << IF OUT WHEN
-            if (tobi(a) < b ) then 
-                { out (`hola`); }
-            else 
-                {when( a > b ) then 
-                    { 
-                        a =: 3 ;
-                    };
-                }
+            if (cumple(a,b) < b ) then { 
+                    <<out (`hola`); 
+            }
+            else {
+                
+            }
             end_if;
             << WHILE 
+            i32 i;
             while ( i < 10 ) : (i =: i + 1 ) {
-                out ( `test` );
+                <<out ( `test` );
             };
             << FOR
+            const n=:0;
             for ( i =: n ; i < 10 ; +1){
                 a =: 3; 
             };
             << FOR CON CONTINUE Y BREAK 
+            
             for ( i =: n ; i < 10 ; +1){
                 if (a < b) then {
                     continue; 
@@ -31,15 +37,24 @@ program {
                 end_if;
             };
             << CONTINUE CON ETIQUETADO 
+            i32 j;
             outer:  while ( i < 10 ) : (i =: i + 1 ) {
                         while ( j < 5 ) : (j =: j + 1 ) {
                             continue :outer;     
                         };           
                     };
             << SENTENCIA DE CONTROL COMO EXPRESION 
+            i32 end, number;
             <<a =:    for (i =: 0 ;i < end ; +1){
-            <<            if (i = number) then {
-            <<                break 1;
-            <<            } end_if;
-            <<        }else 3;
+                        <<if (i = number) then {
+                           << break 1;
+                        <<} end_if;
+                    <<}else 3;
+
+            j=: while ( i < 10 ) : (i =: i + 1 ) {
+                if (i = number) then {
+                            break 1;
+                        } end_if;
+                }else 3;
+
         }

@@ -116,7 +116,7 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                                         TablaSimbolos.addAtributo(((ArbolSintactico)$6).getLex() + "@"+ ambitoActual,"Uso","Variable");
                                         hayReturn.push(false);
                                 }else{
-                                        yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
+                                        yyerror("El identificador " + $2.sval + " ya esta usado en el ambito " + ambitoActual);
                                         ambitoActual += "@"+$2.sval;
                                 }
                         }
@@ -149,7 +149,7 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                                 hayReturn.push(false);
 
                         }else{
-                                yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
+                                yyerror("El identificador " + $2.sval + " ya esta usado en el ambito " + ambitoActual);
                                 ambitoActual += "@"+$2.sval;
                         }
                 }
@@ -171,7 +171,7 @@ encabezado_fun  : FUN ID PARENT_A parametro COMA parametro PARENT_C DOSPUNTOS ti
                                 cambiarTipoActual(((ArbolSintactico)$6).getTipo());
                                 hayReturn.push(false);
                         }else{
-                                yyerror("La funcion " + $2.sval + " ya existe en el ambito " + ambitoActual);
+                                yyerror("El identificador " + $2.sval + " ya esta usado en el ambito " + ambitoActual);
                                 ambitoActual += "@"+$2.sval;
                         }
                 }
@@ -260,9 +260,9 @@ sentencia_if_fun : IF PARENT_A condicion PARENT_C THEN sentencias_fun PUNTOCOMA 
                 | IF PARENT_A condicion PARENT_C THEN LLAVE_A cuerpo_fun LLAVE_C ELSE sentencias_fun error {$$=new NodoHoja("Error sintactico"); yyerror("Se esperaba ; luego de la sentencia");}
 ; 
 sentencia_when_fun: encabezado_when THEN LLAVE_A cuerpo_fun LLAVE_C {
+        $$=$1;
         if (!((ArbolSintactico)$1).getLex().equals("No cumple condicion when")){
                 ((ArbolSintactico)$1).setIzq((ArbolSintactico)$4);
-                $$=(ArbolSintactico)$1;
                 if (!stackWhen.empty()){
                         List<String> tope=stackWhen.pop();
                         if (!stackWhen.empty()){
@@ -273,10 +273,8 @@ sentencia_when_fun: encabezado_when THEN LLAVE_A cuerpo_fun LLAVE_C {
                                 stackWhen.push(whenSuperior);
                         }
                 }
-        }else if (((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                $$=$1;
-        } else {
-                $$=$1;
+
+        } else if (!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                 if (!stackWhen.empty()){
                         List<String> tope=stackWhen.pop();
                         for(String cadena :tope){
@@ -287,9 +285,9 @@ sentencia_when_fun: encabezado_when THEN LLAVE_A cuerpo_fun LLAVE_C {
 }
         
 | encabezado_when THEN sentencias_fun {
+        $$=$1;
         if (!((ArbolSintactico)$1).getLex().equals("No cumple condicion when")){
                 ((ArbolSintactico)$1).setIzq((ArbolSintactico)$3);
-                $$=(ArbolSintactico)$1;
                 if (!stackWhen.empty()){
                         List<String> tope=stackWhen.pop();
                         if (!stackWhen.empty()){
@@ -300,9 +298,7 @@ sentencia_when_fun: encabezado_when THEN LLAVE_A cuerpo_fun LLAVE_C {
                                 stackWhen.push(whenSuperior);
                         }
                 }
-        }else if (((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                $$=$1;
-        }else { 
+        }else if (!((ArbolSintactico)$1).getLex().equals("Error sintactico")){ 
                 if (!stackWhen.empty()){
                         List<String> tope=stackWhen.pop();
                         for(String cadena :tope){
@@ -324,7 +320,7 @@ etiqueta : ID DOSPUNTOS {
                                         TablaSimbolos.removeAtributo($1.sval);
                                         etiquetasAct.add($1.sval + "@" + ambitoActual);
                                 }else{
-                                        yyerror("La etiqueta '" + $1.sval + "' ya existe en el ambito " + ambitoActual);
+                                        yyerror("El identificador " + $1.sval + " ya esta usado en el ambito " + ambitoActual);
                                 }
                         }
 ;
@@ -502,7 +498,7 @@ lista_asignacion : lista_asignacion COMA asignacion_const
 ;
 asignacion_const : ID ASIG cte { 
                                 if(TablaSimbolos.existeSimbolo($1.sval+"@"+ambitoActual)){
-                                        yyerror("La variable " + $1.sval + " se encuentra declarada en el ambito " + ambitoActual);
+                                        yyerror("La variable " + $1.sval + " ya se encuentra declarada en el ambito " + ambitoActual);
                                 }else{
                                         TablaSimbolos.addNuevoSimbolo($1.sval+"@"+ambitoActual);
                                         if (!stackWhen.empty()){
@@ -894,10 +890,10 @@ encabezado_when : WHEN PARENT_A factor comparacion factor PARENT_C{
                         yyerror("Se esperaba ( en el when");}
 ;
 sentencia_when : encabezado_when THEN LLAVE_A bloque_sentencias LLAVE_C {
+        $$=$1;
         if (!((ArbolSintactico)$1).getLex().equals("No cumple condicion when"))
         {
                 ((ArbolSintactico)$1).setIzq((ArbolSintactico)$4);
-                $$=(ArbolSintactico)$1;
                 if (!stackWhen.empty()){
                         List<String> tope=stackWhen.pop();
                         if (!stackWhen.empty()){
@@ -908,11 +904,7 @@ sentencia_when : encabezado_when THEN LLAVE_A bloque_sentencias LLAVE_C {
                                 stackWhen.push(whenSuperior);
                         }
                 }
-        }else if (((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                $$=$1;
-        }
-        else {
-                $$=$1;
+        }else if (!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                 if (!stackWhen.empty()){
                         List<String> tope=stackWhen.pop();
                         for(String cadena :tope){
@@ -922,10 +914,10 @@ sentencia_when : encabezado_when THEN LLAVE_A bloque_sentencias LLAVE_C {
         }
 }
         | encabezado_when THEN sentencia {
+                $$=$1;
                 if (!((ArbolSintactico)$1).getLex().equals("No cumple condicion when"))
                 {
                         ((ArbolSintactico)$1).setIzq((ArbolSintactico)$3);
-                        $$=(ArbolSintactico)$1;
                         if (!stackWhen.empty()){
                                 List<String> tope=stackWhen.pop();
                                 if (!stackWhen.empty()){
@@ -936,19 +928,14 @@ sentencia_when : encabezado_when THEN LLAVE_A bloque_sentencias LLAVE_C {
                                         stackWhen.push(whenSuperior);
                                 }
                         }
-                }else { 
-                        if (((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                                $$=$1;
-                        }
-                        else {
-                                $$=$1;
-                                if (!stackWhen.empty()){
-                                        List<String> tope=stackWhen.pop();
-                                        for(String cadena :tope){
-                                                TablaSimbolos.removeAtributo(cadena);
-                                        }
+                }else  if (!((ArbolSintactico)$1).getLex().equals("Error sintactico")){   
+                        if (!stackWhen.empty()){
+                                List<String> tope=stackWhen.pop();
+                                for(String cadena :tope){
+                                        TablaSimbolos.removeAtributo(cadena);
                                 }
                         }
+                        
                 }
         }
                 | encabezado_when THEN LLAVE_A bloque_sentencias error{
@@ -1390,20 +1377,26 @@ param_real : cte{
                         ((ArbolSintactico)$$).setUso("Variable");}
                 | ID {
                         String ambito = buscarAmbito(ambitoActual,$1.sval);
-                        if( TablaSimbolos.getAtributo($1.sval+"@"+ambito,"Uso").equals("Variable") || TablaSimbolos.getAtributo($1.sval+"@"+ambito,"Uso").equals("Constante") ){
-                                if(!ambito.equals("")){
+                        if(!ambito.equals("")){
+                                 $$=new NodoHoja($1.sval+"@"+ambito);
+                                ((ArbolSintactico)$$).setUso("Variable");
+                                ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
+                                if( TablaSimbolos.getAtributo($1.sval+"@"+ambito,"Uso").equals("Variable") 
+                                || TablaSimbolos.getAtributo($1.sval+"@"+ambito,"Uso").equals("Constante") ){
+                                
                                         $$=new NodoHoja($1.sval+"@"+ambito);
                                         ((ArbolSintactico)$$).setUso("Variable");
                                         ((ArbolSintactico)$$).setTipo((String)TablaSimbolos.getAtributo($1.sval +"@"+ ambito,"Tipo"));
                                 }else{
-                                        $$=new NodoHoja("Error");
-                                        yyerror("El parametro "+ $1.sval +" no se encuentra declarado en el ambito "+ambitoActual);
+                                        yyerror("El parametro " + $1.sval + " no es una variable.");
+                                        $$ = new NodoHoja("Error");
                                 }
                         }else{
-                                yyerror("El parametro " + $1.sval + " no es una variable.");
-                                $$ = new NodoHoja("Error");
+                                $$=new NodoHoja("Error");
+                                yyerror("El parametro "+ $1.sval +" no se encuentra declarado en el ambito "+ambitoActual);
                         }
-                     }
+                        
+                }
 ;
 llamado_func: ID PARENT_A param_real COMA param_real PARENT_C {
                                                         String ambito = buscarAmbito(ambitoActual,$1.sval);
