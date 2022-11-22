@@ -1154,7 +1154,7 @@ encabezado_for_etiqueta: etiqueta FOR PARENT_A ID ASIG factor PUNTOCOMA ID compa
                                 }
                                 
                         }
-encabezado_for_etiqueta: etiqueta FOR PARENT_A ID ASIG factor PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA factor PARENT_C {
+                | etiqueta FOR PARENT_A ID ASIG factor PUNTOCOMA ID comparacion expresion PUNTOCOMA RESTA factor PARENT_C {
 				String factorAsig = ((ArbolSintactico)$6).getLexemaWhen()+buscarAmbito(ambitoActual,$6.sval);
                                 String factorIteracion = ((ArbolSintactico)$13).getLexemaWhen()+buscarAmbito(ambitoActual,$13.sval);
                                 if (!factorAsig.equals("Error") && !factorIteracion.equals("Error")){

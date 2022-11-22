@@ -36,6 +36,42 @@ program{
     };
     <<POSIBLES ERRORES DEL FOR
     << en la asignacion utilizar una variable arroja error ya que solo se pueden usar constantes y q es una variable
+    for ( i =: q ; i < 10+98/o-7 ; +8){
+        
+    };
+    << en la operacion del for utilizar una variable arroja error ya que solo se pueden usar constantes y q es una variable
+    for ( i =: 2; i < 10+98/o-7 ; +q){
+        
+    };
+    << error al utilizar una variable no declarada para iterar
+    for ( z =: 2; z < 10+98/o*q-7 ; +7){
+        
+    };
+
+    << error al usar una constante de tipo float en la asignacion ya que solo se pueden usar enteros
+    for ( v =: 2.0; v < 10+98/o*q-7 ; +7){
+        
+    };
+    << error al realizar la asignacion con una variable y luego chequear la condicion con otra
+    for ( i =: 2; q < 10+98/o*7 ; +7){
+        
+    };
+    << error al utilizar una constante tipo float para la asignacion de for
+    const w=:3.0;
+    for ( i =: w; i < 10+98/o*7 ; +7){
+        
+    };
+    << error al utilizar una constante tipo float para la suma de la iteracion del for
+    for ( i =: 0; i < 10+98/o*7 ; +w){
+        
+    };
+    << error al utilizar una constante como variable de iteracion en el for
+    const l=:0;
+    for ( l =: 0; l < 10+98/o*7 ; +1){
+        
+    };
+    << Con la iteracion como resta
+    << en la asignacion utilizar una variable arroja error ya que solo se pueden usar constantes y q es una variable
     for ( i =: q ; i < 10+98/o-7 ; -8){
         
     };
@@ -48,13 +84,63 @@ program{
         
     };
 
-    << error al usar una variable de tipo float para iterar ya que solo se pueden usar enteros
+    << error al usar una constante de tipo float en la asignacion ya que solo se pueden usar enteros
     for ( v =: 2.0; v < 10+98/o*q-7 ; -7){
         
     };
     << error al realizar la asignacion con una variable y luego chequear la condicion con otra
-    for ( i =: 2.0; q < 10+98/o*7 ; -7){
+    for ( i =: 2; q < 10+98/o*7 ; -7){
+        
+    };
+    << error al utilizar una constante tipo float para la asignacion de for
+    const w=:3.0;
+    for ( i =: w; i < 10+98/o*7 ; -7){
+        
+    };
+    << error al utilizar una constante tipo float para la suma de la iteracion del for
+    for ( i =: 0; i < 10+98/o*7 ; -w){
+        
+    };
+    << error al utilizar una constante como variable de iteracion en el for
+    const l=:0;
+    for ( l =: 0; l < 10+98/o*7 ; -1){
+        
+    };
+    << mismos errores pero con etiquetas
+    << en la asignacion utilizar una variable arroja error ya que solo se pueden usar constantes y q es una variable
+    et1: for ( i =: q ; i < 10+98/o-7 ; -8){
+        
+    };
+    << en la operacion del for utilizar una variable arroja error ya que solo se pueden usar constantes y q es una variable
+    et2:for ( i =: 2; i < 10+98/o-7 ; -q){
+        
+    };
+    << error al utilizar una variable no declarada para iterar
+    et3: for ( z =: 2; z < 10+98/o*q-7 ; -7){
         
     };
 
+    << error al usar una constante de tipo float en la asignacion ya que solo se pueden usar enteros
+    et4: for ( v =: 2.0; v < 10+98/o*q-7 ; -7){
+        
+    };
+    << error al realizar la asignacion con una variable y luego chequear la condicion con otra
+    et5: for ( i =: 2; q < 10+98/o*7 ; -7){
+        
+    };
+    << error al utilizar una constante tipo float para la asignacion de for
+    
+    et6: for ( i =: w; i < 10+98/o*7 ; -7){
+        
+    };
+    << error al utilizar una constante tipo float para la suma de la iteracion del for
+    et7: for ( i =: 0; i < 10+98/o*7 ; -w){
+        
+    };
+    << error al utilizar una constante como variable de iteracion en el for
+    const l=:0;
+    et8: for ( l =: 0; l < 10+98/o*7 ; -1){
+        
+    };
+    
 }
