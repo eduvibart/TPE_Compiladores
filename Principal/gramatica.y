@@ -690,26 +690,26 @@ cte : ENTERO {
 ;
 sentencia_for_asig: encabezado_for LLAVE_A bloque_sent_eje_asig LLAVE_C {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                                ((ArbolSintactico)$1).getDer().getDer().getDer().getIzq().setIzq((ArbolSintactico)$3);
+                                ((ArbolSintactico)$1).getDer().getDer().getIzq().setIzq((ArbolSintactico)$3);
                         }
                         $$ = $1;
                 }
                 |encabezado_for sent_eje_asig {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                                ((ArbolSintactico)$1).getDer().getDer().getDer().getIzq().setIzq((ArbolSintactico)$2);
+                                ((ArbolSintactico)$1).getDer().getDer().getIzq().setIzq((ArbolSintactico)$2);
                         }
                         $$ = $1;
                 }
                 |  encabezado_for LLAVE_A bloque_sent_eje_asig error{ $$=new NodoHoja("Error sintactico");yyerror("Se esperaba }");}
 sentencia_while_asig: encabezado_while LLAVE_A bloque_sent_eje_asig LLAVE_C {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                                ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$3);
+                                ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$3);
                         }
                         $$=$1;
                 } 
                 | encabezado_while sent_eje_asig {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                                ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$2);
+                                ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$2);
                         }
                         $$=$1;
                 } 
@@ -976,12 +976,12 @@ encabezado_while : WHILE PARENT_A condicion PARENT_C DOSPUNTOS PARENT_A asignaci
 ;
 sentencia_while : encabezado_while_etiqueta LLAVE_A bloque_break_continue LLAVE_C {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                                ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$3);
+                                ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$3);
                                 String tag = ((ArbolSintactico)$1).getIzq().getIzq().getLex();
                                 List<ArbolSintactico> l = mapEtiquetas.get(tag);
                                 if(l!=null){
                                         for(ArbolSintactico a : l){
-                                                a.setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
+                                                a.setIzq(((ArbolSintactico)$1).getDer().getDer());
                                         }
                                 }
                         }
@@ -989,12 +989,12 @@ sentencia_while : encabezado_while_etiqueta LLAVE_A bloque_break_continue LLAVE_
                 }
                 | encabezado_while_etiqueta ejecutables_break_continue {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
-                                ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$2);
+                                ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$2);
                                 String tag = ((ArbolSintactico)$1).getIzq().getIzq().getLex();
                                 List<ArbolSintactico> l = mapEtiquetas.get(tag);
                                 if(l!=null){
                                         for(ArbolSintactico a : l){
-                                                a.setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
+                                                a.setIzq(((ArbolSintactico)$1).getDer().getDer());
                                         }
                                 }
                         }
@@ -1133,7 +1133,7 @@ encabezado_for_etiqueta: etiqueta FOR PARENT_A ID ASIG factor PUNTOCOMA ID compa
                                 			NodoHoja id2 = new NodoHoja($8.sval+"@"+ambito);
                                 			id2.setUso("Variable");
                                 			id2.setTipo((String)TablaSimbolos.getAtributo($8.sval +"@"+ ambito,"Tipo"));
-                                			$$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval, id1, new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,id2, (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", null),asignacion ))) );
+                                			$$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval, id1, new NodoHoja(((ArbolSintactico)$6).getLex())),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,id2, (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", null),asignacion ))) );
                                 			mapEtiquetas.put($1.sval,new ArrayList<ArbolSintactico>());
 							}
 					}else{
@@ -1185,7 +1185,19 @@ encabezado_for_etiqueta: etiqueta FOR PARENT_A ID ASIG factor PUNTOCOMA ID compa
                                 			NodoHoja id2 = new NodoHoja($8.sval+"@"+ambito);
                                 			id2.setUso("Variable");
                                 			id2.setTipo((String)TablaSimbolos.getAtributo($8.sval +"@"+ ambito,"Tipo"));
-                                			$$ = new NodoComun("For con Etiqueta", new NodoControl("Etiqueta",new NodoHoja($1.sval)), new NodoComun("FOR",new NodoComun("Asignacion FOR", new NodoComun($5.sval, id1, new NodoHoja($6.sval)),null) ,new NodoComun("Condicion-Cuerpo", new NodoControl("Condicion",new NodoComun($9.sval,id2, (ArbolSintactico)$10)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", null),asignacion ))) );
+                                			$$ = new NodoComun("For con Etiqueta", 
+                                                                                                new NodoControl("Etiqueta", 
+                                                                                                                new NodoHoja($1.sval)), 
+                                                                                                new NodoComun("FOR",
+                                                                                                                new NodoComun("Asignacion FOR",         
+                                                                                                                                new NodoComun($5.sval, id1, new NodoHoja(((ArbolSintactico)$6).getLex())) 
+                                                                                                                                ,null) ,
+                                                                                                                new NodoComun("Condicion-Cuerpo", 
+                                                                                                                                new NodoControl("Condicion",
+                                                                                                                                                new NodoComun($9.sval,id2, (ArbolSintactico)$10)),
+                                                                                                                                new NodoComun("Cuerpo", 
+                                                                                                                                                new NodoControl("Cuerpo For", null),
+                                                                                                                                                asignacion ))) );
                                 			mapEtiquetas.put($1.sval,new ArrayList<ArbolSintactico>());
 							}
 					}else{
@@ -1252,7 +1264,7 @@ encabezado_for : FOR PARENT_A ID ASIG  factor PUNTOCOMA ID comparacion expresion
                                                 NodoHoja id2 = new NodoHoja($7.sval+"@"+ambito);
                                                 id2.setUso("Variable");
                                                 id2.setTipo((String)TablaSimbolos.getAtributo($7.sval +"@"+ ambito,"Tipo"));
-                                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,id1,new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,id2,(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", null), asignacion )) );
+                                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,id1,new NodoHoja(((ArbolSintactico)$5).getLex())),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,id2,(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", null), asignacion )) );
                                         }
                                 }else{
                                         $$=new NodoHoja("Error sintactico");
@@ -1303,7 +1315,16 @@ encabezado_for : FOR PARENT_A ID ASIG  factor PUNTOCOMA ID comparacion expresion
                                                 NodoHoja id2 = new NodoHoja($7.sval+"@"+ambito);
                                                 id2.setUso("Variable");
                                                 id2.setTipo((String)TablaSimbolos.getAtributo($7.sval +"@"+ ambito,"Tipo"));
-                                                $$ = new NodoComun("FOR",new NodoComun("Asignacion FOR",new NodoComun($4.sval,id1,new NodoHoja($5.sval)),null),new NodoComun("Condicion-Cuerpo",new NodoControl("Condicion",new NodoComun($8.sval,id2,(ArbolSintactico)$9)),new NodoComun("Cuerpo", new NodoControl("Cuerpo For", null), asignacion )) );
+                                                $$ = new NodoComun("FOR",
+                                                                        new NodoComun("Asignacion FOR",
+                                                                                new NodoComun($4.sval,id1,new NodoHoja(((ArbolSintactico)$5).getLex())),
+                                                                                null),
+                                                                        new NodoComun("Condicion-Cuerpo",
+                                                                                new NodoControl("Condicion",
+                                                                                        new NodoComun($8.sval,id2,(ArbolSintactico)$9)),
+                                                                                new NodoComun("Cuerpo", 
+                                                                                        new NodoControl("Cuerpo For", null), 
+                                                                                        asignacion )) );
                                         }
                                 }else{
                                         $$=new NodoHoja("Error sintactico");
