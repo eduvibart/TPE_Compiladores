@@ -16,11 +16,10 @@ public class TPR {
         palabrasRes.put("break",264);
         palabrasRes.put("when",265);
         palabrasRes.put("while",266);
-        palabrasRes.put("for",267);
-        palabrasRes.put("continue",268);
-        palabrasRes.put("i32",270);
-        palabrasRes.put("f32",271);
-        palabrasRes.put("const",291);
+        palabrasRes.put("continue",267);
+        palabrasRes.put("i32",269);
+        palabrasRes.put("f32",270);
+        palabrasRes.put("const",290);
 
     }
 
