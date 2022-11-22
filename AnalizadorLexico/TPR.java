@@ -19,7 +19,7 @@ public class TPR {
         palabrasRes.put("continue",267);
         palabrasRes.put("i32",269);
         palabrasRes.put("f32",270);
-        palabrasRes.put("const",290);
+        palabrasRes.put("const",286);
 
     }
 
