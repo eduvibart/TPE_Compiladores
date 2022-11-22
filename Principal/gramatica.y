@@ -643,12 +643,14 @@ sentencia_while_asig: encabezado_while LLAVE_A bloque_sent_eje_asig LLAVE_C {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$3);
                         }
+                        ((ArbolSintactico)$1).setLex("While Asignacion");
                         $$=$1;
                 } 
                 | encabezado_while sent_eje_asig {
                         if(!((ArbolSintactico)$1).getLex().equals("Error sintactico")){
                                 ((ArbolSintactico)$1).getDer().setIzq((ArbolSintactico)$2);
                         }
+                        ((ArbolSintactico)$1).setLex("While Asignacion");
                         $$=$1;
                 } 
                 | encabezado_while LLAVE_A bloque_sent_eje_asig error {$$=new NodoHoja("Error sintactico");yyerror("Se esperaba }");}

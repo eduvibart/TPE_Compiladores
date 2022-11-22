@@ -17,17 +17,18 @@ errorMensRecursionMutua db "Se produjo un llamado recursivo mutuo.", 0
 outMens db "Out", 0 
 error db "Error de ejecucion!!!", 0 
 @tagAnt dd ? 
-_0 dd 0
-_1 dd 1
 _i@Global dd  ? 
-_3 dd 3
 @aux4 dd  ? 
 _number@Global dd  ? 
-_end@Global dd  ? 
 _a@Global dd  ? 
+_c@Global dd  ? 
+_1 dd 1
+_3 dd 3
+_end@Global dd  ? 
 @aux3 dd  ? 
 @aux2 dd  ? 
 @aux1 dd  ? 
+_10 dd 10
 
 .code
 errorFun: 
@@ -43,32 +44,29 @@ errorRecursionMutua:
 invoke MessageBox, NULL, addr errorMensRecursionMutua, addr error, MB_OK 
 invoke ExitProcess, 1 
 main:
-MOV EAX , _0
-MOV _i@Global, EAX
-label_4:
+label_3:
 MOV EAX, _i@Global
-CMP EAX, _end@Global
-JGE label_3
+CMP EAX, _10
+JGE label_2
 MOV EAX, _i@Global
-CMP EAX, _number@Global
-JNE label_6
+CMP EAX, _10
+JNE label_5
 MOV EAX , 1
 MOV @aux1, EAX
-JMP label_3
-label_6:
+JMP label_1
 label_5:
+label_4:
 MOV EAX, _i@Global
-ADD EAX, _null
+ADD EAX, _1
 MOV @aux4, EAX
 MOV EAX , @aux4
 MOV _i@Global, EAX
-JMP label_4
-label_3:
+JMP label_3
 label_2:
 MOV EAX , 3
 MOV @aux1, EAX
 label_1:
 MOV EAX , @aux1
-MOV _a@Global, EAX
+MOV _c@Global, EAX
 invoke ExitProcess, 0 
 end main
