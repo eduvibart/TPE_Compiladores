@@ -2001,7 +2001,7 @@ case 94:
                                                         }
                                                 }
                                         }else{
-                                                yyval = new NodoComun("Continue",null,(ArbolSintactico)val_peek(0));
+                                                yyval = new NodoComun("Continue",new NodoHoja("Fin"),(ArbolSintactico)val_peek(0));
                                         }
                                 }
 break;
@@ -2922,7 +2922,7 @@ break;
 case 247:
 //#line 893 "gramatica.y"
 { 
-                        yyval = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja(val_peek(8).sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", null, (ArbolSintactico) val_peek(1))) );
+                        yyval = new NodoComun("While con Etiqueta",(ArbolSintactico) new NodoControl("Etiqueta", (ArbolSintactico) new NodoHoja(val_peek(8).sval)) , (ArbolSintactico) new NodoComun("While", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", new NodoHoja("Fin"), (ArbolSintactico) val_peek(1))) );
                         mapEtiquetas.put(val_peek(8).sval,new ArrayList<ArbolSintactico>());
                         }
 break;
@@ -2957,7 +2957,7 @@ break;
 case 255:
 //#line 905 "gramatica.y"
 {
-                        yyval = new NodoComun("While", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", null, (ArbolSintactico) val_peek(1)) );      
+                        yyval = new NodoComun("While", (ArbolSintactico) val_peek(5), (ArbolSintactico) new NodoComun("Cuerpo - Asignacion", new NodoHoja("Fin"), (ArbolSintactico) val_peek(1)) );      
                         }
 break;
 case 256:
@@ -2992,12 +2992,12 @@ case 263:
 //#line 916 "gramatica.y"
 {
                         if(!((ArbolSintactico)val_peek(3)).getLex().equals("Error sintactico")){
-                                ((ArbolSintactico)val_peek(3)).getDer().setIzq((ArbolSintactico)val_peek(1));
                                 String tag = ((ArbolSintactico)val_peek(3)).getIzq().getIzq().getLex();
                                 List<ArbolSintactico> l = mapEtiquetas.get(tag);
+                                ((ArbolSintactico)val_peek(3)).getDer().getDer().setIzq((ArbolSintactico)val_peek(1));
                                 if(l!=null){
                                         for(ArbolSintactico a : l){
-                                                a.setIzq(((ArbolSintactico)val_peek(3)).getDer().getDer());
+                                                a.setIzq(((ArbolSintactico)val_peek(3)).getDer().getDer().getDer());
                                         }
                                 }
                         }
@@ -3008,12 +3008,12 @@ case 264:
 //#line 929 "gramatica.y"
 {
                         if(!((ArbolSintactico)val_peek(1)).getLex().equals("Error sintactico")){
-                                ((ArbolSintactico)val_peek(1)).getDer().setIzq((ArbolSintactico)val_peek(0));
                                 String tag = ((ArbolSintactico)val_peek(1)).getIzq().getIzq().getLex();
                                 List<ArbolSintactico> l = mapEtiquetas.get(tag);
+                                ((ArbolSintactico)val_peek(1)).getDer().getDer().setIzq((ArbolSintactico)val_peek(0));
                                 if(l!=null){
                                         for(ArbolSintactico a : l){
-                                                a.setIzq(((ArbolSintactico)val_peek(1)).getDer().getDer());
+                                                a.setIzq(((ArbolSintactico)val_peek(1)).getDer().getDer().getDer());
                                         }
                                 }
                         }
