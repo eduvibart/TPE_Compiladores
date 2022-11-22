@@ -20,22 +20,8 @@ program {
             while ( i < 10 ) : (i =: i + 1 ) {
                 <<out ( `test` );
             };
-            << FOR
-            const n=:0;
-            for ( i =: n ; i < 10 ; +1){
-                a =: 3; 
-            };
-            << FOR CON CONTINUE Y BREAK 
             
-            for ( i =: n ; i < 10 ; +1){
-                if (a < b) then {
-                    continue; 
-                }
-                else {
-                    break;
-                }
-                end_if;
-            };
+            
             << CONTINUE CON ETIQUETADO 
             i32 j;
             outer:  while ( i < 10 ) : (i =: i + 1 ) {
@@ -45,11 +31,6 @@ program {
                     };
             << SENTENCIA DE CONTROL COMO EXPRESION 
             i32 end, number;
-            <<a =:    for (i =: 0 ;i < end ; +1){
-                        <<if (i = number) then {
-                           << break 1;
-                        <<} end_if;
-                    <<}else 3;
 
             j=: while ( i < 10 ) : (i =: i + 1 ) {
                 if (i = number) then {

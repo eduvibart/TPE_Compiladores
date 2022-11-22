@@ -10,11 +10,6 @@ program {
             return (5*a/10);   
     };
 
-    b =:    for (i =: 0 ;i < p ; +1){
-                if (i = 10) then {
-                    break 1;
-                } end_if;
-            }else 3;
     c =: while ( i < 10 ) : (i =: i + 1 ) {
         if (i = 10) then {
                     break 1;

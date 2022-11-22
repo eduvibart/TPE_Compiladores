@@ -136,21 +136,6 @@ program {
           <<out ( `test` );
      	};
 
-	<<sentencia for
-	const n=:0;
-	for ( i =: n ; i < 10 ; +1){
-          a =: 3; 
-      };
-	
-	<<sentencia for con continue y break
-	for ( i =: n ; i < 10 ; +1){
-      	if (a < b) then {
-            	continue; 
-            }
-            else {
-            	break;
-            } end_if;
-      };
 
 	<< continue con etiquetado
 	i32 a1,a2;
@@ -160,12 +145,6 @@ program {
             	};           
             };
 	
-	<< sentencia de control como expresion
-	a =:  for (i =: 0 ;i < 50 ; +1){
-           		if (i = 9) then {
-                  	break 1;
-                  } end_if;
-              }else 3;
 
 	<< ERRORES
 

@@ -202,10 +202,6 @@ program {
         return (2.0);
     };
 
-    << intento de utilizar misma etiqueta en mismo ambito
-    etiquetaPrueba: for (a =: 0 ; a < b ; +1 ){
-
-    };
 
     
 
