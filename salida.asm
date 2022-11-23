@@ -17,14 +17,12 @@ errorMensRecursionMutua db "Se produjo un llamado recursivo mutuo.", 0
 outMens db "Out", 0 
 error db "Error de ejecucion!!!", 0 
 @tagAnt dd ? 
-_i@Global dd  ? 
-@aux4 dd  ? 
-_number@Global dd  ? 
-_a@Global dd  ? 
-_c@Global dd  ? 
 _1 dd 1
-_3 dd 3
-_end@Global dd  ? 
+@aux5 dd  ? 
+@aux4 dd  ? 
+_5 dd 5
+_a1@Global dd  ? 
+_a2@Global dd  ? 
 @aux3 dd  ? 
 @aux2 dd  ? 
 @aux1 dd  ? 
@@ -44,29 +42,36 @@ errorRecursionMutua:
 invoke MessageBox, NULL, addr errorMensRecursionMutua, addr error, MB_OK 
 invoke ExitProcess, 1 
 main:
-label_3:
-MOV EAX, _i@Global
+outer:
+label_1:
+MOV EAX, _a1@Global
 CMP EAX, _10
 JGE label_2
-MOV EAX, _i@Global
-CMP EAX, _10
-JNE label_5
-MOV EAX , 1
-MOV @aux1, EAX
-JMP label_1
-label_5:
 label_4:
-MOV EAX, _i@Global
+MOV EAX, _a2@Global
+CMP EAX, _5
+JGE label_5
+MOV EAX, _a1@Global
+ADD EAX, _1
+MOV @aux3, EAX
+MOV EAX , @aux3
+MOV _a1@Global, EAX
+JMP outer
+label_6:
+MOV EAX, _a2@Global
 ADD EAX, _1
 MOV @aux4, EAX
 MOV EAX , @aux4
-MOV _i@Global, EAX
-JMP label_3
+MOV _a2@Global, EAX
+JMP label_4
+label_5:
+label_3:
+MOV EAX, _a1@Global
+ADD EAX, _1
+MOV @aux5, EAX
+MOV EAX , @aux5
+MOV _a1@Global, EAX
+JMP label_1
 label_2:
-MOV EAX , 3
-MOV @aux1, EAX
-label_1:
-MOV EAX , @aux1
-MOV _c@Global, EAX
 invoke ExitProcess, 0 
 end main

@@ -920,7 +920,7 @@ sentencia_while : encabezado_while_etiqueta LLAVE_A bloque_break_continue LLAVE_
                                 ((ArbolSintactico)$1).getDer().getDer().setIzq((ArbolSintactico)$3);
                                 if(l!=null){
                                         for(ArbolSintactico a : l){
-                                                a.setIzq(((ArbolSintactico)$1).getDer().getDer(),getDer());
+                                                a.setIzq(((ArbolSintactico)$1).getDer().getDer().getDer());
                                         }
                                 }
                         }
