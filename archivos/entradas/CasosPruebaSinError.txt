@@ -1,0 +1,99 @@
+program{
+    i32 i,a,x;
+    f32 cc;
+    fun cumple(i32 a,f32 b): i32 {
+        const w=:0;
+        i32 o;
+        if(0<w) then {
+            a=:0;
+            
+            o=:2;
+            if (a=w) then{
+                    return (4);
+            }else {
+                    o=:2;
+            }end_if;
+        }end_if;
+        when (3>99) then{
+            fun cumple1(i32 a): i32 {
+                    return (w);
+            };
+        };   
+    };
+    i32 a1,a2,l;
+    i32  b,c;
+    fun cumpleA(i32 a,i32 b): i32 {
+        i32 z;
+        return (z);
+    };
+    const c1=:3, c2=:4;
+	when( c1<c2 ) then 
+      { 
+      	a =: 3 ;
+      };
+    fun cumple1(f32 a,f32 b): f32 {
+        if (a < b) then { 
+            return (a);
+        }
+        else {
+            return (3.0);
+        }
+        end_if;
+    };
+    const aa =: 3,bb =:2;
+
+    fun cumple2(i32 a,i32 b): f32 {
+        if (a < b) then { 
+            i32 i,j;
+            outer:  while ( i < 10 ) : (i =: i + 1 ) {
+                    while ( j < 5 ) : (j =: j + 1 ) {
+                        continue :outer;
+                        return (8.0);    
+                    };           
+                };
+        }
+        else {
+            return (3.0);
+        }
+        end_if;
+    };
+    i32 y;
+    y =: while ( i < 10 ) : (i =: i + 1 ) {
+                    if (i < 10) then {
+                                break 1;
+                            } end_if;
+                        }else 3; 
+    fun declaracion():i32{
+        i32 g,h,i;
+        f32 j,k,l;
+        
+        g=: h+i;
+        j=: k+l;
+        j=: k+l;
+        g=: h-i;
+        k=: l/j;
+        k=: j*l;
+        return (g);
+    };
+    fun ll(i32 i): f32 {
+        while ( i < 10 ) : (i =: i + 1 ) {
+        };
+        while ( i < 10 ) : (i =: i + 1 ) 
+            i=:10;
+        e: while ( i < 10 ) : (i =: i + 1 ) {
+        };
+        p: while ( i < 10 ) : (i =: i + 1 ) 
+            i=:10;   
+        return (3.0);    
+    };
+    a=:89/6*21234;
+    e: while ( i < 10 ) : (i =: i + 1 ) {
+        if (a<b) then{
+            continue: e;
+        }else{
+            break;
+        }end_if;
+    };
+
+
+}

@@ -1,4 +1,22 @@
 program{
+    i32 a,b;
+    fun cambiaAmbito():f32{
+
+        <<misma etiqueta en distinto ambito
+        etiquetaPrueba : while (a>b): (a=:a+1){
+
+        };
+        return (2.0);
+    };
+    fun cambiaAmb():f32{
+
+        <<llamo a la misma etiqueta en distinto ambito no es alcanzable por lo tanto arroja error
+        while (a>b): (a=:a+1){
+            continue : etiquetaPrueba ;
+        };
+        return (2.0);
+    };
+
     <<INTENTO DE REFERENCIA A UNA ETIQUETA
 
     << se define un while con etiqueta etiquetaWhile
@@ -25,4 +43,5 @@ program{
         
         continue : a;
     };
+
 }

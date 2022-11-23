@@ -7,9 +7,8 @@ program {
     fun a(i32 a,i32 b): i32 {
             return (o/10);   
     };
-
+    c=:a(i,c);
     fun f(i32 a,i32 b): i32 {
-            b=:a(1,2);
             return (5*i/10);   
     };
 

@@ -1,0 +1,73 @@
+program{
+    <<CADA VARIABLE O FUNCION SERA VISIBLE DENTRO DEL AMBITO EN EL QUE FUE DECLARADA Y POR LOS AMBTIOS ANIDADOS CONTENIDOS EN EL AMBITO DE DECLARACION
+    i32 g;
+    fun FuncionA():i32{
+        
+        << declaracion de la variable e dentro de FuncionA
+        i32 e,c;
+
+        << declaracion de la funcion FuncionB
+        fun FuncionB():i32{
+
+            << alcance de la variable e declarada en el ambito de la funcion FuncionA (padre de FuncionB)
+            e=:4;
+
+            fun FuncionC():i32{
+
+                << alcance de la variable e declarada en el ambito de la funcion FuncionA (abuelo de FuncionC)
+                e=:5;
+
+                << alcance de la funcion padre FuncionB
+                FuncionB();
+                return (8);
+            };
+            return (8);
+        };
+
+        fun FuncionD():i32 {
+            << alcance de la variable e declarada en el ambito de la funcion FuncionA (padre de FuncionB)
+            e=:6;
+
+            << alcance de la funcion hermana FuncionB
+            
+            return (FuncionB());
+        };
+        return (c); 
+    };
+
+    fun FuncionE():i32{
+        
+        <<alcance a la variable e declarada en el ambito global
+        g=:7;
+
+        <<alcance de la funcion FuncionA
+        FuncionA();
+        return (0); 
+    };
+
+    <<SE PERMITEN VARIABLES CON EL MISMO NOMBRE, SIEMPRE QUE SEAN DECLARADAS EN DIFERENTES AMBITOS.
+    
+    <<declaracion de f en general
+    i32 f;
+
+    fun FuncionF():i32{
+
+        <<declaracion de f en ambito de funDeclarcionMismoNombre
+        i32 f;
+
+        fun FuncionG():i32{
+
+            <<declaracion de f en ambito de funDeclarcionMismoNombre1
+            i32 f;
+            return (f);
+        };
+
+        fun FuncionH():i32{
+
+            <<declaracion de f en ambito de funDeclarcionMismoNombre2
+            i32 f;
+            return (f);
+        };
+        return (f);
+    };
+}

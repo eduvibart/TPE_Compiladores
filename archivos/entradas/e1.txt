@@ -1,6 +1,8 @@
 eduardo {
-    i32 a,b;
-    etiquetaPrueba : while (a > b): (a=:a+1){
-
-    };
+    i32 a1,a2;
+    outer: while ( a1 < 10 ) : (a1 =: a1 + 1 ) {
+      		while ( a2 < 5 ) : (a2 =: a2 + 1 ) {
+            		continue :outer;     
+            	};           
+            };
 }   

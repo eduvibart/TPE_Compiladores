@@ -1,0 +1,39 @@
+program{
+     <<EL NUMERO DE LOS PARAMETROS REALES DE UNA INVOCACION A FUNCION DEBEN COINCIDIR CON EL NUMERO DE PARAMETROS DECLARADOS PARA LA FUNCION
+    i32 g,h;
+    fun funSinParametros():i32{
+        return (6);
+    };
+    fun funConUnParametro(i32 a):i32{
+        return (6);
+    };
+    fun funConDosParametros(i32 a, i32 b):i32{
+        return (6);
+    };
+
+    <<llamado a fun sin parametros
+    funSinParametros();
+
+    <<llamado a fun con un parametro
+    funConUnParametro(g);
+
+    <<llamado a fun con dos parametros
+    funConDosParametros(g,h);
+
+
+    <<CHECKEO DE COMPATIBILIDAD EN LLAMADO A FUNCIONES
+    fun funConParametroEntero(i32 a):i32{
+        return (8);
+    };
+    fun funConParametroFlotante(f32 b):f32{
+        return (8.0);
+    };
+
+    << g es una variable de tipo entero y j es de tipo flotante (declaradas previamente)
+
+    <<llamado correctamente
+    funConParametroEntero(g);
+    funConParametroFlotante(2.0);
+
+
+}

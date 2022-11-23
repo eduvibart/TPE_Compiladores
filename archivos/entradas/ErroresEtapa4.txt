@@ -1,0 +1,21 @@
+program{
+    i32 a,b,x,y;
+    b=:0;
+    << en el codigo assembler arroja errorDivisionPorCero
+    a=:a/b;
+    i32 t;
+    t=:82;
+    << en el codigo assembler arroja errorProductoEnteros
+    x =: 2147483647; 
+    y =: 2147483647; 
+    x=:x*y;
+    << recursion mutua se ejecuta JE errorRecursionMutua para evitarla en la parte de codigo assembler de abc()
+    fun abc(): i32{
+        fun dfg(): i32{
+            return (abc());
+        };
+        return (dfg());
+    };
+    
+    b=:abc();
+}

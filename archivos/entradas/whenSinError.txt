@@ -1,0 +1,45 @@
+program {
+    const a=:5.0F5;
+    i32 o;
+    o=:0;
+    when (a>4.0F5) then{
+        fun cumple(i32 a,i32 b): i32 {
+            i32 z;
+            return (z);
+        };
+        i32 i;
+        i=:88;
+    };
+    o=:i;
+    o=:cumple(8,7);
+
+    
+    fun c(): f32 {
+        i32 b;
+        when (7<8) then{
+        
+        };
+        when (2<96) then
+               o=:9; 
+        return (4.0);    
+    };
+    const w=:9;
+    fun cumpleA(i32 a,f32 b): i32 {
+        when(0<w) then {
+            a=:0;
+            i32 o;
+            o=:2;
+            if (a=w) then{
+                    return (4);
+            }else {
+                    when (3>99) then{
+                            fun cumple1(i32 a): i32 {
+                                    return (w);
+                            };
+                    };
+            }end_if;
+        };
+        o=:55;
+        
+    };
+}

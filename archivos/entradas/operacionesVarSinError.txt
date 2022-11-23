@@ -1,0 +1,22 @@
+program{
+    <<SOLO SE PODRA EFECTUAR UNA OPERACION ENTRE OPERANDOS DEL MISMO TIPO
+
+    i32 g,h,i;
+    f32 j,k,l;
+    
+    <<asignacion:
+    g=:h;
+    j=:k;
+    
+    g=:h;
+    j=:k;
+
+    <<expresion:
+    g=: h+i;
+    j=: k+l;
+    j=: k+l;
+    g=: h-i;
+    k=: l/j;
+    k=: j*l;
+
+}

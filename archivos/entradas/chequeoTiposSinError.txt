@@ -1,0 +1,26 @@
+program{
+    i32 g;
+    f32 h,k;
+    << comparacion:
+    if (k>h) then {
+
+    }end_if;
+    if(h=k)then{
+
+    }end_if;
+
+    << asignacion con expresion y funcion
+    fun pruebaTipoEntero():i32{
+        i32 m;
+        return(m);
+    };
+    fun pruebaTipoFlotante():f32{
+        f32 n;
+        return(n);
+    };
+
+    g=: g + pruebaTipoEntero();
+    
+    <<intento con funcion de distinto tipo
+    k=: h +pruebaTipoFlotante();
+}

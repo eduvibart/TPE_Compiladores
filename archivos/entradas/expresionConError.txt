@@ -1,0 +1,17 @@
+program {
+
+    i32 b,i,c,y;
+
+    const o=:5, p=:9;
+
+    fun a(i32 a,i32 b): i32 {
+            return (o/10);   
+    };
+    << no puedo asignar valores a las constantes
+    fun f(i32 a,i32 b): i32 {
+            return (5*i/10);   
+    };
+
+
+ 
+}

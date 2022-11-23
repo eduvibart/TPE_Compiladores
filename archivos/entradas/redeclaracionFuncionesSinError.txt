@@ -1,0 +1,43 @@
+program{
+    <<FUNCIONES REDECLARADAS
+
+    <<declaracion de la funcion FuncionA
+    fun FuncionA(): i32{
+        return (3);
+    };
+
+
+    <<redeclaracion de la funcion FuncionA con el mismo tipo en un ambito distinto
+    fun FuncionB(): i32 {
+        fun FuncionB():i32{
+            return (3);
+        };
+        return (3);
+    };
+
+    <<redeclaracion de la funcion FuncionA con distinto tipo en un ambito distinto
+    fun FuncionC(): i32 {
+        return (3);
+        fun FuncionB():f32{
+            return (3.0);
+        };
+    };
+
+    <<SE PERMITEN FUNCIONES CON EL MISMO NOMBRE, SIEMPRE QUE SEAN DECLARADAS EN DIFERENTES AMBITOS.
+
+    <<declaracion de funcion funDeclaracionMismoNombre
+
+    fun funDeclaracionMismoNombre():i32{
+        return (9);
+    };
+
+    fun funDeclaracion():i32{
+        
+        <<declaracion de funcion con el mismo nombre (funDeclaracionMismoNombre) en ambito distinto 
+        fun funDeclaracionMismoNombre():i32{
+            return (7+5);
+        };
+        return (7+5);
+    };
+
+}

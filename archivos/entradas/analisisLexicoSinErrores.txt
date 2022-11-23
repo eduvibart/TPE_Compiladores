@@ -4,27 +4,22 @@ program {
 	i32 i;
 	<< Punto flotante en el limite del rango superior, funciona correctamente
 	x =: 3.40282347F38; 
-
-	<< Punto flotante fuera del limite del rango superior, arroja error fuera de rango
-	y =: 3.40282348F38; 
+ 
 
 	<< Punto flotante en el limite del rango inferior, funciona correctamente
 	z =: 1.17549435F-38; 
 
-	<< Punto flotante fuera del limite del rango inferior, arroja error fuera de rango
-	w =: 1.17549436F-38; 
+
 
 	<< maximo entero positivo
 	i =: 2147483647; 
 
-	<< maximo entero positivo fuera de rango, arroja error fuera de rango
-	i =: 2147483648; 
+
 
 	<< maximo entero negativo
 	i =: -2147483648;  
 
-	<< maximo entero negativo fuera de rango, arroja error fuera de rango
-	i =: -2147483649; 
+
 
 	<< Testeo numeros flotantes y sus alternativas.
 	f32 e;
@@ -41,11 +36,6 @@ program {
 	f32 hola;
 	i32 hola123;
 	i32 hola_prueba;
-
-	<<Intento de incluir en el nombre de un identificador un caracter que no sea letra, digito o -.
-	<<i32 prue.ba;
-	
-
 
 	<< SENTENCIAS DECLARATIVAS
 	
@@ -139,10 +129,6 @@ program {
 	while (i < 10 ) : (i =: i + 1 ) {
 		<<i32 a;
 	};
-	
-	<< No se deben permitir anidamientos de expresiones con parentesis
-	<< arroja el error de que se esperaba una expresion
-	c =: (a + b ) / c;
 
 	<<Palabras reservadas escritas en minúsculas y mayúsculas
 	if (hola123 < 3) then {
@@ -155,8 +141,4 @@ program {
 	out( `prueba de cadena/
 	multilinea`);
 
-	<< esta sentencia tiene varios errores juntos, ya que no se permiten palabras reservadas en mayusculas,
-	<< por lo tanto los errores arrojados no seran tan precisos
-	IF (hola123 >= 3.0) THEN {
-	} END_IF;
 }
