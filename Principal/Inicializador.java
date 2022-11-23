@@ -83,14 +83,15 @@ public class Inicializador{
                 a.recorrerArbol("");    	
             }
             
-            System.out.println("\nAssembler: \n" );
+            //System.out.println("\nAssembler: \n" );
             GeneradorAssembler generador = new GeneradorAssembler(parser);
-            System.out.println(generador.getAssembler());
-            File f = new File("salida.asm");
+            //System.out.println(generador.getAssembler());
+
+            File f = new File(nombreArchivo.substring(0,nombreArchivo.length()-4)+".asm");
             f.createNewFile();
             PrintWriter pw;
 		    try {
-			    pw = new PrintWriter("salida.asm");
+			    pw = new PrintWriter(nombreArchivo.substring(0,nombreArchivo.length()-4)+".asm");
 			    pw.print(generador.getAssembler());
 			    pw.close();
 		    } catch (FileNotFoundException e) {
